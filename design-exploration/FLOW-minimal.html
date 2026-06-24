@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>∞ · Flow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#1A1726;--mute:#9A968C;--p:#7C5CF0;--p2:#896AFB;--line:#1a172618}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%;overflow:hidden}
+  body{font-family:'Fraunces',serif;color:var(--ink);-webkit-font-smoothing:antialiased;
+    background:radial-gradient(ellipse 90% 80% at 50% 40%,#FCFBF7,#F1EFE8 60%,#E7E4DC);transition:background .6s,color .6s;
+    user-select:none}
+  body.dark{--ink:#F4F2FB;--mute:#7E7A92;--line:#ffffff20;
+    background:radial-gradient(ellipse 90% 80% at 50% 40%,#201A3A,#0D0B18 62%,#070510)}
+  .grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.04;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  /* faint brand ∞ watermark */
+  .watermark{position:fixed;left:50%;top:42%;transform:translate(-50%,-50%);z-index:0;width:min(70vw,820px);opacity:.05;pointer-events:none}
+  .watermark path{fill:none;stroke:var(--ink);stroke-width:1}
+  nav{position:fixed;top:0;left:0;right:0;z-index:5;display:flex;justify-content:space-between;align-items:baseline;padding:30px clamp(28px,5vw,76px)}
+  nav .logo{font-size:19px;font-weight:500;letter-spacing:-.01em}
+  nav .links{display:flex;gap:36px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.04em;color:var(--mute);text-transform:uppercase}
+  nav .links a{color:inherit;text-decoration:none;transition:.3s;cursor:pointer;position:relative}
+  nav .links a .i{color:var(--p);margin-right:6px;opacity:.55}
+  nav .links a:hover,nav .links a.active{color:var(--ink)}
+  nav .links a.active .i{opacity:1}
+  nav .links a.active::after{content:"";position:absolute;left:0;right:-2px;bottom:-7px;height:1px;background:var(--p)}
+  /* content stage — clean editorial, single focus */
+  .stage{position:fixed;inset:0;z-index:2;display:flex;align-items:center;padding:0 clamp(28px,5vw,76px)}
+  .slide{position:absolute;left:clamp(28px,5vw,76px);right:clamp(28px,5vw,76px);max-width:1000px;
+    opacity:0;transform:translateY(22px);transition:opacity .6s cubic-bezier(.2,.7,.2,1),transform .6s cubic-bezier(.2,.7,.2,1);pointer-events:none}
+  .slide.on{opacity:1;transform:translateY(0);pointer-events:auto}
+  .slide .label{font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--p);margin-bottom:26px}
+  .slide h1{font-weight:320;font-size:clamp(50px,9vw,150px);line-height:.92;letter-spacing:-.03em}
+  .slide h1 em{font-style:italic;color:var(--p2)}
+  .slide p{margin-top:34px;max-width:480px;font-family:'JetBrains Mono',monospace;font-size:14px;line-height:1.8;color:var(--mute)}
+  .slide .more{margin-top:40px;display:inline-flex;gap:10px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:8px;transition:.25s}
+  .slide .more:hover{color:var(--p);border-color:var(--p)}
+  /* ∞ navigator — the instrument you operate */
+  .nav-inf{position:fixed;left:50%;bottom:54px;transform:translateX(-50%);z-index:5;display:flex;flex-direction:column;align-items:center;gap:14px}
+  .nav-inf .cap{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--mute);opacity:.8}
+  .nav-inf svg{cursor:grab;overflow:visible;touch-action:none}
+  .nav-inf svg.drag{cursor:grabbing}
+  .track{fill:none;stroke:var(--line);stroke-width:1.5}
+  .prog{fill:none;stroke:var(--p);stroke-width:1.5;stroke-linecap:round;opacity:.85}
+  .node{fill:var(--mute);opacity:.45;transition:.3s;cursor:pointer}
+  .node.active{fill:var(--p);opacity:1}
+  .bead{fill:var(--p2)}
+  .bead-glow{fill:var(--p2);opacity:.25}
+  .toggle{position:fixed;z-index:6;right:clamp(28px,5vw,76px);top:78px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);background:none;border:1px solid var(--line);border-radius:100px;padding:8px 14px;cursor:pointer;transition:.25s}
+  .toggle:hover{color:var(--p);border-color:var(--p)}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<svg class="watermark" viewBox="0 0 200 100"><path id="wm"/></svg>
+<nav>
+  <div class="logo">Adeline Wen</div>
+  <div class="links">
+    <a data-s="0"><span class="i">01</span>Work</a>
+    <a data-s="1"><span class="i">02</span>About</a>
+    <a data-s="2"><span class="i">03</span>Research</a>
+    <a data-s="3"><span class="i">04</span>Contact</a>
+  </div>
+</nav>
+<button class="toggle" id="tg">◐ Light / Dark</button>
+
+<div class="stage" id="stage">
+  <article class="slide on" data-s="0">
+    <div class="label">01 — Selected Work</div>
+    <h1>Things I've<br><em>built</em>.</h1>
+    <p>Crafted, precise interfaces and the systems behind them — from 3D web experiences to trading infrastructure.</p>
+    <a class="more" href="#">View projects →</a>
+  </article>
+  <article class="slide" data-s="1">
+    <div class="label">02 — About · the crossing</div>
+    <h1>Where it all<br><em>meets</em>.</h1>
+    <p>CS @ University of Washington. The point where research and making become one continuous loop — that's me.</p>
+    <a class="more" href="#">More about me →</a>
+  </article>
+  <article class="slide" data-s="2">
+    <div class="label">03 — Research</div>
+    <h1>Decentralized<br><em>systems</em>.</h1>
+    <p>UW Decentralized Computing Lab — Sybil detection, on-chain analysis, and the trust layer of open networks.</p>
+    <a class="more" href="#">Read research →</a>
+  </article>
+  <article class="slide" data-s="3">
+    <div class="label">04 — Contact</div>
+    <h1>Let's <em>build</em><br>something.</h1>
+    <p>Back to the start — the loop closes where it began. Open to 2026 opportunities.</p>
+    <a class="more" href="#">Say hello →</a>
+  </article>
+</div>
+
+<div class="nav-inf">
+  <div class="cap" id="cap">drag the loop ↔</div>
+  <svg id="navsvg" width="260" height="120" viewBox="0 0 260 120">
+    <path class="track" id="track"/>
+    <path class="prog" id="prog"/>
+    <g id="nodes"></g>
+    <circle class="bead-glow" id="glow" r="10"/>
+    <circle class="bead" id="bead" r="4.5"/>
+  </svg>
+</div>
+
+<script>
+// lemniscate path generator
+function lemPath(cx,cy,sx,sy,n=160){let d='';for(let i=0;i<=n;i++){const a=i/n*Math.PI*2,k=1+Math.sin(a)*Math.sin(a);
+  const x=cx+sx*Math.cos(a)/k,y=cy+sy*Math.sin(a)*Math.cos(a)/k;d+=(i?'L':'M')+x.toFixed(2)+','+y.toFixed(2);}return d+'Z';}
+document.getElementById('wm').setAttribute('d',lemPath(100,50,82,46));
+const track=document.getElementById('track'),prog=document.getElementById('prog'),
+  bead=document.getElementById('bead'),glow=document.getElementById('glow'),nodesG=document.getElementById('nodes');
+track.setAttribute('d',lemPath(130,60,108,48));
+prog.setAttribute('d',track.getAttribute('d'));
+const LEN=track.getTotalLength();
+prog.style.strokeDasharray=LEN;
+
+// 4 stations along path length (evenly)
+const STN=[0.125,0.375,0.625,0.875];
+const slides=[...document.querySelectorAll('.slide')],links=[...document.querySelectorAll('nav .links a')],cap=document.getElementById('cap');
+STN.forEach((f)=>{const pt=track.getPointAtLength(f*LEN);const c=document.createElementNS('http://www.w3.org/2000/svg','circle');
+  c.setAttribute('cx',pt.x);c.setAttribute('cy',pt.y);c.setAttribute('r',3.5);c.setAttribute('class','node');nodesG.appendChild(c);});
+const nodeEls=[...nodesG.children];
+
+let pos=STN[0],cur=-1; // pos in [0,1)
+function circ(a,b){let d=Math.abs(a-b);return Math.min(d,1-d);}
+function render(){
+  const pt=track.getPointAtLength((pos%1)*LEN);
+  bead.setAttribute('cx',pt.x);bead.setAttribute('cy',pt.y);glow.setAttribute('cx',pt.x);glow.setAttribute('cy',pt.y);
+  prog.style.strokeDashoffset=LEN*(1-(pos%1));
+  let best=0,bd=9;STN.forEach((f,i)=>{const d=circ(f,pos);if(d<bd){bd=d;best=i;}});
+  if(best!==cur){cur=best;
+    slides.forEach(s=>s.classList.toggle('on',+s.dataset.s===best));
+    links.forEach(a=>a.classList.toggle('active',+a.dataset.s===best));
+    nodeEls.forEach((n,i)=>n.classList.toggle('active',i===best));
+  }
+}
+render();
+
+// drag to scrub
+const svg=document.getElementById('navsvg');
+let dragging=false,lastX=0,vel=0;
+function down(x){dragging=true;lastX=x;svg.classList.add('drag');cap.textContent='∞';}
+function move(x){if(!dragging)return;const dx=x-lastX;lastX=x;const dp=dx*0.0016;pos=(pos+dp+1)%1;vel=dp;render();}
+function up(){dragging=false;svg.classList.remove('drag');cap.textContent='drag the loop ↔';}
+svg.addEventListener('pointerdown',e=>down(e.clientX));
+addEventListener('pointermove',e=>move(e.clientX));
+addEventListener('pointerup',up);
+// also drag anywhere on page
+addEventListener('pointerdown',e=>{if(!e.target.closest('a,button')) down(e.clientX);});
+addEventListener('wheel',e=>{pos=(pos+e.deltaY*0.0004+1)%1;render();},{passive:true});
+// nav + node click → ease to station
+function easeTo(f){const start=pos;let dp=((f-start+0.5)%1+1)%1-0.5;const t0=performance.now();
+  (function anim(t){const k=Math.min(1,(t-t0)/600);const e=1-Math.pow(1-k,3);pos=(start+dp*e+1)%1;render();if(k<1)requestAnimationFrame(anim);})(t0);}
+links.forEach(a=>a.addEventListener('click',()=>easeTo(STN[+a.dataset.s])));
+nodeEls.forEach((n,i)=>n.addEventListener('click',()=>easeTo(STN[i])));
+// momentum after drag
+function inertia(){if(!dragging&&Math.abs(vel)>0.0002){pos=(pos+vel+1)%1;vel*=0.9;render();}requestAnimationFrame(inertia);}
+inertia();
+document.getElementById('tg').addEventListener('click',()=>document.body.classList.toggle('dark'));
+</script>
+</body>
+</html>

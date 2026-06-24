@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>∞ · Flow (layout + motion)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#1A1726;--mute:#9A968C;--p:#7C5CF0;--p2:#896AFB;--line:#1a172618;--card:#ffffff}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%;overflow:hidden}
+  body{font-family:'Fraunces',serif;color:var(--ink);-webkit-font-smoothing:antialiased;user-select:none;
+    background:radial-gradient(ellipse 92% 82% at 50% 36%,#FCFBF7,#F1EFE8 60%,#E7E4DC);transition:background .6s,color .6s}
+  body.dark{--ink:#F4F2FB;--mute:#807C95;--line:#ffffff20;--card:#16122E;
+    background:radial-gradient(ellipse 92% 82% at 50% 36%,#221B3E,#0D0B18 62%,#070510)}
+  .grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.04;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  nav{position:fixed;top:0;left:0;right:0;z-index:5;display:flex;justify-content:space-between;align-items:baseline;padding:30px clamp(28px,5vw,76px)}
+  nav .logo{font-size:19px;font-weight:500;letter-spacing:-.01em}
+  nav .links{display:flex;gap:34px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.04em;color:var(--mute);text-transform:uppercase}
+  nav .links a{color:inherit;text-decoration:none;transition:.3s;cursor:pointer;position:relative}
+  nav .links a .i{color:var(--p);margin-right:6px;opacity:.55}
+  nav .links a:hover,nav .links a.active{color:var(--ink)}
+  nav .links a.active .i{opacity:1}
+  nav .links a.active::after{content:"";position:absolute;left:0;right:-2px;bottom:-7px;height:1px;background:var(--p)}
+  .stage{position:fixed;inset:0;z-index:2;display:flex;align-items:center;padding:80px clamp(28px,5vw,76px) 150px}
+  .slide{position:absolute;left:clamp(28px,5vw,76px);right:clamp(28px,5vw,76px);top:88px;bottom:140px;
+    display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(30px,5vw,80px);align-items:center;pointer-events:none}
+  .slide .label,.slide h1,.slide p,.slide .more,.slide .right>*{opacity:0;transform:translateY(26px);filter:blur(7px);
+    transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1),filter .7s cubic-bezier(.2,.7,.2,1)}
+  .slide.on{pointer-events:auto}
+  .slide.on .label,.slide.on h1,.slide.on p,.slide.on .more,.slide.on .right>*{opacity:1;transform:none;filter:blur(0)}
+  .slide.on .label{transition-delay:.02s}.slide.on h1{transition-delay:.10s}.slide.on p{transition-delay:.20s}.slide.on .more{transition-delay:.28s}
+  .slide.on .right>*{transition-delay:.22s}
+  .left .label{font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--p);margin-bottom:24px}
+  .left h1{font-weight:320;font-size:clamp(46px,7vw,118px);line-height:.92;letter-spacing:-.03em;will-change:transform}
+  .left h1 em{font-style:italic;color:var(--p2)}
+  .left p{margin-top:30px;max-width:430px;font-family:'JetBrains Mono',monospace;font-size:13.5px;line-height:1.8;color:var(--mute)}
+  .left .more{margin-top:36px;display:inline-flex;gap:10px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:8px;transition:.25s}
+  .left .more:hover{color:var(--p);border-color:var(--p)}
+  /* right column */
+  .right{max-width:460px;justify-self:end;width:100%}
+  .rows{list-style:none;display:flex;flex-direction:column}
+  .rows li{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:18px 6px;border-top:1px solid var(--line);
+    font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--mute);cursor:pointer;transition:.3s;text-transform:uppercase;letter-spacing:.04em}
+  .rows li:last-child{border-bottom:1px solid var(--line)}
+  .rows li .n{font-family:Fraunces,serif;font-size:22px;font-weight:330;letter-spacing:-.01em;color:var(--ink);text-transform:none}
+  .rows li:hover{padding-left:18px;color:var(--ink)}
+  .rows li:hover .n{color:var(--p2)}
+  .tl{list-style:none}
+  .tl li{padding:16px 0 16px 26px;border-left:1px solid var(--line);position:relative;margin-left:4px}
+  .tl li::before{content:"";position:absolute;left:-4.5px;top:22px;width:8px;height:8px;border-radius:50%;background:var(--p);box-shadow:0 0 0 4px var(--card)}
+  .tl li .y{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:var(--p);text-transform:uppercase}
+  .tl li .h{font-family:Fraunces,serif;font-size:24px;font-weight:330;margin-top:4px}
+  .tl li .d{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--mute);margin-top:4px;line-height:1.6}
+  .about{display:flex;flex-direction:column;gap:24px}
+  .portrait{width:160px;height:200px;border-radius:14px;background:linear-gradient(150deg,#896AFB,#534AB7);box-shadow:0 24px 60px rgba(124,92,240,.3)}
+  .tags{display:flex;flex-wrap:wrap;gap:8px}
+  .tags span{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--p2);border:1px solid var(--line);border-radius:100px;padding:7px 13px}
+  .clinks{display:flex;flex-direction:column}
+  .clinks a{display:flex;justify-content:space-between;align-items:baseline;padding:18px 6px;border-top:1px solid var(--line);text-decoration:none;
+    font-family:Fraunces,serif;font-size:28px;font-weight:330;color:var(--ink);transition:.3s}
+  .clinks a:last-child{border-bottom:1px solid var(--line)}
+  .clinks a .ar{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--mute);transition:.3s}
+  .clinks a:hover{padding-left:16px;color:var(--p2)}.clinks a:hover .ar{color:var(--p);transform:translateX(4px)}
+  /* ∞ navigator */
+  .nav-inf{position:fixed;left:50%;bottom:42px;transform:translateX(-50%);z-index:5;display:flex;flex-direction:column;align-items:center;gap:10px}
+  .nav-inf .now{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
+  .nav-inf .now b{color:var(--ink);font-weight:500}
+  .nav-inf svg{cursor:grab;overflow:visible;touch-action:none}
+  .nav-inf svg.drag{cursor:grabbing}
+  .track{fill:none;stroke:rgba(124,92,240,.16);stroke-width:18;stroke-linecap:round;stroke-linejoin:round}
+  body.dark .track{stroke:rgba(160,140,255,.18)}
+  .prog{fill:none;stroke:url(#pg);stroke-width:18;stroke-linecap:round;stroke-linejoin:round}
+  .node{opacity:0}
+  .pulse{fill:none;stroke:#fff;stroke-width:2;opacity:0}
+  .beadglow{fill:#fff;animation:bpulse 2.4s ease-in-out infinite}
+  @keyframes bpulse{0%,100%{opacity:.5;r:9}50%{opacity:.8;r:13}}
+  .bead{fill:#fff}
+  .nav-inf .hint{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute);opacity:.55}
+  .toggle{position:fixed;z-index:6;right:clamp(28px,5vw,76px);top:78px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);background:none;border:1px solid var(--line);border-radius:100px;padding:8px 14px;cursor:pointer;transition:.25s}
+  .toggle:hover{color:var(--p);border-color:var(--p)}
+  @media(max-width:820px){.slide{grid-template-columns:1fr}.right{display:none}}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<nav>
+  <div class="logo">Adeline Wen</div>
+  <div class="links">
+    <a data-s="0"><span class="i">01</span>Work</a>
+    <a data-s="1"><span class="i">02</span>About</a>
+    <a data-s="2"><span class="i">03</span>Research</a>
+    <a data-s="3"><span class="i">04</span>Contact</a>
+  </div>
+</nav>
+<button class="toggle" id="tg">◐ Light / Dark</button>
+
+<div class="stage">
+  <article class="slide on" data-s="0">
+    <div class="left">
+      <div class="label">01 — Selected Work</div>
+      <h1>Things I've<br><em>built</em>.</h1>
+      <p>Crafted, precise interfaces and the systems behind them.</p>
+      <a class="more" href="#">All projects →</a>
+    </div>
+    <div class="right"><ul class="rows">
+      <li><span class="n">Portfolio 3D</span><span>2026 · WebGL</span></li>
+      <li><span class="n">Trading Engine</span><span>2025 · Rust</span></li>
+      <li><span class="n">Design System</span><span>2025 · React</span></li>
+      <li><span class="n">HasciDB UI</span><span>2024 · Next.js</span></li>
+    </ul></div>
+  </article>
+
+  <article class="slide" data-s="1">
+    <div class="left">
+      <div class="label">02 — About · the crossing</div>
+      <h1>Where it all<br><em>meets</em>.</h1>
+      <p>CS @ University of Washington. The point where research and making become one continuous loop — that's me.</p>
+      <a class="more" href="#">More about me →</a>
+    </div>
+    <div class="right"><div class="about">
+      <div class="portrait"></div>
+      <div class="tags"><span>React</span><span>Three.js</span><span>Rust</span><span>Solidity</span><span>Python</span><span>Figma</span></div>
+    </div></div>
+  </article>
+
+  <article class="slide" data-s="2">
+    <div class="left">
+      <div class="label">03 — Research</div>
+      <h1>Decentralized<br><em>systems</em>.</h1>
+      <p>UW Decentralized Computing Lab — the trust layer of open networks.</p>
+      <a class="more" href="#">Read research →</a>
+    </div>
+    <div class="right"><ul class="tl">
+      <li><div class="y">2026 · UW DC Lab</div><div class="h">Sybil Detection</div><div class="d">ML framework for airdrop sybil identification.</div></li>
+      <li><div class="y">2025</div><div class="h">HasciDB</div><div class="d">A database for identifying crypto sybil hunters.</div></li>
+      <li><div class="y">2025</div><div class="h">Blur</div><div class="d">On-chain analysis & privacy tooling.</div></li>
+    </ul></div>
+  </article>
+
+  <article class="slide" data-s="3">
+    <div class="left">
+      <div class="label">04 — Contact</div>
+      <h1>Let's <em>build</em><br>something.</h1>
+      <p>Back to the start — the loop closes where it began. Open to 2026 opportunities.</p>
+      <a class="more" href="#">Email me →</a>
+    </div>
+    <div class="right"><div class="clinks">
+      <a href="#">Email<span class="ar">ywen8@uw.edu</span></a>
+      <a href="#">GitHub<span class="ar">@Adeline117 ↗</span></a>
+      <a href="#">LinkedIn<span class="ar">↗</span></a>
+      <a href="#">X / Twitter<span class="ar">↗</span></a>
+    </div></div>
+  </article>
+</div>
+
+<div class="nav-inf">
+  <div class="now"><b id="now-n">01</b> / 04 — <b id="now-name">Work</b></div>
+  <svg id="navsvg" width="300" height="150" viewBox="0 0 300 150">
+    <defs><linearGradient id="pg" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#7C5CF0"/><stop offset="1" stop-color="#896AFB"/></linearGradient></defs>
+    <path class="track" id="track"/>
+    <path class="prog" id="prog"/>
+    <g id="nodes"></g>
+    <circle class="pulse" id="pulse" r="6"/>
+    <circle class="beadglow" id="glow" r="9"/>
+    <circle class="bead" id="bead" r="5"/>
+  </svg>
+  <div class="hint">drag · scroll · ← → · or tap a point</div>
+</div>
+
+<script>
+// STANDARD infinity = Bernoulli lemniscate centerline, stroked thick → bold ∞ glyph (verified by screenshot)
+function infPath(cx,cy,sx,sy,n){n=n||260;let d='';
+  for(let i=0;i<=n;i++){const a=i/n*2*Math.PI,k=1+Math.sin(a)*Math.sin(a);
+    d+=(i?'L':'M')+(cx+sx*Math.cos(a)/k).toFixed(2)+','+(cy+sy*Math.sin(a)*Math.cos(a)/k).toFixed(2);}
+  return d+'Z';}
+const track=document.getElementById('track'),prog=document.getElementById('prog'),bead=document.getElementById('bead'),
+  glow=document.getElementById('glow'),pulse=document.getElementById('pulse'),nodesG=document.getElementById('nodes'),svg=document.getElementById('navsvg');
+track.setAttribute('d',infPath(150,75,116,116));prog.setAttribute('d',track.getAttribute('d'));
+const LEN=track.getTotalLength();prog.style.strokeDasharray=LEN;
+const STN=[0.125,0.375,0.625,0.875];
+const NAMES=['Work','About','Research','Contact'];
+const slides=[...document.querySelectorAll('.slide')],links=[...document.querySelectorAll('nav .links a')];
+const nowN=document.getElementById('now-n'),nowName=document.getElementById('now-name');
+STN.forEach(f=>{const pt=track.getPointAtLength(f*LEN);const c=document.createElementNS('http://www.w3.org/2000/svg','circle');
+  c.setAttribute('cx',pt.x);c.setAttribute('cy',pt.y);c.setAttribute('r',4);c.setAttribute('class','node');nodesG.appendChild(c);});
+const nodeEls=[...nodesG.children];
+
+let pos=STN[0],cur=-1,vel=0,dragging=false,lastX=0;
+function circ(a,b){let d=Math.abs(a-b);return Math.min(d,1-d);}
+function nearest(){let best=0,bd=9;STN.forEach((f,i)=>{const d=circ(f,pos);if(d<bd){bd=d;best=i;}});return best;}
+function pulseAt(pt){pulse.setAttribute('cx',pt.x);pulse.setAttribute('cy',pt.y);
+  pulse.animate([{r:5,opacity:.6},{r:22,opacity:0}],{duration:700,easing:'ease-out'});}
+function render(){
+  const pt=track.getPointAtLength((pos%1)*LEN);
+  bead.setAttribute('cx',pt.x);bead.setAttribute('cy',pt.y);glow.setAttribute('cx',pt.x);glow.setAttribute('cy',pt.y);
+  prog.style.strokeDashoffset=LEN*(1-(pos%1));
+  const b=nearest();
+  if(b!==cur){cur=b;
+    slides.forEach(s=>s.classList.toggle('on',+s.dataset.s===b));
+    links.forEach(a=>a.classList.toggle('active',+a.dataset.s===b));
+    nodeEls.forEach((n,i)=>n.classList.toggle('active',i===b));
+    nowN.textContent=String(b+1).padStart(2,'0');nowName.textContent=NAMES[b];
+    pulseAt(track.getPointAtLength(STN[b]*LEN));
+  }
+}
+render();
+let easing=null;
+function easeTo(f){const start=pos;let dp=((f-start+0.5)%1+1)%1-0.5;const t0=performance.now();
+  easing=t=>{const k=Math.min(1,(t-t0)/650);const e=1-Math.pow(1-k,3);pos=(start+dp*e+1)%1;render();if(k<1)easing&&requestAnimationFrame(easing);else easing=null;};
+  requestAnimationFrame(easing);}
+function go(i){vel=0;easing=null;easeTo(STN[i]);}
+links.forEach(a=>a.addEventListener('click',()=>go(+a.dataset.s)));
+nodeEls.forEach((n,i)=>n.addEventListener('click',e=>{e.stopPropagation();go(i);}));
+function down(x,t){if(t&&t.closest('a,button,.node,.rows li,.clinks a'))return;dragging=true;lastX=x;svg.classList.add('drag');easing=null;}
+function move(x){if(!dragging)return;const dx=x-lastX;lastX=x;pos=(pos+dx*0.0016+1)%1;vel=dx*0.0016;render();}
+function up(){if(!dragging)return;dragging=false;svg.classList.remove('drag');}
+addEventListener('pointerdown',e=>down(e.clientX,e.target));
+addEventListener('pointermove',e=>move(e.clientX));
+addEventListener('pointerup',up);
+addEventListener('wheel',e=>{easing=null;pos=(pos+e.deltaY*0.0004+1)%1;vel=e.deltaY*0.0004*0.6;render();},{passive:true});
+addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowDown')go((nearest()+1)%4);
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp')go((nearest()+3)%4);});
+function loop(){
+  if(!dragging&&!easing){
+    if(Math.abs(vel)>0.0004){pos=(pos+vel+1)%1;vel*=0.9;render();}
+    else{const f=STN[nearest()];let dp=((f-pos+0.5)%1+1)%1-0.5;if(Math.abs(dp)>0.0008){pos=(pos+dp*0.12+1)%1;render();}}
+  }
+  requestAnimationFrame(loop);
+}
+loop();
+// title mouse parallax
+addEventListener('pointermove',e=>{const mx=(e.clientX/innerWidth-.5),my=(e.clientY/innerHeight-.5);
+  const h=document.querySelector('.slide.on h1');if(h)h.style.transform=`translate(${mx*10}px,${my*8}px)`;});
+setTimeout(()=>{if(cur===0){easeTo(STN[1]);setTimeout(()=>easeTo(STN[0]),900);}},1500);
+document.getElementById('tg').addEventListener('click',()=>document.body.classList.toggle('dark'));
+</script>
+</body>
+</html>
