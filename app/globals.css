@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+/* ===== Arena purple brand system ===== */
+:root {
+  --ink: #1a1726;
+  --mute: #8c8898;
+  --p: #7c5cf0;
+  --p2: #896afb;
+  --light: #eeedfe;
+  --line: rgba(26, 23, 38, 0.1);
+  --scrim-t: linear-gradient(rgba(241, 239, 232, 0.8), transparent);
+  --scrim-b: linear-gradient(transparent, rgba(231, 228, 220, 0.87));
+  --bg-grad: radial-gradient(ellipse 80% 68% at 50% 44%, #fcfbf7, #f1efe8 56%, #e7e4dc);
+}
+body.dark {
+  --ink: #f6f4fc;
+  --mute: #ada8c6;
+  --line: rgba(255, 255, 255, 0.12);
+  --scrim-t: linear-gradient(rgba(12, 10, 20, 0.9), transparent);
+  --scrim-b: linear-gradient(transparent, rgba(5, 3, 12, 0.95));
+  --bg-grad: radial-gradient(ellipse 80% 68% at 50% 44%, #241e42, #0c0a14 62%, #050309);
+}
+
+@theme inline {
+  --font-fraunces: var(--font-fraunces);
+  --font-mono: var(--font-mono);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: var(--font-fraunces), serif;
+  color: var(--ink);
+  background: var(--bg-grad);
+  -webkit-font-smoothing: antialiased;
+  transition: background 0.6s, color 0.6s;
+}
+.mono { font-family: var(--font-mono), monospace; }
+
+.spacer { height: 500vh; }
+
+#scene { position: fixed; inset: 0; z-index: 0; }
+.grain {
+  position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.scrim { position: fixed; left: 0; right: 0; z-index: 1; pointer-events: none; height: 210px; }
+.scrim.t { top: 0; background: var(--scrim-t); }
+.scrim.b { bottom: 0; height: 280px; background: var(--scrim-b); }
+
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 3;
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: 26px clamp(24px, 5vw, 72px); border-bottom: 1px solid var(--line);
+}
+nav .logo { font-size: 19px; font-weight: 500; letter-spacing: -0.01em; }
+nav .links { display: flex; gap: 36px; font-family: var(--font-mono), monospace; font-size: 12px; letter-spacing: 0.04em; color: var(--mute); text-transform: uppercase; }
+nav .links button { background: none; border: 0; color: inherit; cursor: pointer; transition: 0.3s; font: inherit; letter-spacing: inherit; text-transform: inherit; }
+nav .links .i { color: var(--p); margin-right: 6px; opacity: 0.55; }
+nav .links button:hover, nav .links button.active { color: var(--ink); }
+nav .links button.active .i { opacity: 1; }
+
+.intro { position: fixed; inset: 0; z-index: 2; pointer-events: none; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+.intro .meta { font-family: var(--font-mono), monospace; font-size: 12px; letter-spacing: 0.2em; color: var(--mute); text-transform: uppercase; }
+.intro h1 { font-weight: 330; font-size: clamp(54px, 9vw, 148px); line-height: 0.92; letter-spacing: -0.025em; margin: 22px 0; }
+.intro h1 em { font-style: italic; color: var(--p2); }
+.intro .hint { font-family: var(--font-mono), monospace; font-size: 11px; letter-spacing: 0.22em; color: var(--mute); text-transform: uppercase; margin-top: 32px; }
+
+.station { position: fixed; left: clamp(24px, 5vw, 72px); bottom: 50px; z-index: 3; max-width: 460px; transition: opacity 0.5s, transform 0.5s; }
+.station .idx { font-family: var(--font-mono), monospace; font-size: 12px; letter-spacing: 0.18em; color: var(--p); text-transform: uppercase; }
+.station h2 { font-weight: 330; font-size: clamp(40px, 6vw, 84px); line-height: 0.94; letter-spacing: -0.02em; margin: 10px 0 14px; }
+.station h2 em { font-style: italic; color: var(--p2); }
+.station p { font-family: var(--font-mono), monospace; font-size: 13px; line-height: 1.7; color: var(--mute); max-width: 400px; }
+
+.prog { position: fixed; right: clamp(24px, 5vw, 72px); bottom: 54px; z-index: 3; text-align: right; font-family: var(--font-mono), monospace; color: var(--mute); }
+.prog .count { font-size: 12px; letter-spacing: 0.1em; }
+.prog .count b { color: var(--ink); font-weight: 500; }
+.prog svg { display: block; margin-top: 12px; margin-left: auto; }
+.prog .track { fill: none; stroke: var(--line); stroke-width: 1.5; }
+.prog .bead { fill: var(--p); }
+
+.toggle { position: fixed; z-index: 4; right: clamp(24px, 5vw, 72px); top: 74px; font-family: var(--font-mono), monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mute); background: none; border: 1px solid var(--line); border-radius: 100px; padding: 8px 14px; cursor: pointer; transition: 0.25s; }
+.toggle:hover { color: var(--p); border-color: var(--p); }
+
+@media (max-width: 760px) { .prog { display: none; } }
