@@ -136,6 +136,9 @@ export default function InfinityHero() {
       curve.getPoint(curU % 1, tmp);
       bead.position.copy(tmp);
 
+      // fade the loop to an ambient backdrop once past the hero
+      canvas.style.opacity = String(Math.max(0.14, 1 - (window.scrollY / window.innerHeight) * 0.95));
+
       if (!prefersReduced) {
         group.rotation.y = Math.sin(t * 0.0002 * 1000) * 0.3 + mx * 0.4;
         group.rotation.x = -0.15 + my * 0.25;
