@@ -9,7 +9,7 @@ const NAV = ["Work", "About", "Research", "Contact"];
 
 export default function Home() {
   const [active, setActive] = useState(0);
-  const [dark, setDark] = useState(false);
+  const [dark, setDark] = useState<boolean | null>(null);
   const secRefs = useRef<(HTMLElement | null)[]>([]);
   const trackRef = useRef<SVGPathElement>(null);
   const beadRef = useRef<SVGCircleElement>(null);
@@ -50,8 +50,16 @@ export default function Home() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // initial theme: stored preference, else system
   useEffect(() => {
+    const stored = localStorage.getItem("theme");
+    setDark(stored ? stored === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches);
+  }, []);
+
+  useEffect(() => {
+    if (dark === null) return;
     document.body.classList.toggle("dark", dark);
+    localStorage.setItem("theme", dark ? "dark" : "light");
   }, [dark]);
 
   const goTo = (i: number) => secRefs.current[i]?.scrollIntoView({ behavior: "smooth" });

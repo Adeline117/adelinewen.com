@@ -33,8 +33,12 @@ export default function InfinityHero() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
+    const isMobile =
+      window.matchMedia("(max-width: 760px)").matches || navigator.maxTouchPoints > 0;
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
     const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2));
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.15;
@@ -60,7 +64,7 @@ export default function InfinityHero() {
     const group = new THREE.Group();
     scene.add(group);
 
-    const tubeGeo = new THREE.TubeGeometry(curve, 480, 0.2, 32, true);
+    const tubeGeo = new THREE.TubeGeometry(curve, isMobile ? 240 : 480, 0.2, isMobile ? 18 : 32, true);
     const glass = new THREE.MeshPhysicalMaterial({
       transmission: 1,
       thickness: 1.6,
@@ -100,8 +104,14 @@ export default function InfinityHero() {
 
     const composer = new EffectComposer(renderer);
     composer.addPass(new RenderPass(scene, camera));
+    // bloom is the priciest pass — lighten it on mobile
     composer.addPass(
-      new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 0.5, 0.7, 0.85)
+      new UnrealBloomPass(
+        new THREE.Vector2(window.innerWidth, window.innerHeight),
+        isMobile ? 0.32 : 0.5,
+        0.7,
+        0.85
+      )
     );
     composer.addPass(new OutputPass());
 
@@ -121,13 +131,15 @@ export default function InfinityHero() {
     };
     window.addEventListener("resize", onResize);
 
-    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const clock = new THREE.Clock();
     const tmp = new THREE.Vector3();
     let curU = 0;
     let raf = 0;
 
     const tick = () => {
+      raf = requestAnimationFrame(tick);
+      if (document.hidden) return; // don't burn GPU/battery on a hidden tab
+
       const t = clock.getElapsedTime();
       const max = document.body.scrollHeight - window.innerHeight;
       const targetU = max > 0 ? window.scrollY / max : 0;
@@ -140,12 +152,13 @@ export default function InfinityHero() {
       canvas.style.opacity = String(Math.max(0.14, 1 - (window.scrollY / window.innerHeight) * 0.95));
 
       if (!prefersReduced) {
-        group.rotation.y = Math.sin(t * 0.0002 * 1000) * 0.3 + mx * 0.4;
+        group.rotation.y = Math.sin(t * 0.2) * 0.3 + mx * 0.4;
         group.rotation.x = -0.15 + my * 0.25;
+      } else {
+        group.rotation.x = -0.15;
       }
       camera.lookAt(0, 0, 0);
       composer.render();
-      raf = requestAnimationFrame(tick);
     };
     tick();
 
@@ -161,5 +174,5 @@ export default function InfinityHero() {
     };
   }, []);
 
-  return <canvas id="scene" ref={canvasRef} />;
+  return <canvas id="scene" ref={canvasRef} aria-hidden="true" />;
 }
