@@ -22,7 +22,7 @@ export default function OpengraphImage() {
         }}
       >
         <div style={{ display: "flex", justifyContent: "space-between", fontSize: 22, letterSpacing: 6, color: "#ada8c6" }}>
-          <span>SOFTWARE · RESEARCH</span>
+          <span>RESEARCHER · BUILDER</span>
           <span>SEATTLE · 2026</span>
         </div>
 
@@ -45,7 +45,7 @@ export default function OpengraphImage() {
         </div>
 
         <div style={{ display: "flex", justifyContent: "space-between", fontSize: 24, color: "#ada8c6" }}>
-          <span>Decentralized computing · crafted software</span>
+          <span>UW Decentralized Computing Lab · arenafi.org</span>
           <span style={{ color: "#896afb" }}>adelinewen.com</span>
         </div>
       </div>
