@@ -16,7 +16,6 @@ const COPY: Record<
   Lang,
   {
     nav: string[];
-    heroMeta: string;
     heroTitle: ReactNode;
     heroSub: ReactNode;
     heroHint: string;
@@ -28,7 +27,6 @@ const COPY: Record<
 > = {
   en: {
     nav: ["About", "Research", "Arena", "Contact"],
-    heroMeta: "Researcher · Builder · Seattle",
     heroTitle: (
       <>
         Adeline <em>Wen</em>
@@ -36,8 +34,8 @@ const COPY: Record<
     ),
     heroSub: (
       <>
-        I research airdrop <b>Sybil detection</b> at the UW Decentralized Computing Lab — and build{" "}
-        <b>arenafi.org</b>.
+        Economics student at the University of Washington. I research decentralized systems and
+        build <b>arenafi.org</b>.
       </>
     ),
     heroHint: "scroll to explore ↓",
@@ -120,7 +118,6 @@ const COPY: Record<
   },
   zh: {
     nav: ["关于", "研究", "Arena", "联系"],
-    heroMeta: "研究者 · 构建者 · 西雅图",
     heroTitle: (
       <>
         Adeline <em>Wen</em>
@@ -128,7 +125,7 @@ const COPY: Record<
     ),
     heroSub: (
       <>
-        在华盛顿大学去中心化计算实验室研究空投 <b>Sybil 检测</b>，并独立构建 <b>arenafi.org</b>。
+        华盛顿大学经济学学生。研究去中心化系统，构建 <b>arenafi.org</b>。
       </>
     ),
     heroHint: "向下滚动了解 ↓",
@@ -382,7 +379,6 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
       </div>
 
       <header className="hero">
-        <div className="meta">{t.heroMeta}</div>
         <h1>{t.heroTitle}</h1>
         <p className="sub">{t.heroSub}</p>
         <div className="hint">{t.heroHint}</div>
