@@ -6,13 +6,7 @@ import dynamic from "next/dynamic";
 const InfinityHero = dynamic(() => import("@/components/InfinityHero"), { ssr: false });
 
 type Lang = "en" | "zh";
-
-type Section = {
-  label: string;
-  title: ReactNode;
-  lead: string;
-  more: { text: string; href: string };
-};
+type Section = { label: string; title: ReactNode; lead: string; more: { text: string; href: string } };
 type Row = { n: string; d: string; m: string };
 type TL = { y: string; h: string; d: string };
 type CLink = { label: string; val: string; href: string };
@@ -25,14 +19,14 @@ const COPY: Record<
     heroTitle: ReactNode;
     heroSub: ReactNode;
     heroHint: string;
-    work: Section & { rows: Row[] };
-    about: Section & { tags: string[] };
+    about: Section & { tags: string[]; resume: TL[] };
     research: Section & { tl: TL[] };
+    arena: Section & { stats: Row[] };
     contact: Section & { links: CLink[] };
   }
 > = {
   en: {
-    nav: ["Work", "About", "Research", "Contact"],
+    nav: ["About", "Research", "Arena", "Contact"],
     heroMeta: "Researcher · Builder · Seattle",
     heroTitle: (
       <>
@@ -46,54 +40,61 @@ const COPY: Record<
       </>
     ),
     heroHint: "scroll to explore ↓",
-    work: {
-      label: "01 — Work",
-      title: (
-        <>
-          Things I&apos;ve <em>built</em>.
-        </>
-      ),
-      lead: "Products I've shipped — mostly solo — across crypto, on-chain data, and the web.",
-      more: { text: "Visit Arena →", href: "https://arenafi.org" },
-      rows: [
-        { n: "Arena", d: "Ranks 68,000+ crypto traders across 44+ exchanges.", m: "2025 · arenafi.org" },
-        { n: "HasciDB", d: "Open-source airdrop Sybil-detection database — 2.5M+ wallets.", m: "2026 · hascidb.org" },
-        { n: "adelinewen.com", d: "This site — a 3D WebGL portfolio.", m: "2026 · Next.js" },
-      ],
-    },
     about: {
-      label: "02 — About",
+      label: "01 — About",
       title: (
         <>
-          Research meets the <em>build</em>.
+          A bit <em>about me</em>.
         </>
       ),
       lead:
-        "I'm Adeline (she/her) — an undergraduate researcher at the UW Decentralized Computing Lab and an analyst at Stably, studying Economics & Informatics at the University of Washington. I research how decentralized systems behave, then build tools to test what I find.",
+        "I'm Adeline (she/her), an undergraduate at the University of Washington studying Economics with an Informatics minor (Dean's List). I research decentralized systems at the UW Decentralized Computing Lab, work as an analyst at Stably, and build products on the side.",
       more: { text: "Connect on LinkedIn →", href: "https://www.linkedin.com/in/adeline1107" },
       tags: ["Blockchain", "On-Chain Analysis", "Data Science", "JavaScript", "API Dev", "Econometrics"],
+      resume: [
+        { y: "Apr 2026 – Present", h: "Analyst · Stably", d: "Research & growth at a stablecoin infrastructure company." },
+        { y: "Feb 2026 – Present", h: "Undergraduate RA · UW DC Lab", d: "Sybil-detection research under Prof. Wei Cai; built hascidb.org." },
+        { y: "Dec 2025 – Present", h: "Founder · Arena", d: "Solo-built arenafi.org, ranking 68,000+ traders." },
+        { y: "2025 – 2029", h: "BA Economics · University of Washington", d: "Informatics minor · Dean's List." },
+      ],
     },
     research: {
-      label: "03 — Research",
+      label: "02 — Research",
       title: (
         <>
-          Sybil detection, <em>published</em>.
+          Papers &amp; <em>research</em>.
         </>
       ),
       lead:
-        "At the UW Decentralized Computing Lab with Prof. Wei Cai. First-author work on detecting airdrop Sybils and making on-chain governance interpretable.",
+        "At the UW Decentralized Computing Lab with Prof. Wei Cai — first-author work on airdrop Sybil detection and interpretable on-chain governance.",
       more: { text: "Explore HasciDB →", href: "https://hascidb.org" },
       tl: [
         { y: "2026 · IEEE SMC", h: "Human-Centered Airdrop Governance", d: "Interpretable behavioral modeling of strategic hunters. To appear in IEEE Xplore." },
         { y: "2026 · Nanyang Blockchain Conf", h: "HasciDB", d: "First open-source cross-project airdrop Sybil database (2.5M+ wallets). First author." },
-        { y: "2026 · Present", h: "Undergraduate RA", d: "UW Decentralized Computing Lab, under Prof. Wei Cai." },
+      ],
+    },
+    arena: {
+      label: "03 — Arena",
+      title: (
+        <>
+          Arena, <em>solo-built</em>.
+        </>
+      ),
+      lead:
+        "Arena (arenafi.org) is a platform I designed and built end-to-end. It ranks 68,000+ crypto traders across 44+ exchanges, turning scattered trading activity into one clean leaderboard.",
+      more: { text: "Visit arenafi.org →", href: "https://arenafi.org" },
+      stats: [
+        { n: "68,000+", d: "crypto traders ranked", m: "" },
+        { n: "44+", d: "exchanges integrated", m: "" },
+        { n: "Solo", d: "designed & built end-to-end", m: "JS · API" },
+        { n: "2025", d: "launched", m: "" },
       ],
     },
     contact: {
       label: "04 — Contact",
       title: (
         <>
-          Let&apos;s <em>build</em> something.
+          Let&apos;s <em>talk</em>.
         </>
       ),
       lead: "Open to research and building opportunities — always up for a good problem.",
@@ -109,7 +110,7 @@ const COPY: Record<
     },
   },
   zh: {
-    nav: ["作品", "关于", "研究", "联系"],
+    nav: ["关于", "研究", "Arena", "联系"],
     heroMeta: "研究者 · 构建者 · 西雅图",
     heroTitle: (
       <>
@@ -122,54 +123,61 @@ const COPY: Record<
       </>
     ),
     heroHint: "向下滚动了解 ↓",
-    work: {
-      label: "01 — 作品",
-      title: (
-        <>
-          我<em>做</em>的东西。
-        </>
-      ),
-      lead: "我（大多独立）做出来的产品——涉及加密、链上数据与 Web。",
-      more: { text: "访问 Arena →", href: "https://arenafi.org" },
-      rows: [
-        { n: "Arena", d: "为 44+ 交易所的 68,000+ 加密交易者做排名。", m: "2025 · arenafi.org" },
-        { n: "HasciDB", d: "开源空投 Sybil 检测数据库，覆盖 250 万+ 钱包。", m: "2026 · hascidb.org" },
-        { n: "adelinewen.com", d: "就是这个网站——3D WebGL 作品集。", m: "2026 · Next.js" },
-      ],
-    },
     about: {
-      label: "02 — 关于",
+      label: "01 — 关于",
       title: (
         <>
-          研究与构建的<em>交汇</em>。
+          关于<em>我</em>。
         </>
       ),
       lead:
-        "我是 Adeline（她/她）——华盛顿大学去中心化计算实验室本科研究员、Stably 分析师，主修经济学、辅修信息学。我研究去中心化系统如何运行，再亲手构建工具去验证发现。",
+        "我是 Adeline（她/她），华盛顿大学本科生，主修经济学、辅修信息学（院长名单）。我在去中心化计算实验室做研究，同时在 Stably 任分析师，业余也自己做产品。",
       more: { text: "在 LinkedIn 联系 →", href: "https://www.linkedin.com/in/adeline1107" },
       tags: ["区块链", "链上分析", "数据科学", "JavaScript", "API 开发", "计量经济学"],
+      resume: [
+        { y: "2026.04 – 至今", h: "分析师 · Stably", d: "稳定币基础设施公司的研究与增长。" },
+        { y: "2026.02 – 至今", h: "本科研究助理 · UW 去中心化计算实验室", d: "导师 Wei Cai 教授；Sybil 检测研究，构建了 hascidb.org。" },
+        { y: "2025.12 – 至今", h: "创始人 · Arena", d: "独立构建 arenafi.org，为 68,000+ 交易者排名。" },
+        { y: "2025 – 2029", h: "经济学学士 · 华盛顿大学", d: "辅修信息学 · 院长名单。" },
+      ],
     },
     research: {
-      label: "03 — 研究",
+      label: "02 — 研究",
       title: (
         <>
-          Sybil 检测，已<em>发表</em>。
+          论文与<em>研究</em>。
         </>
       ),
       lead:
-        "在华盛顿大学去中心化计算实验室，导师 Wei Cai 教授。第一作者，研究空投 Sybil 检测与可解释的链上治理。",
+        "在华盛顿大学去中心化计算实验室，导师 Wei Cai 教授——第一作者，研究空投 Sybil 检测与可解释的链上治理。",
       more: { text: "查看 HasciDB →", href: "https://hascidb.org" },
       tl: [
         { y: "2026 · IEEE SMC", h: "以人为本的空投治理", d: "对策略型猎手的可解释行为建模，将收录于 IEEE Xplore。" },
         { y: "2026 · 南洋区块链大会", h: "HasciDB", d: "首个开源跨项目空投 Sybil 数据库（250 万+ 钱包），第一作者。" },
-        { y: "2026 · 至今", h: "本科研究助理", d: "华盛顿大学去中心化计算实验室，导师 Wei Cai 教授。" },
+      ],
+    },
+    arena: {
+      label: "03 — Arena",
+      title: (
+        <>
+          Arena，<em>独立打造</em>。
+        </>
+      ),
+      lead:
+        "Arena（arenafi.org）是我从头到尾独立设计、构建的平台。它为 44+ 交易所的 68,000+ 加密交易者排名，把分散的交易行为整合成一个清晰的榜单。",
+      more: { text: "访问 arenafi.org →", href: "https://arenafi.org" },
+      stats: [
+        { n: "68,000+", d: "加密交易者排名", m: "" },
+        { n: "44+", d: "接入交易所", m: "" },
+        { n: "独立", d: "从设计到开发全包", m: "JS · API" },
+        { n: "2025", d: "上线", m: "" },
       ],
     },
     contact: {
       label: "04 — 联系",
       title: (
         <>
-          一起<em>做</em>点东西。
+          聊聊<em>吧</em>。
         </>
       ),
       lead: "对研究与构建的机会开放——随时欢迎好问题。",
@@ -228,7 +236,6 @@ export default function Home() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // theme: stored, else system
   useEffect(() => {
     const stored = localStorage.getItem("theme");
     setDark(stored ? stored === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches);
@@ -239,7 +246,6 @@ export default function Home() {
     localStorage.setItem("theme", dark ? "dark" : "light");
   }, [dark]);
 
-  // language: stored, else browser
   useEffect(() => {
     const stored = localStorage.getItem("lang") as Lang | null;
     setLang(stored ?? (navigator.language.startsWith("zh") ? "zh" : "en"));
@@ -255,6 +261,39 @@ export default function Home() {
   };
 
   const t = COPY[lang];
+  const ids = ["about", "research", "arena", "contact"];
+
+  const renderSection = (
+    i: number,
+    sec: Section,
+    right: ReactNode
+  ) => (
+    <section className="sec" id={ids[i]} data-i={i} ref={setRef(i)}>
+      <div className="inner">
+        <div className="left">
+          <div className="label">{sec.label}</div>
+          <h2>{sec.title}</h2>
+          <p className="lead">{sec.lead}</p>
+          {i === 0 && (
+            <div className="tags">
+              {t.about.tags.map((tag) => (
+                <span key={tag}>{tag}</span>
+              ))}
+            </div>
+          )}
+          <a
+            className="more"
+            href={sec.more.href}
+            target={sec.more.href.startsWith("mailto") ? undefined : "_blank"}
+            rel={sec.more.href.startsWith("mailto") ? undefined : "noopener noreferrer"}
+          >
+            {sec.more.text}
+          </a>
+        </div>
+        <div className="right">{right}</div>
+      </div>
+    </section>
+  );
 
   return (
     <>
@@ -291,110 +330,71 @@ export default function Home() {
         <div className="hint">{t.heroHint}</div>
       </header>
 
-      {/* 01 — Work */}
-      <section className="sec" id="work" data-i="0" ref={setRef(0)}>
-        <div className="inner">
-          <div className="left">
-            <div className="label">{t.work.label}</div>
-            <h2>{t.work.title}</h2>
-            <p className="lead">{t.work.lead}</p>
-            <a className="more" href={t.work.more.href} target="_blank" rel="noopener noreferrer">
-              {t.work.more.text}
-            </a>
-          </div>
-          <div className="right">
-            <ul className="rows">
-              {t.work.rows.map((r) => (
-                <li key={r.n}>
-                  <div className="rinfo">
-                    <span className="n">{r.n}</span>
-                    <span className="rd">{r.d}</span>
-                  </div>
-                  <span className="rm">{r.m}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </section>
+      {/* 01 — About / resume */}
+      {renderSection(
+        0,
+        t.about,
+        <ul className="tl">
+          {t.about.resume.map((item) => (
+            <li key={item.h}>
+              <div className="y">{item.y}</div>
+              <div className="h">{item.h}</div>
+              <div className="dsc">{item.d}</div>
+            </li>
+          ))}
+        </ul>
+      )}
 
-      {/* 02 — About */}
-      <section className="sec" id="about" data-i="1" ref={setRef(1)}>
-        <div className="inner">
-          <div className="left">
-            <div className="label">{t.about.label}</div>
-            <h2>{t.about.title}</h2>
-            <p className="lead">{t.about.lead}</p>
-            <a className="more" href={t.about.more.href} target="_blank" rel="noopener noreferrer">
-              {t.about.more.text}
-            </a>
-          </div>
-          <div className="right">
-            <div className="about">
-              <div className="portrait" />
-              <div className="tags">
-                {t.about.tags.map((tag) => (
-                  <span key={tag}>{tag}</span>
-                ))}
+      {/* 02 — Research */}
+      {renderSection(
+        1,
+        t.research,
+        <ul className="tl">
+          {t.research.tl.map((item) => (
+            <li key={item.h}>
+              <div className="y">{item.y}</div>
+              <div className="h">{item.h}</div>
+              <div className="dsc">{item.d}</div>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {/* 03 — Arena */}
+      {renderSection(
+        2,
+        t.arena,
+        <ul className="rows">
+          {t.arena.stats.map((r) => (
+            <li key={r.d}>
+              <div className="rinfo">
+                <span className="n">{r.n}</span>
+                <span className="rd">{r.d}</span>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 03 — Research */}
-      <section className="sec" data-i="2" ref={setRef(2)}>
-        <div className="inner">
-          <div className="left">
-            <div className="label">{t.research.label}</div>
-            <h2>{t.research.title}</h2>
-            <p className="lead">{t.research.lead}</p>
-            <a className="more" href={t.research.more.href} target="_blank" rel="noopener noreferrer">
-              {t.research.more.text}
-            </a>
-          </div>
-          <div className="right">
-            <ul className="tl">
-              {t.research.tl.map((item) => (
-                <li key={item.h}>
-                  <div className="y">{item.y}</div>
-                  <div className="h">{item.h}</div>
-                  <div className="dsc">{item.d}</div>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </section>
+              {r.m && <span className="rm">{r.m}</span>}
+            </li>
+          ))}
+        </ul>
+      )}
 
       {/* 04 — Contact */}
-      <section className="sec" data-i="3" ref={setRef(3)}>
-        <div className="inner">
-          <div className="left">
-            <div className="label">{t.contact.label}</div>
-            <h2>{t.contact.title}</h2>
-            <p className="lead">{t.contact.lead}</p>
-            <a className="more" href={t.contact.more.href}>
-              {t.contact.more.text}
+      {renderSection(
+        3,
+        t.contact,
+        <div className="clinks">
+          {t.contact.links.map((l) => (
+            <a
+              key={l.label}
+              href={l.href}
+              target={l.href.startsWith("mailto") ? undefined : "_blank"}
+              rel={l.href.startsWith("mailto") ? undefined : "noopener noreferrer"}
+            >
+              {l.label}
+              <span className="ar">{l.val}</span>
             </a>
-          </div>
-          <div className="right">
-            <div className="clinks">
-              {t.contact.links.map((l) => (
-                <a
-                  key={l.label}
-                  href={l.href}
-                  target={l.href.startsWith("mailto") ? undefined : "_blank"}
-                  rel={l.href.startsWith("mailto") ? undefined : "noopener noreferrer"}
-                >
-                  {l.label}
-                  <span className="ar">{l.val}</span>
-                </a>
-              ))}
-            </div>
-          </div>
+          ))}
         </div>
-      </section>
+      )}
 
       <div className="prog">
         <div className="count">

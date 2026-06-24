@@ -93,16 +93,18 @@ nav .links button.active .i { opacity: 1; }
 
 .sec { min-height: 100vh; display: flex; align-items: center; padding: 120px clamp(24px, 5vw, 72px); position: relative; z-index: 2; }
 .sec .inner { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(30px, 5vw, 80px); align-items: center; width: 100%; max-width: 1180px; margin: 0 auto; }
-.sec .label, .sec h2, .sec .lead, .sec .more, .sec .right > * {
+.sec .label, .sec h2, .sec .lead, .sec .tags, .sec .more, .sec .right > * {
   opacity: 0; transform: translateY(26px); filter: blur(7px);
   transition: opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1), filter 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
-.sec.on .label, .sec.on h2, .sec.on .lead, .sec.on .more, .sec.on .right > * { opacity: 1; transform: none; filter: blur(0); }
+.sec.on .label, .sec.on h2, .sec.on .lead, .sec.on .tags, .sec.on .more, .sec.on .right > * { opacity: 1; transform: none; filter: blur(0); }
 .sec.on .label { transition-delay: 0.02s; }
 .sec.on h2 { transition-delay: 0.1s; }
 .sec.on .lead { transition-delay: 0.2s; }
-.sec.on .more { transition-delay: 0.28s; }
+.sec.on .tags { transition-delay: 0.26s; }
+.sec.on .more { transition-delay: 0.32s; }
 .sec.on .right > * { transition-delay: 0.22s; }
+.sec .left .tags { margin-top: 28px; }
 
 .sec .label { font-family: var(--font-mono), monospace; font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--p); margin-bottom: 24px; }
 .sec h2 { font-weight: 320; font-size: clamp(46px, 7vw, 118px); line-height: 0.92; letter-spacing: -0.03em; }
