@@ -34,7 +34,7 @@ const COPY: Record<
     ),
     heroSub: (
       <>
-        Student, researcher, and the person behind <b>arenafi.org</b>.
+        Student, researcher — I built <b>arenafi.org</b>.
       </>
     ),
     heroHint: "scroll to explore ↓",
@@ -124,7 +124,7 @@ const COPY: Record<
     ),
     heroSub: (
       <>
-        学生、研究者，<b>arenafi.org</b> 的作者。
+        学生、研究者——做了 <b>arenafi.org</b>。
       </>
     ),
     heroHint: "向下滚动了解 ↓",
