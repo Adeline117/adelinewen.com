@@ -300,9 +300,17 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
       if (res.ok) {
         setStatus("sent");
         setForm({ name: "", email: "", message: "" });
-      } else {
-        setStatus("error");
+        return;
       }
+      if (res.status === 503) {
+        // backend not configured yet → fall back to the visitor's mail client
+        const body = encodeURIComponent(`From: ${form.name} <${form.email}>\n\n${form.message}`);
+        const subject = encodeURIComponent(`Portfolio contact — ${form.name}`);
+        window.location.href = `mailto:ywen8@uw.edu?subject=${subject}&body=${body}`;
+        setStatus("idle");
+        return;
+      }
+      setStatus("error");
     } catch {
       setStatus("error");
     }
@@ -384,7 +392,17 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
         0,
         t.about,
         <>
-          <div className="portrait" />
+          <div className="portrait">
+            <span className="mg">AW</span>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/portrait.jpg"
+              alt="Adeline Wen"
+              onError={(e) => {
+                (e.currentTarget as HTMLImageElement).style.display = "none";
+              }}
+            />
+          </div>
           <ul className="tl">
             {t.about.resume.map((item) => (
               <li key={item.h}>
