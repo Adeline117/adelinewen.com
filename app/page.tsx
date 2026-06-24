@@ -203,17 +203,14 @@ export default function Home() {
   const beadRef = useRef<SVGCircleElement>(null);
 
   useEffect(() => {
+    // reveal once a section enters — low threshold so tall (mobile) sections still fire
     const obs = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add("on");
-            const i = Number((e.target as HTMLElement).dataset.i);
-            if (!Number.isNaN(i)) setActive(i);
-          }
+          if (e.isIntersecting) e.target.classList.add("on");
         });
       },
-      { threshold: 0.55 }
+      { threshold: 0.2 }
     );
     secRefs.current.forEach((s) => s && obs.observe(s));
     return () => obs.disconnect();
@@ -230,6 +227,19 @@ export default function Home() {
         beadRef.current.setAttribute("cx", String(pt.x));
         beadRef.current.setAttribute("cy", String(pt.y));
       }
+      // active = section whose middle is nearest the viewport center (height-independent)
+      let best = 0;
+      let bd = Infinity;
+      secRefs.current.forEach((s, i) => {
+        if (!s) return;
+        const r = s.getBoundingClientRect();
+        const d = Math.abs(r.top + r.height / 2 - window.innerHeight / 2);
+        if (d < bd) {
+          bd = d;
+          best = i;
+        }
+      });
+      setActive(best);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
@@ -297,6 +307,9 @@ export default function Home() {
 
   return (
     <>
+      <a href="#about" className="skip">
+        {lang === "zh" ? "跳到内容" : "Skip to content"}
+      </a>
       <InfinityHero />
       <div className="grain" />
       <div className="scrim t" />
@@ -315,10 +328,18 @@ export default function Home() {
       </nav>
 
       <div className="controls">
-        <button className="toggle" onClick={() => setLang((l) => (l === "en" ? "zh" : "en"))}>
+        <button
+          className="toggle"
+          aria-label={lang === "en" ? "切换到中文" : "Switch to English"}
+          onClick={() => setLang((l) => (l === "en" ? "zh" : "en"))}
+        >
           {lang === "en" ? "中文" : "EN"}
         </button>
-        <button className="toggle" onClick={() => setDark((v) => !v)}>
+        <button
+          className="toggle"
+          aria-label={lang === "zh" ? "切换深色模式" : "Toggle dark mode"}
+          onClick={() => setDark((v) => !v)}
+        >
           ◐
         </button>
       </div>
