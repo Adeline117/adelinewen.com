@@ -85,9 +85,11 @@ nav .links button.active .i { opacity: 1; }
 /* ===== Hero + scrolling content sections ===== */
 .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; position: relative; z-index: 2; padding: 0 24px; }
 .hero .meta { font-family: var(--font-mono), monospace; font-size: 12px; letter-spacing: 0.2em; color: var(--mute); text-transform: uppercase; }
-.hero h1 { font-weight: 330; font-size: clamp(54px, 9vw, 148px); line-height: 0.92; letter-spacing: -0.025em; margin: 22px 0; }
+.hero h1 { font-weight: 330; font-size: clamp(56px, 10vw, 160px); line-height: 0.9; letter-spacing: -0.03em; margin: 20px 0 0; }
 .hero h1 em { font-style: italic; color: var(--p2); }
-.hero .hint { font-family: var(--font-mono), monospace; font-size: 11px; letter-spacing: 0.22em; color: var(--mute); text-transform: uppercase; margin-top: 32px; }
+.hero .sub { margin-top: 26px; max-width: 560px; font-family: var(--font-mono), monospace; font-size: clamp(13px, 1.4vw, 15px); line-height: 1.7; color: var(--mute); }
+.hero .sub b { color: var(--ink); font-weight: 500; }
+.hero .hint { font-family: var(--font-mono), monospace; font-size: 11px; letter-spacing: 0.22em; color: var(--mute); text-transform: uppercase; margin-top: 40px; }
 
 .sec { min-height: 100vh; display: flex; align-items: center; padding: 120px clamp(24px, 5vw, 72px); position: relative; z-index: 2; }
 .sec .inner { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(30px, 5vw, 80px); align-items: center; width: 100%; max-width: 1180px; margin: 0 auto; }

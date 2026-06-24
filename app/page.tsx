@@ -23,6 +23,7 @@ const COPY: Record<
     nav: string[];
     heroMeta: string;
     heroTitle: ReactNode;
+    heroSub: ReactNode;
     heroHint: string;
     work: Section & { rows: Row[] };
     about: Section & { tags: string[] };
@@ -35,11 +36,16 @@ const COPY: Record<
     heroMeta: "Researcher · Builder · Seattle",
     heroTitle: (
       <>
-        The loop of <em>research</em>
-        <br />& <em>building</em>.
+        Adeline <em>Wen</em>
       </>
     ),
-    heroHint: "scroll to travel the loop ↓",
+    heroSub: (
+      <>
+        I research airdrop <b>Sybil detection</b> at the UW Decentralized Computing Lab — and build{" "}
+        <b>arenafi.org</b>.
+      </>
+    ),
+    heroHint: "scroll to explore ↓",
     work: {
       label: "01 — Work",
       title: (
@@ -105,12 +111,15 @@ const COPY: Record<
     heroMeta: "研究者 · 构建者 · 西雅图",
     heroTitle: (
       <>
-        研究 与 <em>构建</em>
-        <br />
-        的无限循环。
+        Adeline <em>Wen</em>
       </>
     ),
-    heroHint: "向下滚动，沿回路探索 ↓",
+    heroSub: (
+      <>
+        在华盛顿大学去中心化计算实验室研究空投 <b>Sybil 检测</b>，并独立构建 <b>arenafi.org</b>。
+      </>
+    ),
+    heroHint: "向下滚动了解 ↓",
     work: {
       label: "01 — 作品",
       title: (
@@ -274,6 +283,7 @@ export default function Home() {
       <header className="hero">
         <div className="meta">{t.heroMeta}</div>
         <h1>{t.heroTitle}</h1>
+        <p className="sub">{t.heroSub}</p>
         <div className="hint">{t.heroHint}</div>
       </header>
 
