@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>E1 · Premium Light</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#F1EFE8;--ink:#1A1726;--p:#7C5CF0;--pd:#3C3489;--mute:#9A968C;--line:#1a172614}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{font-size:16px}
+  body{background:var(--bg);color:var(--ink);font-family:'Fraunces',serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+  /* subtle purple mesh glow */
+  .mesh{position:fixed;z-index:0;width:60vw;height:60vw;right:-12vw;top:-14vw;border-radius:50%;
+    background:radial-gradient(circle at 50% 50%,rgba(124,92,240,.22),rgba(137,106,251,.06) 45%,transparent 70%);filter:blur(40px)}
+  .mesh2{left:-16vw;bottom:-20vw;top:auto;right:auto;width:44vw;height:44vw;
+    background:radial-gradient(circle at 50% 50%,rgba(83,74,183,.16),transparent 68%)}
+  .grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.045;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  .mono{font-family:'JetBrains Mono',monospace}
+  .wrap{position:relative;z-index:2;min-height:100vh;display:flex;flex-direction:column;padding:0 clamp(24px,5vw,72px)}
+  /* hairline top bar */
+  nav{display:flex;justify-content:space-between;align-items:baseline;padding:26px 0;border-bottom:1px solid var(--line)}
+  nav .logo{font-size:19px;font-weight:500;letter-spacing:-.01em}
+  nav .links{display:flex;gap:40px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.04em;color:var(--mute)}
+  nav .links a{color:inherit;text-decoration:none;transition:.25s;text-transform:uppercase}
+  nav .links a .i{color:var(--p);margin-right:6px}
+  nav .links a:hover{color:var(--ink)}
+  .hero{flex:1;display:flex;flex-direction:column;justify-content:center;padding:5vh 0}
+  .row{display:flex;justify-content:space-between;align-items:flex-end;gap:40px}
+  .meta{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.05em;color:var(--mute);line-height:1.9;text-transform:uppercase}
+  .meta b{color:var(--ink);font-weight:500}
+  h1{font-weight:340;font-size:clamp(54px,10.5vw,184px);line-height:.9;letter-spacing:-.025em;margin:30px 0}
+  h1 em{font-style:italic;color:var(--p);font-weight:380}
+  .lede{max-width:430px;font-family:'JetBrains Mono',monospace;font-size:13.5px;line-height:1.75;color:#56525e;letter-spacing:.01em}
+  .actions{display:flex;flex-direction:column;gap:14px;min-width:200px}
+  .link{font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink);text-decoration:none;display:flex;justify-content:space-between;padding:14px 0;border-top:1px solid var(--line);transition:.25s}
+  .link:last-child{border-bottom:1px solid var(--line)}
+  .link .a{color:var(--mute);transition:.25s}
+  .link:hover{color:var(--p)}.link:hover .a{color:var(--p);transform:translateX(4px)}
+  .foot{display:flex;justify-content:space-between;padding:22px 0;border-top:1px solid var(--line);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;color:var(--mute);text-transform:uppercase}
+  @media(max-width:760px){.row{flex-direction:column;align-items:flex-start}h1{font-size:64px}}
+</style>
+</head>
+<body>
+<div class="mesh"></div><div class="mesh mesh2"></div><div class="grain"></div>
+<div class="wrap">
+  <nav>
+    <div class="logo">Adeline Wen</div>
+    <div class="links">
+      <a href="#"><span class="i">01</span>Work</a>
+      <a href="#"><span class="i">02</span>About</a>
+      <a href="#"><span class="i">03</span>Research</a>
+      <a href="#"><span class="i">04</span>Contact</a>
+    </div>
+  </nav>
+  <header class="hero">
+    <div class="meta">Software Engineer · Researcher &nbsp;—&nbsp; <b>University of Washington</b></div>
+    <h1>Building the<br><em>quiet</em> kind of<br>great software.</h1>
+    <div class="row">
+      <p class="lede">Decentralized computing research and crafted, precise interfaces. I care about the details most people never notice — that's where the work lives.</p>
+      <div class="actions">
+        <a class="link" href="#"><span>Selected Work</span><span class="a">→</span></a>
+        <a class="link" href="#"><span>Get in touch</span><span class="a">→</span></a>
+      </div>
+    </div>
+  </header>
+  <footer class="foot"><span>© 2026 — Seattle, WA</span><span>Available for opportunities</span><span class="mono">↓ Scroll</span></footer>
+</div>
+</body>
+</html>
