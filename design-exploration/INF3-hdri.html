@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>∞ · Infinite Loop (HDRI glass)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#1A1726;--mute:#8C8898;--p:#7C5CF0;--p2:#896AFB;--line:#1a17261a;
+    --scrim-t:linear-gradient(#F1EFE8cc,transparent);--scrim-b:linear-gradient(transparent,#E7E4DCdd)}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Fraunces',serif;color:var(--ink);-webkit-font-smoothing:antialiased;
+    background:radial-gradient(ellipse 80% 68% at 50% 44%,#FCFBF7,#F1EFE8 56%,#E5E2DA);transition:background .6s,color .6s}
+  body.dark{--ink:#F6F4FC;--mute:#ADA8C6;--line:#ffffff1f;
+    --scrim-t:linear-gradient(#0C0A14e6,transparent);--scrim-b:linear-gradient(transparent,#05030Cf2);
+    background:radial-gradient(ellipse 80% 68% at 50% 44%,#241E42,#0C0A14 62%,#050309)}
+  .spacer{height:500vh}
+  #c{position:fixed;inset:0;z-index:0}
+  .grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.035;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  .scrim{position:fixed;left:0;right:0;z-index:1;pointer-events:none;height:210px}
+  .scrim.t{top:0;background:var(--scrim-t)}
+  .scrim.b{bottom:0;height:280px;background:var(--scrim-b)}
+  nav{position:fixed;top:0;left:0;right:0;z-index:3;display:flex;justify-content:space-between;align-items:baseline;padding:26px clamp(24px,5vw,72px);border-bottom:1px solid var(--line)}
+  nav .logo{font-size:19px;font-weight:500;letter-spacing:-.01em}
+  nav .links{display:flex;gap:36px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.04em;color:var(--mute);text-transform:uppercase}
+  nav .links a{color:inherit;text-decoration:none;transition:.3s;cursor:pointer;position:relative}
+  nav .links a .i{color:var(--p);margin-right:6px;opacity:.55}
+  nav .links a:hover,nav .links a.active{color:var(--ink)}
+  nav .links a.active .i{opacity:1}
+  nav .links a.active::after{content:"";position:absolute;left:0;right:0;bottom:-7px;height:1px;background:var(--p)}
+  .station{position:fixed;left:clamp(24px,5vw,72px);bottom:50px;z-index:3;max-width:460px;transition:opacity .5s,transform .5s}
+  .station .idx{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.18em;color:var(--p);text-transform:uppercase}
+  .station h2{font-weight:330;font-size:clamp(40px,6vw,84px);line-height:.94;letter-spacing:-.02em;margin:10px 0 14px}
+  .station h2 em{font-style:italic;color:var(--p2)}
+  .station p{font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.7;color:var(--mute);max-width:400px}
+  .prog{position:fixed;right:clamp(24px,5vw,72px);bottom:54px;z-index:3;text-align:right;font-family:'JetBrains Mono',monospace;color:var(--mute)}
+  .prog .count{font-size:12px;letter-spacing:.1em}.prog .count b{color:var(--ink);font-weight:500}
+  .prog svg{display:block;margin-top:12px;margin-left:auto}
+  .prog .track{fill:none;stroke:var(--line);stroke-width:1.5}.prog .bead{fill:var(--p)}
+  .intro{position:fixed;inset:0;z-index:2;pointer-events:none;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+  .intro .meta{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.2em;color:var(--mute);text-transform:uppercase}
+  .intro h1{font-weight:330;font-size:clamp(54px,9vw,148px);line-height:.92;letter-spacing:-.025em;margin:22px 0}
+  .intro h1 em{font-style:italic;color:var(--p2)}
+  .intro .hint{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.22em;color:var(--mute);text-transform:uppercase;margin-top:32px}
+  .toggle{position:fixed;z-index:4;right:clamp(24px,5vw,72px);top:74px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);background:none;border:1px solid var(--line);border-radius:100px;padding:8px 14px;cursor:pointer;transition:.25s}
+  .toggle:hover{color:var(--p);border-color:var(--p)}
+  .loading{position:fixed;inset:0;z-index:5;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.2em;color:var(--mute);text-transform:uppercase;transition:opacity .6s}
+  @media(max-width:760px){.prog{display:none}}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div class="grain"></div>
+<div class="scrim t"></div><div class="scrim b"></div>
+<div class="loading" id="loading">Loading ∞</div>
+<nav>
+  <div class="logo">Adeline Wen</div>
+  <div class="links">
+    <a data-u="0.18"><span class="i">01</span>Work</a>
+    <a data-u="0.42"><span class="i">02</span>About</a>
+    <a data-u="0.68"><span class="i">03</span>Research</a>
+    <a data-u="0.92"><span class="i">04</span>Contact</a>
+  </div>
+</nav>
+<button class="toggle" id="tg">◐ Light / Dark</button>
+<div class="intro" id="intro">
+  <div class="meta">Software Engineer · Researcher</div>
+  <h1>The <em>infinite</em> loop<br>of craft.</h1>
+  <div class="hint">scroll to travel the loop ↓</div>
+</div>
+<div class="station" id="station">
+  <div class="idx" id="s-idx">01 — Work</div>
+  <h2 id="s-title">Selected <em>builds</em>.</h2>
+  <p id="s-desc">Crafted, precise interfaces and the systems behind them.</p>
+</div>
+<div class="prog"><div class="count"><b id="p-num">01</b> / 04</div>
+  <svg width="84" height="44" viewBox="0 0 84 44"><path class="track" id="track"/><circle class="bead" id="pbead" r="3" cx="42" cy="22"/></svg></div>
+<div class="spacer"></div>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://unpkg.com/three@0.169.0/build/three.module.js",
+  "three/addons/": "https://unpkg.com/three@0.169.0/examples/jsm/"
+}}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+
+const canvas=document.getElementById('c');
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.setSize(innerWidth,innerHeight);
+renderer.toneMapping=THREE.ACESFilmicToneMapping; renderer.toneMappingExposure=1.1;
+
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(33,innerWidth/innerHeight,0.1,100);
+camera.position.set(0,0,7.6);
+
+const pmrem=new THREE.PMREMGenerator(renderer);
+// immediate fallback so glass is never dull while HDRI loads
+scene.environment=pmrem.fromScene(new RoomEnvironment(),0.04).texture;
+// real studio HDRI = crisp, expensive speculars (per Codrops/Heckel: HDRI is what stops glass looking cheap)
+new RGBELoader().load('https://threejs.org/examples/textures/equirectangular/royal_esplanade_1k.hdr',
+  (hdr)=>{hdr.mapping=THREE.EquirectangularReflectionMapping;scene.environment=hdr;
+    const L=document.getElementById('loading');L.style.opacity=0;setTimeout(()=>L.remove(),600);},
+  undefined,
+  ()=>{const L=document.getElementById('loading');L.style.opacity=0;setTimeout(()=>L.remove(),600);});
+
+const key=new THREE.DirectionalLight(0xffffff,1.8);key.position.set(5,6,4);scene.add(key);
+const rim=new THREE.PointLight(0x7C5CF0,40,40);rim.position.set(-6,-1,3);scene.add(rim);
+
+class Lemniscate extends THREE.Curve{
+  constructor(s=2.55){super();this.s=s;}
+  getPoint(u,t=new THREE.Vector3()){
+    const a=u*Math.PI*2,d=1+Math.sin(a)*Math.sin(a);
+    return t.set(this.s*Math.cos(a)/d,this.s*Math.sin(a)*Math.cos(a)/d,Math.sin(a)*0.22);
+  }
+}
+const curve=new Lemniscate(2.55);
+const group=new THREE.Group();group.rotation.x=-0.12;scene.add(group);
+
+// chunkier glass = more refraction presence
+const tubeGeo=new THREE.TubeGeometry(curve,560,0.32,44,true);
+const glass=new THREE.MeshPhysicalMaterial({
+  transmission:1, thickness:1.5, roughness:0.05, ior:1.5, dispersion:2.4,
+  iridescence:0.55, iridescenceIOR:1.35, iridescenceThicknessRange:[120,420],
+  metalness:0, clearcoat:1, clearcoatRoughness:0.05,
+  color:new THREE.Color('#D8CFFF'),
+  attenuationColor:new THREE.Color('#7C5CF0'), attenuationDistance:2.6,
+  envMapIntensity:1.35, specularIntensity:1
+});
+const tube=new THREE.Mesh(tubeGeo,glass);group.add(tube);
+
+const bead=new THREE.Mesh(new THREE.SphereGeometry(0.15,32,32),new THREE.MeshBasicMaterial({color:0xCFC2FF}));
+group.add(bead);bead.add(new THREE.PointLight(0x896AFB,6,5));
+
+const stationsU=[0.18,0.42,0.68,0.92];
+const nodes=stationsU.map(u=>{const m=new THREE.Mesh(new THREE.SphereGeometry(0.065,18,18),
+  new THREE.MeshBasicMaterial({color:0x7C5CF0,transparent:true,opacity:.4}));m.position.copy(curve.getPoint(u));group.add(m);return m;});
+
+const composer=new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene,camera));
+composer.addPass(new UnrealBloomPass(new THREE.Vector2(innerWidth,innerHeight),0.32,0.6,0.9));
+composer.addPass(new OutputPass());
+
+const DATA=[
+  {idx:'01 — Work',title:'Selected <em>builds</em>.',desc:'Crafted, precise interfaces and the systems behind them.'},
+  {idx:'02 — About',title:'Where it <em>meets</em>.',desc:'The crossing point — research and making, one continuous loop. This is me.'},
+  {idx:'03 — Research',title:'Decentralized <em>systems</em>.',desc:'UW Decentralized Computing Lab — Sybil detection & on-chain analysis.'},
+  {idx:'04 — Contact',title:'Let\'s <em>build</em>.',desc:'Back to the start. Open to 2026 opportunities — say hello.'}
+];
+const sEl=document.getElementById('station'),sIdx=document.getElementById('s-idx'),sTitle=document.getElementById('s-title'),
+  sDesc=document.getElementById('s-desc'),pNum=document.getElementById('p-num'),pbead=document.getElementById('pbead'),
+  links=[...document.querySelectorAll('nav .links a')],intro=document.getElementById('intro');
+let active=-1;
+function setStation(i){if(i===active)return;active=i;
+  sEl.style.opacity=0;sEl.style.transform='translateY(8px)';
+  setTimeout(()=>{sIdx.textContent=DATA[i].idx;sTitle.innerHTML=DATA[i].title;sDesc.innerHTML=DATA[i].desc;
+    pNum.textContent=String(i+1).padStart(2,'0');sEl.style.opacity=1;sEl.style.transform='translateY(0)';},170);
+  links.forEach((a,k)=>a.classList.toggle('active',k===i));
+  nodes.forEach((n,k)=>{n.material.opacity=k===i?1:.4;n.scale.setScalar(k===i?1.7:1);});
+}
+(function(){let d='';for(let i=0;i<=120;i++){const u=i/120,a=u*Math.PI*2,dd=1+Math.sin(a)*Math.sin(a);
+  const x=42+28*Math.cos(a)/dd,y=22+16*Math.sin(a)*Math.cos(a)/dd;d+=(i?'L':'M')+x.toFixed(1)+','+y.toFixed(1);}
+  document.getElementById('track').setAttribute('d',d+'Z');})();
+const track=document.getElementById('track'),tlen=track.getTotalLength();
+let targetU=0,curU=0;
+function onScroll(){const max=document.body.scrollHeight-innerHeight;targetU=max>0?scrollY/max:0;
+  intro.style.opacity=Math.max(0,1-scrollY/(innerHeight*0.5));}
+addEventListener('scroll',onScroll,{passive:true});onScroll();
+links.forEach(a=>a.addEventListener('click',()=>{const u=parseFloat(a.dataset.u),max=document.body.scrollHeight-innerHeight;scrollTo({top:u*max,behavior:'smooth'});}));
+let mx=0,my=0;addEventListener('pointermove',e=>{mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5;});
+addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);composer.setSize(innerWidth,innerHeight);});
+const tmp=new THREE.Vector3();
+function tick(){
+  curU+=(targetU-curU)*0.05;
+  curve.getPoint(curU%1,tmp);bead.position.copy(tmp);
+  const pt=track.getPointAtLength((curU%1)*tlen);pbead.setAttribute('cx',pt.x);pbead.setAttribute('cy',pt.y);
+  let best=0,bd=9;stationsU.forEach((u,i)=>{const dd=Math.abs(((u-curU+1.5)%1)-0.5);if(dd<bd){bd=dd;best=i;}});setStation(best);
+  group.rotation.y=Math.sin(Date.now()*0.00013)*0.25+mx*0.32;
+  group.rotation.x=-0.12+my*0.2;
+  camera.lookAt(0,0,0);composer.render();requestAnimationFrame(tick);
+}
+tick();
+document.getElementById('tg').addEventListener('click',()=>document.body.classList.toggle('dark'));
+</script>
+</body>
+</html>

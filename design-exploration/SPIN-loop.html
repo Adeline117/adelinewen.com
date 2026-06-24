@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>∞ · Spin the Loop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#1A1726;--mute:#8C8898;--p:#7C5CF0;--p2:#896AFB;--line:#1a17261a;
+    --scrim-t:linear-gradient(#F1EFE8cc,transparent);--scrim-b:linear-gradient(transparent,#E7E4DCdd)}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%;overflow:hidden}
+  body{font-family:'Fraunces',serif;color:var(--ink);-webkit-font-smoothing:antialiased;
+    background:radial-gradient(ellipse 80% 68% at 50% 46%,#FCFBF7,#F1EFE8 56%,#E5E2DA);transition:background .6s,color .6s;cursor:grab}
+  body.grabbing{cursor:grabbing}
+  body.dark{--ink:#F6F4FC;--mute:#ADA8C6;--line:#ffffff1f;
+    --scrim-t:linear-gradient(#0C0A14e6,transparent);--scrim-b:linear-gradient(transparent,#05030Cf2);
+    background:radial-gradient(ellipse 80% 68% at 50% 46%,#241E42,#0C0A14 62%,#050309)}
+  #c{position:fixed;inset:0;z-index:0}
+  .grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.035;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  .scrim{position:fixed;left:0;right:0;z-index:1;pointer-events:none;height:200px}
+  .scrim.t{top:0;background:var(--scrim-t)}.scrim.b{bottom:0;height:240px;background:var(--scrim-b)}
+  nav{position:fixed;top:0;left:0;right:0;z-index:3;display:flex;justify-content:space-between;align-items:baseline;padding:26px clamp(24px,5vw,72px);border-bottom:1px solid var(--line)}
+  nav .logo{font-size:19px;font-weight:500;letter-spacing:-.01em}
+  nav .links{display:flex;gap:34px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.04em;color:var(--mute);text-transform:uppercase}
+  nav .links a{color:inherit;text-decoration:none;transition:.3s;cursor:pointer;position:relative}
+  nav .links a .i{color:var(--p);margin-right:6px;opacity:.55}
+  nav .links a:hover,nav .links a.active{color:var(--ink)}
+  nav .links a.active .i{opacity:1}
+  nav .links a.active::after{content:"";position:absolute;left:0;right:-2px;bottom:-7px;height:1px;background:var(--p)}
+  /* focus readout — what's at the crossing now */
+  .focus{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2;pointer-events:none;text-align:center;width:min(80vw,560px)}
+  .focus .cat{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--p);margin-bottom:14px;transition:.3s}
+  .focus h1{font-weight:330;font-size:clamp(38px,6vw,82px);line-height:.96;letter-spacing:-.025em;transition:.3s}
+  .focus h1 em{font-style:italic;color:var(--p2)}
+  .focus .open{margin-top:22px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);pointer-events:auto;cursor:pointer;display:inline-flex;gap:8px;border:1px solid var(--line);border-radius:100px;padding:10px 20px;transition:.25s}
+  .focus .open:hover{color:var(--p);border-color:var(--p)}
+  .hint{position:fixed;left:50%;bottom:38px;transform:translateX(-50%);z-index:3;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute);opacity:.85;text-align:center}
+  .hint b{color:var(--ink);font-weight:500}
+  .toggle{position:fixed;z-index:4;right:clamp(24px,5vw,72px);top:74px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);background:none;border:1px solid var(--line);border-radius:100px;padding:8px 14px;cursor:pointer;transition:.25s}
+  .toggle:hover{color:var(--p);border-color:var(--p)}
+  /* lobe labels */
+  .lobe{position:fixed;z-index:2;pointer-events:none;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);opacity:.7;top:50%;transform:translateY(-50%)}
+  .lobe.l{left:clamp(24px,5vw,72px)}.lobe.r{right:clamp(24px,5vw,72px);text-align:right}
+  @media(max-width:760px){.lobe{display:none}}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div class="grain"></div>
+<div class="scrim t"></div><div class="scrim b"></div>
+<nav>
+  <div class="logo">Adeline Wen</div>
+  <div class="links">
+    <a data-i="1"><span class="i">01</span>Work</a>
+    <a data-i="0"><span class="i">02</span>About</a>
+    <a data-i="4"><span class="i">03</span>Research</a>
+    <a data-i="7"><span class="i">04</span>Contact</a>
+  </div>
+</nav>
+<button class="toggle" id="tg">◐ Light / Dark</button>
+<div class="lobe l">← Research<br>思考</div>
+<div class="lobe r">Build →<br>创造</div>
+<div class="focus">
+  <div class="cat" id="f-cat">About</div>
+  <h1 id="f-title">Adeline <em>Wen</em></h1>
+  <div class="open" id="f-open">Open ↗</div>
+</div>
+<div class="hint"><b>drag</b> or <b>scroll</b> to spin the loop · cards pass through the focus</div>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://unpkg.com/three@0.169.0/build/three.module.js",
+  "three/addons/": "https://unpkg.com/three@0.169.0/examples/jsm/"
+}}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+
+const canvas=document.getElementById('c');
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setSize(innerWidth,innerHeight);
+renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.1;
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(34,innerWidth/innerHeight,0.1,100);camera.position.set(0,0,8);
+const pmrem=new THREE.PMREMGenerator(renderer);
+scene.environment=pmrem.fromScene(new RoomEnvironment(),0.04).texture;
+scene.add(new THREE.DirectionalLight(0xffffff,1.4).translateX(4).translateY(6).translateZ(4));
+const rim=new THREE.PointLight(0x7C5CF0,30,40);rim.position.set(-6,-1,3);scene.add(rim);
+
+// ∞ curve — focus (front crossing) at u=0.25
+class Lemniscate extends THREE.Curve{
+  constructor(s=3.0){super();this.s=s;}
+  getPoint(u,t=new THREE.Vector3()){const a=u*Math.PI*2,d=1+Math.sin(a)*Math.sin(a);
+    return t.set(this.s*Math.cos(a)/d,this.s*Math.sin(a)*Math.cos(a)/d,Math.sin(a)*0.9);}
+}
+const curve=new Lemniscate(3.0);
+const group=new THREE.Group();group.rotation.x=-0.08;scene.add(group);
+
+// faint glass track
+const tube=new THREE.Mesh(new THREE.TubeGeometry(curve,500,0.055,20,true),
+  new THREE.MeshPhysicalMaterial({transmission:1,thickness:.6,roughness:.08,ior:1.5,dispersion:1.5,
+    metalness:0,clearcoat:1,color:new THREE.Color('#D8CFFF'),attenuationColor:new THREE.Color('#7C5CF0'),
+    attenuationDistance:3,envMapIntensity:1.3}));
+group.add(tube);
+
+// ---- cards threaded on the loop ----
+const CARDS=[
+  {t:'Adeline Wen',cat:'About — the crossing',c:'#7C5CF0'},
+  {t:'Portfolio 3D',cat:'Build',c:'#896AFB'},
+  {t:'Trading Engine',cat:'Build',c:'#896AFB'},
+  {t:'Design System',cat:'Build',c:'#896AFB'},
+  {t:'Sybil Detection',cat:'Research',c:'#6D5BD0'},
+  {t:'HasciDB',cat:'Research',c:'#6D5BD0'},
+  {t:'Blur',cat:'Research',c:'#6D5BD0'},
+  {t:'Say hello',cat:'Contact',c:'#7C5CF0'},
+];
+function cardTexture(card,dark){
+  const w=512,h=320,c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d');
+  const r=28;x.fillStyle=dark?'rgba(30,26,52,0.82)':'rgba(255,255,255,0.9)';
+  x.beginPath();x.roundRect(16,16,w-32,h-32,r);x.fill();
+  x.strokeStyle=card.c+'66';x.lineWidth=2;x.stroke();
+  x.fillStyle=card.c;x.beginPath();x.arc(54,62,9,0,7);x.fill();
+  x.fillStyle=dark?'#ADA8C6':'#8C8898';x.font='500 22px "JetBrains Mono",monospace';x.fillText(card.cat.toUpperCase(),76,70);
+  x.fillStyle=dark?'#F6F4FC':'#1A1726';x.font='340 56px Fraunces,serif';
+  // wrap title
+  const words=card.t.split(' ');let line='',y=160;for(const wd of words){const test=line+wd+' ';
+    if(x.measureText(test).width>w-90){x.fillText(line,52,y);line=wd+' ';y+=58;}else line=test;}x.fillText(line,52,y);
+  x.fillStyle=card.c;x.font='500 20px "JetBrains Mono",monospace';x.fillText('↗ OPEN',52,h-46);
+  const tex=new THREE.CanvasTexture(c);tex.colorSpace=THREE.SRGBColorSpace;tex.anisotropy=4;return tex;
+}
+let sprites=[];
+function buildSprites(dark){
+  sprites.forEach(s=>group.remove(s));sprites=[];
+  CARDS.forEach((card,i)=>{
+    const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:cardTexture(card,dark),transparent:true,depthWrite:false}));
+    sp.userData.baseU=i/CARDS.length;group.add(sp);sprites.push(sp);
+  });
+}
+buildSprites(false);
+
+const composer=new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene,camera));
+composer.addPass(new UnrealBloomPass(new THREE.Vector2(innerWidth,innerHeight),0.18,0.5,0.95));
+composer.addPass(new OutputPass());
+
+// ---- spin interaction (drag + wheel + inertia + snap) ----
+const FOCUS_U=0.25;
+let phase=FOCUS_U,vel=0,dragging=false,lastX=0,moved=0;
+const fCat=document.getElementById('f-cat'),fTitle=document.getElementById('f-title'),links=[...document.querySelectorAll('nav .links a')];
+function circDist(a,b){let d=Math.abs((a-b)%1);return Math.min(d,1-d);}
+let curFocus=-1;
+function updateFocus(){
+  let best=0,bd=9;sprites.forEach((s,i)=>{const u=(s.userData.baseU+phase)%1,d=circDist(u,FOCUS_U);if(d<bd){bd=d;best=i;}});
+  if(best!==curFocus){curFocus=best;const card=CARDS[best];
+    fCat.textContent=card.cat;
+    const parts=card.t.split(' ');fTitle.innerHTML=parts.length>1?parts[0]+' <em>'+parts.slice(1).join(' ')+'</em>':'<em>'+card.t+'</em>';
+    links.forEach(a=>a.classList.toggle('active',+a.dataset.i===best));
+  }
+}
+function spinTo(i){ // ease phase so card i lands at focus
+  const target=FOCUS_U - i/CARDS.length;
+  let dp=(target-phase);dp=((dp+0.5)%1+1)%1-0.5; // shortest
+  vel=dp*0.12;
+}
+links.forEach(a=>a.addEventListener('click',()=>spinTo(+a.dataset.i)));
+addEventListener('pointerdown',e=>{dragging=true;lastX=e.clientX;moved=0;document.body.classList.add('grabbing');});
+addEventListener('pointermove',e=>{if(!dragging)return;const dx=e.clientX-lastX;lastX=e.clientX;moved+=Math.abs(dx);
+  const dp=-dx*0.0016;phase=(phase+dp+1)%1;vel=dp;});
+addEventListener('pointerup',()=>{dragging=false;document.body.classList.remove('grabbing');});
+addEventListener('wheel',e=>{e.preventDefault();vel+=e.deltaY*0.00010;},{passive:false});
+document.getElementById('f-open').addEventListener('click',()=>{
+  fTitle.animate([{opacity:1},{opacity:.4},{opacity:1}],{duration:500});
+});
+
+const tmp=new THREE.Vector3();
+function tick(){
+  if(!dragging){
+    phase=(phase+vel+1)%1;vel*=0.93;
+    if(Math.abs(vel)<0.0004){ // snap to nearest card
+      let best=0,bd=9;sprites.forEach((s,i)=>{const u=(s.userData.baseU+phase)%1,d=circDist(u,FOCUS_U);if(d<bd){bd=d;best=i;}});
+      const target=FOCUS_U-best/CARDS.length;let dp=((target-phase+0.5)%1+1)%1-0.5;phase=(phase+dp*0.12+1)%1;
+    }
+  }
+  sprites.forEach(s=>{
+    const u=(s.userData.baseU+phase)%1;curve.getPoint(u,tmp);s.position.copy(tmp);
+    const d=circDist(u,FOCUS_U); // 0 at focus
+    const sc=1.0 - d*1.1; const scale=Math.max(0.28,sc);
+    s.scale.set(scale*1.7,scale*1.06,1);
+    s.material.opacity=Math.max(0.18,1-d*1.8);
+    s.renderOrder=Math.round((1-d)*100);
+  });
+  updateFocus();
+  group.rotation.y=Math.sin(Date.now()*0.0001)*0.12;
+  camera.lookAt(0,0,0);composer.render();requestAnimationFrame(tick);
+}
+tick();
+addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);composer.setSize(innerWidth,innerHeight);});
+document.getElementById('tg').addEventListener('click',()=>{const d=document.body.classList.toggle('dark');buildSprites(d);});
+</script>
+</body>
+</html>
