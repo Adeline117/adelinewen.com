@@ -391,28 +391,15 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
       {renderSection(
         0,
         t.about,
-        <>
-          <div className="portrait">
-            <span className="mg">AW</span>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/portrait.jpg"
-              alt="Adeline Wen"
-              onError={(e) => {
-                (e.currentTarget as HTMLImageElement).style.display = "none";
-              }}
-            />
-          </div>
-          <ul className="tl">
-            {t.about.resume.map((item) => (
-              <li key={item.h}>
-                <div className="y">{item.y}</div>
-                <div className="h">{item.h}</div>
-                <div className="dsc">{item.d}</div>
-              </li>
-            ))}
-          </ul>
-        </>
+        <ul className="tl">
+          {t.about.resume.map((item) => (
+            <li key={item.h}>
+              <div className="y">{item.y}</div>
+              <div className="h">{item.h}</div>
+              <div className="dsc">{item.d}</div>
+            </li>
+          ))}
+        </ul>
       )}
 
       {renderSection(
