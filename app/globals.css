@@ -78,7 +78,8 @@ nav .links button.active .i { opacity: 1; }
 .prog .track { fill: none; stroke: var(--line); stroke-width: 1.5; }
 .prog .bead { fill: var(--p); }
 
-.toggle { position: fixed; z-index: 4; right: clamp(24px, 5vw, 72px); top: 74px; font-family: var(--font-mono), monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mute); background: none; border: 1px solid var(--line); border-radius: 100px; padding: 8px 14px; cursor: pointer; transition: 0.25s; }
+.controls { position: fixed; z-index: 6; top: 70px; right: clamp(24px, 5vw, 72px); display: flex; gap: 10px; }
+.toggle { font-family: var(--font-mono), monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mute); background: none; border: 1px solid var(--line); border-radius: 100px; padding: 8px 14px; cursor: pointer; transition: 0.25s; }
 .toggle:hover { color: var(--p); border-color: var(--p); }
 
 /* ===== Hero + scrolling content sections ===== */
@@ -110,10 +111,13 @@ nav .links button.active .i { opacity: 1; }
 .sec .right { max-width: 460px; justify-self: end; width: 100%; }
 
 .rows { list-style: none; }
-.rows li { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 18px 6px; border-top: 1px solid var(--line); font-family: var(--font-mono), monospace; font-size: 13px; color: var(--mute); cursor: pointer; transition: 0.3s; text-transform: uppercase; letter-spacing: 0.04em; }
+.rows li { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; padding: 18px 6px; border-top: 1px solid var(--line); transition: 0.3s; }
 .rows li:last-child { border-bottom: 1px solid var(--line); }
-.rows li .n { font-family: var(--font-fraunces), serif; font-size: 22px; font-weight: 330; letter-spacing: -0.01em; color: var(--ink); text-transform: none; }
-.rows li:hover { padding-left: 18px; color: var(--ink); }
+.rinfo { display: flex; flex-direction: column; gap: 5px; }
+.rows .n { font-family: var(--font-fraunces), serif; font-size: 23px; font-weight: 330; letter-spacing: -0.01em; color: var(--ink); }
+.rows .rd { font-family: var(--font-mono), monospace; font-size: 11.5px; line-height: 1.55; color: var(--mute); max-width: 34ch; }
+.rows .rm { font-family: var(--font-mono), monospace; font-size: 11px; letter-spacing: 0.04em; color: var(--mute); text-transform: uppercase; white-space: nowrap; }
+.rows li:hover { padding-left: 14px; }
 .rows li:hover .n { color: var(--p2); }
 
 .tl { list-style: none; }

@@ -1,20 +1,186 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import dynamic from "next/dynamic";
 
 const InfinityHero = dynamic(() => import("@/components/InfinityHero"), { ssr: false });
 
-const NAV = ["Work", "About", "Research", "Contact"];
+type Lang = "en" | "zh";
+
+type Section = {
+  label: string;
+  title: ReactNode;
+  lead: string;
+  more: { text: string; href: string };
+};
+type Row = { n: string; d: string; m: string };
+type TL = { y: string; h: string; d: string };
+type CLink = { label: string; val: string; href: string };
+
+const COPY: Record<
+  Lang,
+  {
+    nav: string[];
+    heroMeta: string;
+    heroTitle: ReactNode;
+    heroHint: string;
+    work: Section & { rows: Row[] };
+    about: Section & { tags: string[] };
+    research: Section & { tl: TL[] };
+    contact: Section & { links: CLink[] };
+  }
+> = {
+  en: {
+    nav: ["Work", "About", "Research", "Contact"],
+    heroMeta: "Researcher · Builder · Seattle",
+    heroTitle: (
+      <>
+        The loop of <em>research</em>
+        <br />& <em>building</em>.
+      </>
+    ),
+    heroHint: "scroll to travel the loop ↓",
+    work: {
+      label: "01 — Work",
+      title: (
+        <>
+          Things I&apos;ve <em>built</em>.
+        </>
+      ),
+      lead: "Products I've shipped — mostly solo — across crypto, on-chain data, and the web.",
+      more: { text: "Visit Arena →", href: "https://arenafi.org" },
+      rows: [
+        { n: "Arena", d: "Ranks 68,000+ crypto traders across 44+ exchanges.", m: "2025 · arenafi.org" },
+        { n: "HasciDB", d: "Open-source airdrop Sybil-detection database — 2.5M+ wallets.", m: "2026 · hascidb.org" },
+        { n: "adelinewen.com", d: "This site — a 3D WebGL portfolio.", m: "2026 · Next.js" },
+      ],
+    },
+    about: {
+      label: "02 — About",
+      title: (
+        <>
+          Research meets the <em>build</em>.
+        </>
+      ),
+      lead:
+        "I'm Adeline (she/her) — an undergraduate researcher at the UW Decentralized Computing Lab and an analyst at Stably, studying Economics & Informatics at the University of Washington. I research how decentralized systems behave, then build tools to test what I find.",
+      more: { text: "Connect on LinkedIn →", href: "https://www.linkedin.com/in/adeline1107" },
+      tags: ["Blockchain", "On-Chain Analysis", "Data Science", "JavaScript", "API Dev", "Econometrics"],
+    },
+    research: {
+      label: "03 — Research",
+      title: (
+        <>
+          Sybil detection, <em>published</em>.
+        </>
+      ),
+      lead:
+        "At the UW Decentralized Computing Lab with Prof. Wei Cai. First-author work on detecting airdrop Sybils and making on-chain governance interpretable.",
+      more: { text: "Explore HasciDB →", href: "https://hascidb.org" },
+      tl: [
+        { y: "2026 · IEEE SMC", h: "Human-Centered Airdrop Governance", d: "Interpretable behavioral modeling of strategic hunters. To appear in IEEE Xplore." },
+        { y: "2026 · Nanyang Blockchain Conf", h: "HasciDB", d: "First open-source cross-project airdrop Sybil database (2.5M+ wallets). First author." },
+        { y: "2026 · Present", h: "Undergraduate RA", d: "UW Decentralized Computing Lab, under Prof. Wei Cai." },
+      ],
+    },
+    contact: {
+      label: "04 — Contact",
+      title: (
+        <>
+          Let&apos;s <em>build</em> something.
+        </>
+      ),
+      lead: "Open to research and building opportunities — always up for a good problem.",
+      more: { text: "Email me →", href: "mailto:ywen8@uw.edu" },
+      links: [
+        { label: "Email", val: "ywen8@uw.edu", href: "mailto:ywen8@uw.edu" },
+        { label: "GitHub", val: "@Adeline117 ↗", href: "https://github.com/Adeline117" },
+        { label: "LinkedIn", val: "/in/adeline1107 ↗", href: "https://www.linkedin.com/in/adeline1107" },
+        { label: "Arena", val: "arenafi.org ↗", href: "https://arenafi.org" },
+      ],
+    },
+  },
+  zh: {
+    nav: ["作品", "关于", "研究", "联系"],
+    heroMeta: "研究者 · 构建者 · 西雅图",
+    heroTitle: (
+      <>
+        研究 与 <em>构建</em>
+        <br />
+        的无限循环。
+      </>
+    ),
+    heroHint: "向下滚动，沿回路探索 ↓",
+    work: {
+      label: "01 — 作品",
+      title: (
+        <>
+          我<em>做</em>的东西。
+        </>
+      ),
+      lead: "我（大多独立）做出来的产品——涉及加密、链上数据与 Web。",
+      more: { text: "访问 Arena →", href: "https://arenafi.org" },
+      rows: [
+        { n: "Arena", d: "为 44+ 交易所的 68,000+ 加密交易者做排名。", m: "2025 · arenafi.org" },
+        { n: "HasciDB", d: "开源空投 Sybil 检测数据库，覆盖 250 万+ 钱包。", m: "2026 · hascidb.org" },
+        { n: "adelinewen.com", d: "就是这个网站——3D WebGL 作品集。", m: "2026 · Next.js" },
+      ],
+    },
+    about: {
+      label: "02 — 关于",
+      title: (
+        <>
+          研究与构建的<em>交汇</em>。
+        </>
+      ),
+      lead:
+        "我是 Adeline（她/她）——华盛顿大学去中心化计算实验室本科研究员、Stably 分析师，主修经济学、辅修信息学。我研究去中心化系统如何运行，再亲手构建工具去验证发现。",
+      more: { text: "在 LinkedIn 联系 →", href: "https://www.linkedin.com/in/adeline1107" },
+      tags: ["区块链", "链上分析", "数据科学", "JavaScript", "API 开发", "计量经济学"],
+    },
+    research: {
+      label: "03 — 研究",
+      title: (
+        <>
+          Sybil 检测，已<em>发表</em>。
+        </>
+      ),
+      lead:
+        "在华盛顿大学去中心化计算实验室，导师 Wei Cai 教授。第一作者，研究空投 Sybil 检测与可解释的链上治理。",
+      more: { text: "查看 HasciDB →", href: "https://hascidb.org" },
+      tl: [
+        { y: "2026 · IEEE SMC", h: "以人为本的空投治理", d: "对策略型猎手的可解释行为建模，将收录于 IEEE Xplore。" },
+        { y: "2026 · 南洋区块链大会", h: "HasciDB", d: "首个开源跨项目空投 Sybil 数据库（250 万+ 钱包），第一作者。" },
+        { y: "2026 · 至今", h: "本科研究助理", d: "华盛顿大学去中心化计算实验室，导师 Wei Cai 教授。" },
+      ],
+    },
+    contact: {
+      label: "04 — 联系",
+      title: (
+        <>
+          一起<em>做</em>点东西。
+        </>
+      ),
+      lead: "对研究与构建的机会开放——随时欢迎好问题。",
+      more: { text: "给我发邮件 →", href: "mailto:ywen8@uw.edu" },
+      links: [
+        { label: "邮箱", val: "ywen8@uw.edu", href: "mailto:ywen8@uw.edu" },
+        { label: "GitHub", val: "@Adeline117 ↗", href: "https://github.com/Adeline117" },
+        { label: "LinkedIn", val: "/in/adeline1107 ↗", href: "https://www.linkedin.com/in/adeline1107" },
+        { label: "Arena", val: "arenafi.org ↗", href: "https://arenafi.org" },
+      ],
+    },
+  },
+};
 
 export default function Home() {
   const [active, setActive] = useState(0);
   const [dark, setDark] = useState<boolean | null>(null);
+  const [lang, setLang] = useState<Lang>("en");
   const secRefs = useRef<(HTMLElement | null)[]>([]);
   const trackRef = useRef<SVGPathElement>(null);
   const beadRef = useRef<SVGCircleElement>(null);
 
-  // reveal-on-scroll + active section tracking
   useEffect(() => {
     const obs = new IntersectionObserver(
       (entries) => {
@@ -32,7 +198,6 @@ export default function Home() {
     return () => obs.disconnect();
   }, []);
 
-  // mini-∞ progress bead driven by scroll
   useEffect(() => {
     const track = trackRef.current;
     const len = track ? track.getTotalLength() : 0;
@@ -50,22 +215,33 @@ export default function Home() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // initial theme: stored preference, else system
+  // theme: stored, else system
   useEffect(() => {
     const stored = localStorage.getItem("theme");
     setDark(stored ? stored === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches);
   }, []);
-
   useEffect(() => {
     if (dark === null) return;
     document.body.classList.toggle("dark", dark);
     localStorage.setItem("theme", dark ? "dark" : "light");
   }, [dark]);
 
+  // language: stored, else browser
+  useEffect(() => {
+    const stored = localStorage.getItem("lang") as Lang | null;
+    setLang(stored ?? (navigator.language.startsWith("zh") ? "zh" : "en"));
+  }, []);
+  useEffect(() => {
+    localStorage.setItem("lang", lang);
+    document.documentElement.lang = lang === "zh" ? "zh" : "en";
+  }, [lang]);
+
   const goTo = (i: number) => secRefs.current[i]?.scrollIntoView({ behavior: "smooth" });
   const setRef = (i: number) => (el: HTMLElement | null) => {
     secRefs.current[i] = el;
   };
+
+  const t = COPY[lang];
 
   return (
     <>
@@ -77,8 +253,8 @@ export default function Home() {
       <nav>
         <div className="logo">Adeline Wen</div>
         <div className="links">
-          {NAV.map((label, i) => (
-            <button key={label} className={i === active ? "active" : ""} onClick={() => goTo(i)}>
+          {t.nav.map((label, i) => (
+            <button key={i} className={i === active ? "active" : ""} onClick={() => goTo(i)}>
               <span className="i">{String(i + 1).padStart(2, "0")}</span>
               {label}
             </button>
@@ -86,42 +262,43 @@ export default function Home() {
         </div>
       </nav>
 
-      <button className="toggle" onClick={() => setDark((v) => !v)}>
-        ◐ Light / Dark
-      </button>
+      <div className="controls">
+        <button className="toggle" onClick={() => setLang((l) => (l === "en" ? "zh" : "en"))}>
+          {lang === "en" ? "中文" : "EN"}
+        </button>
+        <button className="toggle" onClick={() => setDark((v) => !v)}>
+          ◐
+        </button>
+      </div>
 
-      {/* Hero — the 3D glass infinity */}
       <header className="hero">
-        <div className="meta">Researcher · Builder · Seattle</div>
-        <h1>
-          The <em>infinite</em> loop
-          <br />
-          of craft.
-        </h1>
-        <div className="hint">scroll to travel the loop ↓</div>
+        <div className="meta">{t.heroMeta}</div>
+        <h1>{t.heroTitle}</h1>
+        <div className="hint">{t.heroHint}</div>
       </header>
 
       {/* 01 — Work */}
       <section className="sec" id="work" data-i="0" ref={setRef(0)}>
         <div className="inner">
           <div className="left">
-            <div className="label">01 — Selected Work</div>
-            <h2>
-              Things I&apos;ve <em>built</em>.
-            </h2>
-            <p className="lead">
-              Solo-built products across crypto and decentralized systems — from a global
-              trader-ranking platform to an open-source Sybil-detection database.
-            </p>
-            <a className="more" href="https://arenafi.org" target="_blank" rel="noopener noreferrer">
-              Visit Arena →
+            <div className="label">{t.work.label}</div>
+            <h2>{t.work.title}</h2>
+            <p className="lead">{t.work.lead}</p>
+            <a className="more" href={t.work.more.href} target="_blank" rel="noopener noreferrer">
+              {t.work.more.text}
             </a>
           </div>
           <div className="right">
             <ul className="rows">
-              <li><span className="n">Arena</span><span>2025 · arenafi.org</span></li>
-              <li><span className="n">HasciDB</span><span>2026 · hascidb.org</span></li>
-              <li><span className="n">adelinewen.com</span><span>2026 · Next.js · 3D</span></li>
+              {t.work.rows.map((r) => (
+                <li key={r.n}>
+                  <div className="rinfo">
+                    <span className="n">{r.n}</span>
+                    <span className="rd">{r.d}</span>
+                  </div>
+                  <span className="rm">{r.m}</span>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
@@ -131,30 +308,20 @@ export default function Home() {
       <section className="sec" id="about" data-i="1" ref={setRef(1)}>
         <div className="inner">
           <div className="left">
-            <div className="label">02 — About · the crossing</div>
-            <h2>
-              Where it all <em>meets</em>.
-            </h2>
-            <p className="lead">
-              Undergraduate researcher (she/her) at the UW Decentralized Computing Lab and analyst
-              at Stably. Economics + Informatics at the University of Washington. I study
-              decentralized systems — and build the things that put the ideas to the test.
-            </p>
-            <a
-              className="more"
-              href="https://www.linkedin.com/in/adeline1107"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Connect on LinkedIn →
+            <div className="label">{t.about.label}</div>
+            <h2>{t.about.title}</h2>
+            <p className="lead">{t.about.lead}</p>
+            <a className="more" href={t.about.more.href} target="_blank" rel="noopener noreferrer">
+              {t.about.more.text}
             </a>
           </div>
           <div className="right">
             <div className="about">
               <div className="portrait" />
               <div className="tags">
-                <span>Blockchain</span><span>On-Chain Analysis</span><span>Data Science</span>
-                <span>JavaScript</span><span>API Dev</span><span>Econometrics</span>
+                {t.about.tags.map((tag) => (
+                  <span key={tag}>{tag}</span>
+                ))}
               </div>
             </div>
           </div>
@@ -165,35 +332,22 @@ export default function Home() {
       <section className="sec" data-i="2" ref={setRef(2)}>
         <div className="inner">
           <div className="left">
-            <div className="label">03 — Research</div>
-            <h2>
-              Decentralized <em>systems</em>.
-            </h2>
-            <p className="lead">
-              UW Decentralized Computing Lab, advised by Prof. Wei Cai. First-author work on
-              airdrop Sybil detection and interpretable on-chain governance.
-            </p>
-            <a className="more" href="https://hascidb.org" target="_blank" rel="noopener noreferrer">
-              Explore HasciDB →
+            <div className="label">{t.research.label}</div>
+            <h2>{t.research.title}</h2>
+            <p className="lead">{t.research.lead}</p>
+            <a className="more" href={t.research.more.href} target="_blank" rel="noopener noreferrer">
+              {t.research.more.text}
             </a>
           </div>
           <div className="right">
             <ul className="tl">
-              <li>
-                <div className="y">2026 · IEEE SMC</div>
-                <div className="h">Human-Centered Airdrop Governance</div>
-                <div className="dsc">Interpretable behavioral modeling of strategic hunters. To appear in IEEE Xplore.</div>
-              </li>
-              <li>
-                <div className="y">2026 · Nanyang Blockchain Conf</div>
-                <div className="h">HasciDB</div>
-                <div className="dsc">First open-source cross-project airdrop Sybil database (2.5M+ wallets). First author.</div>
-              </li>
-              <li>
-                <div className="y">2026 · Present</div>
-                <div className="h">Undergraduate RA</div>
-                <div className="dsc">UW Decentralized Computing Lab, under Prof. Wei Cai.</div>
-              </li>
+              {t.research.tl.map((item) => (
+                <li key={item.h}>
+                  <div className="y">{item.y}</div>
+                  <div className="h">{item.h}</div>
+                  <div className="dsc">{item.d}</div>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
@@ -203,30 +357,26 @@ export default function Home() {
       <section className="sec" data-i="3" ref={setRef(3)}>
         <div className="inner">
           <div className="left">
-            <div className="label">04 — Contact</div>
-            <h2>
-              Let&apos;s <em>build</em> something.
-            </h2>
-            <p className="lead">
-              Back to the start — the loop closes where it began. Open to research and building
-              opportunities.
-            </p>
-            <a className="more" href="mailto:ywen8@uw.edu">
-              Email me →
+            <div className="label">{t.contact.label}</div>
+            <h2>{t.contact.title}</h2>
+            <p className="lead">{t.contact.lead}</p>
+            <a className="more" href={t.contact.more.href}>
+              {t.contact.more.text}
             </a>
           </div>
           <div className="right">
             <div className="clinks">
-              <a href="mailto:ywen8@uw.edu">Email<span className="ar">ywen8@uw.edu</span></a>
-              <a href="https://github.com/Adeline117" target="_blank" rel="noopener noreferrer">
-                GitHub<span className="ar">@Adeline117 ↗</span>
-              </a>
-              <a href="https://www.linkedin.com/in/adeline1107" target="_blank" rel="noopener noreferrer">
-                LinkedIn<span className="ar">/in/adeline1107 ↗</span>
-              </a>
-              <a href="https://arenafi.org" target="_blank" rel="noopener noreferrer">
-                Arena<span className="ar">arenafi.org ↗</span>
-              </a>
+              {t.contact.links.map((l) => (
+                <a
+                  key={l.label}
+                  href={l.href}
+                  target={l.href.startsWith("mailto") ? undefined : "_blank"}
+                  rel={l.href.startsWith("mailto") ? undefined : "noopener noreferrer"}
+                >
+                  {l.label}
+                  <span className="ar">{l.val}</span>
+                </a>
+              ))}
             </div>
           </div>
         </div>
