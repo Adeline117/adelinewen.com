@@ -5,42 +5,40 @@ import dynamic from "next/dynamic";
 
 const InfinityHero = dynamic(() => import("@/components/InfinityHero"), { ssr: false });
 
-const STATIONS = [0.18, 0.42, 0.68, 0.92];
-const DATA = [
-  { idx: "01 — Work", title: ["Selected ", "builds", "."], desc: "Crafted, precise interfaces and the systems behind them." },
-  { idx: "02 — About", title: ["Where it ", "meets", "."], desc: "The crossing point — research and making, one continuous loop. This is me." },
-  { idx: "03 — Research", title: ["Decentralized ", "systems", "."], desc: "UW Decentralized Computing Lab — Sybil detection & on-chain analysis." },
-  { idx: "04 — Contact", title: ["Let's ", "build", "."], desc: "Back to the start. Open to 2026 opportunities — say hello." },
-];
 const NAV = ["Work", "About", "Research", "Contact"];
 
 export default function Home() {
   const [active, setActive] = useState(0);
-  const [introOpacity, setIntroOpacity] = useState(1);
   const [dark, setDark] = useState(false);
+  const secRefs = useRef<(HTMLElement | null)[]>([]);
   const trackRef = useRef<SVGPathElement>(null);
   const beadRef = useRef<SVGCircleElement>(null);
 
+  // reveal-on-scroll + active section tracking
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add("on");
+            const i = Number((e.target as HTMLElement).dataset.i);
+            if (!Number.isNaN(i)) setActive(i);
+          }
+        });
+      },
+      { threshold: 0.55 }
+    );
+    secRefs.current.forEach((s) => s && obs.observe(s));
+    return () => obs.disconnect();
+  }, []);
+
+  // mini-∞ progress bead driven by scroll
   useEffect(() => {
     const track = trackRef.current;
     const len = track ? track.getTotalLength() : 0;
-
     const onScroll = () => {
       const max = document.body.scrollHeight - window.innerHeight;
       const u = max > 0 ? window.scrollY / max : 0;
-      setIntroOpacity(Math.max(0, 1 - window.scrollY / (window.innerHeight * 0.5)));
-
-      let best = 0;
-      let bd = 9;
-      STATIONS.forEach((s, i) => {
-        const d = Math.abs(s - u);
-        if (d < bd) {
-          bd = d;
-          best = i;
-        }
-      });
-      setActive(best);
-
       if (track && beadRef.current) {
         const pt = track.getPointAtLength((u % 1) * len);
         beadRef.current.setAttribute("cx", String(pt.x));
@@ -56,12 +54,10 @@ export default function Home() {
     document.body.classList.toggle("dark", dark);
   }, [dark]);
 
-  const goTo = (i: number) => {
-    const max = document.body.scrollHeight - window.innerHeight;
-    window.scrollTo({ top: STATIONS[i] * max, behavior: "smooth" });
+  const goTo = (i: number) => secRefs.current[i]?.scrollIntoView({ behavior: "smooth" });
+  const setRef = (i: number) => (el: HTMLElement | null) => {
+    secRefs.current[i] = el;
   };
-
-  const d = DATA[active];
 
   return (
     <>
@@ -86,7 +82,8 @@ export default function Home() {
         ◐ Light / Dark
       </button>
 
-      <div className="intro" style={{ opacity: introOpacity }}>
+      {/* Hero — the 3D glass infinity */}
+      <header className="hero">
         <div className="meta">Software Engineer · Researcher</div>
         <h1>
           The <em>infinite</em> loop
@@ -94,17 +91,120 @@ export default function Home() {
           of craft.
         </h1>
         <div className="hint">scroll to travel the loop ↓</div>
-      </div>
+      </header>
 
-      <div className="station" key={active}>
-        <div className="idx">{d.idx}</div>
-        <h2>
-          {d.title[0]}
-          <em>{d.title[1]}</em>
-          {d.title[2]}
-        </h2>
-        <p>{d.desc}</p>
-      </div>
+      {/* 01 — Work */}
+      <section className="sec" id="work" data-i="0" ref={setRef(0)}>
+        <div className="inner">
+          <div className="left">
+            <div className="label">01 — Selected Work</div>
+            <h2>
+              Things I&apos;ve <em>built</em>.
+            </h2>
+            <p className="lead">Crafted, precise interfaces and the systems behind them.</p>
+            <a className="more" href="#">
+              All projects →
+            </a>
+          </div>
+          <div className="right">
+            <ul className="rows">
+              <li><span className="n">Portfolio 3D</span><span>2026 · WebGL</span></li>
+              <li><span className="n">Trading Engine</span><span>2025 · Rust</span></li>
+              <li><span className="n">Design System</span><span>2025 · React</span></li>
+              <li><span className="n">HasciDB UI</span><span>2024 · Next.js</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* 02 — About */}
+      <section className="sec" id="about" data-i="1" ref={setRef(1)}>
+        <div className="inner">
+          <div className="left">
+            <div className="label">02 — About · the crossing</div>
+            <h2>
+              Where it all <em>meets</em>.
+            </h2>
+            <p className="lead">
+              CS @ University of Washington. The point where research and making become one
+              continuous loop — that&apos;s me.
+            </p>
+            <a className="more" href="#">
+              More about me →
+            </a>
+          </div>
+          <div className="right">
+            <div className="about">
+              <div className="portrait" />
+              <div className="tags">
+                <span>React</span><span>Three.js</span><span>Rust</span>
+                <span>Solidity</span><span>Python</span><span>Figma</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 03 — Research */}
+      <section className="sec" data-i="2" ref={setRef(2)}>
+        <div className="inner">
+          <div className="left">
+            <div className="label">03 — Research</div>
+            <h2>
+              Decentralized <em>systems</em>.
+            </h2>
+            <p className="lead">UW Decentralized Computing Lab — the trust layer of open networks.</p>
+            <a className="more" href="#">
+              Read research →
+            </a>
+          </div>
+          <div className="right">
+            <ul className="tl">
+              <li>
+                <div className="y">2026 · UW DC Lab</div>
+                <div className="h">Sybil Detection</div>
+                <div className="dsc">ML framework for airdrop sybil identification.</div>
+              </li>
+              <li>
+                <div className="y">2025</div>
+                <div className="h">HasciDB</div>
+                <div className="dsc">A database for identifying crypto sybil hunters.</div>
+              </li>
+              <li>
+                <div className="y">2025</div>
+                <div className="h">Blur</div>
+                <div className="dsc">On-chain analysis &amp; privacy tooling.</div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* 04 — Contact */}
+      <section className="sec" data-i="3" ref={setRef(3)}>
+        <div className="inner">
+          <div className="left">
+            <div className="label">04 — Contact</div>
+            <h2>
+              Let&apos;s <em>build</em> something.
+            </h2>
+            <p className="lead">
+              Back to the start — the loop closes where it began. Open to 2026 opportunities.
+            </p>
+            <a className="more" href="mailto:ywen8@uw.edu">
+              Email me →
+            </a>
+          </div>
+          <div className="right">
+            <div className="clinks">
+              <a href="mailto:ywen8@uw.edu">Email<span className="ar">ywen8@uw.edu</span></a>
+              <a href="https://github.com/Adeline117">GitHub<span className="ar">@Adeline117 ↗</span></a>
+              <a href="#">LinkedIn<span className="ar">↗</span></a>
+              <a href="#">X / Twitter<span className="ar">↗</span></a>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <div className="prog">
         <div className="count">
@@ -119,8 +219,6 @@ export default function Home() {
           <circle ref={beadRef} className="bead" r="3" cx="42" cy="22" />
         </svg>
       </div>
-
-      <div className="spacer" />
     </>
   );
 }
