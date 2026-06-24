@@ -57,6 +57,22 @@ export const viewport: Viewport = {
 
 const noFlash = `try{var t=localStorage.getItem('theme');var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;if(d)document.body.classList.add('dark');}catch(e){}`;
 
+const personLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Adeline Wen",
+  url: "https://adelinewen.com",
+  jobTitle: "Researcher & Builder",
+  affiliation: { "@type": "Organization", name: "University of Washington" },
+  sameAs: [
+    "https://github.com/Adeline117",
+    "https://www.linkedin.com/in/adeline1107",
+    "https://x.com/AdelineWen07",
+    "https://www.instagram.com/adelinew07/",
+    "https://arenafi.org",
+  ],
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -66,6 +82,10 @@ export default function RootLayout({
     <html lang="en" className={`${fraunces.variable} ${mono.variable}`}>
       <body>
         <script dangerouslySetInnerHTML={{ __html: noFlash }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personLd) }}
+        />
         {children}
       </body>
     </html>

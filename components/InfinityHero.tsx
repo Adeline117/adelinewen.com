@@ -134,6 +134,7 @@ export default function InfinityHero() {
     const clock = new THREE.Clock();
     const tmp = new THREE.Vector3();
     let curU = 0;
+    let curOpacity = 0; // starts hidden → eases in on load, and smooths scroll fades
     let raf = 0;
 
     const tick = () => {
@@ -148,8 +149,10 @@ export default function InfinityHero() {
       curve.getPoint(curU % 1, tmp);
       bead.position.copy(tmp);
 
-      // fade the loop to an ambient backdrop once past the hero
-      canvas.style.opacity = String(Math.max(0.14, 1 - (window.scrollY / window.innerHeight) * 0.95));
+      // fade the loop to an ambient backdrop once past the hero (eased → also fades in on load)
+      const targetOpacity = Math.max(0.14, 1 - (window.scrollY / window.innerHeight) * 0.95);
+      curOpacity += (targetOpacity - curOpacity) * 0.08;
+      canvas.style.opacity = String(curOpacity);
 
       if (!prefersReduced) {
         group.rotation.y = Math.sin(t * 0.2) * 0.3 + mx * 0.4;
