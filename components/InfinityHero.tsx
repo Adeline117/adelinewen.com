@@ -163,7 +163,18 @@ export default function InfinityHero() {
       camera.lookAt(0, 0, 0);
       composer.render();
     };
-    tick();
+
+    const saveData = (navigator as { connection?: { saveData?: boolean } }).connection?.saveData;
+    if (prefersReduced || saveData) {
+      // static frame — no continuous loop (saves battery / data)
+      group.rotation.x = -0.15;
+      curve.getPoint(0, tmp);
+      bead.position.copy(tmp);
+      canvas.style.opacity = "0.85";
+      composer.render();
+    } else {
+      tick();
+    }
 
     return () => {
       cancelAnimationFrame(raf);

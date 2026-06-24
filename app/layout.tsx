@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Fraunces, JetBrains_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -31,7 +33,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Adeline Wen" }],
   creator: "Adeline Wen",
-  alternates: { canonical: "/" },
+  alternates: { canonical: "/", languages: { en: "/", zh: "/zh" } },
   openGraph: {
     title: "Adeline Wen — Researcher & Builder",
     description:
@@ -87,6 +89,8 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personLd) }}
         />
         {children}
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
