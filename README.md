@@ -12,7 +12,9 @@ The site is built around the **infinity symbol**: the two loops represent **Rese
 
 The ∞ doubles as the **navigation spine**: scrolling travels a glowing bead along the glass infinity, passing four stations — **Work → About (crossing) → Research → Contact** — and looping back to close.
 
-See [`design-exploration/`](./design-exploration/) for live prototypes. Current direction: **`INF2-refined.html`** (real WebGL glass lemniscate, refined).
+See [`design-exploration/`](./design-exploration/) for live prototypes.
+
+**Chosen direction: `INF-infinity.html`** — the real WebGL 3D glass infinity (lemniscate tube) as the hero/navigation spine. Refinements to fold in: a real studio HDRI environment for premium, non-"cheap" glass speculars (`INF3-hdri.html`), and top/bottom scrims for dark-mode text legibility. The flat-line `FLOW*` explorations were a detour and are not the direction.
 
 ## Design system
 

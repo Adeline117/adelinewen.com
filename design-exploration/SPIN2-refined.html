@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>∞ · Spin the Loop (refined)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#1A1726;--mute:#8C8898;--p:#7C5CF0;--p2:#896AFB;--line:#1a172614;
+    --scrim-t:linear-gradient(#F1EFE8bb,transparent);--scrim-b:linear-gradient(transparent,#E5E2DAdd)}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%;overflow:hidden}
+  body{font-family:'Fraunces',serif;color:var(--ink);-webkit-font-smoothing:antialiased;
+    background:radial-gradient(ellipse 75% 70% at 50% 48%,#FCFBF7,#EFEDE5 55%,#DEDACF);transition:background .6s,color .6s;cursor:grab}
+  body.grabbing{cursor:grabbing}
+  body.dark{--ink:#F6F4FC;--mute:#ADA8C6;--line:#ffffff1a;
+    --scrim-t:linear-gradient(#0C0A14d9,transparent);--scrim-b:linear-gradient(transparent,#05030Cf2);
+    background:radial-gradient(ellipse 75% 70% at 50% 48%,#272050,#0E0B1A 60%,#050309)}
+  #c{position:fixed;inset:0;z-index:0}
+  .grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.03;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  .scrim{position:fixed;left:0;right:0;z-index:1;pointer-events:none}
+  .scrim.t{top:0;height:170px;background:var(--scrim-t)}.scrim.b{bottom:0;height:220px;background:var(--scrim-b)}
+  nav{position:fixed;top:0;left:0;right:0;z-index:3;display:flex;justify-content:space-between;align-items:baseline;padding:26px clamp(24px,5vw,72px)}
+  nav .logo{font-size:19px;font-weight:500;letter-spacing:-.01em}
+  nav .links{display:flex;gap:34px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.04em;color:var(--mute);text-transform:uppercase}
+  nav .links a{color:inherit;text-decoration:none;transition:.3s;cursor:pointer;position:relative}
+  nav .links a .i{color:var(--p);margin-right:6px;opacity:.55}
+  nav .links a:hover,nav .links a.active{color:var(--ink)}
+  nav .links a.active .i{opacity:1}
+  nav .links a.active::after{content:"";position:absolute;left:0;right:-2px;bottom:-7px;height:1px;background:var(--p)}
+  /* crisp editorial readout, bottom-left (wayfinding) */
+  .read{position:fixed;left:clamp(24px,5vw,72px);bottom:46px;z-index:3;max-width:46vw;transition:opacity .35s,transform .35s}
+  .read .cat{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--p)}
+  .read .t{font-weight:330;font-size:clamp(30px,4vw,56px);line-height:1.0;letter-spacing:-.02em;margin-top:8px}
+  .read .t em{font-style:italic;color:var(--p2)}
+  .hint{position:fixed;left:50%;bottom:40px;transform:translateX(-50%);z-index:3;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);opacity:.8}
+  .hint b{color:var(--ink);font-weight:500}
+  .lobe{position:fixed;z-index:2;pointer-events:none;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);opacity:.6;top:50%;transform:translateY(-50%);line-height:1.8}
+  .lobe.l{left:clamp(24px,5vw,72px)}.lobe.r{right:clamp(24px,5vw,72px);text-align:right}
+  .toggle{position:fixed;z-index:4;right:clamp(24px,5vw,72px);top:74px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);background:none;border:1px solid var(--line);border-radius:100px;padding:8px 14px;cursor:pointer;transition:.25s}
+  .toggle:hover{color:var(--p);border-color:var(--p)}
+  @media(max-width:760px){.lobe,.read{display:none}}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div class="grain"></div>
+<div class="scrim t"></div><div class="scrim b"></div>
+<nav>
+  <div class="logo">Adeline Wen</div>
+  <div class="links">
+    <a data-i="1"><span class="i">01</span>Work</a>
+    <a data-i="0"><span class="i">02</span>About</a>
+    <a data-i="4"><span class="i">03</span>Research</a>
+    <a data-i="7"><span class="i">04</span>Contact</a>
+  </div>
+</nav>
+<button class="toggle" id="tg">◐ Light / Dark</button>
+<div class="lobe l">← Research<br>思考</div>
+<div class="lobe r">Build →<br>创造</div>
+<div class="read" id="read"><div class="cat" id="r-cat">About</div><div class="t" id="r-title">Adeline <em>Wen</em></div></div>
+<div class="hint"><b>drag</b> · <b>scroll</b> to spin the loop</div>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://unpkg.com/three@0.169.0/build/three.module.js",
+  "three/addons/": "https://unpkg.com/three@0.169.0/examples/jsm/"
+}}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+
+const canvas=document.getElementById('c');
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setSize(innerWidth,innerHeight);
+renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.1;
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(36,innerWidth/innerHeight,0.1,100);camera.position.set(0,0,8);
+const pmrem=new THREE.PMREMGenerator(renderer);
+scene.environment=pmrem.fromScene(new RoomEnvironment(),0.04).texture;
+const rim=new THREE.PointLight(0x7C5CF0,28,40);rim.position.set(-6,0,4);scene.add(rim);
+
+class Lemniscate extends THREE.Curve{
+  constructor(s=3.3){super();this.s=s;}
+  getPoint(u,t=new THREE.Vector3()){const a=u*Math.PI*2,d=1+Math.sin(a)*Math.sin(a);
+    return t.set(this.s*Math.cos(a)/d,this.s*Math.sin(a)*Math.cos(a)/d,Math.sin(a)*1.25);}
+}
+const curve=new Lemniscate(3.3);
+const group=new THREE.Group();group.rotation.x=-0.06;scene.add(group);
+
+// faint glass track
+group.add(new THREE.Mesh(new THREE.TubeGeometry(curve,520,0.045,16,true),
+  new THREE.MeshPhysicalMaterial({transmission:1,thickness:.5,roughness:.1,ior:1.5,metalness:0,clearcoat:1,
+    color:new THREE.Color('#E0D8FF'),attenuationColor:new THREE.Color('#7C5CF0'),attenuationDistance:3,envMapIntensity:1.2})));
+
+// ---- card data + premium texture ----
+const CARDS=[
+  {idx:'02',t:'Adeline Wen',cat:'About — the crossing',c1:'#7C5CF0',c2:'#534AB7'},
+  {idx:'01',t:'Portfolio 3D',cat:'Build',c1:'#896AFB',c2:'#6D4FE0'},
+  {idx:'02',t:'Trading Engine',cat:'Build',c1:'#8A6CFA',c2:'#5E45C9'},
+  {idx:'03',t:'Design System',cat:'Build',c1:'#9B7BFF',c2:'#6D4FE0'},
+  {idx:'01',t:'Sybil Detection',cat:'Research',c1:'#6D5BD0',c2:'#3C3489'},
+  {idx:'02',t:'HasciDB',cat:'Research',c1:'#7867D6',c2:'#3C3489'},
+  {idx:'03',t:'Blur',cat:'Research',c1:'#6657C4',c2:'#332B7A'},
+  {idx:'04',t:'Say hello',cat:'Contact',c1:'#9B7BFF',c2:'#7C5CF0'},
+];
+const CW=920,CH=1150;
+function rr(c,x,y,w,h,r){c.beginPath();if(c.roundRect)c.roundRect(x,y,w,h,r);
+  else{c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath();}}
+function cardTexture(card,dark){
+  const c=document.createElement('canvas');c.width=CW;c.height=CH;const x=c.getContext('2d');
+  const m=70,X=m,Y=m,W=CW-2*m,H=CH-2*m,R=54,hh=H*0.6;
+  // soft baked shadow
+  x.save();x.shadowColor=dark?'rgba(0,0,0,0.55)':'rgba(70,55,150,0.28)';x.shadowBlur=80;x.shadowOffsetY=34;
+  rr(x,X,Y,W,H,R);x.fillStyle=dark?'#14112A':'#ffffff';x.fill();x.restore();
+  x.save();rr(x,X,Y,W,H,R);x.clip();
+  // header gradient
+  const g=x.createLinearGradient(X,Y,X+W,Y+hh);g.addColorStop(0,card.c1);g.addColorStop(1,card.c2);
+  x.fillStyle=g;x.fillRect(X,Y,W,hh);
+  const rg=x.createRadialGradient(X+W*0.32,Y+hh*0.22,12,X+W*0.32,Y+hh*0.22,hh*1.1);
+  rg.addColorStop(0,'rgba(255,255,255,0.4)');rg.addColorStop(1,'rgba(255,255,255,0)');x.fillStyle=rg;x.fillRect(X,Y,W,hh);
+  // giant faint monogram
+  x.fillStyle='rgba(255,255,255,0.9)';x.globalAlpha=0.20;x.textAlign='left';x.textBaseline='alphabetic';
+  x.font='300 '+(hh*1.05)+'px Fraunces';x.fillText(card.t[0],X+W*0.05,Y+hh*0.95);x.globalAlpha=1;
+  // index
+  x.font='500 34px "JetBrains Mono"';x.fillStyle='rgba(255,255,255,0.85)';x.textAlign='right';x.fillText(card.idx,X+W-54,Y+74);
+  // footer
+  x.fillStyle=dark?'#14112A':'#ffffff';x.fillRect(X,Y+hh,W,H-hh);
+  x.textAlign='left';
+  x.fillStyle=card.c1;x.font='500 30px "JetBrains Mono"';x.fillText(card.cat.toUpperCase(),X+62,Y+hh+76);
+  x.fillStyle=dark?'#F6F4FC':'#1A1726';x.font='340 78px Fraunces';
+  // wrap title
+  const words=card.t.split(' ');let line='',yy=Y+hh+168;for(const wd of words){const test=line+wd+' ';
+    if(x.measureText(test).width>W-110&&line){x.fillText(line,X+62,yy);line=wd+' ';yy+=86;}else line=test;}x.fillText(line.trim(),X+62,yy);
+  x.fillStyle=card.c1;x.font='500 28px "JetBrains Mono"';x.fillText('↗  VIEW',X+62,Y+H-54);
+  x.restore();
+  rr(x,X,Y,W,H,R);x.strokeStyle=dark?'rgba(255,255,255,0.12)':'rgba(26,23,38,0.09)';x.lineWidth=2;x.stroke();
+  const tex=new THREE.CanvasTexture(c);tex.colorSpace=THREE.SRGBColorSpace;tex.anisotropy=renderer.capabilities.getMaxAnisotropy();return tex;
+}
+let cards=[];
+function buildCards(dark){
+  cards.forEach(m=>{group.remove(m);m.material.map.dispose();m.material.dispose();});cards=[];
+  const ph=2.15,pw=ph*(CW/CH);
+  CARDS.forEach((card,i)=>{
+    const m=new THREE.Mesh(new THREE.PlaneGeometry(pw,ph),
+      new THREE.MeshBasicMaterial({map:cardTexture(card,dark),transparent:true,depthTest:false,depthWrite:false}));
+    m.userData.baseU=i/CARDS.length;group.add(m);cards.push(m);
+  });
+}
+
+const composer=new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene,camera));
+composer.addPass(new UnrealBloomPass(new THREE.Vector2(innerWidth,innerHeight),0.14,0.5,0.96));
+composer.addPass(new OutputPass());
+
+// ---- interaction ----
+const FOCUS_U=0.25;
+let phase=FOCUS_U,vel=0,dragging=false,lastX=0;
+const rCat=document.getElementById('r-cat'),rTitle=document.getElementById('r-title'),read=document.getElementById('read'),
+  links=[...document.querySelectorAll('nav .links a')];
+function circDist(a,b){let d=Math.abs((a-b)%1);return Math.min(d,1-d);}
+let curFocus=-1;
+function updateReadout(){
+  let best=0,bd=9;cards.forEach((s,i)=>{const u=(s.userData.baseU+phase)%1,d=circDist(u,FOCUS_U);if(d<bd){bd=d;best=i;}});
+  if(best!==curFocus){curFocus=best;const card=CARDS[best];
+    read.style.opacity=0;read.style.transform='translateY(6px)';
+    setTimeout(()=>{rCat.textContent=card.cat;const p=card.t.split(' ');
+      rTitle.innerHTML=p.length>1?p[0]+' <em>'+p.slice(1).join(' ')+'</em>':'<em>'+card.t+'</em>';
+      read.style.opacity=1;read.style.transform='translateY(0)';},150);
+    links.forEach(a=>a.classList.toggle('active',+a.dataset.i===best));
+  }
+}
+function spinTo(i){const target=FOCUS_U-i/CARDS.length;let dp=((target-phase+0.5)%1+1)%1-0.5;vel=dp*0.1;}
+links.forEach(a=>a.addEventListener('click',()=>spinTo(+a.dataset.i)));
+addEventListener('pointerdown',e=>{dragging=true;lastX=e.clientX;document.body.classList.add('grabbing');});
+addEventListener('pointermove',e=>{if(!dragging)return;const dx=e.clientX-lastX;lastX=e.clientX;const dp=-dx*0.0015;phase=(phase+dp+1)%1;vel=dp;});
+addEventListener('pointerup',()=>{dragging=false;document.body.classList.remove('grabbing');});
+addEventListener('wheel',e=>{e.preventDefault();vel+=e.deltaY*0.00009;},{passive:false});
+addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);composer.setSize(innerWidth,innerHeight);});
+
+const tmp=new THREE.Vector3();let T=0;
+function tick(){
+  T+=0.016;
+  if(!dragging){phase=(phase+vel+1)%1;vel*=0.92;
+    if(Math.abs(vel)<0.0004){let best=0,bd=9;cards.forEach((s,i)=>{const u=(s.userData.baseU+phase)%1,d=circDist(u,FOCUS_U);if(d<bd){bd=d;best=i;}});
+      const target=FOCUS_U-best/CARDS.length;let dp=((target-phase+0.5)%1+1)%1-0.5;phase=(phase+dp*0.1+1)%1;}}
+  cards.forEach((s,i)=>{
+    const u=(s.userData.baseU+phase)%1;curve.getPoint(u,tmp);
+    const d=circDist(u,FOCUS_U),n=d/0.5;
+    s.position.set(tmp.x,tmp.y+Math.sin(T*0.8+i)*0.03,tmp.z+(1-n)*0.5);
+    const sc=Math.max(0.5,1.28-n*0.8);s.scale.set(sc,sc,1);
+    s.material.opacity=Math.max(0.0,1-n*1.6);
+    s.renderOrder=Math.round((1-n)*1000);
+    s.lookAt(camera.position);
+  });
+  updateReadout();
+  group.rotation.y=Math.sin(T*0.06)*0.10;
+  camera.lookAt(0,0,0);composer.render();requestAnimationFrame(tick);
+}
+
+// wait for fonts so canvas text is crisp (this was a big cause of "rough")
+await Promise.all([
+  document.fonts.load('340 78px Fraunces'),
+  document.fonts.load('300 200px Fraunces'),
+  document.fonts.load('500 30px "JetBrains Mono"')
+]).catch(()=>{});
+await document.fonts.ready;
+buildCards(false);
+tick();
+document.getElementById('tg').addEventListener('click',()=>{const d=document.body.classList.toggle('dark');buildCards(d);});
+</script>
+</body>
+</html>
