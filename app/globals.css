@@ -138,3 +138,13 @@ nav .links button.active .i { opacity: 1; }
 @media (max-width: 820px) { .sec .inner { grid-template-columns: 1fr; } .sec .right { display: none; } }
 @media (max-width: 760px) { .prog { display: none; } }
 
+/* keyboard focus */
+:focus-visible { outline: 2px solid var(--p); outline-offset: 3px; border-radius: 4px; }
+
+/* respect reduced-motion: reveal content immediately, drop transitions */
+@media (prefers-reduced-motion: reduce) {
+  * { transition-duration: 0.001ms !important; animation-duration: 0.001ms !important; }
+  .sec .label, .sec h2, .sec .lead, .sec .more, .sec .right > * { opacity: 1 !important; transform: none !important; filter: none !important; }
+  html { scroll-behavior: auto !important; }
+}
+
