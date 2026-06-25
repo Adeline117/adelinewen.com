@@ -50,6 +50,16 @@ body {
 ::-webkit-scrollbar-thumb { background: rgba(124, 92, 240, 0.4); border-radius: 11px; border: 3px solid transparent; background-clip: padding-box; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(124, 92, 240, 0.7); background-clip: padding-box; }
 
+/* visually-hidden labels: translatable + screen-reader friendly, no visual change */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
+/* remove the grey tap flash on touch devices */
+* { -webkit-tap-highlight-color: transparent; }
+
+/* modern line-breaking: balanced headings, no orphan words in prose */
+h1, h2, .tl li .h { text-wrap: balance; }
+.hero .sub, .sec .lead, .tl li .dsc, .cs dd { text-wrap: pretty; }
+
 .spacer { height: 500vh; }
 
 /* skip-to-content for keyboard users */
@@ -100,6 +110,7 @@ nav .links button.active .i { opacity: 1; }
 .controls { display: flex; gap: 10px; }
 .toggle { font-family: var(--font-mono), monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mute); background: none; border: 1px solid var(--line); border-radius: 100px; padding: 8px 14px; cursor: pointer; transition: 0.25s; }
 .toggle:hover { color: var(--p); border-color: var(--p); }
+.toggle:active { transform: scale(0.95); }
 
 /* ===== Hero + scrolling content sections ===== */
 .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; position: relative; z-index: 2; padding: 0 24px; }
@@ -186,6 +197,7 @@ nav .links button.active .i { opacity: 1; }
   transition: 0.25s; box-shadow: 0 10px 28px rgba(124, 92, 240, 0.3);
 }
 .cform button:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(124, 92, 240, 0.42); }
+.cform button:active:not(:disabled) { transform: translateY(0); box-shadow: 0 6px 16px rgba(124, 92, 240, 0.3); }
 .cform button:disabled { opacity: 0.6; cursor: default; }
 .cform .status { font-family: var(--font-mono), monospace; font-size: 12px; line-height: 1.6; margin-top: 4px; }
 .cform .status.ok { color: var(--p2); }
