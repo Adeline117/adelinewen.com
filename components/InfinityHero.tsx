@@ -41,7 +41,7 @@ export default function InfinityHero() {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2));
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.15;
+    renderer.toneMappingExposure = 1.16;
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(34, window.innerWidth / window.innerHeight, 0.1, 100);
@@ -65,6 +65,7 @@ export default function InfinityHero() {
     scene.add(group);
 
     const tubeGeo = new THREE.TubeGeometry(curve, isMobile ? 240 : 480, 0.2, isMobile ? 18 : 32, true);
+    tubeGeo.computeTangents(); // needed for anisotropic highlights along the tube
     const glass = new THREE.MeshPhysicalMaterial({
       transmission: 1,
       thickness: 1.6,
@@ -74,6 +75,8 @@ export default function InfinityHero() {
       iridescence: 1,
       iridescenceIOR: 1.45,
       iridescenceThicknessRange: [120, 500],
+      anisotropy: 0.3, // stretches speculars along the curve — softer, glassier highlights
+      anisotropyRotation: Math.PI / 2,
       metalness: 0,
       clearcoat: 1,
       clearcoatRoughness: 0.03,
@@ -85,14 +88,22 @@ export default function InfinityHero() {
     const tube = new THREE.Mesh(tubeGeo, glass);
     group.add(tube);
 
+    // Glass node at the ∞ crossing: blends the hard self-intersection of the two
+    // tube branches into one smooth knot, so the centre no longer reads as stiff.
+    const nodeGeo = new THREE.SphereGeometry(0.31, 48, 48);
+    const node = new THREE.Mesh(nodeGeo, glass);
+    group.add(node);
+
     const bead = new THREE.Mesh(
       new THREE.SphereGeometry(0.15, 32, 32),
       new THREE.MeshBasicMaterial({ color: 0xcfc2ff })
     );
     group.add(bead);
-    bead.add(new THREE.PointLight(0x896afb, 6, 5));
+    const beadLight = new THREE.PointLight(0x896afb, 6, 5);
+    bead.add(beadLight);
 
     const stationsU = [0.18, 0.42, 0.68, 0.92];
+    const stations: THREE.Mesh[] = [];
     stationsU.forEach((u) => {
       const m = new THREE.Mesh(
         new THREE.SphereGeometry(0.06, 18, 18),
@@ -100,6 +111,7 @@ export default function InfinityHero() {
       );
       m.position.copy(curve.getPoint(u));
       group.add(m);
+      stations.push(m);
     });
 
     const composer = new EffectComposer(renderer);
@@ -108,9 +120,9 @@ export default function InfinityHero() {
     composer.addPass(
       new UnrealBloomPass(
         new THREE.Vector2(window.innerWidth, window.innerHeight),
-        isMobile ? 0.32 : 0.5,
-        0.7,
-        0.85
+        isMobile ? 0.32 : 0.5, // strength
+        0.8, // radius — slightly wider, softer halo
+        0.84 // threshold
       )
     );
     composer.addPass(new OutputPass());
@@ -164,6 +176,13 @@ export default function InfinityHero() {
       if (!prefersReduced) {
         group.rotation.y = Math.sin(t * 0.2) * 0.3 + mx * 0.4;
         group.rotation.x = -0.15 + my * 0.25;
+        // subtle life: the bead breathes, its light pulses, the station nodes twinkle
+        bead.scale.setScalar(1 + Math.sin(t * 2.2) * 0.09);
+        beadLight.intensity = 6 + Math.sin(t * 2.2) * 2;
+        for (let i = 0; i < stations.length; i++) {
+          const mat = stations[i].material as THREE.MeshBasicMaterial;
+          mat.opacity = 0.4 + Math.sin(t * 1.3 + i * 1.7) * 0.22;
+        }
       } else {
         group.rotation.x = -0.15;
       }
@@ -189,6 +208,7 @@ export default function InfinityHero() {
       window.removeEventListener("resize", onResize);
       composer.dispose();
       tubeGeo.dispose();
+      nodeGeo.dispose();
       glass.dispose();
       pmrem.dispose();
       renderer.dispose();
