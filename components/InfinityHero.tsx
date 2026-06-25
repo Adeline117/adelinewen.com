@@ -136,10 +136,17 @@ export default function InfinityHero() {
     let curU = 0;
     let curOpacity = 0; // starts hidden → eases in on load, and smooths scroll fades
     let raf = 0;
+    let frame = 0;
 
     const tick = () => {
       raf = requestAnimationFrame(tick);
       if (document.hidden) return; // don't burn GPU/battery on a hidden tab
+
+      // once scrolled past the hero the loop is just a faint backdrop (≈0.14 opacity) —
+      // render it at half rate to save GPU/battery; full rate while the hero is on screen
+      frame++;
+      const pastHero = window.scrollY > window.innerHeight && curOpacity < 0.2;
+      if (pastHero && frame % 2 === 0) return;
 
       const t = clock.getElapsedTime();
       const max = document.body.scrollHeight - window.innerHeight;

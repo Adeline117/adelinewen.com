@@ -2,11 +2,17 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
-    const { name, email, message } = (await req.json()) as {
+    const { name, email, message, company } = (await req.json()) as {
       name?: string;
       email?: string;
       message?: string;
+      company?: string;
     };
+
+    // honeypot: a real visitor never fills this — pretend success, drop silently
+    if (company) {
+      return NextResponse.json({ ok: true });
+    }
 
     if (!name || !email || !message) {
       return NextResponse.json({ error: "missing_fields" }, { status: 400 });
