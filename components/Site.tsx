@@ -549,20 +549,28 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
                 value={hp}
                 onChange={(e) => setHp(e.target.value)}
               />
+              <label htmlFor="cf-name" className="sr-only">{t.contact.form.name}</label>
               <input
+                id="cf-name"
                 required
+                autoComplete="name"
                 placeholder={t.contact.form.name}
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
               />
+              <label htmlFor="cf-email" className="sr-only">{t.contact.form.email}</label>
               <input
+                id="cf-email"
                 required
                 type="email"
+                autoComplete="email"
                 placeholder={t.contact.form.email}
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
               />
+              <label htmlFor="cf-message" className="sr-only">{t.contact.form.message}</label>
               <textarea
+                id="cf-message"
                 required
                 placeholder={t.contact.form.message}
                 value={form.message}
