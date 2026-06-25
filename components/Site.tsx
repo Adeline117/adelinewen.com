@@ -226,6 +226,7 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
   const [hp, setHp] = useState(""); // honeypot — humans leave it empty, bots fill it
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const secRefs = useRef<(HTMLElement | null)[]>([]);
+  const heroRef = useRef<HTMLElement>(null);
   const trackRef = useRef<SVGPathElement>(null);
   const beadRef = useRef<SVGCircleElement>(null);
 
@@ -278,6 +279,76 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
     window.addEventListener("scroll", onScroll, { passive: true });
     update();
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Mouse-wheel / keyboard paging: one section per gesture, then center.
+  // (Touch keeps the native CSS scroll-snap; we only hijack wheel + keys.)
+  useEffect(() => {
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const items = () =>
+      [heroRef.current, ...secRefs.current].filter(Boolean) as HTMLElement[];
+
+    // index of the section currently closest to the viewport center
+    const currentIndex = () => {
+      const list = items();
+      let best = 0;
+      let bd = Infinity;
+      list.forEach((el, i) => {
+        const r = el.getBoundingClientRect();
+        const d = Math.abs(r.top + r.height / 2 - window.innerHeight / 2);
+        if (d < bd) {
+          bd = d;
+          best = i;
+        }
+      });
+      return best;
+    };
+
+    const go = (dir: number) => {
+      const list = items();
+      const next = Math.min(list.length - 1, Math.max(0, currentIndex() + dir));
+      list[next]?.scrollIntoView({
+        behavior: prefersReduced ? "auto" : "smooth",
+        block: "center",
+      });
+    };
+
+    let locked = false;
+    let tail: ReturnType<typeof setTimeout>;
+    const onWheel = (e: WheelEvent) => {
+      if (Math.abs(e.deltaY) < 4) return;
+      // let the contact textarea scroll its own overflow
+      if ((e.target as HTMLElement).closest("textarea")) return;
+      e.preventDefault();
+      clearTimeout(tail);
+      if (!locked) {
+        locked = true;
+        go(e.deltaY > 0 ? 1 : -1);
+      }
+      // stay locked through the whole flick (incl. inertia); release once wheel is quiet
+      tail = setTimeout(() => {
+        locked = false;
+      }, 160);
+    };
+    window.addEventListener("wheel", onWheel, { passive: false });
+
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.target as HTMLElement).closest("input, textarea")) return;
+      if (e.key === "ArrowDown" || e.key === "PageDown" || e.key === " ") {
+        e.preventDefault();
+        go(1);
+      } else if (e.key === "ArrowUp" || e.key === "PageUp") {
+        e.preventDefault();
+        go(-1);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+
+    return () => {
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("keydown", onKey);
+      clearTimeout(tail);
+    };
   }, []);
 
   useEffect(() => {
@@ -408,7 +479,7 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
         </button>
       </div>
 
-      <header className="hero">
+      <header className="hero" ref={heroRef}>
         <h1>{t.heroTitle}</h1>
         <p className="sub">{t.heroSub}</p>
         <div className="hint">{t.heroHint}</div>
