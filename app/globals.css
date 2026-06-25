@@ -67,9 +67,10 @@ body {
 
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 3;
-  display: flex; justify-content: space-between; align-items: baseline;
-  padding: 26px clamp(24px, 5vw, 72px); border-bottom: 1px solid var(--line);
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 20px clamp(24px, 5vw, 72px); border-bottom: 1px solid var(--line);
 }
+nav .navright { display: flex; align-items: center; gap: clamp(20px, 3vw, 36px); }
 nav .logo { font-size: 19px; font-weight: 500; letter-spacing: -0.01em; }
 nav .links { display: flex; gap: 36px; font-family: var(--font-mono), monospace; font-size: 12px; letter-spacing: 0.04em; color: var(--mute); text-transform: uppercase; }
 nav .links button { background: none; border: 0; color: inherit; cursor: pointer; transition: 0.3s; font: inherit; letter-spacing: inherit; text-transform: inherit; }
@@ -96,7 +97,7 @@ nav .links button.active .i { opacity: 1; }
 .prog .track { fill: none; stroke: var(--line); stroke-width: 1.5; }
 .prog .bead { fill: var(--p); }
 
-.controls { position: fixed; z-index: 6; top: 70px; right: clamp(24px, 5vw, 72px); display: flex; gap: 10px; }
+.controls { display: flex; gap: 10px; }
 .toggle { font-family: var(--font-mono), monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mute); background: none; border: 1px solid var(--line); border-radius: 100px; padding: 8px 14px; cursor: pointer; transition: 0.25s; }
 .toggle:hover { color: var(--p); border-color: var(--p); }
 
@@ -215,7 +216,8 @@ nav .links button.active .i { opacity: 1; }
   nav { padding: 18px 20px; }
   nav .links { gap: 16px; font-size: 10.5px; }
   nav .links .i { display: none; }
-  .controls { top: 58px; right: 18px; }
+  /* not enough room inline on phones — float the toggles just below the bar */
+  .controls { position: fixed; z-index: 6; top: 56px; right: 16px; }
   .station { left: 20px; right: 20px; bottom: 28px; }
 }
 @media (max-width: 480px) {
