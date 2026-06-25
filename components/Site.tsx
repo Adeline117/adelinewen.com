@@ -452,32 +452,33 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
 
       <nav>
         <div className="logo">Adeline Wen</div>
-        <div className="links">
-          {t.nav.map((label, i) => (
-            <button key={i} className={i === active ? "active" : ""} onClick={() => goTo(i)}>
-              <span className="i">{String(i + 1).padStart(2, "0")}</span>
-              {label}
+        <div className="navright">
+          <div className="links">
+            {t.nav.map((label, i) => (
+              <button key={i} className={i === active ? "active" : ""} onClick={() => goTo(i)}>
+                <span className="i">{String(i + 1).padStart(2, "0")}</span>
+                {label}
+              </button>
+            ))}
+          </div>
+          <div className="controls">
+            <button
+              className="toggle"
+              aria-label={lang === "en" ? "切换到中文" : "Switch to English"}
+              onClick={() => setLang((l) => (l === "en" ? "zh" : "en"))}
+            >
+              {lang === "en" ? "中文" : "EN"}
             </button>
-          ))}
+            <button
+              className="toggle"
+              aria-label={lang === "zh" ? "切换深色模式" : "Toggle dark mode"}
+              onClick={() => setDark((v) => !v)}
+            >
+              ◐
+            </button>
+          </div>
         </div>
       </nav>
-
-      <div className="controls">
-        <button
-          className="toggle"
-          aria-label={lang === "en" ? "切换到中文" : "Switch to English"}
-          onClick={() => setLang((l) => (l === "en" ? "zh" : "en"))}
-        >
-          {lang === "en" ? "中文" : "EN"}
-        </button>
-        <button
-          className="toggle"
-          aria-label={lang === "zh" ? "切换深色模式" : "Toggle dark mode"}
-          onClick={() => setDark((v) => !v)}
-        >
-          ◐
-        </button>
-      </div>
 
       <header className="hero" ref={heroRef}>
         <h1>{t.heroTitle}</h1>
