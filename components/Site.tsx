@@ -8,6 +8,7 @@ const InfinityHero = dynamic(() => import("@/components/InfinityHero"), { ssr: f
 type Lang = "en" | "zh";
 type Section = { label: string; title: ReactNode; lead: string; more: { text: string; href: string } };
 type Row = { n: string; d: string; m: string };
+type CS = { k: string; v: string };
 type TL = { y: string; h: string; d: string };
 type CLink = { label: string; val: string; href: string };
 type Form = { name: string; email: string; message: string; send: string; sending: string; sent: string; err: string };
@@ -21,12 +22,12 @@ const COPY: Record<
     heroHint: string;
     about: Section & { tags: string[]; resume: TL[] };
     research: Section & { tl: TL[] };
-    arena: Section & { stats: Row[] };
+    arena: Section & { stats: Row[]; cs: CS[] };
     contact: { label: string; title: ReactNode; lead: string; links: CLink[]; form: Form };
   }
 > = {
   en: {
-    nav: ["About", "Research", "Arena", "Contact"],
+    nav: ["About", "Research", "Work", "Contact"],
     heroTitle: (
       <>
         Adeline <em>Wen</em>
@@ -34,7 +35,7 @@ const COPY: Record<
     ),
     heroSub: (
       <>
-        Student, researcher — I built <b>arenafi.org</b>.
+        Economics undergrad at UW. I research decentralized systems — and built <b>arenafi.org</b>.
       </>
     ),
     heroHint: "scroll to explore ↓",
@@ -81,6 +82,11 @@ const COPY: Record<
       lead:
         "Arena (arenafi.org) is a platform I designed and built end-to-end. It ranks 68,000+ crypto traders across 44+ exchanges, turning scattered trading activity into one clean leaderboard.",
       more: { text: "Visit arenafi.org →", href: "https://arenafi.org" },
+      cs: [
+        { k: "Problem", v: "Trading activity is scattered across dozens of exchanges, so there was no neutral way to compare traders." },
+        { k: "What I built", v: "A unified leaderboard — exchange API integrations, a normalized scoring pipeline, and the full front end." },
+        { k: "Result", v: "68,000+ traders ranked across 44+ exchanges, designed and shipped solo." },
+      ],
       stats: [
         { n: "68,000+", d: "crypto traders ranked", m: "" },
         { n: "44+", d: "exchanges integrated", m: "" },
@@ -116,7 +122,7 @@ const COPY: Record<
     },
   },
   zh: {
-    nav: ["关于", "研究", "Arena", "联系"],
+    nav: ["关于", "研究", "项目", "联系"],
     heroTitle: (
       <>
         Adeline <em>Wen</em>
@@ -124,7 +130,7 @@ const COPY: Record<
     ),
     heroSub: (
       <>
-        学生、研究者——做了 <b>arenafi.org</b>。
+        华盛顿大学经济学本科生。研究去中心化系统——并独立做了 <b>arenafi.org</b>。
       </>
     ),
     heroHint: "向下滚动了解 ↓",
@@ -171,6 +177,11 @@ const COPY: Record<
       lead:
         "Arena（arenafi.org）是我从头到尾独立设计、构建的平台。它为 44+ 交易所的 68,000+ 加密交易者排名，把分散的交易行为整合成一个清晰的榜单。",
       more: { text: "访问 arenafi.org →", href: "https://arenafi.org" },
+      cs: [
+        { k: "问题", v: "交易行为分散在几十个交易所，没有一个中立的方式去横向比较交易者。" },
+        { k: "我做了什么", v: "一个统一的排行榜——交易所 API 接入、标准化的评分管线，以及整个前端。" },
+        { k: "结果", v: "为 44+ 交易所的 68,000+ 交易者排名，独立完成设计与上线。" },
+      ],
       stats: [
         { n: "68,000+", d: "加密交易者排名", m: "" },
         { n: "44+", d: "接入交易所", m: "" },
@@ -212,6 +223,7 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
   const [dark, setDark] = useState<boolean | null>(null);
   const [lang, setLang] = useState<Lang>(routeLang ?? "en");
   const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [hp, setHp] = useState(""); // honeypot — humans leave it empty, bots fill it
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const secRefs = useRef<(HTMLElement | null)[]>([]);
   const trackRef = useRef<SVGPathElement>(null);
@@ -233,7 +245,9 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
   useEffect(() => {
     const track = trackRef.current;
     const len = track ? track.getTotalLength() : 0;
-    const onScroll = () => {
+    let ticking = false;
+    const update = () => {
+      ticking = false;
       const max = document.body.scrollHeight - window.innerHeight;
       const u = max > 0 ? window.scrollY / max : 0;
       if (track && beadRef.current) {
@@ -254,8 +268,15 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
       });
       setActive(best);
     };
+    // rAF-throttle: coalesce scroll bursts into one layout read per frame
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
+    update();
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
@@ -291,7 +312,7 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, company: hp }),
       });
       if (res.ok) {
         setStatus("sent");
@@ -328,6 +349,16 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
                 <span key={tag}>{tag}</span>
               ))}
             </div>
+          )}
+          {i === 2 && (
+            <dl className="cs">
+              {t.arena.cs.map((c) => (
+                <div key={c.k}>
+                  <dt>{c.k}</dt>
+                  <dd>{c.v}</dd>
+                </div>
+              ))}
+            </dl>
           )}
           <a className="more" href={sec.more.href} target="_blank" rel="noopener noreferrer">
             {sec.more.text}
@@ -435,6 +466,17 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
             <h2>{t.contact.title}</h2>
             <p className="lead">{t.contact.lead}</p>
             <form className="cform" onSubmit={submit}>
+              {/* honeypot: hidden from humans, catches naive bots */}
+              <input
+                className="hp"
+                type="text"
+                name="company"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                value={hp}
+                onChange={(e) => setHp(e.target.value)}
+              />
               <input
                 required
                 placeholder={t.contact.form.name}
