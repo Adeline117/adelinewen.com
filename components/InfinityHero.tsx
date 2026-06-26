@@ -108,7 +108,7 @@ export default function InfinityHero() {
       const f = 1 - i / TRAIL; // near bead → far tail
       const m = new THREE.Mesh(
         new THREE.SphereGeometry(0.025 + 0.085 * f, 16, 16),
-        new THREE.MeshBasicMaterial({ color: 0xcfc2ff, transparent: true, opacity: 0.5 * f })
+        new THREE.MeshBasicMaterial({ color: 0xcfc2ff, transparent: true, opacity: 0.38 * f })
       );
       group.add(m);
       trail.push(m);
@@ -119,7 +119,7 @@ export default function InfinityHero() {
     stationsU.forEach((u) => {
       const m = new THREE.Mesh(
         new THREE.SphereGeometry(0.06, 18, 18),
-        new THREE.MeshBasicMaterial({ color: 0x7c5cf0, transparent: true, opacity: 0.4 })
+        new THREE.MeshBasicMaterial({ color: 0x7c5cf0, transparent: true, opacity: 0.3 })
       );
       m.position.copy(curve.getPoint(u));
       group.add(m);
@@ -141,9 +141,9 @@ export default function InfinityHero() {
     // cream bg — there the loop reads better as crisper, lower-key glass.
     const applyTheme = () => {
       const dark = document.body.classList.contains("dark");
-      // dark = full glow; light = minimal bloom (glow only muddies the cream bg)
-      bloom.strength = isMobile ? (dark ? 0.32 : 0.12) : dark ? 0.5 : 0.2;
-      renderer.toneMappingExposure = dark ? 1.18 : 1.04;
+      // dark = glow (toned down — was too bright); light = minimal bloom
+      bloom.strength = isMobile ? (dark ? 0.24 : 0.12) : dark ? 0.36 : 0.2;
+      renderer.toneMappingExposure = dark ? 1.08 : 1.04;
       if (isStatic) composer.render(); // static frame won't re-tick, so repaint now
     };
     const themeObs = new MutationObserver(applyTheme);
@@ -219,10 +219,10 @@ export default function InfinityHero() {
         l3.position.set(4 - smx * 2.5, -4 - smy * 2, -2);
         // subtle life: the bead breathes, its light pulses, the station nodes twinkle
         bead.scale.setScalar(1 + Math.sin(t * 2.2) * 0.09);
-        beadLight.intensity = 6 + Math.sin(t * 2.2) * 2;
+        beadLight.intensity = 4.5 + Math.sin(t * 2.2) * 1.5;
         for (let i = 0; i < stations.length; i++) {
           const mat = stations[i].material as THREE.MeshBasicMaterial;
-          mat.opacity = 0.4 + Math.sin(t * 1.3 + i * 1.7) * 0.22;
+          mat.opacity = 0.28 + Math.sin(t * 1.3 + i * 1.7) * 0.16;
         }
       } else {
         group.rotation.x = -0.13;
