@@ -176,10 +176,10 @@ nav .links button.active .i { opacity: 1; }
 .rows li:hover .n { color: var(--p2); }
 
 .tl { list-style: none; }
-.tl li { padding: 16px 0 16px 26px; border-left: 1px solid var(--line); position: relative; margin-left: 4px; }
+.tl li { padding: 20px 0 20px 26px; border-left: 1px solid var(--line); position: relative; margin-left: 4px; }
 .tl li::before { content: ""; position: absolute; left: -4.5px; top: 22px; width: 8px; height: 8px; border-radius: 50%; background: var(--p); box-shadow: 0 0 0 4px var(--bg-grad, #f1efe8); }
 .tl li .y { font-family: var(--font-mono), monospace; font-size: 11px; letter-spacing: 0.1em; color: var(--p); text-transform: uppercase; }
-.tl li .h { font-family: var(--font-fraunces), serif; font-size: 24px; font-weight: 330; margin-top: 4px; }
+.tl li .h { font-family: var(--font-fraunces), serif; font-size: 24px; font-weight: 330; line-height: 1.22; margin-top: 4px; }
 .tl li .dsc { font-size: 14.5px; color: var(--text); margin-top: 5px; line-height: 1.6; }
 
 .about { display: flex; flex-direction: column; gap: 24px; }
