@@ -50,13 +50,12 @@ export default function InfinityHero() {
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(34, window.innerWidth / window.innerHeight, 0.1, 100);
-    // portrait phones are too narrow for the wide ∞ — rotate it vertical so the
-    // whole symbol fits a tall screen while staying large, and pull back to frame it
-    const portrait = () => window.innerWidth / window.innerHeight < 0.8;
+    // portrait phones are too narrow for the wide ∞ — pull the camera back far
+    // enough that the whole horizontal loop fits (smaller, but never cropped)
     const fitZ = () => {
       const aspect = window.innerWidth / window.innerHeight;
-      if (!portrait()) return 7.5;
-      return Math.min(18, Math.max(10.2, 6.6 / aspect)); // fit the rotated (tall) loop
+      if (aspect >= 0.8) return 7.5;
+      return Math.min(24, 10.3 / aspect);
     };
     camera.position.set(0, 0, fitZ());
 
@@ -219,7 +218,6 @@ export default function InfinityHero() {
         // Keep the loop near front-facing so its silhouette stays a balanced,
         // symmetric ∞ — only a whisper of slow tilt for life. (Bigger rotation
         // projected the depth-weave into the outline and read as lopsided.)
-        group.rotation.z = portrait() ? Math.PI / 2 : 0; // vertical ∞ on phones
         group.rotation.y = Math.sin(t * 0.16) * 0.05;
         group.rotation.x = -0.05 + Math.sin(t * 0.11) * 0.025;
         // The cursor glides the light across the glass — the loop itself stays calm.
@@ -244,7 +242,6 @@ export default function InfinityHero() {
 
     if (isStatic) {
       // static frame — no continuous loop (saves battery / data); no flowing trail
-      group.rotation.z = portrait() ? Math.PI / 2 : 0;
       group.rotation.x = -0.13;
       curve.getPoint(0, tmp);
       bead.position.copy(tmp);
