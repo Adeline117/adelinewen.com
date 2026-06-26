@@ -31,8 +31,9 @@ body.dark {
   --bg-grad: radial-gradient(ellipse 80% 68% at 50% 44%, #241e42, #0c0a14 62%, #050309);
   /* on dark, the halo becomes an actual glow bloom around the loop */
   --halo: radial-gradient(46% 42% at 50% 40%, rgba(124, 92, 240, 0.15), transparent 70%);
-  /* dark backdrop hugging the hero text so the bright loop doesn't wash out the white name */
-  --hero-shadow: 0 2px 40px rgba(5, 3, 12, 0.78), 0 0 16px rgba(5, 3, 12, 0.6), 0 0 6px rgba(5, 3, 12, 0.7);
+  /* soft, tight shadow hugging the hero text — just enough contrast over the
+     loop without smudging a black blob behind the name */
+  --hero-shadow: 0 1px 14px rgba(6, 4, 14, 0.5);
   --nav-bg: rgba(10, 8, 18, 0.6);
 }
 
