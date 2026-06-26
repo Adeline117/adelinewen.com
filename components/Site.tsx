@@ -601,6 +601,7 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
         </div>
       </nav>
 
+      <main>
       <header className="hero" ref={heroRef}>
         <h1>{t.heroTitle}</h1>
         <p className="sub">{t.heroSub}</p>
@@ -801,8 +802,9 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
           </div>
         </div>
       </section>
+      </main>
 
-      <div className="prog">
+      <div className="prog" aria-hidden="true">
         <div className="count">
           <b>{String(active + 1).padStart(2, "0")}</b> / 04
         </div>
