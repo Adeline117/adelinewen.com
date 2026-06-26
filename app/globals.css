@@ -236,12 +236,17 @@ nav .links button.active .i { opacity: 1; }
 
 /* ===== Responsive / device adaptation ===== */
 @media (max-width: 820px) {
-  /* mobile: align sections to the top under the nav (centre-snap hid headings on
-     tall sections) and loosen snapping so long content reads freely */
-  html { scroll-snap-type: y proximity; scroll-padding-top: 56px; }
-  .hero, .sec { scroll-snap-align: start; }
-  .sec { min-height: 100svh; padding: 76px clamp(20px, 6vw, 40px) 64px; }
-  .sec .inner { grid-template-columns: 1fr; gap: 38px; }
+  /* mobile: natural free scrolling (snap/paging is a desktop-pointer concept and
+     fought touch on tall sections); content-height sections so there's no dead
+     whitespace to scroll past; scroll-margin keeps nav jumps clear of the bar */
+  html { scroll-snap-type: none; }
+  .sec { min-height: auto; padding: 56px clamp(20px, 6vw, 40px); scroll-margin-top: 54px; }
+  .sec .inner { grid-template-columns: 1fr; gap: 32px; }
+  /* show content immediately on mobile — the blur/opacity scroll-reveal could
+     leave sections invisible (and the blur transition janked touch scrolling) */
+  .sec .label, .sec h2, .sec .lead, .sec .tags, .sec .cs, .sec .more, .sec .right > * {
+    opacity: 1 !important; transform: none !important; filter: none !important; transition: none !important;
+  }
   .sec .right { display: block; justify-self: stretch; max-width: 100%; }
   .hero { min-height: 100svh; padding: 0 24px; }
   .prog { display: none; }

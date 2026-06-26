@@ -53,7 +53,7 @@ export default function InfinityHero() {
     // portrait phones are too narrow for the wide ∞ — pull back so the whole loop fits
     const fitZ = () => {
       const aspect = window.innerWidth / window.innerHeight;
-      return aspect < 0.75 ? 7.5 / Math.max(aspect / 0.75, 0.42) : 7.5;
+      return aspect < 0.75 ? 7.5 / Math.max(aspect / 0.9, 0.4) : 7.5;
     };
     camera.position.set(0, 0, fitZ());
 
@@ -207,7 +207,8 @@ export default function InfinityHero() {
       }
 
       // fade the loop to an ambient backdrop once past the hero (eased → also fades in on load)
-      const targetOpacity = Math.max(0.14, 1 - (window.scrollY / window.innerHeight) * 0.95);
+      // fade the loop almost away past the hero on phones so sections stay clean
+      const targetOpacity = Math.max(isMobile ? 0.04 : 0.14, 1 - (window.scrollY / window.innerHeight) * 0.95);
       curOpacity += (targetOpacity - curOpacity) * 0.08;
       canvas.style.opacity = String(curOpacity);
 
