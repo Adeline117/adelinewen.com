@@ -21,7 +21,10 @@ class Lemniscate extends THREE.Curve<THREE.Vector3> {
     return target.set(
       (this.s * Math.cos(a)) / d,
       (this.s * Math.sin(a) * Math.cos(a)) / d,
-      Math.sin(a * 2) * 0.35
+      // keep the original gentle wave, plus a sin(a) term that lifts the two
+      // crossing strands apart in depth (one in front, one behind) so the centre
+      // reads as a smooth over/under weave instead of a hard intersection
+      Math.sin(a * 2) * 0.35 + Math.sin(a) * 0.3
     );
   }
 }
@@ -36,12 +39,14 @@ export default function InfinityHero() {
     const isMobile =
       window.matchMedia("(max-width: 760px)").matches || navigator.maxTouchPoints > 0;
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const saveData = (navigator as { connection?: { saveData?: boolean } }).connection?.saveData;
+    const isStatic = prefersReduced || !!saveData;
 
     const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2));
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.16;
+    // toneMappingExposure is set per-theme by applyTheme() below
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(34, window.innerWidth / window.innerHeight, 0.1, 100);
@@ -88,12 +93,6 @@ export default function InfinityHero() {
     const tube = new THREE.Mesh(tubeGeo, glass);
     group.add(tube);
 
-    // Glass node at the ∞ crossing: blends the hard self-intersection of the two
-    // tube branches into one smooth knot, so the centre no longer reads as stiff.
-    const nodeGeo = new THREE.SphereGeometry(0.31, 48, 48);
-    const node = new THREE.Mesh(nodeGeo, glass);
-    group.add(node);
-
     const bead = new THREE.Mesh(
       new THREE.SphereGeometry(0.15, 32, 32),
       new THREE.MeshBasicMaterial({ color: 0xcfc2ff })
@@ -116,16 +115,26 @@ export default function InfinityHero() {
 
     const composer = new EffectComposer(renderer);
     composer.addPass(new RenderPass(scene, camera));
-    // bloom is the priciest pass — lighten it on mobile
-    composer.addPass(
-      new UnrealBloomPass(
-        new THREE.Vector2(window.innerWidth, window.innerHeight),
-        isMobile ? 0.32 : 0.5, // strength
-        0.8, // radius — slightly wider, softer halo
-        0.84 // threshold
-      )
+    const bloom = new UnrealBloomPass(
+      new THREE.Vector2(window.innerWidth, window.innerHeight),
+      0.5, // strength (set per-theme below)
+      0.8, // radius — slightly wider, softer halo
+      0.84 // threshold
     );
+    composer.addPass(bloom);
     composer.addPass(new OutputPass());
+
+    // Theme-aware glow: additive bloom pops on dark but washes out on the light
+    // cream bg — there the loop reads better as crisper, lower-key glass.
+    const applyTheme = () => {
+      const dark = document.body.classList.contains("dark");
+      bloom.strength = isMobile ? (dark ? 0.32 : 0.22) : dark ? 0.5 : 0.34;
+      renderer.toneMappingExposure = dark ? 1.18 : 1.05;
+      if (isStatic) composer.render(); // static frame won't re-tick, so repaint now
+    };
+    const themeObs = new MutationObserver(applyTheme);
+    themeObs.observe(document.body, { attributes: true, attributeFilter: ["class"] });
+    applyTheme();
 
     let mx = 0;
     let my = 0;
@@ -190,8 +199,7 @@ export default function InfinityHero() {
       composer.render();
     };
 
-    const saveData = (navigator as { connection?: { saveData?: boolean } }).connection?.saveData;
-    if (prefersReduced || saveData) {
+    if (isStatic) {
       // static frame — no continuous loop (saves battery / data)
       group.rotation.x = -0.15;
       curve.getPoint(0, tmp);
@@ -204,11 +212,11 @@ export default function InfinityHero() {
 
     return () => {
       cancelAnimationFrame(raf);
+      themeObs.disconnect();
       window.removeEventListener("pointermove", onPointer);
       window.removeEventListener("resize", onResize);
       composer.dispose();
       tubeGeo.dispose();
-      nodeGeo.dispose();
       glass.dispose();
       pmrem.dispose();
       renderer.dispose();
