@@ -155,6 +155,8 @@ export default function InfinityHero() {
     const clock = new THREE.Clock();
     const tmp = new THREE.Vector3();
     let curU = 0;
+    let smx = 0; // smoothed cursor → glides the light, not the geometry
+    let smy = 0;
     let curOpacity = 0; // starts hidden → eases in on load, and smooths scroll fades
     let raf = 0;
     let frame = 0;
@@ -186,10 +188,16 @@ export default function InfinityHero() {
         // Gentle organic float instead of a single-axis metronome rock: several
         // slow, out-of-phase frequencies + a soft vertical bob, so it reads as a
         // glass object suspended and breathing in space — never exactly repeating.
-        group.rotation.y = Math.sin(t * 0.13) * 0.16 + mx * 0.32;
-        group.rotation.x = -0.13 + Math.sin(t * 0.19) * 0.06 + my * 0.18;
+        group.rotation.y = Math.sin(t * 0.13) * 0.16;
+        group.rotation.x = -0.13 + Math.sin(t * 0.19) * 0.06;
         group.rotation.z = Math.sin(t * 0.09) * 0.03;
         group.position.y = Math.sin(t * 0.23) * 0.06;
+        // The cursor glides the light across the glass — the loop itself stays calm.
+        // (Tilting the whole ∞ toward the pointer felt dizzy and fought the hero text.)
+        smx += (mx - smx) * 0.05;
+        smy += (my - smy) * 0.05;
+        l2.position.set(-5 + smx * 2.5, -1 - smy * 2, 3);
+        l3.position.set(4 - smx * 2.5, -4 - smy * 2, -2);
         // subtle life: the bead breathes, its light pulses, the station nodes twinkle
         bead.scale.setScalar(1 + Math.sin(t * 2.2) * 0.09);
         beadLight.intensity = 6 + Math.sin(t * 2.2) * 2;
