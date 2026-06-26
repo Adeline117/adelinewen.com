@@ -226,13 +226,10 @@ export default function InfinityHero() {
         smy += (my - smy) * 0.05;
         l2.position.set(-5 + smx * 2.5, -1 - smy * 2, 3);
         l3.position.set(4 - smx * 2.5, -4 - smy * 2, -2);
-        // subtle life: the bead breathes, its light pulses, the station nodes twinkle
-        bead.scale.setScalar(1 + Math.sin(t * 2.2) * 0.09);
-        beadLight.intensity = 4.5 + Math.sin(t * 2.2) * 1.5;
-        for (let i = 0; i < stations.length; i++) {
-          const mat = stations[i].material as THREE.MeshBasicMaterial;
-          mat.opacity = 0.28 + Math.sin(t * 1.3 + i * 1.7) * 0.16;
-        }
+        // very gentle bead breath only — the station twinkle read as "flashy", so
+        // the nodes now sit steady (their constant material opacity)
+        bead.scale.setScalar(1 + Math.sin(t * 1.1) * 0.04);
+        beadLight.intensity = 4.5 + Math.sin(t * 1.1) * 0.5;
       } else {
         group.rotation.x = -0.13;
       }
