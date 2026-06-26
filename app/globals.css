@@ -13,6 +13,9 @@
   --scrim-t: linear-gradient(rgba(241, 239, 232, 0.8), transparent);
   --scrim-b: linear-gradient(transparent, rgba(231, 228, 220, 0.87));
   --bg-grad: radial-gradient(ellipse 80% 68% at 50% 44%, #fcfbf7, #f1efe8 56%, #e7e4dc);
+  /* violet "stage" behind the loop so its glow/speculars have contrast to read
+     against on the light cream bg (additive glow can't show over near-white) */
+  --halo: radial-gradient(44% 40% at 50% 42%, rgba(124, 92, 240, 0.13), transparent 72%);
 }
 body.dark {
   --ink: #f6f4fc;
@@ -22,6 +25,8 @@ body.dark {
   --scrim-t: linear-gradient(rgba(12, 10, 20, 0.9), transparent);
   --scrim-b: linear-gradient(transparent, rgba(5, 3, 12, 0.95));
   --bg-grad: radial-gradient(ellipse 80% 68% at 50% 44%, #241e42, #0c0a14 62%, #050309);
+  /* on dark, the same halo becomes an actual glow bloom around the loop */
+  --halo: radial-gradient(46% 42% at 50% 40%, rgba(124, 92, 240, 0.24), transparent 70%);
 }
 
 @theme inline {
@@ -67,6 +72,9 @@ h1, h2, .tl li .h { text-wrap: balance; }
 .skip:focus { top: 16px; }
 
 #scene { position: fixed; inset: 0; z-index: 0; opacity: 0; }
+/* glow "stage" sitting just behind the 3D canvas (both z-index 0; canvas paints
+   later in the DOM so it stays on top) — gives the loop's glow something to read against */
+.halo { position: fixed; inset: 0; z-index: 0; pointer-events: none; background: var(--halo); transition: background 0.6s; }
 .grain {
   position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: 0.04;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");

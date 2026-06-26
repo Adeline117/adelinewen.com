@@ -445,6 +445,7 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
       <a href="#about" className="skip">
         {lang === "zh" ? "跳到内容" : "Skip to content"}
       </a>
+      <div className="halo" />
       <InfinityHero />
       <div className="grain" />
       <div className="scrim t" />
