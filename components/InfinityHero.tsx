@@ -95,7 +95,7 @@ export default function InfinityHero() {
       color: new THREE.Color("#c6bbff"),
       attenuationColor: new THREE.Color("#7c5cf0"),
       attenuationDistance: 2.2,
-      envMapIntensity: 1.6,
+      envMapIntensity: 1.35,
     });
     const tube = new THREE.Mesh(tubeGeo, glass);
     group.add(tube);
@@ -149,8 +149,8 @@ export default function InfinityHero() {
     const applyTheme = () => {
       const dark = document.body.classList.contains("dark");
       // dark = a calm, dim glow (a backdrop, not the star); light = minimal bloom
-      bloom.strength = isMobile ? (dark ? 0.18 : 0.12) : dark ? 0.28 : 0.2;
-      renderer.toneMappingExposure = dark ? 1.0 : 1.04;
+      bloom.strength = isMobile ? (dark ? 0.13 : 0.12) : dark ? 0.2 : 0.2;
+      renderer.toneMappingExposure = dark ? 0.9 : 1.04;
       if (isStatic) composer.render(); // static frame won't re-tick, so repaint now
     };
     const themeObs = new MutationObserver(applyTheme);
