@@ -115,7 +115,7 @@ export default function InfinityHero() {
       const f = 1 - i / TRAIL; // near bead → far tail
       const m = new THREE.Mesh(
         new THREE.SphereGeometry(0.025 + 0.085 * f, 16, 16),
-        new THREE.MeshBasicMaterial({ color: 0xcfc2ff, transparent: true, opacity: 0.38 * f })
+        new THREE.MeshBasicMaterial({ color: 0xcfc2ff, transparent: true, opacity: 0.5 * f })
       );
       group.add(m);
       trail.push(m);
@@ -176,6 +176,8 @@ export default function InfinityHero() {
 
     const clock = new THREE.Clock();
     const tmp = new THREE.Vector3();
+    let lastScrollY = window.scrollY;
+    let scrollAccum = 0; // total scroll distance → always pushes the light forward
     let smx = 0; // smoothed cursor → glides the light, not the geometry
     let smy = 0;
     let curOpacity = 0; // starts hidden → eases in on load, and smooths scroll fades
@@ -194,9 +196,12 @@ export default function InfinityHero() {
 
       const t = clock.getElapsedTime();
 
-      // the light flows endlessly along the ∞ in one steady direction (time-driven,
-      // never reverses with scroll)
-      const flow = (t * 0.05) % 1;
+      // the light flows in ONE direction only: a gentle idle drift plus scroll —
+      // any scrolling (up or down) pushes it further forward, never backward
+      const sy = window.scrollY;
+      scrollAccum += Math.abs(sy - lastScrollY);
+      lastScrollY = sy;
+      const flow = (t * 0.04 + scrollAccum * 0.0011) % 1;
       curve.getPoint(flow, tmp);
       bead.position.copy(tmp);
       for (let i = 0; i < trail.length; i++) {
