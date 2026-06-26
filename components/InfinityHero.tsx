@@ -183,8 +183,13 @@ export default function InfinityHero() {
       canvas.style.opacity = String(curOpacity);
 
       if (!prefersReduced) {
-        group.rotation.y = Math.sin(t * 0.2) * 0.3 + mx * 0.4;
-        group.rotation.x = -0.15 + my * 0.25;
+        // Gentle organic float instead of a single-axis metronome rock: several
+        // slow, out-of-phase frequencies + a soft vertical bob, so it reads as a
+        // glass object suspended and breathing in space — never exactly repeating.
+        group.rotation.y = Math.sin(t * 0.13) * 0.16 + mx * 0.32;
+        group.rotation.x = -0.13 + Math.sin(t * 0.19) * 0.06 + my * 0.18;
+        group.rotation.z = Math.sin(t * 0.09) * 0.03;
+        group.position.y = Math.sin(t * 0.23) * 0.06;
         // subtle life: the bead breathes, its light pulses, the station nodes twinkle
         bead.scale.setScalar(1 + Math.sin(t * 2.2) * 0.09);
         beadLight.intensity = 6 + Math.sin(t * 2.2) * 2;
@@ -193,7 +198,7 @@ export default function InfinityHero() {
           mat.opacity = 0.4 + Math.sin(t * 1.3 + i * 1.7) * 0.22;
         }
       } else {
-        group.rotation.x = -0.15;
+        group.rotation.x = -0.13;
       }
       camera.lookAt(0, 0, 0);
       composer.render();
@@ -201,7 +206,7 @@ export default function InfinityHero() {
 
     if (isStatic) {
       // static frame — no continuous loop (saves battery / data)
-      group.rotation.x = -0.15;
+      group.rotation.x = -0.13;
       curve.getPoint(0, tmp);
       bead.position.copy(tmp);
       canvas.style.opacity = "0.85";
