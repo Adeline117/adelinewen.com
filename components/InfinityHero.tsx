@@ -101,6 +101,19 @@ export default function InfinityHero() {
     const beadLight = new THREE.PointLight(0x896afb, 6, 5);
     bead.add(beadLight);
 
+    // comet trail behind the bead — reinforces the sense of endless flow along the ∞
+    const TRAIL = 7;
+    const trail: THREE.Mesh[] = [];
+    for (let i = 0; i < TRAIL; i++) {
+      const f = 1 - i / TRAIL; // near bead → far tail
+      const m = new THREE.Mesh(
+        new THREE.SphereGeometry(0.025 + 0.085 * f, 16, 16),
+        new THREE.MeshBasicMaterial({ color: 0xcfc2ff, transparent: true, opacity: 0.5 * f })
+      );
+      group.add(m);
+      trail.push(m);
+    }
+
     const stationsU = [0.18, 0.42, 0.68, 0.92];
     const stations: THREE.Mesh[] = [];
     stationsU.forEach((u) => {
@@ -177,8 +190,15 @@ export default function InfinityHero() {
       const targetU = max > 0 ? window.scrollY / max : 0;
       curU += (targetU - curU) * 0.06;
 
-      curve.getPoint(curU % 1, tmp);
+      // the light flows endlessly along the ∞ (its essence) — scroll adds a push
+      const flow = (t * 0.05 + curU) % 1;
+      curve.getPoint(flow, tmp);
       bead.position.copy(tmp);
+      for (let i = 0; i < trail.length; i++) {
+        const tu = (((flow - (i + 1) * 0.013) % 1) + 1) % 1;
+        curve.getPoint(tu, tmp);
+        trail[i].position.copy(tmp);
+      }
 
       // fade the loop to an ambient backdrop once past the hero (eased → also fades in on load)
       const targetOpacity = Math.max(0.14, 1 - (window.scrollY / window.innerHeight) * 0.95);
@@ -212,10 +232,11 @@ export default function InfinityHero() {
     };
 
     if (isStatic) {
-      // static frame — no continuous loop (saves battery / data)
+      // static frame — no continuous loop (saves battery / data); no flowing trail
       group.rotation.x = -0.13;
       curve.getPoint(0, tmp);
       bead.position.copy(tmp);
+      trail.forEach((m) => (m.visible = false));
       canvas.style.opacity = "0.85";
       composer.render();
     } else {
@@ -230,6 +251,10 @@ export default function InfinityHero() {
       composer.dispose();
       tubeGeo.dispose();
       glass.dispose();
+      trail.forEach((m) => {
+        m.geometry.dispose();
+        (m.material as THREE.Material).dispose();
+      });
       pmrem.dispose();
       renderer.dispose();
     };
