@@ -80,18 +80,18 @@ const COPY: Record<
         </>
       ),
       lead:
-        "Arena (arenafi.org) is a platform I designed and built end-to-end. It ranks 68,000+ crypto traders across 44+ exchanges, turning scattered trading activity into one clean leaderboard.",
+        "Tennis has the ATP rankings; chess has Elo. Crypto trading moves hundreds of billions a day — yet no one could answer the simplest question: who are the best traders? Arena (arenafi.org) is the first cross-platform answer. I designed, built, and shipped it solo — unifying 68,000+ traders across 44+ exchanges (CEX + DEX) into one transparent Arena Score, giving crypto trading a world ranking for the first time.",
       more: { text: "Visit arenafi.org →", href: "https://arenafi.org" },
       cs: [
-        { k: "Problem", v: "Trading activity is scattered across dozens of exchanges, so there was no neutral way to compare traders." },
-        { k: "What I built", v: "A unified leaderboard — exchange API integrations, a normalized scoring pipeline, and the full front end." },
-        { k: "Result", v: "68,000+ traders ranked across 44+ exchanges, designed and shipped solo." },
+        { k: "Discover", v: "Leaderboard, live now — unified rankings across every exchange, built on a 44+ source data pipeline (the moat)." },
+        { k: "Prove", v: "Battles (V2) — traders go head-to-head on their real trades while spectators predict and bet." },
+        { k: "Follow", v: "Copy trading (V3) — the proven top traders open vaults anyone can follow." },
       ],
       stats: [
-        { n: "68,000+", d: "crypto traders ranked", m: "" },
-        { n: "44+", d: "exchanges integrated", m: "" },
-        { n: "Solo", d: "designed & built end-to-end", m: "JS · API" },
-        { n: "2025", d: "launched", m: "" },
+        { n: "68,000+", d: "traders ranked", m: "" },
+        { n: "44+", d: "exchanges · CEX + DEX", m: "" },
+        { n: "60", d: "automated data pipelines", m: "" },
+        { n: "Solo", d: "designed, built & shipped", m: "Next.js · Supabase · Redis" },
       ],
     },
     contact: {
@@ -175,18 +175,18 @@ const COPY: Record<
         </>
       ),
       lead:
-        "Arena（arenafi.org）是我从头到尾独立设计、构建的平台。它为 44+ 交易所的 68,000+ 加密交易者排名，把分散的交易行为整合成一个清晰的榜单。",
+        "网球有 ATP 排名，国际象棋有 Elo。加密交易每天成交数千亿美元，却没人能回答最基本的问题：谁是最好的交易者？Arena（arenafi.org）是第一个跨平台的答案。我独立设计、开发并上线——把 44+ 交易所（中心化 + 去中心化）上分散的 68,000+ 交易者，统一进一个透明的 Arena 评分，第一次给加密交易一个世界排名。",
       more: { text: "访问 arenafi.org →", href: "https://arenafi.org" },
       cs: [
-        { k: "问题", v: "交易行为分散在几十个交易所，没有一个中立的方式去横向比较交易者。" },
-        { k: "我做了什么", v: "一个统一的排行榜——交易所 API 接入、标准化的评分管线，以及整个前端。" },
-        { k: "结果", v: "为 44+ 交易所的 68,000+ 交易者排名，独立完成设计与上线。" },
+        { k: "发现", v: "排行榜（已上线）——跨所统一排名，建立在 44+ 数据源的管线之上（核心壁垒）。" },
+        { k: "证明", v: "对战（V2）——交易者用各自的真实交易正面对决，观众预测并下注。" },
+        { k: "跟随", v: "跟单（V3）——被验证的顶尖交易者开设金库，任何人都能跟投。" },
       ],
       stats: [
-        { n: "68,000+", d: "加密交易者排名", m: "" },
-        { n: "44+", d: "接入交易所", m: "" },
-        { n: "独立", d: "从设计到开发全包", m: "JS · API" },
-        { n: "2025", d: "上线", m: "" },
+        { n: "68,000+", d: "交易者排名", m: "" },
+        { n: "44+", d: "交易所 · CEX + DEX", m: "" },
+        { n: "60", d: "自动化数据管线", m: "" },
+        { n: "独立", d: "设计、开发、上线", m: "Next.js · Supabase · Redis" },
       ],
     },
     contact: {
