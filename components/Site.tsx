@@ -656,18 +656,22 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
           </ul>
 
           <p className="ablock-intro">{t.arena.funnelIntro}</p>
-          <dl className="cs">
-            {t.arena.cs.map((c) => (
-              <div key={c.k}>
-                <dt>{c.k}</dt>
-                <dd>{c.v}</dd>
-              </div>
-            ))}
-          </dl>
+
+          <div className="ablock">
+            <h3>{lang === "zh" ? "漏斗" : "The funnel"}</h3>
+            <dl className="cs abody">
+              {t.arena.cs.map((c) => (
+                <div key={c.k}>
+                  <dt>{c.k}</dt>
+                  <dd>{c.v}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
 
           <div className="ablock">
             <h3>{t.arena.value.h}</h3>
-            <ul className="alist">
+            <ul className="alist abody">
               {t.arena.value.items.map((v) => (
                 <li key={v.h}>
                   <b>{v.h}</b> — {v.d}
@@ -678,17 +682,19 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
 
           <div className="ablock">
             <h3>{t.arena.model.h}</h3>
-            <p>{t.arena.model.d}</p>
-            <ul className="alist">
-              {t.arena.model.points.map((p, i) => (
-                <li key={i}>{p}</li>
-              ))}
-            </ul>
+            <div className="abody">
+              <p>{t.arena.model.d}</p>
+              <ul className="alist">
+                {t.arena.model.points.map((p, i) => (
+                  <li key={i}>{p}</li>
+                ))}
+              </ul>
+            </div>
           </div>
 
           <div className="ablock">
             <h3>{t.arena.roadmap.h}</h3>
-            <ul className="aroad">
+            <ul className="aroad abody">
               {t.arena.roadmap.steps.map((s) => (
                 <li key={s.phase}>
                   <div className="rp">{s.phase}</div>
@@ -701,20 +707,22 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
 
           <div className="ablock">
             <h3>{t.arena.revenue.h}</h3>
-            <p>{t.arena.revenue.d}</p>
-            <dl className="arev">
-              {t.arena.revenue.rows.map((r) => (
-                <div key={r.k}>
-                  <dt>{r.k}</dt>
-                  <dd>{r.v}</dd>
-                </div>
-              ))}
-            </dl>
+            <div className="abody">
+              <p>{t.arena.revenue.d}</p>
+              <dl className="arev">
+                {t.arena.revenue.rows.map((r) => (
+                  <div key={r.k}>
+                    <dt>{r.k}</dt>
+                    <dd>{r.v}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
           </div>
 
           <div className="ablock">
             <h3>{t.arena.moats.h}</h3>
-            <ul className="alist">
+            <ul className="alist abody">
               {t.arena.moats.items.map((m, i) => (
                 <li key={i}>{m}</li>
               ))}
@@ -723,7 +731,7 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
 
           <div className="ablock">
             <h3>{t.arena.vision.h}</h3>
-            <p>{t.arena.vision.d}</p>
+            <p className="abody">{t.arena.vision.d}</p>
           </div>
 
           <a className="more" href={t.arena.more.href} target="_blank" rel="noopener noreferrer">

@@ -153,6 +153,11 @@ export default function InfinityHero() {
       // dark = a calm, dim glow (a backdrop, not the star); light = minimal bloom
       bloom.strength = isMobile ? (dark ? 0.13 : 0.12) : dark ? 0.2 : 0.2;
       renderer.toneMappingExposure = dark ? 0.9 : 1.04;
+      // dark bg: light lavender glass (glows). light bg: deep saturated purple that
+      // reads as a rich shape against cream (glass absorbs more so it doesn't wash out)
+      glass.color.set(dark ? "#c6bbff" : "#6a48d4");
+      glass.attenuationColor.set(dark ? "#7c5cf0" : "#3f23a8");
+      glass.attenuationDistance = dark ? 2.2 : 1.3;
       if (isStatic) composer.render(); // static frame won't re-tick, so repaint now
     };
     const themeObs = new MutationObserver(applyTheme);
