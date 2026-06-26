@@ -229,32 +229,35 @@ nav .links button.active .i { opacity: 1; }
 
 /* ===== Arena: full project section (long-form, scrolls freely) ===== */
 .arena-sec { display: block; min-height: 100vh; padding: 120px clamp(24px, 5vw, 72px); scroll-snap-align: start; scroll-margin-top: 64px; }
-.arena-wrap { max-width: 720px; margin: 0 auto; }
+.arena-wrap { max-width: 980px; margin: 0 auto; }
 /* this section is a long read — show everything immediately, no blur-in reveal */
 .arena-sec .label, .arena-sec h2, .arena-sec .lead, .arena-sec .cs, .arena-sec .more {
   opacity: 1 !important; transform: none !important; filter: none !important; transition: none !important;
 }
 .arena-wrap > .lead { max-width: 100%; margin-top: 26px; }
-.arena-stats { display: grid !important; grid-template-columns: repeat(2, 1fr); gap: 0 28px; margin: 44px 0 8px; }
+.arena-stats { display: grid !important; grid-template-columns: repeat(4, 1fr); gap: 0 28px; margin: 44px 0 8px; }
 .arena-stats li { border-top: 1px solid var(--line); flex-direction: column; align-items: flex-start; gap: 5px; padding: 16px 4px; }
 .arena-stats li:hover { padding-left: 4px; }
 .arena-stats .rm { white-space: normal; }
 .ablock-intro { margin-top: 44px; font-size: 15px; line-height: 1.65; color: var(--text); max-width: 640px; }
-.arena-wrap .cs { margin-top: 22px; }
-.ablock { margin-top: 46px; }
-.ablock h3 { font-family: var(--font-mono), monospace; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--p); margin-bottom: 16px; }
-.ablock > p { font-size: 15px; line-height: 1.65; color: var(--text); max-width: 640px; }
-.alist { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-top: 14px; max-width: 660px; }
+.arena-wrap .cs { margin-top: 0; }
+/* two-column editorial blocks: mono label left, content right (matches the site) */
+.ablock { display: grid; grid-template-columns: 170px 1fr; gap: clamp(24px, 4vw, 56px); align-items: start; margin-top: 42px; padding-top: 30px; border-top: 1px solid var(--line); }
+.ablock h3 { font-family: var(--font-mono), monospace; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--p); padding-top: 3px; }
+.ablock p { font-size: 15px; line-height: 1.65; color: var(--text); max-width: 600px; }
+.abody > *:first-child { margin-top: 0; }
+.abody p + ul, .abody p + .arev { margin-top: 16px; }
+.alist { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-top: 0; max-width: 600px; }
 .alist li { font-size: 15px; line-height: 1.6; color: var(--text); padding-left: 18px; position: relative; }
 .alist li::before { content: "—"; position: absolute; left: 0; color: var(--p); }
 .alist li b { color: var(--ink); font-weight: 500; }
-.aroad { list-style: none; margin-top: 8px; }
+.aroad { list-style: none; margin-top: 0; }
 .aroad li { display: grid; grid-template-columns: 150px 86px 1fr; gap: 20px; padding: 16px 0; border-top: 1px solid var(--line); align-items: baseline; }
 .aroad li:last-child { border-bottom: 1px solid var(--line); }
 .aroad .rp { font-family: var(--font-fraunces), serif; font-size: 18px; color: var(--ink); }
 .aroad .rw { font-family: var(--font-mono), monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--p); }
 .aroad .rwhat { font-size: 14px; line-height: 1.55; color: var(--text); }
-.arev { margin-top: 16px; max-width: 660px; }
+.arev { margin-top: 0; max-width: 600px; }
 .arev > div { display: flex; justify-content: space-between; gap: 24px; padding: 13px 0; border-top: 1px solid var(--line); align-items: baseline; }
 .arev > div:last-child { border-bottom: 1px solid var(--line); }
 .arev dt { font-family: var(--font-fraunces), serif; font-size: 16px; color: var(--ink); }
@@ -277,6 +280,8 @@ nav .links button.active .i { opacity: 1; }
   html { scroll-snap-type: none; }
   .sec { min-height: auto; padding: 56px clamp(20px, 6vw, 40px); scroll-margin-top: 54px; }
   .arena-sec { min-height: auto; padding: 56px clamp(20px, 6vw, 40px); }
+  .arena-stats { grid-template-columns: repeat(2, 1fr); }
+  .ablock { grid-template-columns: 1fr; gap: 12px; padding-top: 24px; margin-top: 28px; }
   .aroad li { grid-template-columns: 1fr; gap: 4px; }
   .aroad .rw { margin-top: 2px; }
   .sec .inner { grid-template-columns: 1fr; gap: 32px; }
