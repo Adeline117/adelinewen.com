@@ -53,14 +53,14 @@ const COPY: Record<
     ),
     heroHint: "scroll to explore ↓",
     about: {
-      label: "01 — About",
+      label: "01 · About",
       title: (
         <>
           A bit <em>about me</em>.
         </>
       ),
       lead:
-        "I'm Adeline (she/her) — an Economics undergrad at the University of Washington, with an Informatics minor. I'm fascinated by how decentralized systems actually behave: I research them at the UW Decentralized Computing Lab, dig into markets as a crypto analyst at Stably, and build products of my own to put ideas to the test. On the side, my content has drawn 1.5M+ organic views.",
+        "I'm Adeline (she/her), an Economics undergrad at the University of Washington, with an Informatics minor. I'm fascinated by how decentralized systems actually behave: I research them at the UW Decentralized Computing Lab, dig into markets as a crypto analyst at Stably, and build products of my own to put ideas to the test. On the side, my content has drawn 1.5M+ organic views.",
       more: { text: "Connect on LinkedIn →", href: "https://www.linkedin.com/in/adeline1107" },
       tags: ["Blockchain", "On-Chain Analysis", "Data Science", "JavaScript", "API Dev", "Econometrics"],
       resume: [
@@ -71,14 +71,14 @@ const COPY: Record<
       ],
     },
     research: {
-      label: "02 — Research",
+      label: "02 · Research",
       title: (
         <>
           Papers &amp; <em>research</em>.
         </>
       ),
       lead:
-        "At the UW Decentralized Computing Lab with Prof. Wei Cai — first-author and co-authored research in blockchain and decentralized AI, from airdrop Sybil detection to interpretable on-chain governance.",
+        "At the UW Decentralized Computing Lab with Prof. Wei Cai, first-author and co-authored research in blockchain and decentralized AI, from airdrop Sybil detection to interpretable on-chain governance.",
       more: { text: "Explore HasciDB →", href: "https://hascidb.org" },
       tl: [
         { y: "Accepted · Nanyang Blockchain Conference 2026", h: "HasciDB: A Database for Identifying Crypto Sybil Airdrop Hunters", d: "First author. The largest open-source cross-project airdrop Sybil-detection database (hascidb.org, 2.5M+ wallets). With Chunyang Li, Shutong Qu, Leon Leng, and Wei Cai." },
@@ -86,19 +86,19 @@ const COPY: Record<
       ],
     },
     arena: {
-      label: "03 — Arena",
+      label: "03 · Arena",
       title: (
         <>
           Arena, <em>solo-built</em>.
         </>
       ),
       lead:
-        "Tennis has the ATP rankings; chess has Elo. Crypto trading moves hundreds of billions a day — yet no one could answer the simplest question: who are the best traders? Arena (arenafi.org) is the first cross-platform answer. I designed, built, and shipped it solo — unifying 68,000+ traders across 44+ exchanges (CEX + DEX) into one transparent Arena Score, giving crypto trading a world ranking for the first time.",
+        "Tennis has the ATP rankings; chess has Elo. Crypto trading moves hundreds of billions a day, yet no one could answer the simplest question: who are the best traders? Arena (arenafi.org) is the first cross-platform answer. I designed, built, and shipped it solo, unifying 68,000+ traders across 44+ exchanges (CEX + DEX) into one transparent Arena Score, giving crypto trading a world ranking for the first time.",
       more: { text: "Visit arenafi.org →", href: "https://arenafi.org" },
       cs: [
-        { k: "Discover", v: "Leaderboard, live now — unified rankings across every exchange, built on a data pipeline spanning 44+ sources." },
-        { k: "Prove", v: "Battles (V2) — traders go head-to-head on their real trades while spectators predict and bet." },
-        { k: "Follow", v: "Copy trading (V3) — the proven top traders open vaults anyone can follow." },
+        { k: "Discover", v: "Leaderboard, live now. Unified rankings across every exchange, built on a data pipeline spanning 44+ sources." },
+        { k: "Prove", v: "Battles (V2). Traders go head-to-head on their real trades while spectators predict and bet." },
+        { k: "Follow", v: "Copy trading (V3). The proven top traders open vaults anyone can follow." },
       ],
       stats: [
         { n: "68,000+", d: "traders ranked", m: "" },
@@ -106,21 +106,21 @@ const COPY: Record<
         { n: "60", d: "automated data pipelines", m: "" },
         { n: "Solo", d: "designed, built & shipped", m: "Next.js · Supabase · Redis" },
       ],
-      funnelIntro: "Rankings are only step one. Arena's full form is a three-stage funnel — each step builds on the data of the last and earns far more per user:",
+      funnelIntro: "Rankings are only step one. Arena's full form is a three-stage funnel, where each step builds on the data of the last and earns far more per user:",
       value: {
         h: "Why it's different",
         items: [
-          { h: "Cross-platform visibility", d: "The only place that sees every trader on every exchange. Binance will never show you Bybit's traders — Arena shows them all." },
-          { h: "One transparent standard", d: "Arena Score, 0–100 — weighted 60% return-on-investment and 40% absolute profit — with a published methodology anyone can audit. Accounts under $500 profit are filtered out, so no stat-padding." },
+          { h: "Cross-platform visibility", d: "The only place that sees every trader on every exchange. Binance will never show you Bybit's traders. Arena shows them all." },
+          { h: "One transparent standard", d: "Arena Score, 0–100, weighted 60% return-on-investment and 40% absolute profit, with a published methodology anyone can audit. Accounts under $500 profit are filtered out, so no stat-padding." },
           { h: "Competition, not display", d: "Not a static dashboard but a live contest. Ego is the strongest retention engine ever built." },
         ],
       },
       model: {
-        h: "The business model — UFC + Polymarket",
+        h: "The business model: UFC + Polymarket",
         d: "Every breakout crypto product monetizes speculation. Arena makes the traders themselves the show: performers fight, spectators predict and bet, and the house takes a cut from both sides. Three things that have never been combined into one product:",
         points: [
-          "Real traders competing on their real trades — not virtual athletes, not passive copy-trading.",
-          "Cross-exchange normalization — putting a Binance trader and a Bybit trader on one scale.",
+          "Real traders competing on their real trades, not virtual athletes, not passive copy-trading.",
+          "Cross-exchange normalization, putting a Binance trader and a Bybit trader on one scale.",
           "Spectators betting on real humans making real trades, in real time.",
         ],
       },
@@ -134,7 +134,7 @@ const COPY: Record<
       },
       revenue: {
         h: "How it makes money",
-        d: "Revenue comes from several independent layers — each stands on its own, so it holds even when any one slows:",
+        d: "Revenue comes from several independent layers, each stands on its own, so it holds even when any one slows:",
         rows: [
           { k: "Battle rake", v: "5% of bounty pools" },
           { k: "Betting spread", v: "3% of every bet placed" },
@@ -145,24 +145,24 @@ const COPY: Record<
       moats: {
         h: "Moats",
         items: [
-          "The 44+ exchange data asset — a structural barrier no single exchange will ever cross to build.",
+          "The 44+ exchange data asset: a structural barrier no single exchange will ever cross to build.",
           "Full CEX + DEX coverage, where on-chain tools see only DEX and exchanges see only their own users.",
           "Competition and public reputation compound retention in a way a data dashboard never can.",
         ],
       },
       vision: {
         h: "Long-term vision",
-        d: "Trading is the most-played, highest-stakes competitive sport of our era — and the only one with no world ranking, no official matches, and no star system. Arena fills in all three, in order: discover the best, let them prove it in public, then let anyone follow. The benchmark isn't a single product but ATP + UFC + Bloomberg combined — and the path runs from the arena of crypto to the arena of every financial market.",
+        d: "Trading is the most-played, highest-stakes competitive sport of our era, and the only one with no world ranking, no official matches, and no star system. Arena fills in all three, in order: discover the best, let them prove it in public, then let anyone follow. The benchmark isn't a single product but ATP + UFC + Bloomberg combined, and the path runs from the arena of crypto to the arena of every financial market.",
       },
     },
     contact: {
-      label: "04 — Contact",
+      label: "04 · Contact",
       title: (
         <>
           Let&apos;s <em>talk</em>.
         </>
       ),
-      lead: "Open to research and building opportunities — always up for a good problem.",
+      lead: "Open to research and building opportunities, always up for a good problem.",
       links: [
         { label: "Email", val: "adelinewen1107@outlook.com", href: "mailto:adelinewen1107@outlook.com" },
         { label: "GitHub", val: "@Adeline117 ↗", href: "https://github.com/Adeline117" },
@@ -177,8 +177,8 @@ const COPY: Record<
         message: "Message",
         send: "Send message",
         sending: "Sending…",
-        sent: "Thanks — I'll be in touch soon.",
-        err: "Couldn't send — please email adelinewen1107@outlook.com directly.",
+        sent: "Thanks, I'll be in touch soon.",
+        err: "Couldn't send, please email adelinewen1107@outlook.com directly.",
       },
     },
   },
@@ -196,14 +196,14 @@ const COPY: Record<
     ),
     heroHint: "向下滚动了解 ↓",
     about: {
-      label: "01 — 关于",
+      label: "01 · 关于",
       title: (
         <>
           关于<em>我</em>。
         </>
       ),
       lead:
-        "我是 Adeline（她/她）——华盛顿大学经济学本科生，辅修信息学。我着迷于去中心化系统真实的运转方式：在华盛顿大学去中心化计算实验室做研究，在 Stably 任加密分析师钻研市场，也独立打造自己的产品，把想法付诸实践。业余做的内容也收获了 150 万+ 次自然播放。",
+        "我是 Adeline（她/她），华盛顿大学经济学本科生，辅修信息学。我着迷于去中心化系统真实的运转方式：在华盛顿大学去中心化计算实验室做研究，在 Stably 任加密分析师钻研市场，也独立打造自己的产品，把想法付诸实践。业余做的内容也收获了 150 万+ 次自然播放。",
       more: { text: "在 LinkedIn 联系 →", href: "https://www.linkedin.com/in/adeline1107" },
       tags: ["区块链", "链上分析", "数据科学", "JavaScript", "API 开发", "计量经济学"],
       resume: [
@@ -214,14 +214,14 @@ const COPY: Record<
       ],
     },
     research: {
-      label: "02 — 研究",
+      label: "02 · 研究",
       title: (
         <>
           论文与<em>研究</em>。
         </>
       ),
       lead:
-        "在华盛顿大学去中心化计算实验室，导师 Wei Cai 教授——区块链与去中心化 AI 研究（第一作者及合作者），涵盖空投 Sybil 检测与可解释的链上治理。",
+        "在华盛顿大学去中心化计算实验室，导师 Wei Cai 教授，区块链与去中心化 AI 研究（第一作者及合作者），涵盖空投 Sybil 检测与可解释的链上治理。",
       more: { text: "查看 HasciDB →", href: "https://hascidb.org" },
       tl: [
         { y: "已接收 · 南洋区块链大会 2026", h: "HasciDB：识别加密 Sybil 空投猎人的数据库", d: "第一作者。最大的开源跨项目空投 Sybil 检测数据库（hascidb.org，250 万+ 钱包）。合作者：Chunyang Li、Shutong Qu、Leon Leng、Wei Cai。" },
@@ -229,19 +229,19 @@ const COPY: Record<
       ],
     },
     arena: {
-      label: "03 — Arena",
+      label: "03 · Arena",
       title: (
         <>
           Arena，<em>独立打造</em>。
         </>
       ),
       lead:
-        "网球有 ATP 排名，国际象棋有 Elo。加密交易每天成交数千亿美元，却没人能回答最基本的问题：谁是最好的交易者？Arena（arenafi.org）是第一个跨平台的答案。我独立设计、开发并上线——把 44+ 交易所（中心化 + 去中心化）上分散的 68,000+ 交易者，统一进一个透明的 Arena 评分，第一次给加密交易一个世界排名。",
+        "网球有 ATP 排名，国际象棋有 Elo。加密交易每天成交数千亿美元，却没人能回答最基本的问题：谁是最好的交易者？Arena（arenafi.org）是第一个跨平台的答案。我独立设计、开发并上线，把 44+ 交易所（中心化 + 去中心化）上分散的 68,000+ 交易者，统一进一个透明的 Arena 评分，第一次给加密交易一个世界排名。",
       more: { text: "访问 arenafi.org →", href: "https://arenafi.org" },
       cs: [
-        { k: "发现", v: "排行榜（已上线）——跨所统一排名，建立在覆盖 44+ 数据源的管线之上。" },
-        { k: "证明", v: "对战（V2）——交易者用各自的真实交易正面对决，观众预测并下注。" },
-        { k: "跟随", v: "跟单（V3）——被验证的顶尖交易者开设金库，任何人都能跟投。" },
+        { k: "发现", v: "排行榜（已上线）：跨所统一排名，建立在覆盖 44+ 数据源的管线之上。" },
+        { k: "证明", v: "对战（V2）：交易者用各自的真实交易正面对决，观众预测并下注。" },
+        { k: "跟随", v: "跟单（V3）：被验证的顶尖交易者开设金库，任何人都能跟投。" },
       ],
       stats: [
         { n: "68,000+", d: "交易者排名", m: "" },
@@ -249,21 +249,21 @@ const COPY: Record<
         { n: "60", d: "自动化数据管线", m: "" },
         { n: "独立", d: "设计、开发、上线", m: "Next.js · Supabase · Redis" },
       ],
-      funnelIntro: "排名只是第一步。Arena 的完整形态是一个三段漏斗——每一步都建立在上一步的数据之上，单用户的变现也大幅提升：",
+      funnelIntro: "排名只是第一步。Arena 的完整形态是一个三段漏斗，每一步都建立在上一步的数据之上，单用户的变现也大幅提升：",
       value: {
         h: "为什么不一样",
         items: [
-          { h: "跨平台可见", d: "唯一能看见每个交易所、每位交易者的地方。币安永远不会告诉你 Bybit 的交易者——Arena 全都看得见。" },
-          { h: "统一透明的标准", d: "Arena 评分，0–100——其中收益率（ROI）占 60%、绝对盈亏占 40%，方法论公开、任何人可审计。绝对盈利低于 $500 的账户被过滤，杜绝刷数据。" },
+          { h: "跨平台可见", d: "唯一能看见每个交易所、每位交易者的地方。币安永远不会告诉你 Bybit 的交易者；Arena 全都看得见。" },
+          { h: "统一透明的标准", d: "Arena 评分，0–100，其中收益率（ROI）占 60%、绝对盈亏占 40%，方法论公开、任何人可审计。绝对盈利低于 $500 的账户被过滤，杜绝刷数据。" },
           { h: "是竞技，不是展示", d: "这里的数据不是静态看板，而是实时比赛。胜负欲是有史以来最强的留存引擎。" },
         ],
       },
       model: {
-        h: "商业模式——UFC + Polymarket",
+        h: "商业模式：UFC + Polymarket",
         d: "所有爆发过的加密产品都在为投机变现。Arena 让交易者本身成为表演：选手对战，观众预测下注，平台从两边抽成。三件从未被组合进同一个产品的事：",
         points: [
-          "真实交易者用真实交易正面较量——不是虚拟选手，也不是被动跟单。",
-          "跨所归一化——把币安和 Bybit 的交易者放进同一把尺子。",
+          "真实交易者用真实交易正面较量，不是虚拟选手，也不是被动跟单。",
+          "跨所归一化，把币安和 Bybit 的交易者放进同一把尺子。",
           "观众对真实的人、真实的交易、实时下注。",
         ],
       },
@@ -277,7 +277,7 @@ const COPY: Record<
       },
       revenue: {
         h: "怎么赚钱",
-        d: "收入来自多条相互独立的线——每条都能独立支撑，任何一条放缓都不塌：",
+        d: "收入来自多条相互独立的线，每条都能独立支撑，任何一条放缓都不塌：",
         rows: [
           { k: "对战抽成", v: "奖池的 5%" },
           { k: "下注价差", v: "每笔下注的 3%" },
@@ -288,24 +288,24 @@ const COPY: Record<
       moats: {
         h: "护城河",
         items: [
-          "44+ 交易所的数据资产——任何单一交易所都不会跨过的结构性壁垒。",
+          "44+ 交易所的数据资产：任何单一交易所都不会跨过的结构性壁垒。",
           "完整的 CEX + DEX 覆盖；链上工具只看得到 DEX，交易所只看得到自家用户。",
           "竞技与公开声誉带来的留存，是数据看板永远做不到的复利。",
         ],
       },
       vision: {
         h: "长期愿景",
-        d: "交易是这个时代参与最广、赌注最高的竞技运动——也是唯一没有世界排名、没有官方比赛、没有明星体系的运动。Arena 依次补上这三样：先发现最强者，再让他们公开证明，最后让任何人都能跟随。对标的不是某个单一产品，而是 ATP + UFC + Bloomberg 的合体——路径从加密的竞技场，通向一切金融市场的竞技场。",
+        d: "交易是这个时代参与最广、赌注最高的竞技运动，也是唯一没有世界排名、没有官方比赛、没有明星体系的运动。Arena 依次补上这三样：先发现最强者，再让他们公开证明，最后让任何人都能跟随。对标的不是某个单一产品，而是 ATP + UFC + Bloomberg 的合体，路径从加密的竞技场，通向一切金融市场的竞技场。",
       },
     },
     contact: {
-      label: "04 — 联系",
+      label: "04 · 联系",
       title: (
         <>
           聊聊<em>吧</em>。
         </>
       ),
-      lead: "对研究与构建的机会开放——随时欢迎好问题。",
+      lead: "对研究与构建的机会开放，随时欢迎好问题。",
       links: [
         { label: "邮箱", val: "adelinewen1107@outlook.com", href: "mailto:adelinewen1107@outlook.com" },
         { label: "GitHub", val: "@Adeline117 ↗", href: "https://github.com/Adeline117" },
@@ -321,7 +321,7 @@ const COPY: Record<
         send: "发送",
         sending: "发送中…",
         sent: "谢谢，我会尽快回复你。",
-        err: "发送失败——请直接邮件 adelinewen1107@outlook.com。",
+        err: "发送失败，请直接邮件 adelinewen1107@outlook.com。",
       },
     },
   },
@@ -332,7 +332,7 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
   const [dark, setDark] = useState<boolean | null>(null);
   const [lang, setLang] = useState<Lang>(routeLang ?? "en");
   const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const [hp, setHp] = useState(""); // honeypot — humans leave it empty, bots fill it
+  const [hp, setHp] = useState(""); // honeypot, humans leave it empty, bots fill it
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const secRefs = useRef<(HTMLElement | null)[]>([]);
   const heroRef = useRef<HTMLElement>(null);
@@ -442,9 +442,14 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
       });
       if (cur) {
         const r = cur.getBoundingClientRect();
-        const EDGE = 6;
-        if (dir > 0 && r.bottom > vh + EDGE) return;
-        if (dir < 0 && r.top < -EDGE) return;
+        // only a genuinely long section (the Arena page) may scroll natively to its
+        // edge before paging; normal ~one-screen sections always page exactly one
+        const tall = r.height > vh * 1.3;
+        if (tall) {
+          const EDGE = 6;
+          if (dir > 0 && r.bottom > vh + EDGE) return;
+          if (dir < 0 && r.top < -EDGE) return;
+        }
       }
       e.preventDefault();
       clearTimeout(tail);
@@ -480,7 +485,7 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
 
   useEffect(() => {
     const stored = localStorage.getItem("theme");
-    setDark(stored ? stored === "dark" : true); // default dark — the loop's glow lives there
+    setDark(stored ? stored === "dark" : true); // default dark, the loop's glow lives there
   }, []);
   useEffect(() => {
     if (dark === null) return;
@@ -520,7 +525,7 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
       if (res.status === 503) {
         // backend not configured yet → fall back to the visitor's mail client
         const body = encodeURIComponent(`From: ${form.name} <${form.email}>\n\n${form.message}`);
-        const subject = encodeURIComponent(`Portfolio contact — ${form.name}`);
+        const subject = encodeURIComponent(`Portfolio contact, ${form.name}`);
         window.location.href = `mailto:adelinewen1107@outlook.com?subject=${subject}&body=${body}`;
         setStatus("idle");
         return;
@@ -636,7 +641,7 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
         </ul>
       )}
 
-      {/* 03 — Arena (full project page) */}
+      {/* 03, Arena (full project page) */}
       <section className="sec arena-sec" id="arena" data-i={2} ref={setRef(2)}>
         <div className="arena-wrap">
           <div className="label">{t.arena.label}</div>
@@ -674,7 +679,7 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
             <ul className="alist abody">
               {t.arena.value.items.map((v) => (
                 <li key={v.h}>
-                  <b>{v.h}</b> — {v.d}
+                  <b>{v.h}</b>, {v.d}
                 </li>
               ))}
             </ul>
@@ -740,7 +745,7 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
         </div>
       </section>
 
-      {/* 04 — Contact (with working form) */}
+      {/* 04, Contact (with working form) */}
       <section className="sec" id="contact" data-i={3} ref={setRef(3)}>
         <div className="inner">
           <div className="left">

@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://adelinewen.com"),
   title: "Adeline Wen | Researcher & Builder",
   description:
-    "Adeline Wen — undergraduate research assistant at the UW Decentralized Computing Lab and solo founder of arenafi.org. Blockchain and decentralized-AI research, airdrop Sybil detection, and the first cross-platform crypto trader ranking, built end-to-end.",
+    "Adeline Wen, undergraduate research assistant at the UW Decentralized Computing Lab and solo founder of arenafi.org. Blockchain and decentralized-AI research, airdrop Sybil detection, and the first cross-platform crypto trader ranking, built end-to-end.",
   keywords: [
     "Adeline Wen",
     "blockchain research",
