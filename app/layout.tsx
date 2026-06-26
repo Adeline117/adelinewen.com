@@ -18,7 +18,7 @@ const mono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://adelinewen.com"),
-  title: "Adeline Wen — Researcher & Builder",
+  title: "Adeline Wen | Researcher & Builder",
   description:
     "Adeline Wen — undergraduate research assistant at the UW Decentralized Computing Lab and solo founder of arenafi.org. Blockchain and decentralized-AI research, airdrop Sybil detection, and the first cross-platform crypto trader ranking, built end-to-end.",
   keywords: [
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   creator: "Adeline Wen",
   alternates: { canonical: "/", languages: { en: "/", zh: "/zh" } },
   openGraph: {
-    title: "Adeline Wen — Researcher & Builder",
+    title: "Adeline Wen | Researcher & Builder",
     description:
       "UW Decentralized Computing Lab · solo founder of arenafi.org · blockchain and decentralized-AI research. One infinite loop of craft.",
     url: "https://adelinewen.com",
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Adeline Wen — Researcher & Builder",
+    title: "Adeline Wen | Researcher & Builder",
     description: "UW Decentralized Computing Lab · solo founder of arenafi.org · blockchain & decentralized-AI research.",
   },
 };
