@@ -13,9 +13,11 @@
   --scrim-t: linear-gradient(rgba(241, 239, 232, 0.8), transparent);
   --scrim-b: linear-gradient(transparent, rgba(231, 228, 220, 0.87));
   --bg-grad: radial-gradient(ellipse 80% 68% at 50% 44%, #fcfbf7, #f1efe8 56%, #e7e4dc);
-  /* violet "stage" behind the loop so its glow/speculars have contrast to read
-     against on the light cream bg (additive glow can't show over near-white) */
-  --halo: radial-gradient(44% 40% at 50% 42%, rgba(124, 92, 240, 0.13), transparent 72%);
+  /* light mode: no glow stage — additive glow only looks muddy on cream, so the
+     loop reads as clean glass instead. (glow lives in dark mode, below) */
+  --halo: transparent;
+  /* soft halo hugging the hero text so the loop never hurts its legibility */
+  --hero-shadow: 0 1px 24px rgba(245, 243, 236, 0.9), 0 0 8px rgba(245, 243, 236, 0.7);
 }
 body.dark {
   --ink: #f6f4fc;
@@ -25,8 +27,10 @@ body.dark {
   --scrim-t: linear-gradient(rgba(12, 10, 20, 0.9), transparent);
   --scrim-b: linear-gradient(transparent, rgba(5, 3, 12, 0.95));
   --bg-grad: radial-gradient(ellipse 80% 68% at 50% 44%, #241e42, #0c0a14 62%, #050309);
-  /* on dark, the same halo becomes an actual glow bloom around the loop */
+  /* on dark, the halo becomes an actual glow bloom around the loop */
   --halo: radial-gradient(46% 42% at 50% 40%, rgba(124, 92, 240, 0.24), transparent 70%);
+  /* dark backdrop hugging the hero text so the bright loop doesn't wash out the white name */
+  --hero-shadow: 0 2px 40px rgba(5, 3, 12, 0.78), 0 0 16px rgba(5, 3, 12, 0.6), 0 0 6px rgba(5, 3, 12, 0.7);
 }
 
 @theme inline {
@@ -123,9 +127,9 @@ nav .links button.active .i { opacity: 1; }
 /* ===== Hero + scrolling content sections ===== */
 .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; position: relative; z-index: 2; padding: 0 24px; }
 .hero .meta { font-family: var(--font-mono), monospace; font-size: 12px; letter-spacing: 0.2em; color: var(--mute); text-transform: uppercase; }
-.hero h1 { font-weight: 330; font-size: clamp(56px, 10vw, 160px); line-height: 0.9; letter-spacing: -0.03em; margin: 20px 0 0; }
+.hero h1 { font-weight: 330; font-size: clamp(56px, 10vw, 160px); line-height: 0.9; letter-spacing: -0.03em; margin: 20px 0 0; text-shadow: var(--hero-shadow); }
 .hero h1 em { font-style: italic; color: var(--p2); }
-.hero .sub { margin-top: 26px; max-width: 560px; font-size: clamp(16px, 1.7vw, 19px); line-height: 1.6; color: var(--text); }
+.hero .sub { margin-top: 26px; max-width: 560px; font-size: clamp(16px, 1.7vw, 19px); line-height: 1.6; color: var(--text); text-shadow: var(--hero-shadow); }
 .hero .sub b { color: var(--ink); font-weight: 500; }
 .hero .hint { font-family: var(--font-mono), monospace; font-size: 11px; letter-spacing: 0.22em; color: var(--mute); text-transform: uppercase; margin-top: 40px; animation: hintFloat 2.6s ease-in-out infinite; }
 @keyframes hintFloat { 0%, 100% { transform: translateY(0); opacity: 0.7; } 50% { transform: translateY(5px); opacity: 1; } }
