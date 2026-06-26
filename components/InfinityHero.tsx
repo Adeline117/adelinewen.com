@@ -62,13 +62,15 @@ export default function InfinityHero() {
     const pmrem = new THREE.PMREMGenerator(renderer);
     scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
 
-    const l1 = new THREE.DirectionalLight(0xffffff, 2.2);
+    // key light tinted lavender (not white) so highlights stay on-brand purple
+    const l1 = new THREE.DirectionalLight(0xd9ccff, 1.7);
     l1.position.set(4, 5, 3);
     scene.add(l1);
-    const l2 = new THREE.PointLight(0x7c5cf0, 70, 40);
+    // two purple fills, balanced in intensity so the loop is evenly lit L↔R
+    const l2 = new THREE.PointLight(0x7c5cf0, 55, 40);
     l2.position.set(-5, -1, 3);
     scene.add(l2);
-    const l3 = new THREE.PointLight(0x896afb, 45, 40);
+    const l3 = new THREE.PointLight(0x8a6cf8, 55, 40);
     l3.position.set(4, -4, -2);
     scene.add(l3);
 
@@ -84,9 +86,9 @@ export default function InfinityHero() {
       roughness: 0,
       ior: 1.7,
       dispersion: 3.0,
-      iridescence: 1,
-      iridescenceIOR: 1.45,
-      iridescenceThicknessRange: [120, 500],
+      iridescence: 0.5, // dialed back — full iridescence threw a pinkish tint off-brand
+      iridescenceIOR: 1.4,
+      iridescenceThicknessRange: [140, 460],
       anisotropy: 0.3, // stretches speculars along the curve — softer, glassier highlights
       anisotropyRotation: Math.PI / 2,
       metalness: 0,
