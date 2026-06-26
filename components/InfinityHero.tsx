@@ -148,9 +148,9 @@ export default function InfinityHero() {
     // cream bg — there the loop reads better as crisper, lower-key glass.
     const applyTheme = () => {
       const dark = document.body.classList.contains("dark");
-      // dark = glow (toned down — was too bright); light = minimal bloom
-      bloom.strength = isMobile ? (dark ? 0.24 : 0.12) : dark ? 0.36 : 0.2;
-      renderer.toneMappingExposure = dark ? 1.08 : 1.04;
+      // dark = a calm, dim glow (a backdrop, not the star); light = minimal bloom
+      bloom.strength = isMobile ? (dark ? 0.18 : 0.12) : dark ? 0.28 : 0.2;
+      renderer.toneMappingExposure = dark ? 1.0 : 1.04;
       if (isStatic) composer.render(); // static frame won't re-tick, so repaint now
     };
     const themeObs = new MutationObserver(applyTheme);
