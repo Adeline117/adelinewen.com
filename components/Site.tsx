@@ -96,7 +96,7 @@ const COPY: Record<
         "Tennis has the ATP rankings; chess has Elo. Crypto trading moves hundreds of billions a day — yet no one could answer the simplest question: who are the best traders? Arena (arenafi.org) is the first cross-platform answer. I designed, built, and shipped it solo — unifying 68,000+ traders across 44+ exchanges (CEX + DEX) into one transparent Arena Score, giving crypto trading a world ranking for the first time.",
       more: { text: "Visit arenafi.org →", href: "https://arenafi.org" },
       cs: [
-        { k: "Discover", v: "Leaderboard, live now — unified rankings across every exchange, built on a 44+ source data pipeline (the moat)." },
+        { k: "Discover", v: "Leaderboard, live now — unified rankings across every exchange, built on a data pipeline spanning 44+ sources." },
         { k: "Prove", v: "Battles (V2) — traders go head-to-head on their real trades while spectators predict and bet." },
         { k: "Follow", v: "Copy trading (V3) — the proven top traders open vaults anyone can follow." },
       ],
@@ -106,12 +106,12 @@ const COPY: Record<
         { n: "60", d: "automated data pipelines", m: "" },
         { n: "Solo", d: "designed, built & shipped", m: "Next.js · Supabase · Redis" },
       ],
-      funnelIntro: "Rankings are only step one. Arena's full form is a three-stage funnel — each step compounds the data of the last and monetizes an order of magnitude deeper:",
+      funnelIntro: "Rankings are only step one. Arena's full form is a three-stage funnel — each step builds on the data of the last and earns far more per user:",
       value: {
         h: "Why it's different",
         items: [
           { h: "Cross-platform visibility", d: "The only place that sees every trader on every exchange. Binance will never show you Bybit's traders — Arena shows them all." },
-          { h: "One transparent standard", d: "Arena Score, 0–100 (ROI 60 + PnL 40), with a published methodology anyone can audit. Accounts under $500 profit are filtered out, so no stat-padding." },
+          { h: "One transparent standard", d: "Arena Score, 0–100 — weighted 60% return-on-investment and 40% absolute profit — with a published methodology anyone can audit. Accounts under $500 profit are filtered out, so no stat-padding." },
           { h: "Competition, not display", d: "Not a static dashboard but a live contest. Ego is the strongest retention engine ever built." },
         ],
       },
@@ -128,13 +128,13 @@ const COPY: Record<
         h: "Roadmap",
         steps: [
           { phase: "V1 · Foundation", when: "now", what: "Live leaderboard, trader claiming & verification, community cold start." },
-          { phase: "V2 · Competition", when: "6–18 mo", what: "Arena Chip, head-to-head battles, spectator betting, the first 12-week season." },
+          { phase: "V2 · Competition", when: "6–18 mo", what: "A stable in-app currency, head-to-head battles, spectator betting, the first 12-week season." },
           { phase: "V3 · Full form", when: "18–36 mo", what: "Copy-trading vaults, advanced bet types, ARENA token, institutional data API." },
         ],
       },
       revenue: {
         h: "How it makes money",
-        d: "A six-legged table — each stream stands on its own, so revenue holds even when any one slows:",
+        d: "Revenue comes from several independent layers — each stands on its own, so it holds even when any one slows:",
         rows: [
           { k: "Battle rake", v: "5% of bounty pools" },
           { k: "Betting spread", v: "3% of every bet placed" },
@@ -239,7 +239,7 @@ const COPY: Record<
         "网球有 ATP 排名，国际象棋有 Elo。加密交易每天成交数千亿美元，却没人能回答最基本的问题：谁是最好的交易者？Arena（arenafi.org）是第一个跨平台的答案。我独立设计、开发并上线——把 44+ 交易所（中心化 + 去中心化）上分散的 68,000+ 交易者，统一进一个透明的 Arena 评分，第一次给加密交易一个世界排名。",
       more: { text: "访问 arenafi.org →", href: "https://arenafi.org" },
       cs: [
-        { k: "发现", v: "排行榜（已上线）——跨所统一排名，建立在 44+ 数据源的管线之上（核心壁垒）。" },
+        { k: "发现", v: "排行榜（已上线）——跨所统一排名，建立在覆盖 44+ 数据源的管线之上。" },
         { k: "证明", v: "对战（V2）——交易者用各自的真实交易正面对决，观众预测并下注。" },
         { k: "跟随", v: "跟单（V3）——被验证的顶尖交易者开设金库，任何人都能跟投。" },
       ],
@@ -249,12 +249,12 @@ const COPY: Record<
         { n: "60", d: "自动化数据管线", m: "" },
         { n: "独立", d: "设计、开发、上线", m: "Next.js · Supabase · Redis" },
       ],
-      funnelIntro: "排名只是第一步。Arena 的完整形态是一个三段漏斗——每一步都复用上一步的数据，并把变现深度提升一个量级：",
+      funnelIntro: "排名只是第一步。Arena 的完整形态是一个三段漏斗——每一步都建立在上一步的数据之上，单用户的变现也大幅提升：",
       value: {
         h: "为什么不一样",
         items: [
           { h: "跨平台可见", d: "唯一能看见每个交易所、每位交易者的地方。币安永远不会告诉你 Bybit 的交易者——Arena 全都看得见。" },
-          { h: "统一透明的标准", d: "Arena 评分，0–100（ROI 60 + 盈亏 40），方法论公开、任何人可审计。绝对盈利低于 $500 的账户被过滤，杜绝刷数据。" },
+          { h: "统一透明的标准", d: "Arena 评分，0–100——其中收益率（ROI）占 60%、绝对盈亏占 40%，方法论公开、任何人可审计。绝对盈利低于 $500 的账户被过滤，杜绝刷数据。" },
           { h: "是竞技，不是展示", d: "这里的数据不是静态看板，而是实时比赛。胜负欲是有史以来最强的留存引擎。" },
         ],
       },
@@ -271,13 +271,13 @@ const COPY: Record<
         h: "路线图",
         steps: [
           { phase: "V1 · 基础", when: "现在", what: "排行榜上线、交易者认领与验证、社区冷启动。" },
-          { phase: "V2 · 竞技", when: "6–18 个月", what: "Arena Chip、1v1 对战、观众下注、第一个 12 周赛季。" },
+          { phase: "V2 · 竞技", when: "6–18 个月", what: "稳定的站内货币、1v1 对战、观众下注、第一个 12 周赛季。" },
           { phase: "V3 · 完整形态", when: "18–36 个月", what: "跟单金库、进阶下注、ARENA 代币、机构数据 API。" },
         ],
       },
       revenue: {
         h: "怎么赚钱",
-        d: "一张六条腿的桌子——每条收入线都能独立支撑，任何一条放缓收入都不塌：",
+        d: "收入来自多条相互独立的线——每条都能独立支撑，任何一条放缓都不塌：",
         rows: [
           { k: "对战抽成", v: "奖池的 5%" },
           { k: "下注价差", v: "每笔下注的 3%" },
