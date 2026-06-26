@@ -185,13 +185,11 @@ export default function InfinityHero() {
       canvas.style.opacity = String(curOpacity);
 
       if (!prefersReduced) {
-        // Gentle organic float instead of a single-axis metronome rock: several
-        // slow, out-of-phase frequencies + a soft vertical bob, so it reads as a
-        // glass object suspended and breathing in space — never exactly repeating.
-        group.rotation.y = Math.sin(t * 0.13) * 0.16;
-        group.rotation.x = -0.13 + Math.sin(t * 0.19) * 0.06;
-        group.rotation.z = Math.sin(t * 0.09) * 0.03;
-        group.position.y = Math.sin(t * 0.23) * 0.06;
+        // Keep the loop near front-facing so its silhouette stays a balanced,
+        // symmetric ∞ — only a whisper of slow tilt for life. (Bigger rotation
+        // projected the depth-weave into the outline and read as lopsided.)
+        group.rotation.y = Math.sin(t * 0.16) * 0.05;
+        group.rotation.x = -0.05 + Math.sin(t * 0.11) * 0.025;
         // The cursor glides the light across the glass — the loop itself stays calm.
         // (Tilting the whole ∞ toward the pointer felt dizzy and fought the hero text.)
         smx += (mx - smx) * 0.05;
