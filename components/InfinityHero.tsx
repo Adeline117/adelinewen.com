@@ -176,7 +176,6 @@ export default function InfinityHero() {
 
     const clock = new THREE.Clock();
     const tmp = new THREE.Vector3();
-    let curU = 0;
     let smx = 0; // smoothed cursor → glides the light, not the geometry
     let smy = 0;
     let curOpacity = 0; // starts hidden → eases in on load, and smooths scroll fades
@@ -194,12 +193,10 @@ export default function InfinityHero() {
       if (pastHero && frame % 2 === 0) return;
 
       const t = clock.getElapsedTime();
-      const max = document.body.scrollHeight - window.innerHeight;
-      const targetU = max > 0 ? window.scrollY / max : 0;
-      curU += (targetU - curU) * 0.06;
 
-      // the light flows endlessly along the ∞ (its essence) — scroll adds a push
-      const flow = (t * 0.05 + curU) % 1;
+      // the light flows endlessly along the ∞ in one steady direction (time-driven,
+      // never reverses with scroll)
+      const flow = (t * 0.05) % 1;
       curve.getPoint(flow, tmp);
       bead.position.copy(tmp);
       for (let i = 0; i < trail.length; i++) {
