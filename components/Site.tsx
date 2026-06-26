@@ -164,7 +164,7 @@ const COPY: Record<
       ),
       lead: "Open to research and building opportunities — always up for a good problem.",
       links: [
-        { label: "Email", val: "ywen8@uw.edu", href: "mailto:ywen8@uw.edu" },
+        { label: "Email", val: "adelinewen1107@outlook.com", href: "mailto:adelinewen1107@outlook.com" },
         { label: "GitHub", val: "@Adeline117 ↗", href: "https://github.com/Adeline117" },
         { label: "LinkedIn", val: "/in/adeline1107 ↗", href: "https://www.linkedin.com/in/adeline1107" },
         { label: "Arena", val: "arenafi.org ↗", href: "https://arenafi.org" },
@@ -178,7 +178,7 @@ const COPY: Record<
         send: "Send message",
         sending: "Sending…",
         sent: "Thanks — I'll be in touch soon.",
-        err: "Couldn't send — please email ywen8@uw.edu directly.",
+        err: "Couldn't send — please email adelinewen1107@outlook.com directly.",
       },
     },
   },
@@ -307,7 +307,7 @@ const COPY: Record<
       ),
       lead: "对研究与构建的机会开放——随时欢迎好问题。",
       links: [
-        { label: "邮箱", val: "ywen8@uw.edu", href: "mailto:ywen8@uw.edu" },
+        { label: "邮箱", val: "adelinewen1107@outlook.com", href: "mailto:adelinewen1107@outlook.com" },
         { label: "GitHub", val: "@Adeline117 ↗", href: "https://github.com/Adeline117" },
         { label: "LinkedIn", val: "/in/adeline1107 ↗", href: "https://www.linkedin.com/in/adeline1107" },
         { label: "Arena", val: "arenafi.org ↗", href: "https://arenafi.org" },
@@ -321,7 +321,7 @@ const COPY: Record<
         send: "发送",
         sending: "发送中…",
         sent: "谢谢，我会尽快回复你。",
-        err: "发送失败——请直接邮件 ywen8@uw.edu。",
+        err: "发送失败——请直接邮件 adelinewen1107@outlook.com。",
       },
     },
   },
@@ -521,7 +521,7 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
         // backend not configured yet → fall back to the visitor's mail client
         const body = encodeURIComponent(`From: ${form.name} <${form.email}>\n\n${form.message}`);
         const subject = encodeURIComponent(`Portfolio contact — ${form.name}`);
-        window.location.href = `mailto:ywen8@uw.edu?subject=${subject}&body=${body}`;
+        window.location.href = `mailto:adelinewen1107@outlook.com?subject=${subject}&body=${body}`;
         setStatus("idle");
         return;
       }
