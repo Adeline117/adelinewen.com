@@ -810,7 +810,7 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
           <path
             ref={trackRef}
             className="track"
-            d="M42,22 C42,6 18,6 14,22 C10,38 42,38 42,22 C42,6 74,6 70,22 C66,38 42,38 42,22 Z"
+            d="M42,22 C38,8 14,8 10,22 C14,36 38,36 42,22 C46,8 70,8 74,22 C70,36 46,36 42,22 Z"
           />
           <circle ref={beadRef} className="bead" r="3" cx="42" cy="22" />
         </svg>
