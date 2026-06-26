@@ -20,16 +20,18 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://adelinewen.com"),
   title: "Adeline Wen — Researcher & Builder",
   description:
-    "Adeline Wen — undergraduate researcher at the UW Decentralized Computing Lab and builder of arenafi.org. Airdrop Sybil detection, decentralized systems, and crafted software.",
+    "Adeline Wen — undergraduate research assistant at the UW Decentralized Computing Lab and solo founder of arenafi.org. Blockchain and decentralized-AI research, airdrop Sybil detection, and the first cross-platform crypto trader ranking, built end-to-end.",
   keywords: [
     "Adeline Wen",
+    "blockchain research",
+    "decentralized AI",
     "decentralized computing",
     "airdrop Sybil detection",
     "HasciDB",
-    "Arena arenafi",
+    "Arena",
+    "arenafi.org",
+    "crypto trader rankings",
     "University of Washington",
-    "blockchain research",
-    "portfolio",
   ],
   authors: [{ name: "Adeline Wen" }],
   creator: "Adeline Wen",
@@ -37,7 +39,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Adeline Wen — Researcher & Builder",
     description:
-      "UW Decentralized Computing Lab · builder of arenafi.org · airdrop Sybil detection. One infinite loop of craft.",
+      "UW Decentralized Computing Lab · solo founder of arenafi.org · blockchain and decentralized-AI research. One infinite loop of craft.",
     url: "https://adelinewen.com",
     siteName: "adelinewen.com",
     type: "website",
@@ -45,7 +47,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Adeline Wen — Researcher & Builder",
-    description: "UW Decentralized Computing Lab · builder of arenafi.org · Sybil detection.",
+    description: "UW Decentralized Computing Lab · solo founder of arenafi.org · blockchain & decentralized-AI research.",
   },
 };
 
