@@ -35,7 +35,7 @@ const COPY: Record<
     ),
     heroSub: (
       <>
-        Economics undergrad at UW. I research decentralized systems — and built <b>arenafi.org</b>.
+        Research assistant at the University of Washington Decentralized Computing Lab, independently building <b>arenafi.org</b>.
       </>
     ),
     heroHint: "scroll to explore ↓",
@@ -130,7 +130,7 @@ const COPY: Record<
     ),
     heroSub: (
       <>
-        华盛顿大学经济学本科生。研究去中心化系统——并独立做了 <b>arenafi.org</b>。
+        华盛顿大学去中心化计算实验室研究助理，独立开发 <b>arenafi.org</b>。
       </>
     ),
     heroHint: "向下滚动了解 ↓",
