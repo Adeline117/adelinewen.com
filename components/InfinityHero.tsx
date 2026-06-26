@@ -50,7 +50,12 @@ export default function InfinityHero() {
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(34, window.innerWidth / window.innerHeight, 0.1, 100);
-    camera.position.set(0, 0, 7.5);
+    // portrait phones are too narrow for the wide ∞ — pull back so the whole loop fits
+    const fitZ = () => {
+      const aspect = window.innerWidth / window.innerHeight;
+      return aspect < 0.75 ? 7.5 / Math.max(aspect / 0.75, 0.42) : 7.5;
+    };
+    camera.position.set(0, 0, fitZ());
 
     const pmrem = new THREE.PMREMGenerator(renderer);
     scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
@@ -160,6 +165,7 @@ export default function InfinityHero() {
 
     const onResize = () => {
       camera.aspect = window.innerWidth / window.innerHeight;
+      camera.position.z = fitZ();
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
       composer.setSize(window.innerWidth, window.innerHeight);

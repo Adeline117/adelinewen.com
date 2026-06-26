@@ -57,7 +57,8 @@ export const viewport: Viewport = {
   ],
 };
 
-const noFlash = `try{var t=localStorage.getItem('theme');var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;if(d)document.body.classList.add('dark');}catch(e){}`;
+// Default to dark (the glowing ∞ is designed for it); a saved choice still wins.
+const noFlash = `try{var t=localStorage.getItem('theme');var d=t?t==='dark':true;if(d)document.body.classList.add('dark');}catch(e){}`;
 
 const personLd = {
   "@context": "https://schema.org",

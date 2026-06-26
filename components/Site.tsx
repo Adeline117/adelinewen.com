@@ -353,7 +353,7 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
 
   useEffect(() => {
     const stored = localStorage.getItem("theme");
-    setDark(stored ? stored === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches);
+    setDark(stored ? stored === "dark" : true); // default dark — the loop's glow lives there
   }, []);
   useEffect(() => {
     if (dark === null) return;
