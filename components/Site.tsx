@@ -47,7 +47,7 @@ const COPY: Record<
         </>
       ),
       lead:
-        "I'm Adeline (she/her), an undergraduate at the University of Washington studying Economics with an Informatics minor (Dean's List). I research decentralized systems at the UW Decentralized Computing Lab, work as an analyst at Stably, and build products on the side.",
+        "I'm Adeline (she/her) — an Economics undergrad at the University of Washington, with an Informatics minor and a place on the Dean's List. I'm fascinated by how decentralized systems actually behave: I research them at the UW Decentralized Computing Lab, dig into markets as an analyst at Stably, and build products of my own to put ideas to the test.",
       more: { text: "Connect on LinkedIn →", href: "https://www.linkedin.com/in/adeline1107" },
       tags: ["Blockchain", "On-Chain Analysis", "Data Science", "JavaScript", "API Dev", "Econometrics"],
       resume: [
@@ -142,7 +142,7 @@ const COPY: Record<
         </>
       ),
       lead:
-        "我是 Adeline（她/她），华盛顿大学本科生，主修经济学、辅修信息学（院长名单）。我在去中心化计算实验室做研究，同时在 Stably 任分析师，业余也自己做产品。",
+        "我是 Adeline（她/她）——华盛顿大学经济学本科生，辅修信息学，入选院长名单。我着迷于去中心化系统真实的运转方式：在华盛顿大学去中心化计算实验室做研究，在 Stably 任分析师钻研市场，也独立打造自己的产品，把想法付诸实践。",
       more: { text: "在 LinkedIn 联系 →", href: "https://www.linkedin.com/in/adeline1107" },
       tags: ["区块链", "链上分析", "数据科学", "JavaScript", "API 开发", "计量经济学"],
       resume: [
