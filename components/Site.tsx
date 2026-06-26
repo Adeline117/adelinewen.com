@@ -52,9 +52,9 @@ const COPY: Record<
       tags: ["Blockchain", "On-Chain Analysis", "Data Science", "JavaScript", "API Dev", "Econometrics"],
       resume: [
         { y: "Apr 2026 – Present", h: "Analyst · Stably", d: "Research & growth at a stablecoin infrastructure company." },
-        { y: "Feb 2026 – Present", h: "Undergraduate RA · UW DC Lab", d: "Sybil-detection research under Prof. Wei Cai; built hascidb.org." },
+        { y: "Feb 2026 – Present", h: "Undergraduate RA · UW DC Lab", d: "Blockchain and decentralized-AI research under Prof. Wei Cai; built hascidb.org." },
         { y: "Dec 2025 – Present", h: "Founder · Arena", d: "Solo-built arenafi.org, ranking 68,000+ traders." },
-        { y: "2025 – 2029", h: "BA Economics · University of Washington", d: "Informatics minor · Dean's List." },
+        { y: "2025 – 2029", h: "Bachelor of Economics · University of Washington", d: "Informatics minor · Dean's List." },
       ],
     },
     research: {
@@ -65,7 +65,7 @@ const COPY: Record<
         </>
       ),
       lead:
-        "At the UW Decentralized Computing Lab with Prof. Wei Cai — first-author work on airdrop Sybil detection and interpretable on-chain governance.",
+        "At the UW Decentralized Computing Lab with Prof. Wei Cai — first-author research in blockchain and decentralized AI, from airdrop Sybil detection to interpretable on-chain governance.",
       more: { text: "Explore HasciDB →", href: "https://hascidb.org" },
       tl: [
         { y: "2026 · IEEE SMC", h: "Human-Centered Airdrop Governance", d: "Interpretable behavioral modeling of strategic hunters. To appear in IEEE Xplore." },
@@ -147,7 +147,7 @@ const COPY: Record<
       tags: ["区块链", "链上分析", "数据科学", "JavaScript", "API 开发", "计量经济学"],
       resume: [
         { y: "2026.04 – 至今", h: "分析师 · Stably", d: "稳定币基础设施公司的研究与增长。" },
-        { y: "2026.02 – 至今", h: "本科研究助理 · UW 去中心化计算实验室", d: "导师 Wei Cai 教授；Sybil 检测研究，构建了 hascidb.org。" },
+        { y: "2026.02 – 至今", h: "本科研究助理 · UW 去中心化计算实验室", d: "导师 Wei Cai 教授；区块链与去中心化 AI 研究，构建了 hascidb.org。" },
         { y: "2025.12 – 至今", h: "创始人 · Arena", d: "独立构建 arenafi.org，为 68,000+ 交易者排名。" },
         { y: "2025 – 2029", h: "经济学学士 · 华盛顿大学", d: "辅修信息学 · 院长名单。" },
       ],
@@ -160,7 +160,7 @@ const COPY: Record<
         </>
       ),
       lead:
-        "在华盛顿大学去中心化计算实验室，导师 Wei Cai 教授——第一作者，研究空投 Sybil 检测与可解释的链上治理。",
+        "在华盛顿大学去中心化计算实验室，导师 Wei Cai 教授——第一作者，研究区块链与去中心化 AI，涵盖空投 Sybil 检测与可解释的链上治理。",
       more: { text: "查看 HasciDB →", href: "https://hascidb.org" },
       tl: [
         { y: "2026 · IEEE SMC", h: "以人为本的空投治理", d: "对策略型猎手的可解释行为建模，将收录于 IEEE Xplore。" },
@@ -414,13 +414,6 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
           <div className="label">{sec.label}</div>
           <h2>{sec.title}</h2>
           <p className="lead">{sec.lead}</p>
-          {i === 0 && (
-            <div className="tags">
-              {t.about.tags.map((tag) => (
-                <span key={tag}>{tag}</span>
-              ))}
-            </div>
-          )}
           {i === 2 && (
             <dl className="cs">
               {t.arena.cs.map((c) => (
