@@ -9,6 +9,9 @@ type Lang = "en" | "zh";
 type Section = { label: string; title: ReactNode; lead: string; more: { text: string; href: string } };
 type Row = { n: string; d: string; m: string };
 type CS = { k: string; v: string };
+type Val = { h: string; d: string };
+type Road = { phase: string; when: string; what: string };
+type Rev = { k: string; v: string };
 type TL = { y: string; h: string; d: string };
 type CLink = { label: string; val: string; href: string };
 type Form = { name: string; email: string; message: string; send: string; sending: string; sent: string; err: string };
@@ -22,7 +25,17 @@ const COPY: Record<
     heroHint: string;
     about: Section & { tags: string[]; resume: TL[] };
     research: Section & { tl: TL[] };
-    arena: Section & { stats: Row[]; cs: CS[] };
+    arena: Section & {
+      stats: Row[];
+      funnelIntro: string;
+      cs: CS[];
+      value: { h: string; items: Val[] };
+      model: { h: string; d: string; points: string[] };
+      roadmap: { h: string; steps: Road[] };
+      revenue: { h: string; d: string; rows: Rev[] };
+      moats: { h: string; items: string[] };
+      vision: { h: string; d: string };
+    };
     contact: { label: string; title: ReactNode; lead: string; links: CLink[]; form: Form };
   }
 > = {
@@ -93,6 +106,54 @@ const COPY: Record<
         { n: "60", d: "automated data pipelines", m: "" },
         { n: "Solo", d: "designed, built & shipped", m: "Next.js · Supabase · Redis" },
       ],
+      funnelIntro: "Rankings are only step one. Arena's full form is a three-stage funnel — each step compounds the data of the last and monetizes an order of magnitude deeper:",
+      value: {
+        h: "Why it's different",
+        items: [
+          { h: "Cross-platform visibility", d: "The only place that sees every trader on every exchange. Binance will never show you Bybit's traders — Arena shows them all." },
+          { h: "One transparent standard", d: "Arena Score, 0–100 (ROI 60 + PnL 40), with a published methodology anyone can audit. Accounts under $500 profit are filtered out, so no stat-padding." },
+          { h: "Competition, not display", d: "Not a static dashboard but a live contest. Ego is the strongest retention engine ever built." },
+        ],
+      },
+      model: {
+        h: "The business model — UFC + Polymarket",
+        d: "Every breakout crypto product monetizes speculation. Arena makes the traders themselves the show: performers fight, spectators predict and bet, and the house takes a cut from both sides. Three things that have never been combined into one product:",
+        points: [
+          "Real traders competing on their real trades — not virtual athletes, not passive copy-trading.",
+          "Cross-exchange normalization — putting a Binance trader and a Bybit trader on one scale.",
+          "Spectators betting on real humans making real trades, in real time.",
+        ],
+      },
+      roadmap: {
+        h: "Roadmap",
+        steps: [
+          { phase: "V1 · Foundation", when: "now", what: "Live leaderboard, trader claiming & verification, community cold start." },
+          { phase: "V2 · Competition", when: "6–18 mo", what: "Arena Chip, head-to-head battles, spectator betting, the first 12-week season." },
+          { phase: "V3 · Full form", when: "18–36 mo", what: "Copy-trading vaults, advanced bet types, ARENA token, institutional data API." },
+        ],
+      },
+      revenue: {
+        h: "How it makes money",
+        d: "A six-legged table — each stream stands on its own, so revenue holds even when any one slows:",
+        rows: [
+          { k: "Battle rake", v: "5% of bounty pools" },
+          { k: "Betting spread", v: "3% of every bet placed" },
+          { k: "Vault fees", v: "10% management + 10% performance" },
+          { k: "SaaS & data", v: "Pro ($9.99/mo), exchange affiliates, data licensing to funds" },
+        ],
+      },
+      moats: {
+        h: "Moats",
+        items: [
+          "The 44+ exchange data asset — a structural barrier no single exchange will ever cross to build.",
+          "Full CEX + DEX coverage, where on-chain tools see only DEX and exchanges see only their own users.",
+          "Competition and public reputation compound retention in a way a data dashboard never can.",
+        ],
+      },
+      vision: {
+        h: "Long-term vision",
+        d: "Trading is the most-played, highest-stakes competitive sport of our era — and the only one with no world ranking, no official matches, and no star system. Arena fills in all three, in order: discover the best, let them prove it in public, then let anyone follow. The benchmark isn't a single product but ATP + UFC + Bloomberg combined — and the path runs from the arena of crypto to the arena of every financial market.",
+      },
     },
     contact: {
       label: "04 — Contact",
@@ -188,6 +249,54 @@ const COPY: Record<
         { n: "60", d: "自动化数据管线", m: "" },
         { n: "独立", d: "设计、开发、上线", m: "Next.js · Supabase · Redis" },
       ],
+      funnelIntro: "排名只是第一步。Arena 的完整形态是一个三段漏斗——每一步都复用上一步的数据，并把变现深度提升一个量级：",
+      value: {
+        h: "为什么不一样",
+        items: [
+          { h: "跨平台可见", d: "唯一能看见每个交易所、每位交易者的地方。币安永远不会告诉你 Bybit 的交易者——Arena 全都看得见。" },
+          { h: "统一透明的标准", d: "Arena 评分，0–100（ROI 60 + 盈亏 40），方法论公开、任何人可审计。绝对盈利低于 $500 的账户被过滤，杜绝刷数据。" },
+          { h: "是竞技，不是展示", d: "这里的数据不是静态看板，而是实时比赛。胜负欲是有史以来最强的留存引擎。" },
+        ],
+      },
+      model: {
+        h: "商业模式——UFC + Polymarket",
+        d: "所有爆发过的加密产品都在为投机变现。Arena 让交易者本身成为表演：选手对战，观众预测下注，平台从两边抽成。三件从未被组合进同一个产品的事：",
+        points: [
+          "真实交易者用真实交易正面较量——不是虚拟选手，也不是被动跟单。",
+          "跨所归一化——把币安和 Bybit 的交易者放进同一把尺子。",
+          "观众对真实的人、真实的交易、实时下注。",
+        ],
+      },
+      roadmap: {
+        h: "路线图",
+        steps: [
+          { phase: "V1 · 基础", when: "现在", what: "排行榜上线、交易者认领与验证、社区冷启动。" },
+          { phase: "V2 · 竞技", when: "6–18 个月", what: "Arena Chip、1v1 对战、观众下注、第一个 12 周赛季。" },
+          { phase: "V3 · 完整形态", when: "18–36 个月", what: "跟单金库、进阶下注、ARENA 代币、机构数据 API。" },
+        ],
+      },
+      revenue: {
+        h: "怎么赚钱",
+        d: "一张六条腿的桌子——每条收入线都能独立支撑，任何一条放缓收入都不塌：",
+        rows: [
+          { k: "对战抽成", v: "奖池的 5%" },
+          { k: "下注价差", v: "每笔下注的 3%" },
+          { k: "金库费", v: "10% 管理费 + 10% 业绩费" },
+          { k: "SaaS 与数据", v: "Pro（$9.99/月）、交易所返佣、对基金的数据授权" },
+        ],
+      },
+      moats: {
+        h: "护城河",
+        items: [
+          "44+ 交易所的数据资产——任何单一交易所都不会跨过的结构性壁垒。",
+          "完整的 CEX + DEX 覆盖；链上工具只看得到 DEX，交易所只看得到自家用户。",
+          "竞技与公开声誉带来的留存，是数据看板永远做不到的复利。",
+        ],
+      },
+      vision: {
+        h: "长期愿景",
+        d: "交易是这个时代参与最广、赌注最高的竞技运动——也是唯一没有世界排名、没有官方比赛、没有明星体系的运动。Arena 依次补上这三样：先发现最强者，再让他们公开证明，最后让任何人都能跟随。对标的不是某个单一产品，而是 ATP + UFC + Bloomberg 的合体——路径从加密的竞技场，通向一切金融市场的竞技场。",
+      },
     },
     contact: {
       label: "04 — 联系",
@@ -307,9 +416,13 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
     const go = (dir: number) => {
       const list = items();
       const next = Math.min(list.length - 1, Math.max(0, currentIndex() + dir));
-      list[next]?.scrollIntoView({
+      const el = list[next];
+      if (!el) return;
+      // land tall sections (e.g. the long Arena page) at the top, others centered
+      const tall = el.getBoundingClientRect().height > window.innerHeight + 10;
+      el.scrollIntoView({
         behavior: prefersReduced ? "auto" : "smooth",
-        block: "center",
+        block: tall ? "start" : "center",
       });
     };
 
@@ -319,11 +432,25 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
       if (Math.abs(e.deltaY) < 4) return;
       // let the contact textarea scroll its own overflow
       if ((e.target as HTMLElement).closest("textarea")) return;
+      const dir = e.deltaY > 0 ? 1 : -1;
+      // if the section under the viewport centre is taller than the screen (the
+      // long Arena page), let it scroll natively until its edge, then page
+      const vh = window.innerHeight;
+      const cur = items().find((el) => {
+        const r = el.getBoundingClientRect();
+        return r.top <= vh / 2 && r.bottom >= vh / 2;
+      });
+      if (cur) {
+        const r = cur.getBoundingClientRect();
+        const EDGE = 6;
+        if (dir > 0 && r.bottom > vh + EDGE) return;
+        if (dir < 0 && r.top < -EDGE) return;
+      }
       e.preventDefault();
       clearTimeout(tail);
       if (!locked) {
         locked = true;
-        go(e.deltaY > 0 ? 1 : -1);
+        go(dir);
       }
       // stay locked through the whole flick (incl. inertia); release once wheel is quiet
       tail = setTimeout(() => {
@@ -508,21 +635,101 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
         </ul>
       )}
 
-      {renderSection(
-        2,
-        t.arena,
-        <ul className="rows">
-          {t.arena.stats.map((r) => (
-            <li key={r.d}>
-              <div className="rinfo">
-                <span className="n">{r.n}</span>
-                <span className="rd">{r.d}</span>
+      {/* 03 — Arena (full project page) */}
+      <section className="sec arena-sec" id="arena" data-i={2} ref={setRef(2)}>
+        <div className="arena-wrap">
+          <div className="label">{t.arena.label}</div>
+          <h2>{t.arena.title}</h2>
+          <p className="lead">{t.arena.lead}</p>
+
+          <ul className="rows arena-stats">
+            {t.arena.stats.map((r) => (
+              <li key={r.d}>
+                <div className="rinfo">
+                  <span className="n">{r.n}</span>
+                  <span className="rd">{r.d}</span>
+                </div>
+                {r.m && <span className="rm">{r.m}</span>}
+              </li>
+            ))}
+          </ul>
+
+          <p className="ablock-intro">{t.arena.funnelIntro}</p>
+          <dl className="cs">
+            {t.arena.cs.map((c) => (
+              <div key={c.k}>
+                <dt>{c.k}</dt>
+                <dd>{c.v}</dd>
               </div>
-              {r.m && <span className="rm">{r.m}</span>}
-            </li>
-          ))}
-        </ul>
-      )}
+            ))}
+          </dl>
+
+          <div className="ablock">
+            <h3>{t.arena.value.h}</h3>
+            <ul className="alist">
+              {t.arena.value.items.map((v) => (
+                <li key={v.h}>
+                  <b>{v.h}</b> — {v.d}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="ablock">
+            <h3>{t.arena.model.h}</h3>
+            <p>{t.arena.model.d}</p>
+            <ul className="alist">
+              {t.arena.model.points.map((p, i) => (
+                <li key={i}>{p}</li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="ablock">
+            <h3>{t.arena.roadmap.h}</h3>
+            <ul className="aroad">
+              {t.arena.roadmap.steps.map((s) => (
+                <li key={s.phase}>
+                  <div className="rp">{s.phase}</div>
+                  <div className="rw">{s.when}</div>
+                  <div className="rwhat">{s.what}</div>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="ablock">
+            <h3>{t.arena.revenue.h}</h3>
+            <p>{t.arena.revenue.d}</p>
+            <dl className="arev">
+              {t.arena.revenue.rows.map((r) => (
+                <div key={r.k}>
+                  <dt>{r.k}</dt>
+                  <dd>{r.v}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+
+          <div className="ablock">
+            <h3>{t.arena.moats.h}</h3>
+            <ul className="alist">
+              {t.arena.moats.items.map((m, i) => (
+                <li key={i}>{m}</li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="ablock">
+            <h3>{t.arena.vision.h}</h3>
+            <p>{t.arena.vision.d}</p>
+          </div>
+
+          <a className="more" href={t.arena.more.href} target="_blank" rel="noopener noreferrer">
+            {t.arena.more.text}
+          </a>
+        </div>
+      </section>
 
       {/* 04 — Contact (with working form) */}
       <section className="sec" id="contact" data-i={3} ref={setRef(3)}>
