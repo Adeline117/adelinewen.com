@@ -24,7 +24,7 @@ const COPY: Record<
     heroSub: ReactNode;
     heroHint: string;
     heroCta: string;
-    about: Section & { tags: string[]; resume: TL[] };
+    about: Section & { resume: TL[] };
     research: Section & { tl: TL[] };
     arena: Section & {
       stats: Row[];
@@ -63,7 +63,6 @@ const COPY: Record<
       lead:
         "I'm Adeline (she/her), an Economics undergrad at the University of Washington, with an Informatics minor. I'm fascinated by how decentralized systems actually behave: I research them at the UW Decentralized Computing Lab, dig into markets as a crypto analyst at Stably, and build products of my own to put ideas to the test. On the side, my content has drawn 1.5M+ organic views.",
       more: { text: "Connect on LinkedIn →", href: "https://www.linkedin.com/in/adeline1107" },
-      tags: ["Blockchain", "On-Chain Analysis", "Data Science", "JavaScript", "API Dev", "Econometrics"],
       resume: [
         { y: "Apr 2026 – Present", h: "Crypto Analyst · Stably", d: "Research & growth at a stablecoin infrastructure company." },
         { y: "Feb 2026 – Present", h: "Undergraduate Research Assistant · UW Decentralized Computing Lab", d: "Research under Prof. Wei Cai; built hascidb.org (open-source Sybil database, 2.5M+ wallets) and published on blockchain, crypto, and decentralized AI." },
@@ -199,7 +198,6 @@ const COPY: Record<
       lead:
         "我是 Adeline（她/她），华盛顿大学经济学本科生，辅修信息学。我着迷于去中心化系统真实的运转方式：在华盛顿大学去中心化计算实验室做研究，在 Stably 任加密分析师钻研市场，也独立打造自己的产品，把想法付诸实践。业余做的内容也收获了 150 万+ 次自然播放。",
       more: { text: "在 LinkedIn 联系 →", href: "https://www.linkedin.com/in/adeline1107" },
-      tags: ["区块链", "链上分析", "数据科学", "JavaScript", "API 开发", "计量经济学"],
       resume: [
         { y: "2026.04 – 至今", h: "加密分析师 · Stably", d: "稳定币基础设施公司的研究与增长。" },
         { y: "2026.02 – 至今", h: "本科研究助理 · UW 去中心化计算实验室", d: "导师 Wei Cai 教授；构建了 hascidb.org（开源 Sybil 检测数据库，250 万+ 钱包），并发表区块链、加密与去中心化 AI 方向的多篇论文。" },
@@ -455,7 +453,8 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
     window.addEventListener("wheel", onWheel, { passive: false });
 
     const onKey = (e: KeyboardEvent) => {
-      if ((e.target as HTMLElement).closest("input, textarea")) return;
+      // don't hijack keys when a control is focused (Space/Enter must activate it)
+      if ((e.target as HTMLElement).closest("input, textarea, button, a, select, [role=button]")) return;
       const down = e.key === "ArrowDown" || e.key === "PageDown" || e.key === " ";
       const up = e.key === "ArrowUp" || e.key === "PageUp";
       if (!down && !up) return;
@@ -495,7 +494,13 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
     document.documentElement.lang = lang === "zh" ? "zh" : "en";
   }, [lang]);
 
-  const goTo = (i: number) => secRefs.current[i]?.scrollIntoView({ behavior: "smooth" });
+  const goTo = (i: number) => {
+    const el = secRefs.current[i];
+    if (!el) return;
+    // match the wheel/key paging: tall Arena lands at top, others centered
+    const tall = el.getBoundingClientRect().height > window.innerHeight + 10;
+    el.scrollIntoView({ behavior: "smooth", block: tall ? "start" : "center" });
+  };
   const setRef = (i: number) => (el: HTMLElement | null) => {
     secRefs.current[i] = el;
   };
@@ -559,7 +564,7 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
 
   return (
     <>
-      <a href="#about" className="skip">
+      <a href="#main" className="skip">
         {lang === "zh" ? "跳到内容" : "Skip to content"}
       </a>
       <div className="halo" />
@@ -590,6 +595,7 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
             <button
               className="toggle"
               aria-label={lang === "zh" ? "切换深色模式" : "Toggle dark mode"}
+              aria-pressed={dark === true}
               onClick={() => setDark((v) => !v)}
             >
               ◐
@@ -598,7 +604,7 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
         </div>
       </nav>
 
-      <main>
+      <main id="main" tabIndex={-1}>
       <header className="hero" ref={heroRef}>
         <h1>{t.heroTitle}</h1>
         <p className="sub">{t.heroSub}</p>
@@ -674,7 +680,7 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
             <ul className="alist abody">
               {t.arena.value.items.map((v) => (
                 <li key={v.h}>
-                  <b>{v.h}</b>, {v.d}
+                  <b>{v.h}</b>{lang === "zh" ? "：" : ": "}{v.d}
                 </li>
               ))}
             </ul>
@@ -780,8 +786,10 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
               <button type="submit" disabled={status === "sending"}>
                 {status === "sending" ? t.contact.form.sending : t.contact.form.send}
               </button>
-              {status === "sent" && <div className="status ok">{t.contact.form.sent}</div>}
-              {status === "error" && <div className="status err">{t.contact.form.err}</div>}
+              <div role="status" aria-live="polite">
+                {status === "sent" && <div className="status ok">{t.contact.form.sent}</div>}
+                {status === "error" && <div className="status err">{t.contact.form.err}</div>}
+              </div>
             </form>
           </div>
           <div className="right">
