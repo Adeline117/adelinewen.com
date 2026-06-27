@@ -23,6 +23,7 @@ const COPY: Record<
     heroTitle: ReactNode;
     heroSub: ReactNode;
     heroHint: string;
+    heroCta: string;
     about: Section & { tags: string[]; resume: TL[] };
     research: Section & { tl: TL[] };
     arena: Section & {
@@ -51,6 +52,7 @@ const COPY: Record<
       </>
     ),
     heroHint: "scroll to explore ↓",
+    heroCta: "Get in touch",
     about: {
       label: "01 · About",
       title: (
@@ -186,6 +188,7 @@ const COPY: Record<
       </>
     ),
     heroHint: "向下滚动了解 ↓",
+    heroCta: "联系我",
     about: {
       label: "01 · 关于",
       title: (
@@ -593,6 +596,9 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
       <header className="hero" ref={heroRef}>
         <h1>{t.heroTitle}</h1>
         <p className="sub">{t.heroSub}</p>
+        <div className="hero-cta">
+          <button onClick={() => goTo(3)}>{t.heroCta} →</button>
+        </div>
         <div className="hint">{t.heroHint}</div>
       </header>
 
