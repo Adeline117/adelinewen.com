@@ -20,8 +20,6 @@
   --hero-shadow: 0 1px 24px rgba(245, 243, 236, 0.9), 0 0 8px rgba(245, 243, 236, 0.7);
   /* frosted nav bar so content scrolls cleanly underneath (esp. on mobile) */
   --nav-bg: rgba(244, 242, 236, 0.72);
-  /* gradient for the big italic display words (deeper on light for contrast) */
-  --em-grad: linear-gradient(115deg, #6a44d6, #5a46e2, #2f5fd2);
 }
 body.dark {
   --ink: #f6f4fc;
@@ -30,18 +28,13 @@ body.dark {
   --line: rgba(255, 255, 255, 0.12);
   --scrim-t: linear-gradient(rgba(12, 10, 20, 0.9), transparent);
   --scrim-b: linear-gradient(transparent, rgba(5, 3, 12, 0.95));
-  /* dual-tone cinematic mesh: violet glow one side, blue the other, over deep base */
-  --bg-grad:
-    radial-gradient(55% 50% at 16% 26%, rgba(124, 92, 240, 0.22), transparent 60%),
-    radial-gradient(52% 48% at 86% 78%, rgba(56, 134, 235, 0.16), transparent 58%),
-    radial-gradient(ellipse 80% 68% at 50% 44%, #241e42, #0c0a14 62%, #050309);
+  --bg-grad: radial-gradient(ellipse 80% 68% at 50% 44%, #241e42, #0c0a14 62%, #050309);
   /* on dark, the halo becomes an actual glow bloom around the loop */
   --halo: radial-gradient(46% 42% at 50% 40%, rgba(124, 92, 240, 0.06), transparent 70%);
   /* soft, tight shadow hugging the hero text — just enough contrast over the
      loop without smudging a black blob behind the name */
   --hero-shadow: 0 1px 14px rgba(6, 4, 14, 0.5);
   --nav-bg: rgba(10, 8, 18, 0.6);
-  --em-grad: linear-gradient(115deg, #a78bfa, #8b6cf8, #5d9bff);
 }
 
 @theme inline {
@@ -140,7 +133,7 @@ nav .links button.active .i { opacity: 1; }
 .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; position: relative; z-index: 2; padding: 0 24px; }
 .hero .meta { font-family: var(--font-mono), monospace; font-size: 12px; letter-spacing: 0.2em; color: var(--mute); text-transform: uppercase; }
 .hero h1 { font-weight: 330; font-size: clamp(56px, 10vw, 160px); line-height: 0.9; letter-spacing: -0.03em; margin: 20px 0 0; text-shadow: var(--hero-shadow); }
-.hero h1 em { font-style: italic; color: var(--p2); background-image: var(--em-grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.hero h1 em { font-style: italic; color: var(--p2); }
 .hero .sub { margin-top: 26px; max-width: 560px; font-size: clamp(16px, 1.7vw, 19px); line-height: 1.6; color: var(--text); text-shadow: var(--hero-shadow); }
 .hero .sub b { color: var(--ink); font-weight: 500; }
 .hero .hint { font-family: var(--font-mono), monospace; font-size: 11px; letter-spacing: 0.22em; color: var(--mute); text-transform: uppercase; margin-top: 40px; animation: hintFloat 3.4s cubic-bezier(0.37, 0, 0.63, 1) infinite; }
@@ -166,7 +159,7 @@ nav .links button.active .i { opacity: 1; }
 
 .sec .label { font-family: var(--font-mono), monospace; font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--p); margin-bottom: 24px; }
 .sec h2 { font-weight: 320; font-size: clamp(46px, 7vw, 118px); line-height: 0.92; letter-spacing: -0.03em; }
-.sec h2 em { font-style: italic; color: var(--p2); background-image: var(--em-grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.sec h2 em { font-style: italic; color: var(--p2); }
 .sec .lead { margin-top: 30px; max-width: 460px; font-size: clamp(16px, 1.5vw, 17px); line-height: 1.65; color: var(--text); }
 .sec .more { margin-top: 36px; display: inline-flex; gap: 10px; font-family: var(--font-mono), monospace; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--line); padding-bottom: 8px; transition: 0.25s; }
 .sec .more:hover { color: var(--p); border-color: var(--p); }
