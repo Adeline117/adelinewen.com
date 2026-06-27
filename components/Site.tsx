@@ -33,7 +33,6 @@ const COPY: Record<
       model: { h: string; d: string; points: string[] };
       roadmap: { h: string; steps: Road[] };
       revenue: { h: string; d: string; rows: Rev[] };
-      moats: { h: string; items: string[] };
       vision: { h: string; d: string };
     };
     contact: { label: string; title: ReactNode; lead: string; links: CLink[]; form: Form };
@@ -140,14 +139,6 @@ const COPY: Record<
           { k: "Betting spread", v: "3% of every bet placed" },
           { k: "Vault fees", v: "10% management + 10% performance" },
           { k: "SaaS & data", v: "Pro ($9.99/mo), exchange affiliates, data licensing to funds" },
-        ],
-      },
-      moats: {
-        h: "Moats",
-        items: [
-          "The 44+ exchange data asset: a structural barrier no single exchange will ever cross to build.",
-          "Full CEX + DEX coverage, where on-chain tools see only DEX and exchanges see only their own users.",
-          "Competition and public reputation compound retention in a way a data dashboard never can.",
         ],
       },
       vision: {
@@ -283,14 +274,6 @@ const COPY: Record<
           { k: "下注价差", v: "每笔下注的 3%" },
           { k: "金库费", v: "10% 管理费 + 10% 业绩费" },
           { k: "SaaS 与数据", v: "Pro（$9.99/月）、交易所返佣、对基金的数据授权" },
-        ],
-      },
-      moats: {
-        h: "护城河",
-        items: [
-          "44+ 交易所的数据资产：任何单一交易所都不会跨过的结构性壁垒。",
-          "完整的 CEX + DEX 覆盖；链上工具只看得到 DEX，交易所只看得到自家用户。",
-          "竞技与公开声誉带来的留存，是数据看板永远做不到的复利。",
         ],
       },
       vision: {
@@ -723,15 +706,6 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
                 ))}
               </dl>
             </div>
-          </div>
-
-          <div className="ablock">
-            <h3>{t.arena.moats.h}</h3>
-            <ul className="alist abody">
-              {t.arena.moats.items.map((m, i) => (
-                <li key={i}>{m}</li>
-              ))}
-            </ul>
           </div>
 
           <div className="ablock">
