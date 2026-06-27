@@ -229,12 +229,13 @@ nav .links button.active .i { opacity: 1; }
 
 /* ===== Arena: full project section (long-form, scrolls freely) ===== */
 .arena-sec { display: block; min-height: 100vh; padding: 120px clamp(24px, 5vw, 72px); scroll-snap-align: start; scroll-margin-top: 64px; }
-.arena-wrap { max-width: 980px; margin: 0 auto; }
+/* match the other sections' container so headings left-align across the site */
+.arena-wrap { max-width: 1180px; margin: 0 auto; }
 /* this section is a long read — show everything immediately, no blur-in reveal */
 .arena-sec .label, .arena-sec h2, .arena-sec .lead, .arena-sec .cs, .arena-sec .more {
   opacity: 1 !important; transform: none !important; filter: none !important; transition: none !important;
 }
-.arena-wrap > .lead { max-width: 100%; margin-top: 26px; }
+.arena-wrap > .lead { max-width: 760px; margin-top: 26px; }
 .arena-stats { display: grid !important; grid-template-columns: repeat(4, 1fr); gap: 0 28px; margin: 44px 0 8px; }
 .arena-stats li { border-top: 1px solid var(--line); flex-direction: column; align-items: flex-start; gap: 5px; padding: 16px 4px; }
 .arena-stats li:hover { padding-left: 4px; }
