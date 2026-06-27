@@ -152,13 +152,15 @@ export default function InfinityHero() {
       const dark = document.body.classList.contains("dark");
       // refined crystal, not neon: keep bloom minimal so the glass reads on its
       // clean refraction and crisp speculars rather than a glow
-      bloom.strength = isMobile ? (dark ? 0.09 : 0.1) : dark ? 0.12 : 0.14;
+      bloom.strength = isMobile ? (dark ? 0.09 : 0.08) : dark ? 0.12 : 0.1;
       renderer.toneMappingExposure = dark ? 0.9 : 1.04;
-      // dark bg: light lavender glass (glows). light bg: deep saturated purple that
-      // reads as a rich shape against cream (glass absorbs more so it doesn't wash out)
+      // dark bg: see-through lavender glass. light bg: a cleaner, more SOLID deep
+      // purple — less transmission (no muddy cream bleed) and no iridescence noise
       glass.color.set(dark ? "#c6bbff" : "#6a48d4");
       glass.attenuationColor.set(dark ? "#7c5cf0" : "#3f23a8");
       glass.attenuationDistance = dark ? 2.2 : 1.3;
+      glass.transmission = dark ? 1 : 0.4;
+      glass.iridescence = dark ? 0.5 : 0;
       if (isStatic) composer.render(); // static frame won't re-tick, so repaint now
     };
     const themeObs = new MutationObserver(applyTheme);
