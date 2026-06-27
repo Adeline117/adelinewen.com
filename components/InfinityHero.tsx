@@ -117,7 +117,7 @@ export default function InfinityHero() {
       const f = 1 - i / TRAIL; // near bead → far tail
       const m = new THREE.Mesh(
         new THREE.SphereGeometry(0.025 + 0.085 * f, 16, 16),
-        new THREE.MeshBasicMaterial({ color: 0xcfc2ff, transparent: true, opacity: 0.5 * f })
+        new THREE.MeshBasicMaterial({ color: 0xcfc2ff, transparent: true, opacity: 0.26 * f })
       );
       group.add(m);
       trail.push(m);
@@ -128,7 +128,7 @@ export default function InfinityHero() {
     stationsU.forEach((u) => {
       const m = new THREE.Mesh(
         new THREE.SphereGeometry(0.06, 18, 18),
-        new THREE.MeshBasicMaterial({ color: 0x7c5cf0, transparent: true, opacity: 0.3 })
+        new THREE.MeshBasicMaterial({ color: 0x7c5cf0, transparent: true, opacity: 0.16 })
       );
       m.position.copy(curve.getPoint(u));
       group.add(m);
@@ -150,8 +150,9 @@ export default function InfinityHero() {
     // cream bg — there the loop reads better as crisper, lower-key glass.
     const applyTheme = () => {
       const dark = document.body.classList.contains("dark");
-      // dark = a calm, dim glow (a backdrop, not the star); light = minimal bloom
-      bloom.strength = isMobile ? (dark ? 0.13 : 0.12) : dark ? 0.2 : 0.2;
+      // refined crystal, not neon: keep bloom minimal so the glass reads on its
+      // clean refraction and crisp speculars rather than a glow
+      bloom.strength = isMobile ? (dark ? 0.09 : 0.1) : dark ? 0.12 : 0.14;
       renderer.toneMappingExposure = dark ? 0.9 : 1.04;
       // dark bg: light lavender glass (glows). light bg: deep saturated purple that
       // reads as a rich shape against cream (glass absorbs more so it doesn't wash out)
@@ -238,7 +239,7 @@ export default function InfinityHero() {
         // very gentle bead breath only — the station twinkle read as "flashy", so
         // the nodes now sit steady (their constant material opacity)
         bead.scale.setScalar(1 + Math.sin(t * 1.1) * 0.04);
-        beadLight.intensity = 4.5 + Math.sin(t * 1.1) * 0.5;
+        beadLight.intensity = 2.8 + Math.sin(t * 1.1) * 0.3;
       } else {
         group.rotation.x = -0.13;
       }

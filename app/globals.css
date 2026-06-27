@@ -28,9 +28,10 @@ body.dark {
   --line: rgba(255, 255, 255, 0.12);
   --scrim-t: linear-gradient(rgba(12, 10, 20, 0.9), transparent);
   --scrim-b: linear-gradient(transparent, rgba(5, 3, 12, 0.95));
-  --bg-grad: radial-gradient(ellipse 80% 68% at 50% 44%, #241e42, #0c0a14 62%, #050309);
-  /* on dark, the halo becomes an actual glow bloom around the loop */
-  --halo: radial-gradient(46% 42% at 50% 40%, rgba(124, 92, 240, 0.06), transparent 70%);
+  /* considered warm-charcoal, less blue — gallery dark rather than neon dark */
+  --bg-grad: radial-gradient(ellipse 80% 68% at 50% 44%, #1a1620, #0b0a0d 62%, #060507);
+  /* no glow stage — the loop reads as refined crystal floating in space */
+  --halo: transparent;
   /* soft, tight shadow hugging the hero text — just enough contrast over the
      loop without smudging a black blob behind the name */
   --hero-shadow: 0 1px 14px rgba(6, 4, 14, 0.5);
@@ -160,7 +161,7 @@ nav .links button.active .i { opacity: 1; }
 .sec .label { font-family: var(--font-mono), monospace; font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--p); margin-bottom: 24px; }
 .sec h2 { font-weight: 320; font-size: clamp(46px, 7vw, 118px); line-height: 0.92; letter-spacing: -0.03em; }
 .sec h2 em { font-style: italic; color: var(--p2); }
-.sec .lead { margin-top: 30px; max-width: 460px; font-size: clamp(16px, 1.5vw, 17px); line-height: 1.65; color: var(--text); }
+.sec .lead { margin-top: 32px; max-width: 460px; font-size: clamp(16px, 1.5vw, 17px); line-height: 1.72; color: var(--text); }
 .sec .more { margin-top: 36px; display: inline-flex; gap: 10px; font-family: var(--font-mono), monospace; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--line); padding-bottom: 8px; transition: 0.25s; }
 .sec .more:hover { color: var(--p); border-color: var(--p); }
 .sec .right { max-width: 460px; justify-self: end; width: 100%; }
