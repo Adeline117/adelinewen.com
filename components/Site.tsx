@@ -413,59 +413,65 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
     };
 
     let locked = false;
-    let tail: ReturnType<typeof setTimeout>;
+    let triggerAt = 0;
+    let lastWheel = 0;
+    let unlockTimer: ReturnType<typeof setTimeout>;
+    // release the lock only once the wheel has gone quiet AND the scroll animation
+    // has had time to finish — so one gesture (incl. its inertia tail) = one page
+    const scheduleUnlock = () => {
+      clearTimeout(unlockTimer);
+      unlockTimer = setTimeout(() => {
+        const now = performance.now();
+        if (now - lastWheel >= 140 && now - triggerAt >= 600) locked = false;
+        else scheduleUnlock();
+      }, 80);
+    };
     const onWheel = (e: WheelEvent) => {
       if (Math.abs(e.deltaY) < 4) return;
-      // let the contact textarea scroll its own overflow
       if ((e.target as HTMLElement).closest("textarea")) return;
       const dir = e.deltaY > 0 ? 1 : -1;
-      // if the section under the viewport centre is taller than the screen (the
-      // long Arena page), let it scroll natively until its edge, then page
       const vh = window.innerHeight;
       const cur = items().find((el) => {
         const r = el.getBoundingClientRect();
         return r.top <= vh / 2 && r.bottom >= vh / 2;
       });
-      if (cur) {
+      // ONLY the long Arena page scrolls natively (to its edge) before paging;
+      // every other section always pages exactly one — never skips
+      if (cur && cur.id === "arena") {
         const r = cur.getBoundingClientRect();
-        // only a genuinely long section (the Arena page) may scroll natively to its
-        // edge before paging; normal ~one-screen sections always page exactly one
-        const tall = r.height > vh * 1.3;
-        if (tall) {
-          const EDGE = 6;
-          if (dir > 0 && r.bottom > vh + EDGE) return;
-          if (dir < 0 && r.top < -EDGE) return;
-        }
+        const EDGE = 6;
+        if (dir > 0 && r.bottom > vh + EDGE) return;
+        if (dir < 0 && r.top < -EDGE) return;
       }
       e.preventDefault();
-      clearTimeout(tail);
+      lastWheel = performance.now();
       if (!locked) {
         locked = true;
+        triggerAt = lastWheel;
         go(dir);
       }
-      // stay locked through the whole flick (incl. inertia); release once wheel is quiet
-      tail = setTimeout(() => {
-        locked = false;
-      }, 160);
+      scheduleUnlock();
     };
     window.addEventListener("wheel", onWheel, { passive: false });
 
     const onKey = (e: KeyboardEvent) => {
       if ((e.target as HTMLElement).closest("input, textarea")) return;
-      if (e.key === "ArrowDown" || e.key === "PageDown" || e.key === " ") {
-        e.preventDefault();
-        go(1);
-      } else if (e.key === "ArrowUp" || e.key === "PageUp") {
-        e.preventDefault();
-        go(-1);
-      }
+      const down = e.key === "ArrowDown" || e.key === "PageDown" || e.key === " ";
+      const up = e.key === "ArrowUp" || e.key === "PageUp";
+      if (!down && !up) return;
+      e.preventDefault();
+      if (locked) return;
+      locked = true;
+      triggerAt = lastWheel = performance.now();
+      go(down ? 1 : -1);
+      scheduleUnlock();
     };
     window.addEventListener("keydown", onKey);
 
     return () => {
       window.removeEventListener("wheel", onWheel);
       window.removeEventListener("keydown", onKey);
-      clearTimeout(tail);
+      clearTimeout(unlockTimer);
     };
   }, []);
 
