@@ -246,10 +246,10 @@ nav .links button.active .i { opacity: 1; }
 /* two-column editorial blocks: mono label left, content right (matches the site) */
 .ablock { display: grid; grid-template-columns: 170px 1fr; gap: clamp(24px, 4vw, 56px); align-items: start; margin-top: 42px; padding-top: 30px; border-top: 1px solid var(--line); }
 .ablock h3 { font-family: var(--font-mono), monospace; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--p); padding-top: 3px; }
-.ablock p { font-size: 15px; line-height: 1.65; color: var(--text); max-width: 600px; }
+.ablock p { font-size: 15px; line-height: 1.65; color: var(--text); max-width: 560px; }
 .abody > *:first-child { margin-top: 0; }
 .abody p + ul, .abody p + .arev { margin-top: 16px; }
-.alist { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-top: 0; max-width: 600px; }
+.alist { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-top: 0; max-width: 560px; }
 .alist li { font-size: 15px; line-height: 1.6; color: var(--text); padding-left: 18px; position: relative; }
 .alist li::before { content: "—"; position: absolute; left: 0; color: var(--p); }
 .alist li b { color: var(--ink); font-weight: 500; }
