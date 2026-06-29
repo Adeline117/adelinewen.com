@@ -230,7 +230,7 @@ nav .links button.active .i { opacity: 1; }
 .clinks a:last-child { border-bottom: 1px solid var(--line); }
 .clinks a .ar { font-family: var(--font-mono), monospace; font-size: 13px; color: var(--mute); transition: 0.3s; }
 .clinks a:hover { padding-left: 16px; color: var(--p2); }
-.clinks a:hover .ar { color: var(--p-text); transform: translateX(4px); }
+.clinks a:hover .ar { color: var(--p-text); transform: translate(3px, -3px); }
 
 /* ===== Arena: full project section (long-form, scrolls freely) ===== */
 .arena-sec { display: block; min-height: 100vh; padding: 120px clamp(24px, 5vw, 72px); scroll-snap-align: start; scroll-margin-top: 64px; }
@@ -255,7 +255,7 @@ nav .links button.active .i { opacity: 1; }
 .abody p + ul, .abody p + .arev { margin-top: 16px; }
 .alist { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-top: 0; max-width: 560px; }
 .alist li { font-size: 15px; line-height: 1.6; color: var(--text); padding-left: 18px; position: relative; }
-.alist li::before { content: "—"; position: absolute; left: 0; color: var(--p-text); }
+.alist li::before { content: "·"; position: absolute; left: 2px; top: -1px; font-size: 20px; line-height: 1.4; color: var(--p-text); }
 .alist li b { color: var(--ink); font-weight: 500; }
 .aroad { list-style: none; margin-top: 0; }
 .aroad li { display: grid; grid-template-columns: 150px 86px 1fr; gap: 20px; padding: 16px 0; border-top: 1px solid var(--line); align-items: baseline; }
