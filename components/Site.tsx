@@ -609,7 +609,7 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
         <h1>{t.heroTitle}</h1>
         <p className="sub">{t.heroSub}</p>
         <div className="hero-cta">
-          <button onClick={() => goTo(3)}>{t.heroCta} →</button>
+          <button onClick={() => goTo(3)}>{t.heroCta}</button>
         </div>
         <div className="hint">{t.heroHint}</div>
       </header>
