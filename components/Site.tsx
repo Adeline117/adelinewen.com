@@ -62,7 +62,7 @@ const COPY: Record<
       ),
       lead:
         "I'm Adeline (she/her), an Economics undergrad at the University of Washington, with an Informatics minor. I'm fascinated by how decentralized systems actually behave: I research them at the UW Decentralized Computing Lab, dig into markets as a crypto analyst at Stably, and build products of my own to put ideas to the test.",
-      more: { text: "Connect on LinkedIn →", href: "https://www.linkedin.com/in/adeline1107" },
+      more: { text: "Connect on LinkedIn ↗", href: "https://www.linkedin.com/in/adeline1107" },
       resume: [
         { y: "Apr 2026 – Present", h: "Crypto Analyst · Stably", d: "Research & growth at a stablecoin infrastructure company." },
         { y: "Feb 2026 – Present", h: "Undergraduate Research Assistant · UW Decentralized Computing Lab", d: "Research under Prof. Wei Cai; built hascidb.org (open-source Sybil database, 2.5M+ wallets) and published on blockchain, crypto, and decentralized AI." },
@@ -79,7 +79,7 @@ const COPY: Record<
       ),
       lead:
         "At the UW Decentralized Computing Lab with Prof. Wei Cai, first-author and co-authored research in blockchain and decentralized AI, from airdrop Sybil detection (catching one person who fakes thousands of wallets to farm token giveaways) to interpretable on-chain governance.",
-      more: { text: "Explore HasciDB →", href: "https://hascidb.org" },
+      more: { text: "Explore HasciDB ↗", href: "https://hascidb.org" },
       tl: [
         { y: "Accepted · Nanyang Blockchain Conference 2026", h: "HasciDB: A Database for Identifying Crypto Sybil Airdrop Hunters", d: "First author. The largest open-source cross-project airdrop Sybil-detection database (hascidb.org, 2.5M+ wallets). With Chunyang Li, Shutong Qu, Leon Leng, and Wei Cai." },
         { y: "Accepted · IEEE SMC 2026 · IEEE Xplore", h: "Human-Centered Decision Support for Crypto Airdrop Governance: Interpretable Behavioral Modeling of Strategic Hunters", d: "Co-author. An extension of HasciDB toward interpretable, human-centered airdrop governance. With Lindsay Zastrow, Cheri Allen, Leah Ingold, Yan Bai, and Wei Cai." },
@@ -94,7 +94,7 @@ const COPY: Record<
       ),
       lead:
         "Tennis has the ATP rankings; chess has Elo. Crypto trading moves hundreds of billions a day, yet no one could answer the simplest question: who are the best traders? Arena (arenafi.org) is the first cross-platform answer. I designed, built, and shipped it solo, unifying 68,000+ traders across 44+ exchanges (CEX + DEX) into one transparent Arena Score, giving crypto trading a world ranking for the first time.",
-      more: { text: "Visit arenafi.org →", href: "https://arenafi.org" },
+      more: { text: "Visit arenafi.org ↗", href: "https://arenafi.org" },
       cs: [
         { k: "Discover", v: "Leaderboard, live now. Unified rankings across every exchange, built on a data pipeline spanning 44+ sources." },
         { k: "Prove", v: "Battles (V2). Traders go head-to-head on their real trades while spectators predict and bet." },
@@ -197,7 +197,7 @@ const COPY: Record<
       ),
       lead:
         "我是 Adeline（她/她），华盛顿大学经济学本科生，辅修信息学。我着迷于去中心化系统真实的运转方式：在华盛顿大学去中心化计算实验室做研究，在 Stably 任加密分析师钻研市场，也独立打造自己的产品，把想法付诸实践。",
-      more: { text: "在 LinkedIn 联系 →", href: "https://www.linkedin.com/in/adeline1107" },
+      more: { text: "在 LinkedIn 联系 ↗", href: "https://www.linkedin.com/in/adeline1107" },
       resume: [
         { y: "2026.04 – 至今", h: "加密分析师 · Stably", d: "稳定币基础设施公司的研究与增长。" },
         { y: "2026.02 – 至今", h: "本科研究助理 · UW 去中心化计算实验室", d: "导师 Wei Cai 教授；构建了 hascidb.org（开源 Sybil 检测数据库，250 万+ 钱包），并发表区块链、加密与去中心化 AI 方向的多篇论文。" },
@@ -214,7 +214,7 @@ const COPY: Record<
       ),
       lead:
         "在华盛顿大学去中心化计算实验室，导师 Wei Cai 教授，区块链与去中心化 AI 研究（第一作者及合作者），涵盖空投 Sybil 检测（识别一个人伪造成千上万个钱包来套取代币空投）与可解释的链上治理。",
-      more: { text: "查看 HasciDB →", href: "https://hascidb.org" },
+      more: { text: "查看 HasciDB ↗", href: "https://hascidb.org" },
       tl: [
         { y: "已接收 · 南洋区块链大会 2026", h: "HasciDB：识别加密 Sybil 空投猎人的数据库", d: "第一作者。最大的开源跨项目空投 Sybil 检测数据库（hascidb.org，250 万+ 钱包）。合作者：Chunyang Li、Shutong Qu、Leon Leng、Wei Cai。" },
         { y: "已接收 · IEEE SMC 2026 · IEEE Xplore", h: "面向加密空投治理的以人为本决策支持：策略型猎手的可解释行为建模", d: "合作者。HasciDB 的延伸工作，面向可解释、以人为本的空投治理。合作者：Lindsay Zastrow、Cheri Allen、Leah Ingold、Yan Bai、Wei Cai。" },
@@ -229,7 +229,7 @@ const COPY: Record<
       ),
       lead:
         "网球有 ATP 排名，国际象棋有 Elo。加密交易每天成交数千亿美元，却没人能回答最基本的问题：谁是最好的交易者？Arena（arenafi.org）是第一个跨平台的答案。我独立设计、开发并上线，把 44+ 交易所（中心化 + 去中心化）上分散的 68,000+ 交易者，统一进一个透明的 Arena 评分，第一次给加密交易一个世界排名。",
-      more: { text: "访问 arenafi.org →", href: "https://arenafi.org" },
+      more: { text: "访问 arenafi.org ↗", href: "https://arenafi.org" },
       cs: [
         { k: "发现", v: "排行榜（已上线）：跨所统一排名，建立在覆盖 44+ 数据源的管线之上。" },
         { k: "证明", v: "对战（V2）：交易者用各自的真实交易正面对决，观众预测并下注。" },
