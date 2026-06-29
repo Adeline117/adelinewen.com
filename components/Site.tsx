@@ -48,7 +48,7 @@ const COPY: Record<
     ),
     heroSub: (
       <>
-        Research assistant at the University of Washington Decentralized Computing Lab, independently building <b>arenafi.org</b>.
+        Research assistant at the University of Washington Decentralized Computing Lab, and solo founder of <b>arenafi.org</b>, the first cross-platform ranking for crypto traders.
       </>
     ),
     heroHint: "scroll to explore ↓",
@@ -61,7 +61,7 @@ const COPY: Record<
         </>
       ),
       lead:
-        "I'm Adeline (she/her), an Economics undergrad at the University of Washington, with an Informatics minor. I'm fascinated by how decentralized systems actually behave: I research them at the UW Decentralized Computing Lab, dig into markets as a crypto analyst at Stably, and build products of my own to put ideas to the test. On the side, my content has drawn 1.5M+ organic views.",
+        "I'm Adeline (she/her), an Economics undergrad at the University of Washington, with an Informatics minor. I'm fascinated by how decentralized systems actually behave: I research them at the UW Decentralized Computing Lab, dig into markets as a crypto analyst at Stably, and build products of my own to put ideas to the test. On the side, my crypto content has drawn 1.5M+ organic views.",
       more: { text: "Connect on LinkedIn →", href: "https://www.linkedin.com/in/adeline1107" },
       resume: [
         { y: "Apr 2026 – Present", h: "Crypto Analyst · Stably", d: "Research & growth at a stablecoin infrastructure company." },
@@ -78,7 +78,7 @@ const COPY: Record<
         </>
       ),
       lead:
-        "At the UW Decentralized Computing Lab with Prof. Wei Cai, first-author and co-authored research in blockchain and decentralized AI, from airdrop Sybil detection to interpretable on-chain governance.",
+        "At the UW Decentralized Computing Lab with Prof. Wei Cai, first-author and co-authored research in blockchain and decentralized AI, from airdrop Sybil detection (catching one person who fakes thousands of wallets to farm token giveaways) to interpretable on-chain governance.",
       more: { text: "Explore HasciDB →", href: "https://hascidb.org" },
       tl: [
         { y: "Accepted · Nanyang Blockchain Conference 2026", h: "HasciDB: A Database for Identifying Crypto Sybil Airdrop Hunters", d: "First author. The largest open-source cross-project airdrop Sybil-detection database (hascidb.org, 2.5M+ wallets). With Chunyang Li, Shutong Qu, Leon Leng, and Wei Cai." },
@@ -111,7 +111,7 @@ const COPY: Record<
         h: "Why it's different",
         items: [
           { h: "Cross-platform visibility", d: "The only place that sees every trader on every exchange. Binance will never show you Bybit's traders. Arena shows them all." },
-          { h: "One transparent standard", d: "Arena Score, 0–100, weighted 60% return-on-investment and 40% absolute profit, with a published methodology anyone can audit. Accounts under $500 profit are filtered out, so no stat-padding." },
+          { h: "One transparent standard", d: "Arena Score, 0–100, weighted 60% return-on-investment and 40% absolute profit, with a published methodology anyone can audit. Accounts under $500 profit are filtered out, and my own Sybil-detection research keeps fake-wallet farming off the board." },
           { h: "Competition, not display", d: "Not a static dashboard but a live contest. Ego is the strongest retention engine ever built." },
         ],
       },
@@ -183,7 +183,7 @@ const COPY: Record<
     ),
     heroSub: (
       <>
-        华盛顿大学去中心化计算实验室研究助理，独立开发 <b>arenafi.org</b>。
+        华盛顿大学去中心化计算实验室研究助理，<b>arenafi.org</b> 独立创始人，首个跨平台加密交易者排名。
       </>
     ),
     heroHint: "向下滚动了解 ↓",
@@ -196,7 +196,7 @@ const COPY: Record<
         </>
       ),
       lead:
-        "我是 Adeline（她/她），华盛顿大学经济学本科生，辅修信息学。我着迷于去中心化系统真实的运转方式：在华盛顿大学去中心化计算实验室做研究，在 Stably 任加密分析师钻研市场，也独立打造自己的产品，把想法付诸实践。业余做的内容也收获了 150 万+ 次自然播放。",
+        "我是 Adeline（她/她），华盛顿大学经济学本科生，辅修信息学。我着迷于去中心化系统真实的运转方式：在华盛顿大学去中心化计算实验室做研究，在 Stably 任加密分析师钻研市场，也独立打造自己的产品，把想法付诸实践。业余做的加密内容也收获了 150 万+ 次自然播放。",
       more: { text: "在 LinkedIn 联系 →", href: "https://www.linkedin.com/in/adeline1107" },
       resume: [
         { y: "2026.04 – 至今", h: "加密分析师 · Stably", d: "稳定币基础设施公司的研究与增长。" },
@@ -213,7 +213,7 @@ const COPY: Record<
         </>
       ),
       lead:
-        "在华盛顿大学去中心化计算实验室，导师 Wei Cai 教授，区块链与去中心化 AI 研究（第一作者及合作者），涵盖空投 Sybil 检测与可解释的链上治理。",
+        "在华盛顿大学去中心化计算实验室，导师 Wei Cai 教授，区块链与去中心化 AI 研究（第一作者及合作者），涵盖空投 Sybil 检测（识别一个人伪造成千上万个钱包来套取代币空投）与可解释的链上治理。",
       more: { text: "查看 HasciDB →", href: "https://hascidb.org" },
       tl: [
         { y: "已接收 · 南洋区块链大会 2026", h: "HasciDB：识别加密 Sybil 空投猎人的数据库", d: "第一作者。最大的开源跨项目空投 Sybil 检测数据库（hascidb.org，250 万+ 钱包）。合作者：Chunyang Li、Shutong Qu、Leon Leng、Wei Cai。" },
@@ -246,7 +246,7 @@ const COPY: Record<
         h: "为什么不一样",
         items: [
           { h: "跨平台可见", d: "唯一能看见每个交易所、每位交易者的地方。币安永远不会告诉你 Bybit 的交易者；Arena 全都看得见。" },
-          { h: "统一透明的标准", d: "Arena 评分，0–100，其中收益率（ROI）占 60%、绝对盈亏占 40%，方法论公开、任何人可审计。绝对盈利低于 $500 的账户被过滤，杜绝刷数据。" },
+          { h: "统一透明的标准", d: "Arena 评分，0–100，其中收益率（ROI）占 60%、绝对盈亏占 40%，方法论公开、任何人可审计。绝对盈利低于 $500 的账户被过滤，我自己的 Sybil 检测研究也把伪造钱包刷分挡在榜外。" },
           { h: "是竞技，不是展示", d: "这里的数据不是静态看板，而是实时比赛。胜负欲是有史以来最强的留存引擎。" },
         ],
       },
