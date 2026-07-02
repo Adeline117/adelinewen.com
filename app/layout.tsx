@@ -9,6 +9,7 @@ const fraunces = Fraunces({
   subsets: ["latin"],
   style: ["normal", "italic"],
   display: "swap",
+  axes: ["opsz"], // optical size: display cuts tighten, text sizes open up
 });
 
 const mono = JetBrains_Mono({
