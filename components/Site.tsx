@@ -476,7 +476,7 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
 
   useEffect(() => {
     const stored = localStorage.getItem("theme");
-    setDark(stored ? stored === "dark" : true); // default dark, the loop's glow lives there
+    setDark(stored ? stored === "dark" : false); // default light — Swiss paper is the primary face
   }, []);
   useEffect(() => {
     if (dark === null) return;

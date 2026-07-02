@@ -58,13 +58,13 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   colorScheme: "light dark",
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f1efe8" },
-    { media: "(prefers-color-scheme: dark)", color: "#0c0a14" },
+    { media: "(prefers-color-scheme: light)", color: "#f7f7f7" },
+    { media: "(prefers-color-scheme: dark)", color: "#131313" },
   ],
 };
 
-// Default to dark (the glowing ∞ is designed for it); a saved choice still wins.
-const noFlash = `try{var t=localStorage.getItem('theme');var d=t?t==='dark':true;if(d)document.body.classList.add('dark');if(location.pathname.indexOf('/zh')===0)document.documentElement.lang='zh';}catch(e){}`;
+// Default to light (Swiss paper is the primary face); a saved choice still wins.
+const noFlash = `try{var t=localStorage.getItem('theme');if(t==='dark')document.body.classList.add('dark');if(location.pathname.indexOf('/zh')===0)document.documentElement.lang='zh';}catch(e){}`;
 
 const personLd = {
   "@context": "https://schema.org",
