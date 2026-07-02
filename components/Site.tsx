@@ -321,6 +321,7 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [hp, setHp] = useState(""); // honeypot, humans leave it empty, bots fill it
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [wide, setWide] = useState(false); // gate the WebGL sculpture to desktop widths
   const secRefs = useRef<(HTMLElement | null)[]>([]);
   const heroRef = useRef<HTMLElement>(null);
   const trackRef = useRef<SVGPathElement>(null);
@@ -476,6 +477,15 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
       window.removeEventListener("keydown", onKey);
       clearTimeout(unlockTimer);
     };
+  }, []);
+
+  // only mount the WebGL sculpture on desktop widths (matches the CSS ≥1024px show)
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const sync = () => setWide(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
   }, []);
 
   useEffect(() => {
@@ -645,9 +655,11 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
           <p className="sub">{t.heroSub}</p>
         </div>
         {/* still life: matte ∞ sculpture in the cover's negative space */}
-        <div className="still" aria-hidden="true">
-          <Sculpture />
-        </div>
+        {wide && (
+          <div className="still" aria-hidden="true">
+            <Sculpture />
+          </div>
+        )}
         {/* cover foot: scroll cue left, CTA right */}
         <div className="cover-foot">
           <div className="hint">{t.heroHint}</div>
