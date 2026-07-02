@@ -1,9 +1,10 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Adeline Wen — Software & Research";
+export const alt = "Adeline Wen — Researcher & Builder";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
+// Swiss-white editorial card: paper, ink, one hairline ∞ — matches the site.
 export default function OpengraphImage() {
   return new ImageResponse(
     (
@@ -15,14 +16,13 @@ export default function OpengraphImage() {
           flexDirection: "column",
           justifyContent: "space-between",
           padding: "72px",
-          background:
-            "radial-gradient(ellipse 90% 80% at 60% 40%, #241e42, #0c0a14 62%, #050309)",
-          color: "#f6f4fc",
+          background: "#f7f7f7",
+          color: "#141414",
           fontFamily: "sans-serif",
         }}
       >
-        <div style={{ display: "flex", justifyContent: "space-between", fontSize: 22, letterSpacing: 6, color: "#ada8c6" }}>
-          <span>RESEARCHER · BUILDER</span>
+        <div style={{ display: "flex", justifyContent: "space-between", fontSize: 22, letterSpacing: 6, color: "#6b6b6b" }}>
+          <span>RESEARCHER · FOUNDER</span>
           <span>SEATTLE · 2026</span>
         </div>
 
@@ -31,22 +31,22 @@ export default function OpengraphImage() {
             <path
               d="M16 9 C16 3 6 3 6 9 C6 15 16 15 16 9 C16 3 26 3 26 9 C26 15 16 15 16 9 Z"
               fill="none"
-              stroke="#896afb"
-              strokeWidth="1.6"
+              stroke="#141414"
+              strokeWidth="1.1"
               strokeLinecap="round"
             />
           </svg>
           <div style={{ fontSize: 96, fontWeight: 600, letterSpacing: -3, lineHeight: 1 }}>
             Adeline Wen
           </div>
-          <div style={{ fontSize: 34, color: "#c4bbff", marginTop: 16 }}>
+          <div style={{ fontSize: 34, color: "#6b6b6b", marginTop: 16 }}>
             The infinite loop of craft.
           </div>
         </div>
 
-        <div style={{ display: "flex", justifyContent: "space-between", fontSize: 24, color: "#ada8c6" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", fontSize: 24, color: "#6b6b6b" }}>
           <span>UW Decentralized Computing Lab · arenafi.org</span>
-          <span style={{ color: "#896afb" }}>adelinewen.com</span>
+          <span style={{ color: "#141414" }}>adelinewen.com</span>
         </div>
       </div>
     ),
