@@ -138,10 +138,17 @@ nav .links button.active .i { opacity: 1; }
 
 /* ===== Hero + scrolling content sections ===== */
 .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; position: relative; z-index: 2; padding: 0 24px; }
-.hero .meta { font-family: var(--font-mono), monospace; font-size: 12px; letter-spacing: 0.2em; color: var(--mute); text-transform: uppercase; }
-.hero h1 { font-weight: 330; font-size: clamp(56px, 10vw, 160px); line-height: 0.9; letter-spacing: -0.03em; margin: 20px 0 0; text-shadow: var(--hero-shadow); }
+/* thin line-art ∞ — the brand mark rendered flat, drawn once on load (no glow, no 3D) */
+.hero-mark { width: clamp(64px, 8vw, 92px); height: auto; overflow: visible; margin-bottom: 34px; }
+.hero-mark path {
+  fill: none; stroke: var(--p-text); stroke-width: 1.4; stroke-linecap: round; opacity: 0.62;
+  stroke-dasharray: 300; stroke-dashoffset: 300; animation: heroDraw 2.6s cubic-bezier(0.6, 0, 0.2, 1) 0.15s forwards;
+}
+@keyframes heroDraw { to { stroke-dashoffset: 0; } }
+.hero .meta { font-family: var(--font-mono), monospace; font-size: 12px; letter-spacing: 0.24em; color: var(--mute); text-transform: uppercase; }
+.hero h1 { font-weight: 330; font-size: clamp(56px, 10vw, 160px); line-height: 0.9; letter-spacing: -0.03em; margin: 18px 0 0; }
 .hero h1 em { font-style: italic; color: var(--p2); }
-.hero .sub { margin-top: 26px; max-width: 560px; font-size: clamp(16px, 1.7vw, 19px); line-height: 1.6; color: var(--text); text-shadow: var(--hero-shadow); }
+.hero .sub { margin-top: 26px; max-width: 560px; font-size: clamp(16px, 1.7vw, 19px); line-height: 1.6; color: var(--text); }
 .hero .sub b { color: var(--ink); font-weight: 500; }
 .hero-cta { margin-top: 32px; }
 .hero-cta button { font-family: var(--font-mono), monospace; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); background: none; border: 1px solid var(--line); border-radius: 100px; padding: 12px 24px; cursor: pointer; transition: color 0.25s, border-color 0.25s, background 0.25s; }
