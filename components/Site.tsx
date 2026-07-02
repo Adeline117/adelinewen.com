@@ -1,9 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import dynamic from "next/dynamic";
-
-const InfinityHero = dynamic(() => import("@/components/InfinityHero"), { ssr: false });
 
 type Lang = "en" | "zh";
 type Section = { label: string; title: ReactNode; lead: string; more: { text: string; href: string } };
@@ -20,6 +17,7 @@ const COPY: Record<
   Lang,
   {
     nav: string[];
+    heroEyebrow: string;
     heroTitle: ReactNode;
     heroSub: ReactNode;
     heroHint: string;
@@ -41,6 +39,7 @@ const COPY: Record<
 > = {
   en: {
     nav: ["About", "Research", "Work", "Contact"],
+    heroEyebrow: "Researcher · Founder",
     heroTitle: (
       <>
         Adeline <em>Wen</em>
@@ -176,6 +175,7 @@ const COPY: Record<
   },
   zh: {
     nav: ["关于", "研究", "项目", "联系"],
+    heroEyebrow: "研究者 · 创始人",
     heroTitle: (
       <>
         Adeline <em>Wen</em>
@@ -567,11 +567,7 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
       <a href="#main" className="skip">
         {lang === "zh" ? "跳到内容" : "Skip to content"}
       </a>
-      <div className="halo" />
-      <InfinityHero />
       <div className="grain" />
-      <div className="scrim t" />
-      <div className="scrim b" />
 
       <nav>
         <div className="logo">Adeline Wen</div>
@@ -606,6 +602,10 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
 
       <main id="main" tabIndex={-1}>
       <header className="hero" ref={heroRef}>
+        <svg className="hero-mark" viewBox="0 0 84 44" aria-hidden="true">
+          <path d="M42,22 C34,8 10,8 10,22 C10,36 34,36 42,22 C50,8 74,8 74,22 C74,36 50,36 42,22 Z" />
+        </svg>
+        <div className="meta">{t.heroEyebrow}</div>
         <h1>{t.heroTitle}</h1>
         <p className="sub">{t.heroSub}</p>
         <div className="hero-cta">
