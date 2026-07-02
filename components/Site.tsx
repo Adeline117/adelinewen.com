@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { flushSync } from "react-dom";
 
 type Lang = "en" | "zh";
 type Section = { label: string; title: ReactNode; lead: string; more: { text: string; href: string } };
@@ -318,6 +319,8 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const secRefs = useRef<(HTMLElement | null)[]>([]);
   const heroRef = useRef<HTMLElement>(null);
+  const trackRef = useRef<SVGPathElement>(null);
+  const beadRef = useRef<SVGCircleElement>(null);
 
   useEffect(() => {
     const obs = new IntersectionObserver(
@@ -333,9 +336,19 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
   }, []);
 
   useEffect(() => {
+    const track = trackRef.current;
+    const len = track ? track.getTotalLength() : 0;
     let ticking = false;
     const update = () => {
       ticking = false;
+      // the bead travels the ∞ once over the full page scroll
+      const max = document.body.scrollHeight - window.innerHeight;
+      const u = max > 0 ? window.scrollY / max : 0;
+      if (track && beadRef.current) {
+        const pt = track.getPointAtLength((u % 1) * len);
+        beadRef.current.setAttribute("cx", String(pt.x));
+        beadRef.current.setAttribute("cy", String(pt.y));
+      }
       let best = 0;
       let bd = Infinity;
       secRefs.current.forEach((s, i) => {
@@ -481,6 +494,26 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
     document.documentElement.lang = lang === "zh" ? "zh" : "en";
   }, [lang]);
 
+  // Theme flip as a circular ink wipe from the click point (View Transitions API).
+  // Falls back to the plain toggle where unsupported or reduced-motion.
+  const flipTheme = (e: React.MouseEvent) => {
+    const next = !dark;
+    const doc = document as Document & { startViewTransition?: (cb: () => void) => { finished: Promise<void> } };
+    if (!doc.startViewTransition || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setDark(next);
+      return;
+    }
+    document.documentElement.style.setProperty("--wx", `${e.clientX}px`);
+    document.documentElement.style.setProperty("--wy", `${e.clientY}px`);
+    // suspend the body's own 0.6s background fade so the wipe reveals a settled page
+    document.documentElement.classList.add("theme-wiping");
+    const vt = doc.startViewTransition(() => {
+      flushSync(() => setDark(next));
+      document.body.classList.toggle("dark", next); // ensure the DOM state is snapshotted
+    });
+    vt.finished.finally(() => document.documentElement.classList.remove("theme-wiping"));
+  };
+
   const goTo = (i: number) => {
     const el = secRefs.current[i];
     if (!el) return;
@@ -578,7 +611,7 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
               className="toggle"
               aria-label={lang === "zh" ? "切换深色模式" : "Toggle dark mode"}
               aria-pressed={dark === true}
-              onClick={() => setDark((v) => !v)}
+              onClick={flipTheme}
             >
               ◐
             </button>
@@ -602,9 +635,6 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
             <span className="mline l2w">
               <span className="minner l2">
                 <em>Wen</em>
-                <svg className="hero-mark" viewBox="0 0 84 44" aria-hidden="true">
-                  <path d="M42,22 C34,8 10,8 10,22 C10,36 34,36 42,22 C50,8 74,8 74,22 C74,36 50,36 42,22 Z" />
-                </svg>
               </span>
             </span>
           </h1>
@@ -821,6 +851,14 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
         <div className="count">
           <b>{String(active + 1).padStart(2, "0")}</b> / 04
         </div>
+        <svg width="84" height="44" viewBox="0 0 84 44">
+          <path
+            ref={trackRef}
+            className="track"
+            d="M42,22 C34,8 10,8 10,22 C10,36 34,36 42,22 C50,8 74,8 74,22 C74,36 50,36 42,22 Z"
+          />
+          <circle ref={beadRef} className="bead" r="3" cx="42" cy="22" />
+        </svg>
       </div>
     </>
   );

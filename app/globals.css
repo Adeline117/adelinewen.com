@@ -17,6 +17,7 @@
   --field-bg: rgba(20, 20, 20, 0.04);
   --field-bg-focus: rgba(20, 20, 20, 0.07);
   --err: #b23c2a; /* form error — AA on paper */
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1); /* one easing voice for the whole site */
 }
 body.dark {
   --ink: #f2f2f2;
@@ -87,15 +88,22 @@ nav {
 nav .navright { display: flex; align-items: center; gap: clamp(18px, 3vw, 36px); }
 nav .logo { font-size: 19px; font-weight: 500; letter-spacing: -0.01em; }
 nav .links { display: flex; gap: 36px; font-family: var(--font-mono), monospace; font-size: 12px; letter-spacing: 0.04em; color: var(--mute); text-transform: uppercase; }
-nav .links button { background: none; border: 0; color: inherit; cursor: pointer; transition: 0.25s; font: inherit; letter-spacing: inherit; text-transform: inherit; padding: 8px 4px; }
+nav .links button { position: relative; background: none; border: 0; color: inherit; cursor: pointer; transition: color 0.2s var(--ease); font: inherit; letter-spacing: inherit; text-transform: inherit; padding: 8px 4px; }
 nav .links button:hover, nav .links button.active { color: var(--ink); }
+/* hairline draws in under the link — same voice as .more */
+nav .links button::after { content: ""; position: absolute; left: 4px; right: 4px; bottom: 3px; height: 1px; background: var(--ink); transform: scaleX(0); transform-origin: left; transition: transform 0.3s var(--ease); }
+nav .links button:hover::after, nav .links button.active::after { transform: scaleX(1); }
 
-.prog { position: fixed; right: clamp(24px, 5vw, 72px); bottom: 54px; z-index: 3; text-align: right; font-family: var(--font-mono), monospace; color: var(--mute); }
+/* raised clear of the cover-foot row so the scroll cue / CTA never collide */
+.prog { position: fixed; right: clamp(24px, 5vw, 72px); bottom: 122px; z-index: 3; text-align: right; font-family: var(--font-mono), monospace; color: var(--mute); }
 .prog .count { font-size: 12px; letter-spacing: 0.1em; }
 .prog .count b { color: var(--ink); font-weight: 500; }
+.prog svg { display: block; margin-top: 12px; margin-left: auto; }
+.prog .track { fill: none; stroke: var(--line); stroke-width: 1.5; }
+.prog .bead { fill: var(--ink); }
 
 .controls { display: flex; gap: 10px; }
-.toggle { font-family: var(--font-mono), monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mute); background: none; border: 1px solid var(--line); border-radius: 100px; padding: 8px 14px; cursor: pointer; transition: 0.25s; }
+.toggle { font-family: var(--font-mono), monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mute); background: none; border: 1px solid var(--line); border-radius: 100px; padding: 8px 14px; cursor: pointer; transition: color 0.2s var(--ease), border-color 0.2s var(--ease), transform 0.2s var(--ease); }
 .toggle:hover { color: var(--ink); border-color: var(--ink); }
 .toggle:active { transform: scale(0.95); }
 
@@ -114,20 +122,12 @@ nav .links button:hover, nav .links button.active { color: var(--ink); }
 @keyframes lineUp { to { transform: translateY(0); } }
 .l1 { font-size: clamp(76px, 15.5vw, 236px); }
 .l2w { align-self: flex-end; margin-right: clamp(4px, 5vw, 120px); }
-.l2 { font-size: clamp(76px, 15.5vw, 236px); animation-delay: 0.26s; display: inline-flex; align-items: baseline; gap: clamp(16px, 2.6vw, 40px); }
+.l2 { font-size: clamp(76px, 15.5vw, 236px); animation-delay: 0.26s; }
 .l2 em { font-style: italic; }
-/* the ∞ mark rides the second line, drawn once */
-.hero-mark { width: clamp(44px, 5.5vw, 96px); height: auto; overflow: visible; }
-.hero-mark path {
-  fill: none; stroke: var(--ink); stroke-width: 1.6; stroke-linecap: round; opacity: 0.5;
-  stroke-dasharray: 300; stroke-dashoffset: 300; animation: heroDraw 2.4s cubic-bezier(0.6, 0, 0.2, 1) 0.9s forwards;
-}
-@keyframes heroDraw { to { stroke-dashoffset: 0; } }
 /* standfirst: a narrow measure hanging under the offset second line */
 .hero .sub { align-self: flex-end; max-width: 36ch; margin: clamp(18px, 3.6vh, 40px) clamp(4px, 5vw, 120px) 0 0; font-size: clamp(15px, 1.5vw, 18px); line-height: 1.65; color: var(--text); opacity: 0; animation: heroIn 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) 0.52s forwards; }
 .hero .sub b { color: var(--ink); font-weight: 500; }
-/* row-reverse: CTA left, scroll cue right (tucks under the fixed progress ∞) */
-.cover-foot { display: flex; flex-direction: row-reverse; justify-content: space-between; align-items: center; gap: 20px; border-top: 1px solid var(--line); padding-top: 16px; opacity: 0; animation: heroIn 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) 0.72s forwards; }
+.cover-foot { display: flex; justify-content: space-between; align-items: center; gap: 20px; border-top: 1px solid var(--line); padding-top: 16px; opacity: 0; animation: heroIn 0.8s var(--ease) 0.72s forwards; }
 .cover-foot .hint { font-family: var(--font-mono), monospace; font-size: 11px; letter-spacing: 0.22em; color: var(--mute); text-transform: uppercase; animation: hintFloat 3.4s cubic-bezier(0.37, 0, 0.63, 1) 1.8s infinite; }
 @keyframes hintFloat { 0%, 100% { transform: translateY(-2px); } 50% { transform: translateY(3px); } }
 .cover-foot .cta { font-family: var(--font-mono), monospace; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); background: none; border: 1px solid var(--line); border-radius: 100px; padding: 12px 24px; cursor: pointer; transition: color 0.25s, border-color 0.25s, background 0.25s; }
@@ -147,18 +147,24 @@ nav .links button:hover, nav .links button.active { color: var(--ink); }
 .sec.rev .inner { grid-template-columns: 0.95fr 1.05fr; }
 .sec.rev .left { order: 2; }
 .sec.rev .right { order: 1; justify-self: start; }
-/* crisp fade + rise reveal (no blur — Swiss wants sharp edges) */
-.sec .label, .sec h2, .sec .lead, .sec .cs, .sec .more, .sec .right > * {
+/* crisp fade + rise reveal (no blur — Swiss wants sharp edges);
+   list items enter one by one — choreography, not a block fade */
+.sec .label, .sec h2, .sec .lead, .sec .cs, .sec .more, .sec .tl li, .sec .clinks a {
   opacity: 0; transform: translateY(26px);
-  transition: opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
 }
-.sec.on .label, .sec.on h2, .sec.on .lead, .sec.on .cs, .sec.on .more, .sec.on .right > * { opacity: 1; transform: none; }
+.sec.on .label, .sec.on h2, .sec.on .lead, .sec.on .cs, .sec.on .more, .sec.on .tl li, .sec.on .clinks a { opacity: 1; transform: none; }
 .sec.on .label { transition-delay: 0.02s; }
 .sec.on h2 { transition-delay: 0.1s; }
 .sec.on .lead { transition-delay: 0.2s; }
 .sec.on .cs { transition-delay: 0.26s; }
 .sec.on .more { transition-delay: 0.32s; }
-.sec.on .right > * { transition-delay: 0.22s; }
+.sec.on .tl li:nth-child(1), .sec.on .clinks a:nth-child(1) { transition-delay: 0.2s; }
+.sec.on .tl li:nth-child(2), .sec.on .clinks a:nth-child(2) { transition-delay: 0.28s; }
+.sec.on .tl li:nth-child(3), .sec.on .clinks a:nth-child(3) { transition-delay: 0.36s; }
+.sec.on .tl li:nth-child(4), .sec.on .clinks a:nth-child(4) { transition-delay: 0.44s; }
+.sec.on .clinks a:nth-child(5) { transition-delay: 0.52s; }
+.sec.on .clinks a:nth-child(6) { transition-delay: 0.6s; }
 
 /* kicker: a short thick bar over the mono label — thick-vs-hairline contrast */
 .sec .label { font-family: var(--font-mono), monospace; font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--mute); margin-bottom: 24px; }
@@ -305,7 +311,7 @@ nav .links button:hover, nav .links button.active { color: var(--ink); }
   .sec .inner { grid-template-columns: 1fr; gap: 32px; }
   /* show content immediately on mobile — the opacity scroll-reveal could
      leave sections invisible (and transitions janked touch scrolling) */
-  .sec .label, .sec h2, .sec .lead, .sec .cs, .sec .more, .sec .right > * {
+  .sec .label, .sec h2, .sec .lead, .sec .cs, .sec .more, .sec .tl li, .sec .clinks a {
     opacity: 1 !important; transform: none !important; transition: none !important;
   }
   .sec .right { display: block; justify-self: stretch; max-width: 100%; }
@@ -335,6 +341,29 @@ main:focus { outline: none; } /* skip-link target — focused programmatically, 
 /* respect reduced-motion: reveal content immediately, drop transitions */
 @media (prefers-reduced-motion: reduce) {
   * { transition-duration: 0.001ms !important; animation-duration: 0.001ms !important; animation-delay: 0s !important; }
-  .sec .label, .sec h2, .sec .lead, .sec .cs, .sec .more, .sec .right > * { opacity: 1 !important; transform: none !important; }
+  .sec .label, .sec h2, .sec .lead, .sec .cs, .sec .more, .sec .tl li, .sec .clinks a { opacity: 1 !important; transform: none !important; }
   html { scroll-behavior: auto !important; }
 }
+
+/* ===== Motion set-pieces ===== */
+
+/* Theme flip: circular ink wipe expanding from the toggle click point.
+   Progressive enhancement via the View Transitions API. */
+.theme-wiping body { transition: none; }
+::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+::view-transition-new(root) { animation: themeWipe 0.6s var(--ease); }
+@keyframes themeWipe {
+  from { clip-path: circle(0 at var(--wx, 50%) var(--wy, 50%)); }
+  to { clip-path: circle(150% at var(--wx, 50%) var(--wy, 50%)); }
+}
+
+/* Cover exit: the two name lines drift up at different rates and fade as the
+   reader scrolls away — depth without JS (compositor-only scroll timeline) */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: scroll()) {
+    .cover h1 .mline:not(.l2w) { animation: coverExitA linear both; animation-timeline: scroll(); animation-range: 0 100vh; }
+    .l2w { animation: coverExitB linear both; animation-timeline: scroll(); animation-range: 0 100vh; }
+  }
+}
+@keyframes coverExitA { to { transform: translateY(-7vh); opacity: 0.15; } }
+@keyframes coverExitB { to { transform: translateY(-13vh); opacity: 0.15; } }
