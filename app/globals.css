@@ -52,7 +52,7 @@ body {
 }
 .mono { font-family: var(--font-mono), monospace; }
 
-/* inverted selection — ink paper swap (flips again inside the inverted section) */
+/* inverted selection — ink paper swap */
 ::selection { background: var(--ink); color: var(--bg); }
 ::-webkit-scrollbar { width: 11px; }
 ::-webkit-scrollbar-track { background: transparent; }
@@ -88,18 +88,11 @@ nav .navright { display: flex; align-items: center; gap: clamp(18px, 3vw, 36px);
 nav .logo { font-size: 19px; font-weight: 500; letter-spacing: -0.01em; }
 nav .links { display: flex; gap: 36px; font-family: var(--font-mono), monospace; font-size: 12px; letter-spacing: 0.04em; color: var(--mute); text-transform: uppercase; }
 nav .links button { background: none; border: 0; color: inherit; cursor: pointer; transition: 0.25s; font: inherit; letter-spacing: inherit; text-transform: inherit; padding: 8px 4px; }
-nav .links .i { color: var(--mute); margin-right: 6px; opacity: 0.55; }
 nav .links button:hover, nav .links button.active { color: var(--ink); }
-nav .links button.active .i { color: var(--ink); opacity: 1; }
 
-/* fixed over both paper and the inverted ink block — difference blending with
-   white-based greys self-inverts against any monochrome background */
-.prog { position: fixed; right: clamp(24px, 5vw, 72px); bottom: 54px; z-index: 3; text-align: right; font-family: var(--font-mono), monospace; color: #8c8c8c; mix-blend-mode: difference; }
+.prog { position: fixed; right: clamp(24px, 5vw, 72px); bottom: 54px; z-index: 3; text-align: right; font-family: var(--font-mono), monospace; color: var(--mute); }
 .prog .count { font-size: 12px; letter-spacing: 0.1em; }
-.prog .count b { color: #fff; font-weight: 500; }
-.prog svg { display: block; margin-top: 12px; margin-left: auto; }
-.prog .track { fill: none; stroke: rgba(255, 255, 255, 0.3); stroke-width: 1.5; }
-.prog .bead { fill: #fff; }
+.prog .count b { color: var(--ink); font-weight: 500; }
 
 .controls { display: flex; gap: 10px; }
 .toggle { font-family: var(--font-mono), monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mute); background: none; border: 1px solid var(--line); border-radius: 100px; padding: 8px 14px; cursor: pointer; transition: 0.25s; }
@@ -150,19 +143,10 @@ nav .links button.active .i { color: var(--ink); opacity: 1; }
 /* scroll-snap targets: hero + every section, centered, never skipped */
 .hero, .sec { scroll-snap-align: center; scroll-snap-stop: always; }
 .sec .inner { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(30px, 5vw, 80px); align-items: center; width: 100%; max-width: 1180px; margin: 0 auto; position: relative; z-index: 1; }
-/* giant hollow issue numeral sitting behind each spread */
-.bignum {
-  position: absolute; top: clamp(28px, 8vh, 90px); right: clamp(8px, 4vw, 64px); z-index: 0;
-  font-family: var(--font-fraunces), serif; font-weight: 330; font-size: clamp(130px, 19vw, 300px);
-  line-height: 0.8; letter-spacing: -0.04em; font-variant-numeric: lining-nums tabular-nums;
-  color: transparent; -webkit-text-stroke: 1.5px color-mix(in srgb, var(--ink) 20%, transparent);
-  pointer-events: none; user-select: none;
-}
-/* zig-zag spreads: reversed sections put the numeral on the left too */
+/* zig-zag spreads: reversed sections read right-to-left */
 .sec.rev .inner { grid-template-columns: 0.95fr 1.05fr; }
 .sec.rev .left { order: 2; }
 .sec.rev .right { order: 1; justify-self: start; }
-.sec.rev .bignum { right: auto; left: clamp(8px, 4vw, 64px); }
 /* crisp fade + rise reveal (no blur — Swiss wants sharp edges) */
 .sec .label, .sec h2, .sec .lead, .sec .cs, .sec .more, .sec .right > * {
   opacity: 0; transform: translateY(26px);
@@ -250,29 +234,11 @@ nav .links button.active .i { color: var(--ink); opacity: 1; }
 .colophon { position: absolute; left: clamp(24px, 5vw, 72px); right: clamp(24px, 5vw, 72px); bottom: 20px; z-index: 1; border-top: 1px solid var(--line); padding-top: 13px; font-family: var(--font-mono), monospace; font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mute); }
 
 /* ===== Arena: full project section (long-form, scrolls freely) =====
-   INVERTED PANEL — not a full-bleed theme flip but an inset, rounded ink plate
-   with paper showing around it: reads as a designed object, not a hard cut.
-   Local token swap still flips everything inside (selection, focus ring, rules). */
-.arena-sec {
-  display: block; min-height: 100vh; scroll-snap-align: start; scroll-margin-top: 76px;
-  margin: clamp(20px, 4vh, 48px) clamp(12px, 2.5vw, 40px);
-  border-radius: clamp(24px, 3vw, 44px); overflow: hidden;
-  padding: clamp(64px, 10vh, 116px) clamp(24px, 5vw, 72px);
-  background: #141414; transition: background 0.6s;
-  --ink: #f2f2f2; --text: #c9c9c9; --mute: #9a9a9a;
-  --line: rgba(255, 255, 255, 0.14); --bg: #141414;
-  --field-bg: rgba(255, 255, 255, 0.05); --field-bg-focus: rgba(255, 255, 255, 0.09);
-  color: var(--ink);
-}
-.arena-sec .bignum { top: clamp(24px, 6vh, 64px); right: clamp(16px, 4vw, 64px); }
-body.dark .arena-sec {
-  background: #f2f2f2;
-  --ink: #141414; --text: #3d3d3d; --mute: #6b6b6b;
-  --line: rgba(20, 20, 20, 0.12); --bg: #f2f2f2;
-  --field-bg: rgba(20, 20, 20, 0.04); --field-bg-focus: rgba(20, 20, 20, 0.07);
-}
+   Same paper as the rest of the site — differentiation comes from the
+   editorial layout, not a color block. */
+.arena-sec { display: block; min-height: 100vh; padding: 120px clamp(24px, 5vw, 72px); scroll-snap-align: start; scroll-margin-top: 64px; }
 /* match the other sections' container so headings left-align across the site */
-.arena-wrap { max-width: 1180px; margin: 0 auto; position: relative; z-index: 1; }
+.arena-wrap { max-width: 1180px; margin: 0 auto; }
 /* this section is a long read — show everything immediately, no reveal */
 .arena-sec .label, .arena-sec h2, .arena-sec .lead, .arena-sec .cs, .arena-sec .more {
   opacity: 1 !important; transform: none !important; transition: none !important;
@@ -322,7 +288,7 @@ body.dark .arena-sec {
      whitespace to scroll past; scroll-margin keeps nav jumps clear of the bar */
   html { scroll-snap-type: none; }
   .sec { min-height: auto; padding: 56px clamp(20px, 6vw, 40px); scroll-margin-top: 54px; }
-  .arena-sec { min-height: auto; margin: 14px 10px; border-radius: 22px; padding: 48px 20px; }
+  .arena-sec { min-height: auto; padding: 56px clamp(20px, 6vw, 40px); }
   .arena-stats { grid-template-columns: repeat(2, 1fr); }
   /* cover collapses gracefully: keep the offset stack, full-width standfirst */
   .hero { height: auto; min-height: 100svh; padding: 74px 20px 26px; }
@@ -330,9 +296,7 @@ body.dark .arena-sec {
   .l2w { margin-right: 4vw; }
   .hero .sub { align-self: stretch; max-width: 100%; margin-right: 0; }
   .edge-tag { display: none; }
-  .bignum { font-size: clamp(96px, 26vw, 150px); top: 18px; right: 12px; }
   .sec.rev .inner { grid-template-columns: 1fr; }
-  .sec.rev .bignum { left: auto; right: 12px; }
   .sec.rev .left { order: 0; }
   .sec.rev .right { order: 0; }
   .ablock { grid-template-columns: 1fr; gap: 12px; padding-top: 24px; margin-top: 28px; }
@@ -351,7 +315,6 @@ body.dark .arena-sec {
   nav .navright { gap: 12px; }
   nav .links { gap: 12px; font-size: 10px; }
   nav .links button { padding: 8px 3px; }
-  nav .links .i { display: none; }
   .toggle { padding: 7px 10px; font-size: 10px; }
 }
 @media (max-width: 480px) {

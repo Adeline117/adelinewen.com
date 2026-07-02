@@ -318,8 +318,6 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const secRefs = useRef<(HTMLElement | null)[]>([]);
   const heroRef = useRef<HTMLElement>(null);
-  const trackRef = useRef<SVGPathElement>(null);
-  const beadRef = useRef<SVGCircleElement>(null);
 
   useEffect(() => {
     const obs = new IntersectionObserver(
@@ -335,18 +333,9 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
   }, []);
 
   useEffect(() => {
-    const track = trackRef.current;
-    const len = track ? track.getTotalLength() : 0;
     let ticking = false;
     const update = () => {
       ticking = false;
-      const max = document.body.scrollHeight - window.innerHeight;
-      const u = max > 0 ? window.scrollY / max : 0;
-      if (track && beadRef.current) {
-        const pt = track.getPointAtLength((u % 1) * len);
-        beadRef.current.setAttribute("cx", String(pt.x));
-        beadRef.current.setAttribute("cy", String(pt.y));
-      }
       let best = 0;
       let bd = Infinity;
       secRefs.current.forEach((s, i) => {
@@ -536,7 +525,6 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
 
   const renderSection = (i: number, sec: Section, right: ReactNode, rev = false) => (
     <section className={`sec${rev ? " rev" : ""}`} id={ids[i]} data-i={i} ref={setRef(i)}>
-      <span className="bignum" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
       <div className="inner">
         <div className="left">
           <div className="label">{sec.label}</div>
@@ -574,7 +562,6 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
           <div className="links">
             {t.nav.map((label, i) => (
               <button key={i} className={i === active ? "active" : ""} onClick={() => goTo(i)}>
-                <span className="i">{String(i + 1).padStart(2, "0")}</span>
                 {label}
               </button>
             ))}
@@ -662,7 +649,6 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
 
       {/* 03, Arena (full project page) */}
       <section className="sec arena-sec" id="arena" data-i={2} ref={setRef(2)}>
-        <span className="bignum" aria-hidden="true">03</span>
         <div className="arena-wrap">
           <div className="label">{t.arena.label}</div>
           <h2>{t.arena.title}</h2>
@@ -758,7 +744,6 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
 
       {/* 04, Contact (with working form) */}
       <section className="sec" id="contact" data-i={3} ref={setRef(3)}>
-        <span className="bignum" aria-hidden="true">04</span>
         <div className="inner">
           <div className="left">
             <div className="label">{t.contact.label}</div>
@@ -836,14 +821,6 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
         <div className="count">
           <b>{String(active + 1).padStart(2, "0")}</b> / 04
         </div>
-        <svg width="84" height="44" viewBox="0 0 84 44">
-          <path
-            ref={trackRef}
-            className="track"
-            d="M42,22 C34,8 10,8 10,22 C10,36 34,36 42,22 C50,8 74,8 74,22 C74,36 50,36 42,22 Z"
-          />
-          <circle ref={beadRef} className="bead" r="3" cx="42" cy="22" />
-        </svg>
       </div>
     </>
   );
