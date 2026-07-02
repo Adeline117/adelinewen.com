@@ -18,10 +18,12 @@ const COPY: Record<
   {
     nav: string[];
     heroEyebrow: string;
-    heroTitle: ReactNode;
+    heroPlace: string;
+    heroTag: string;
     heroSub: ReactNode;
     heroHint: string;
     heroCta: string;
+    colophon: string;
     about: Section & { resume: TL[] };
     research: Section & { tl: TL[] };
     arena: Section & {
@@ -39,12 +41,10 @@ const COPY: Record<
 > = {
   en: {
     nav: ["About", "Research", "Work", "Contact"],
-    heroEyebrow: "Researcher · Founder",
-    heroTitle: (
-      <>
-        Adeline <em>Wen</em>
-      </>
-    ),
+    heroEyebrow: "Researcher & Founder",
+    heroPlace: "Seattle, WA · Est. 2025",
+    heroTag: "The infinite loop of craft",
+    colophon: "© 2026 Adeline Wen · Set in Fraunces & JetBrains Mono",
     heroSub: (
       <>
         Research assistant at the University of Washington Decentralized Computing Lab, and solo founder of <b>arenafi.org</b>, the first cross-platform ranking for crypto traders.
@@ -175,12 +175,10 @@ const COPY: Record<
   },
   zh: {
     nav: ["关于", "研究", "项目", "联系"],
-    heroEyebrow: "研究者 · 创始人",
-    heroTitle: (
-      <>
-        Adeline <em>Wen</em>
-      </>
-    ),
+    heroEyebrow: "研究者 & 创始人",
+    heroPlace: "西雅图 · 2025 起",
+    heroTag: "工艺的无限循环",
+    colophon: "© 2026 Adeline Wen · 字体 Fraunces 与 JetBrains Mono",
     heroSub: (
       <>
         华盛顿大学去中心化计算实验室研究助理，<b>arenafi.org</b> 独立创始人，首个跨平台加密交易者排名。
@@ -536,8 +534,9 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
   const t = COPY[lang];
   const ids = ["about", "research", "arena", "contact"];
 
-  const renderSection = (i: number, sec: Section, right: ReactNode) => (
-    <section className="sec" id={ids[i]} data-i={i} ref={setRef(i)}>
+  const renderSection = (i: number, sec: Section, right: ReactNode, rev = false) => (
+    <section className={`sec${rev ? " rev" : ""}`} id={ids[i]} data-i={i} ref={setRef(i)}>
+      <span className="bignum" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
       <div className="inner">
         <div className="left">
           <div className="label">{sec.label}</div>
@@ -602,16 +601,34 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
 
       <main id="main" tabIndex={-1}>
       <header className="hero" ref={heroRef}>
-        <svg className="hero-mark" viewBox="0 0 84 44" aria-hidden="true">
-          <path d="M42,22 C34,8 10,8 10,22 C10,36 34,36 42,22 C50,8 74,8 74,22 C74,36 50,36 42,22 Z" />
-        </svg>
-        <div className="meta">{t.heroEyebrow}</div>
-        <h1>{t.heroTitle}</h1>
-        <p className="sub">{t.heroSub}</p>
-        <div className="hero-cta">
-          <button onClick={() => goTo(3)}>{t.heroCta}</button>
+        {/* masthead: thick rule + justified dateline + hairline, like a front page */}
+        <div className="masthead">
+          <div className="dateline">
+            <span>{t.heroEyebrow}</span>
+            <span>{t.heroPlace}</span>
+          </div>
         </div>
-        <div className="hint">{t.heroHint}</div>
+        {/* the cover lines: huge, stacked, offset — each revealed through a line mask */}
+        <div className="cover">
+          <h1>
+            <span className="mline"><span className="minner l1">Adeline</span></span>
+            <span className="mline l2w">
+              <span className="minner l2">
+                <em>Wen</em>
+                <svg className="hero-mark" viewBox="0 0 84 44" aria-hidden="true">
+                  <path d="M42,22 C34,8 10,8 10,22 C10,36 34,36 42,22 C50,8 74,8 74,22 C74,36 50,36 42,22 Z" />
+                </svg>
+              </span>
+            </span>
+          </h1>
+          <p className="sub">{t.heroSub}</p>
+        </div>
+        {/* cover foot: scroll cue left, CTA right */}
+        <div className="cover-foot">
+          <div className="hint">{t.heroHint}</div>
+          <button className="cta" onClick={() => goTo(3)}>{t.heroCta}</button>
+        </div>
+        <div className="edge-tag" aria-hidden="true">{t.heroTag}</div>
       </header>
 
       {renderSection(
@@ -639,11 +656,13 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
               <div className="dsc">{item.d}</div>
             </li>
           ))}
-        </ul>
+        </ul>,
+        true // zig-zag: this spread runs right-to-left
       )}
 
       {/* 03, Arena (full project page) */}
       <section className="sec arena-sec" id="arena" data-i={2} ref={setRef(2)}>
+        <span className="bignum" aria-hidden="true">03</span>
         <div className="arena-wrap">
           <div className="label">{t.arena.label}</div>
           <h2>{t.arena.title}</h2>
@@ -739,6 +758,7 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
 
       {/* 04, Contact (with working form) */}
       <section className="sec" id="contact" data-i={3} ref={setRef(3)}>
+        <span className="bignum" aria-hidden="true">04</span>
         <div className="inner">
           <div className="left">
             <div className="label">{t.contact.label}</div>
@@ -808,6 +828,7 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
             </div>
           </div>
         </div>
+        <div className="colophon">{t.colophon}</div>
       </section>
       </main>
 
