@@ -45,7 +45,7 @@ const COPY: Record<
     heroEyebrow: "Researcher & Founder",
     heroPlace: "Seattle, WA · Est. 2025",
     heroTag: "The infinite loop of craft",
-    colophon: "© 2026 Adeline Wen · Set in Fraunces & JetBrains Mono",
+    colophon: "© 2026 Adeline Wen",
     heroSub: (
       <>
         Research assistant at the University of Washington Decentralized Computing Lab, and solo founder of <b>arenafi.org</b>, the first cross-platform ranking for crypto traders.
@@ -179,7 +179,7 @@ const COPY: Record<
     heroEyebrow: "研究者 & 创始人",
     heroPlace: "西雅图 · 2025 起",
     heroTag: "工艺的无限循环",
-    colophon: "© 2026 Adeline Wen · 字体 Fraunces 与 JetBrains Mono",
+    colophon: "© 2026 Adeline Wen",
     heroSub: (
       <>
         华盛顿大学去中心化计算实验室研究助理，<b>arenafi.org</b> 独立创始人，首个跨平台加密交易者排名。
