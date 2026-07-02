@@ -2,6 +2,10 @@
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { flushSync } from "react-dom";
+import dynamic from "next/dynamic";
+
+// the cover's still-life object — desktop only, loaded after the text paints
+const Sculpture = dynamic(() => import("@/components/Sculpture"), { ssr: false });
 
 type Lang = "en" | "zh";
 type Section = { label: string; title: ReactNode; lead: string; more: { text: string; href: string } };
@@ -639,6 +643,10 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
             </span>
           </h1>
           <p className="sub">{t.heroSub}</p>
+        </div>
+        {/* still life: matte ∞ sculpture in the cover's negative space */}
+        <div className="still" aria-hidden="true">
+          <Sculpture />
         </div>
         {/* cover foot: scroll cue left, CTA right */}
         <div className="cover-foot">
