@@ -124,6 +124,9 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 .l2w { align-self: flex-end; margin-right: clamp(4px, 5vw, 120px); }
 .l2 { font-size: clamp(76px, 15.5vw, 236px); animation-delay: 0.26s; }
 .l2 em { font-style: italic; }
+/* each name word breathes toward the cursor — Fraunces weight eases up on hover */
+.cover h1 .minner { transition: font-weight 0.55s var(--ease); will-change: font-weight; }
+.cover h1 .minner:hover { font-weight: 460; }
 /* standfirst: a narrow measure hanging under the offset second line */
 .hero .sub { align-self: flex-end; max-width: 36ch; margin: clamp(18px, 3.6vh, 40px) clamp(4px, 5vw, 120px) 0 0; font-size: clamp(15px, 1.5vw, 18px); line-height: 1.65; color: var(--text); opacity: 0; animation: heroIn 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) 0.52s forwards; }
 .hero .sub b { color: var(--ink); font-weight: 500; }
@@ -149,11 +152,21 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 .sec.rev .right { order: 1; justify-self: start; }
 /* crisp fade + rise reveal (no blur — Swiss wants sharp edges);
    list items enter one by one — choreography, not a block fade */
-.sec .label, .sec h2, .sec .lead, .sec .cs, .sec .more, .sec .tl li, .sec .clinks a {
+.sec .label, .sec .lead, .sec .cs, .sec .more, .sec .tl li, .sec .clinks a {
   opacity: 0; transform: translateY(26px);
   transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
 }
-.sec.on .label, .sec.on h2, .sec.on .lead, .sec.on .cs, .sec.on .more, .sec.on .tl li, .sec.on .clinks a { opacity: 1; transform: none; }
+.sec.on .label, .sec.on .lead, .sec.on .cs, .sec.on .more, .sec.on .tl li, .sec.on .clinks a { opacity: 1; transform: none; }
+/* the big heading wipes up out of a mask (matches the cover's line reveal) */
+.sec h2 {
+  opacity: 0; clip-path: inset(0 0 100% 0); transform: translateY(0.24em);
+  transition: opacity 0.85s var(--ease), transform 0.85s var(--ease), clip-path 0.85s var(--ease), font-weight 0.5s var(--ease);
+}
+.sec.on h2 { opacity: 1; clip-path: inset(0 0 -0.14em 0); transform: none; }
+.sec h2:hover { font-weight: 430; }
+/* the kicker bar draws itself in */
+.sec .label::before { transform: scaleX(0); transform-origin: left; transition: transform 0.6s var(--ease) 0.08s; }
+.sec.on .label::before { transform: scaleX(1); }
 .sec.on .label { transition-delay: 0.02s; }
 .sec.on h2 { transition-delay: 0.1s; }
 .sec.on .lead { transition-delay: 0.2s; }
@@ -247,8 +260,9 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 .arena-wrap { max-width: 1180px; margin: 0 auto; }
 /* this section is a long read — show everything immediately, no reveal */
 .arena-sec .label, .arena-sec h2, .arena-sec .lead, .arena-sec .cs, .arena-sec .more {
-  opacity: 1 !important; transform: none !important; transition: none !important;
+  opacity: 1 !important; transform: none !important; transition: none !important; clip-path: none !important;
 }
+.arena-sec .label::before { transform: none !important; }
 .arena-wrap > .lead { max-width: 760px; margin-top: 26px; }
 .arena-stats { display: grid !important; grid-template-columns: repeat(4, 1fr); gap: 0 28px; margin: 44px 0 8px; }
 .arena-stats li { border-top: 1px solid var(--line); flex-direction: column; align-items: flex-start; gap: 5px; padding: 16px 4px; }
@@ -312,8 +326,9 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
   /* show content immediately on mobile — the opacity scroll-reveal could
      leave sections invisible (and transitions janked touch scrolling) */
   .sec .label, .sec h2, .sec .lead, .sec .cs, .sec .more, .sec .tl li, .sec .clinks a {
-    opacity: 1 !important; transform: none !important; transition: none !important;
+    opacity: 1 !important; transform: none !important; transition: none !important; clip-path: none !important;
   }
+  .sec .label::before { transform: none !important; }
   .sec .right { display: block; justify-self: stretch; max-width: 100%; }
   .colophon { position: static; margin-top: 40px; }
   .prog { display: none; }
@@ -341,7 +356,8 @@ main:focus { outline: none; } /* skip-link target — focused programmatically, 
 /* respect reduced-motion: reveal content immediately, drop transitions */
 @media (prefers-reduced-motion: reduce) {
   * { transition-duration: 0.001ms !important; animation-duration: 0.001ms !important; animation-delay: 0s !important; }
-  .sec .label, .sec h2, .sec .lead, .sec .cs, .sec .more, .sec .tl li, .sec .clinks a { opacity: 1 !important; transform: none !important; }
+  .sec .label, .sec h2, .sec .lead, .sec .cs, .sec .more, .sec .tl li, .sec .clinks a { opacity: 1 !important; transform: none !important; clip-path: none !important; }
+  .sec .label::before { transform: none !important; }
   html { scroll-behavior: auto !important; }
 }
 
