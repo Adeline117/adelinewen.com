@@ -114,14 +114,12 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 .hero { height: 100vh; display: flex; flex-direction: column; position: relative; z-index: 2; padding: 92px clamp(24px, 5vw, 72px) 40px; }
 .masthead { border-top: 3px solid var(--ink); border-bottom: 1px solid var(--line); padding: 13px 2px; opacity: 0; animation: heroIn 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) 0.05s forwards; }
 .dateline { display: flex; justify-content: space-between; gap: 14px 24px; flex-wrap: wrap; font-family: var(--font-mono), monospace; font-size: 11.5px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--mute); }
+.masthead, .cover-foot { position: relative; z-index: 1; }
 .cover { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; justify-content: center; position: relative; z-index: 1; }
-/* still life: the matte ∞ sits in the bottom-left negative space, behind the type */
-.still { position: absolute; left: clamp(20px, 6vw, 96px); bottom: clamp(84px, 12vh, 132px); width: clamp(230px, 24vw, 400px); aspect-ratio: 1; z-index: 0; pointer-events: none; opacity: 0; animation: edgeIn 1.4s var(--ease) 1.05s forwards; }
-.still-canvas { width: 100%; height: 100%; display: block; }
-/* its soft contact shadow on the paper */
-.still::after { content: ""; position: absolute; left: 14%; right: 14%; bottom: 7%; height: 11%; background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.14), transparent 68%); filter: blur(7px); }
-body.dark .still::after { background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.55), transparent 68%); }
-@media (max-width: 1023px) { .still { display: none; } }
+/* atmospheric field: the binary-black-hole ∞ fills the cover, behind the type */
+.hero-field { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.field-canvas { width: 100%; height: 100%; display: block; }
+@media (max-width: 1023px) { .hero-field { display: none; } }
 .cover h1 { display: flex; flex-direction: column; font-weight: 330; line-height: 0.86; letter-spacing: -0.035em; }
 /* line-mask reveal: each giant line rises out of an overflow-hidden slot */
 .mline { display: block; overflow: hidden; padding-bottom: 0.06em; }
