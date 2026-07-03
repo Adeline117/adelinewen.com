@@ -108,13 +108,10 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 .toggle:active { transform: scale(0.95); }
 
 /* ===== Hero: the cover =====
-   Front-page anatomy: thick rule + justified dateline (masthead), two huge
-   stacked name lines offset like a magazine cover, narrow standfirst at the
-   right, foot row with scroll cue + CTA, a vertical tagline on the edge. */
-.hero { height: 100vh; display: flex; flex-direction: column; position: relative; z-index: 2; padding: 92px clamp(24px, 5vw, 72px) 40px; }
-.masthead { border-top: 3px solid var(--ink); border-bottom: 1px solid var(--line); padding: 13px 2px; opacity: 0; animation: heroIn 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) 0.05s forwards; }
-.dateline { display: flex; justify-content: space-between; gap: 14px 24px; flex-wrap: wrap; font-family: var(--font-mono), monospace; font-size: 11.5px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--mute); }
-.masthead, .cover, .cover-foot { position: relative; z-index: 1; }
+   Two huge stacked name lines offset like a magazine cover, a narrow standfirst
+   hanging at the right, and a foot row with the scroll cue + CTA. */
+.hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; position: relative; z-index: 2; padding: 92px clamp(24px, 5vw, 72px) 40px; }
+.cover, .cover-foot { position: relative; z-index: 1; }
 .cover { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; justify-content: center; }
 /* cursor-reactive needle field: fills the cover, behind the type */
 .hero-field { position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: 0; animation: fieldFade 1.4s var(--ease) 0.5s forwards; }
@@ -312,7 +309,6 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
   .arena-stats { grid-template-columns: repeat(2, 1fr); }
   /* cover collapses gracefully: keep the offset stack, full-width standfirst */
   .hero { height: auto; min-height: 100svh; padding: 74px 20px 26px; }
-  .dateline { font-size: 9.5px; letter-spacing: 0.16em; }
   .l2w { margin-right: 4vw; }
   .hero .sub { align-self: stretch; max-width: 100%; margin-right: 0; }
   .sec.rev .inner { grid-template-columns: 1fr; }

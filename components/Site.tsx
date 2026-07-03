@@ -23,8 +23,6 @@ const COPY: Record<
   Lang,
   {
     nav: string[];
-    heroEyebrow: string;
-    heroPlace: string;
     heroSub: ReactNode;
     heroHint: string;
     heroCta: string;
@@ -46,8 +44,6 @@ const COPY: Record<
 > = {
   en: {
     nav: ["About", "Research", "Work", "Contact"],
-    heroEyebrow: "Researcher & Founder",
-    heroPlace: "Seattle, WA · Est. 2025",
     colophon: "© 2026 Adeline Wen",
     heroSub: (
       <>
@@ -179,8 +175,6 @@ const COPY: Record<
   },
   zh: {
     nav: ["关于", "研究", "项目", "联系"],
-    heroEyebrow: "研究者 & 创始人",
-    heroPlace: "西雅图 · 2025 起",
     colophon: "© 2026 Adeline Wen",
     heroSub: (
       <>
@@ -637,13 +631,6 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
         {wide && (
           <div className="hero-field" aria-hidden="true"><Field /></div>
         )}
-        {/* masthead: thick rule + justified dateline + hairline, like a front page */}
-        <div className="masthead">
-          <div className="dateline">
-            <span>{t.heroEyebrow}</span>
-            <span>{t.heroPlace}</span>
-          </div>
-        </div>
         {/* the cover lines: huge, stacked, offset — each revealed through a line mask */}
         <div className="cover">
           <h1>
