@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { flushSync } from "react-dom";
+import Guilloche from "@/components/Guilloche";
 
 type Lang = "en" | "zh";
 type Section = { label: string; title: ReactNode; lead: string; more: { text: string; href: string } };
@@ -621,6 +622,8 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
 
       <main id="main" tabIndex={-1}>
       <header className="hero" ref={heroRef}>
+        {/* faint guilloché ∞ watermark — banknote-fine linework behind the cover */}
+        <div className="guilloche" aria-hidden="true"><Guilloche /></div>
         {/* masthead: thick rule + justified dateline + hairline, like a front page */}
         <div className="masthead">
           <div className="dateline">
