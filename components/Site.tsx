@@ -153,7 +153,7 @@ const COPY: Record<
           Let&apos;s <em>talk</em>.
         </>
       ),
-      lead: "Open to research and building opportunities, always up for a good problem.",
+      lead: "Based in Seattle, open to research and building opportunities, always up for a good problem.",
       links: [
         { label: "Email", val: "adelinewen1107@outlook.com", href: "mailto:adelinewen1107@outlook.com" },
         { label: "GitHub", val: "@Adeline117 ↗", href: "https://github.com/Adeline117" },
@@ -284,7 +284,7 @@ const COPY: Record<
           聊聊<em>吧</em>。
         </>
       ),
-      lead: "对研究与构建的机会开放，随时欢迎好问题。",
+      lead: "常驻西雅图，对研究与构建的机会开放，随时欢迎好问题。",
       links: [
         { label: "邮箱", val: "adelinewen1107@outlook.com", href: "mailto:adelinewen1107@outlook.com" },
         { label: "GitHub", val: "@Adeline117 ↗", href: "https://github.com/Adeline117" },
