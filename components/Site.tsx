@@ -2,11 +2,6 @@
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { flushSync } from "react-dom";
-import dynamic from "next/dynamic";
-
-// the cover's atmospheric field — a monochrome binary-black-hole ∞ behind the
-// type; desktop only, loaded after the text paints
-const HeroField = dynamic(() => import("@/components/HeroField"), { ssr: false });
 
 type Lang = "en" | "zh";
 type Section = { label: string; title: ReactNode; lead: string; more: { text: string; href: string } };
@@ -322,7 +317,6 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [hp, setHp] = useState(""); // honeypot, humans leave it empty, bots fill it
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
-  const [wide, setWide] = useState(false); // gate the WebGL sculpture to desktop widths
   const secRefs = useRef<(HTMLElement | null)[]>([]);
   const heroRef = useRef<HTMLElement>(null);
   const trackRef = useRef<SVGPathElement>(null);
@@ -480,15 +474,6 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
     };
   }, []);
 
-  // only mount the WebGL sculpture on desktop widths (matches the CSS ≥1024px show)
-  useEffect(() => {
-    const mq = window.matchMedia("(min-width: 1024px)");
-    const sync = () => setWide(mq.matches);
-    sync();
-    mq.addEventListener("change", sync);
-    return () => mq.removeEventListener("change", sync);
-  }, []);
-
   useEffect(() => {
     const stored = localStorage.getItem("theme");
     setDark(stored ? stored === "dark" : false); // default light — Swiss paper is the primary face
@@ -636,12 +621,6 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
 
       <main id="main" tabIndex={-1}>
       <header className="hero" ref={heroRef}>
-        {/* atmospheric field: binary-black-hole ∞ behind the whole cover */}
-        {wide && (
-          <div className="hero-field" aria-hidden="true">
-            <HeroField />
-          </div>
-        )}
         {/* masthead: thick rule + justified dateline + hairline, like a front page */}
         <div className="masthead">
           <div className="dateline">
