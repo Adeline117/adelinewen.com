@@ -116,17 +116,10 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 .dateline { display: flex; justify-content: space-between; gap: 14px 24px; flex-wrap: wrap; font-family: var(--font-mono), monospace; font-size: 11.5px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--mute); }
 .masthead, .cover, .cover-foot { position: relative; z-index: 1; }
 .cover { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; justify-content: center; }
-/* guilloché ∞ watermark: banknote-fine linework, barely-there, behind the type */
-.guilloche { position: absolute; inset: 0; z-index: 0; display: grid; place-items: center; pointer-events: none; overflow: hidden; }
-.guilloche-svg {
-  width: min(1180px, 128%); height: auto; color: var(--ink); opacity: 0.09;
-  animation: guillFade 1.6s var(--ease) 0.4s both, guillSway 26s ease-in-out 1.6s infinite;
-}
-@keyframes guillFade { from { opacity: 0; } to { opacity: 0.09; } }
-/* a gentle breathing sway — keeps the ∞ horizontal, just a whisper of life */
-@keyframes guillSway { 0%, 100% { transform: rotate(-2.4deg) scale(0.99); } 50% { transform: rotate(2.4deg) scale(1.01); } }
-body.dark .guilloche-svg { opacity: 0.13; }
-@media (prefers-reduced-motion: reduce) { .guilloche-svg { animation: guillFade 0.001s both; } }
+/* cursor-reactive needle field: fills the cover, behind the type */
+.hero-field { position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: 0; animation: fieldFade 1.4s var(--ease) 0.5s forwards; }
+.field-canvas { width: 100%; height: 100%; display: block; }
+@keyframes fieldFade { to { opacity: 1; } }
 .cover h1 { display: flex; flex-direction: column; font-weight: 330; line-height: 0.86; letter-spacing: -0.035em; }
 /* line-mask reveal: each giant line rises out of an overflow-hidden slot */
 .mline { display: block; overflow: hidden; padding-bottom: 0.06em; }
