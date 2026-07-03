@@ -4,8 +4,9 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { flushSync } from "react-dom";
 import dynamic from "next/dynamic";
 
-// the cover's still-life object — desktop only, loaded after the text paints
-const Sculpture = dynamic(() => import("@/components/Sculpture"), { ssr: false });
+// the cover's atmospheric field — a monochrome binary-black-hole ∞ behind the
+// type; desktop only, loaded after the text paints
+const HeroField = dynamic(() => import("@/components/HeroField"), { ssr: false });
 
 type Lang = "en" | "zh";
 type Section = { label: string; title: ReactNode; lead: string; more: { text: string; href: string } };
@@ -635,6 +636,12 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
 
       <main id="main" tabIndex={-1}>
       <header className="hero" ref={heroRef}>
+        {/* atmospheric field: binary-black-hole ∞ behind the whole cover */}
+        {wide && (
+          <div className="hero-field" aria-hidden="true">
+            <HeroField />
+          </div>
+        )}
         {/* masthead: thick rule + justified dateline + hairline, like a front page */}
         <div className="masthead">
           <div className="dateline">
@@ -654,12 +661,6 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
           </h1>
           <p className="sub">{t.heroSub}</p>
         </div>
-        {/* still life: matte ∞ sculpture in the cover's negative space */}
-        {wide && (
-          <div className="still" aria-hidden="true">
-            <Sculpture />
-          </div>
-        )}
         {/* cover foot: scroll cue left, CTA right */}
         <div className="cover-foot">
           <div className="hint">{t.heroHint}</div>
