@@ -25,7 +25,6 @@ const COPY: Record<
     nav: string[];
     heroEyebrow: string;
     heroPlace: string;
-    heroTag: string;
     heroSub: ReactNode;
     heroHint: string;
     heroCta: string;
@@ -49,14 +48,13 @@ const COPY: Record<
     nav: ["About", "Research", "Work", "Contact"],
     heroEyebrow: "Researcher & Founder",
     heroPlace: "Seattle, WA · Est. 2025",
-    heroTag: "The infinite loop of craft",
     colophon: "© 2026 Adeline Wen",
     heroSub: (
       <>
         Research assistant at the University of Washington Decentralized Computing Lab, and solo founder of <b>arenafi.org</b>, the first cross-platform ranking for crypto traders.
       </>
     ),
-    heroHint: "scroll to explore ↓",
+    heroHint: "Scroll ↓",
     heroCta: "Get in touch",
     about: {
       label: "01 · About",
@@ -183,14 +181,13 @@ const COPY: Record<
     nav: ["关于", "研究", "项目", "联系"],
     heroEyebrow: "研究者 & 创始人",
     heroPlace: "西雅图 · 2025 起",
-    heroTag: "工艺的无限循环",
     colophon: "© 2026 Adeline Wen",
     heroSub: (
       <>
         华盛顿大学去中心化计算实验室研究助理，<b>arenafi.org</b> 独立创始人，首个跨平台加密交易者排名。
       </>
     ),
-    heroHint: "向下滚动了解 ↓",
+    heroHint: "滚动 ↓",
     heroCta: "联系我",
     about: {
       label: "01 · 关于",
@@ -664,7 +661,6 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
           <div className="hint">{t.heroHint}</div>
           <button className="cta" onClick={() => goTo(3)}>{t.heroCta}</button>
         </div>
-        <div className="edge-tag" aria-hidden="true">{t.heroTag}</div>
       </header>
 
       {renderSection(

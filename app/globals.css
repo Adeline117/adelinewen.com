@@ -140,12 +140,7 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 @keyframes hintFloat { 0%, 100% { transform: translateY(-2px); } 50% { transform: translateY(3px); } }
 .cover-foot .cta { font-family: var(--font-mono), monospace; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); background: none; border: 1px solid var(--line); border-radius: 100px; padding: 12px 24px; cursor: pointer; transition: color 0.25s, border-color 0.25s, background 0.25s; }
 .cover-foot .cta:hover { border-color: var(--ink); background: var(--field-bg); }
-/* a whisper of vertical text on the right edge — small dose, big editorial cue */
-.edge-tag { position: absolute; right: clamp(10px, 1.5vw, 24px); top: 50%; transform: translateY(-50%); writing-mode: vertical-rl; font-family: var(--font-mono), monospace; font-size: 10px; letter-spacing: 0.34em; text-transform: uppercase; color: var(--mute); opacity: 0; animation: heroIn 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) 0.95s forwards; }
 @keyframes heroIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
-/* heroIn ends at transform:none — the edge-tag needs its centering back */
-.edge-tag { animation-name: edgeIn; }
-@keyframes edgeIn { from { opacity: 0; } to { opacity: 1; } }
 
 .sec { min-height: 100vh; display: flex; align-items: center; padding: 120px clamp(24px, 5vw, 72px); position: relative; z-index: 2; }
 /* scroll-snap targets: hero + every section, centered, never skipped */
@@ -320,7 +315,6 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
   .dateline { font-size: 9.5px; letter-spacing: 0.16em; }
   .l2w { margin-right: 4vw; }
   .hero .sub { align-self: stretch; max-width: 100%; margin-right: 0; }
-  .edge-tag { display: none; }
   .sec.rev .inner { grid-template-columns: 1fr; }
   .sec.rev .left { order: 0; }
   .sec.rev .right { order: 0; }
