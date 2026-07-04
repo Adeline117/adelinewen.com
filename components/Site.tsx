@@ -92,7 +92,7 @@ const COPY: Record<
         </>
       ),
       lead:
-        "Tennis has the ATP rankings; chess has Elo. Crypto trading moves hundreds of billions a day, yet no one could answer the simplest question: who are the best traders? Arena (arenafi.org) is the first cross-platform answer. I designed, built, and shipped it solo, unifying 68,000+ traders across 44+ exchanges (CEX + DEX) into one transparent Arena Score, giving crypto trading a world ranking for the first time.",
+        "Tennis has the ATP rankings; chess has Elo. Crypto trading moves hundreds of billions a day, yet no one could answer the simplest question: who are the best traders? Arena (arenafi.org) is the cross-platform answer. I designed, built, and shipped it solo, unifying 68,000+ traders across 44+ exchanges (CEX + DEX) into one transparent Arena Score, giving crypto trading a world ranking for the first time.",
       more: { text: "Visit arenafi.org ↗", href: "https://arenafi.org" },
       cs: [
         { k: "Discover", v: "Leaderboard, live now. Unified rankings across every exchange, built on a data pipeline spanning 44+ sources." },
@@ -105,13 +105,13 @@ const COPY: Record<
         { n: "60", d: "automated data pipelines", m: "" },
         { n: "Solo", d: "designed, built & shipped", m: "Next.js · Supabase · Redis" },
       ],
-      funnelIntro: "Rankings are only step one. Arena's full form is a three-stage funnel, where each step builds on the data of the last and earns far more per user:",
+      funnelIntro: "Rankings are only step one. Arena's full form is a three-stage funnel, where each step builds on the data of the last:",
       value: {
         h: "Why it's different",
         items: [
-          { h: "Cross-platform visibility", d: "The only place that sees every trader on every exchange. Binance will never show you Bybit's traders. Arena shows them all." },
+          { h: "Cross-platform visibility", d: "The only place that sees every trader on every exchange. Binance won't show you Bybit's traders; Arena shows them all." },
           { h: "One transparent standard", d: "Arena Score, 0–100, weighted 60% return-on-investment and 40% absolute profit, with a published methodology anyone can audit. Accounts under $500 profit are filtered out, and my own Sybil-detection research keeps fake-wallet farming off the board." },
-          { h: "Competition, not display", d: "Not a static dashboard but a live contest. Ego is the strongest retention engine ever built." },
+          { h: "Competition, not display", d: "Not a static dashboard but a live contest." },
         ],
       },
       model: {
@@ -143,7 +143,7 @@ const COPY: Record<
       },
       vision: {
         h: "Long-term vision",
-        d: "Trading is the most-played, highest-stakes competitive sport of our era, and the only one with no world ranking, no official matches, and no star system. Arena fills in all three, in order: discover the best, let them prove it in public, then let anyone follow. The benchmark isn't a single product but ATP + UFC + Bloomberg combined, and the path runs from the arena of crypto to the arena of every financial market.",
+        d: "Trading is fiercely competitive, yet it's the only sport with no world ranking, no official matches, and no star system. Arena fills in all three, in order: discover the best, let them prove it in public, then let anyone follow.",
       },
     },
     contact: {
@@ -223,7 +223,7 @@ const COPY: Record<
         </>
       ),
       lead:
-        "网球有 ATP 排名，国际象棋有 Elo。加密交易每天成交数千亿美元，却没人能回答最基本的问题：谁是最好的交易者？Arena（arenafi.org）是第一个跨平台的答案。我独立设计、开发并上线，把 44+ 交易所（中心化 + 去中心化）上分散的 68,000+ 交易者，统一进一个透明的 Arena 评分，第一次给加密交易一个世界排名。",
+        "网球有 ATP 排名，国际象棋有 Elo。加密交易每天成交数千亿美元，却没人能回答最基本的问题：谁是最好的交易者？Arena（arenafi.org）是跨平台的答案。我独立设计、开发并上线，把 44+ 交易所（中心化 + 去中心化）上分散的 68,000+ 交易者，统一进一个透明的 Arena 评分，第一次给加密交易一个世界排名。",
       more: { text: "访问 arenafi.org ↗", href: "https://arenafi.org" },
       cs: [
         { k: "发现", v: "排行榜（已上线）：跨所统一排名，建立在覆盖 44+ 数据源的管线之上。" },
@@ -236,13 +236,13 @@ const COPY: Record<
         { n: "60", d: "自动化数据管线", m: "" },
         { n: "独立", d: "设计、开发、上线", m: "Next.js · Supabase · Redis" },
       ],
-      funnelIntro: "排名只是第一步。Arena 的完整形态是一个三段漏斗，每一步都建立在上一步的数据之上，单用户的变现也大幅提升：",
+      funnelIntro: "排名只是第一步。Arena 的完整形态是一个三段漏斗，每一步都建立在上一步的数据之上：",
       value: {
         h: "为什么不一样",
         items: [
-          { h: "跨平台可见", d: "唯一能看见每个交易所、每位交易者的地方。币安永远不会告诉你 Bybit 的交易者；Arena 全都看得见。" },
+          { h: "跨平台可见", d: "唯一能看见每个交易所、每位交易者的地方。币安不会告诉你 Bybit 的交易者；Arena 全都看得见。" },
           { h: "统一透明的标准", d: "Arena 评分，0–100，其中收益率（ROI）占 60%、绝对盈亏占 40%，方法论公开、任何人可审计。绝对盈利低于 $500 的账户被过滤，我自己的 Sybil 检测研究也把伪造钱包刷分挡在榜外。" },
-          { h: "是竞技，不是展示", d: "这里的数据不是静态看板，而是实时比赛。胜负欲是有史以来最强的留存引擎。" },
+          { h: "是竞技，不是展示", d: "这里的数据不是静态看板，而是实时比赛。" },
         ],
       },
       model: {
@@ -274,7 +274,7 @@ const COPY: Record<
       },
       vision: {
         h: "长期愿景",
-        d: "交易是这个时代参与最广、赌注最高的竞技运动，也是唯一没有世界排名、没有官方比赛、没有明星体系的运动。Arena 依次补上这三样：先发现最强者，再让他们公开证明，最后让任何人都能跟随。对标的不是某个单一产品，而是 ATP + UFC + Bloomberg 的合体，路径从加密的竞技场，通向一切金融市场的竞技场。",
+        d: "交易竞争激烈，却是唯一没有世界排名、没有官方比赛、没有明星体系的运动。Arena 依次补上这三样：先发现最强者，再让他们公开证明，最后让任何人都能跟随。",
       },
     },
     contact: {
