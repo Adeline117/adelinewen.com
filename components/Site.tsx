@@ -47,7 +47,7 @@ const COPY: Record<
     colophon: "© 2026 Adeline Wen",
     heroSub: (
       <>
-        Research assistant at the University of Washington Decentralized Computing Lab, and solo founder of <b>arenafi.org</b>, the first cross-platform ranking for crypto traders.
+        Research assistant at the University of Washington Decentralized Computing Lab, and independent developer of <b>arenafi.org</b>.
       </>
     ),
     heroHint: "Scroll ↓",
@@ -65,7 +65,7 @@ const COPY: Record<
       resume: [
         { y: "Apr 2026 – Present", h: "Crypto Analyst · Stably", d: "Research & growth at a stablecoin infrastructure company." },
         { y: "Feb 2026 – Present", h: "Undergraduate Research Assistant · UW Decentralized Computing Lab", d: "Research under Prof. Wei Cai; built hascidb.org (open-source Sybil database, 2.5M+ wallets) and published on blockchain, crypto, and decentralized AI." },
-        { y: "Dec 2025 – Present", h: "Founder · Arena", d: "Solo-built arenafi.org, ranking 68,000+ traders." },
+        { y: "Dec 2025 – Present", h: "Independent Developer · Arena", d: "Solo-built arenafi.org, ranking 68,000+ traders." },
         { y: "2025 – 2029", h: "Bachelor of Economics · University of Washington", d: "Informatics minor · Dean's List." },
       ],
     },
@@ -178,7 +178,7 @@ const COPY: Record<
     colophon: "© 2026 Adeline Wen",
     heroSub: (
       <>
-        华盛顿大学去中心化计算实验室研究助理，<b>arenafi.org</b> 独立创始人，首个跨平台加密交易者排名。
+        华盛顿大学去中心化计算实验室研究助理，<b>arenafi.org</b> 独立开发者。
       </>
     ),
     heroHint: "滚动 ↓",
@@ -196,7 +196,7 @@ const COPY: Record<
       resume: [
         { y: "2026.04 – 至今", h: "加密分析师 · Stably", d: "稳定币基础设施公司的研究与增长。" },
         { y: "2026.02 – 至今", h: "本科研究助理 · UW 去中心化计算实验室", d: "导师 Wei Cai 教授；构建了 hascidb.org（开源 Sybil 检测数据库，250 万+ 钱包），并发表区块链、加密与去中心化 AI 方向的多篇论文。" },
-        { y: "2025.12 – 至今", h: "创始人 · Arena", d: "独立构建 arenafi.org，为 68,000+ 交易者排名。" },
+        { y: "2025.12 – 至今", h: "独立开发 · Arena", d: "独立构建 arenafi.org，为 68,000+ 交易者排名。" },
         { y: "2025 – 2029", h: "经济学学士 · 华盛顿大学", d: "辅修信息学 · 院长名单。" },
       ],
     },

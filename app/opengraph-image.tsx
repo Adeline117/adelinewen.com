@@ -22,7 +22,7 @@ export default function OpengraphImage() {
         }}
       >
         <div style={{ display: "flex", justifyContent: "space-between", fontSize: 22, letterSpacing: 6, color: "#6b6b6b" }}>
-          <span>RESEARCHER · FOUNDER</span>
+          <span>RESEARCHER · DEVELOPER</span>
           <span>SEATTLE · 2026</span>
         </div>
 
