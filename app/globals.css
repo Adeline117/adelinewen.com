@@ -19,6 +19,10 @@
   --err: #b23c2a; /* form error — AA on paper */
   --ease: cubic-bezier(0.2, 0.7, 0.2, 1); /* the one easing voice — every transition/reveal */
   --ease-loop: cubic-bezier(0.37, 0, 0.63, 1); /* symmetric sine — the looping float cue only */
+  /* motion rhythm: one reveal duration, one hover duration, one cascade step */
+  --dur: 0.7s;       /* reveals · weight breathe */
+  --dur-fast: 0.25s; /* hover · micro-interactions */
+  --stagger: 0.08s;  /* one step of a staggered reveal */
   /* corners: one small radius + one pill. Nothing in between. */
   --r: 10px;
   --pill: 100px;
@@ -83,7 +87,7 @@ h1, h2, .tl li .h { text-wrap: balance; }
 .hero .sub, .sec .lead, .tl li .dsc { text-wrap: pretty; }
 
 /* skip-to-content for keyboard users */
-.skip { position: fixed; top: -60px; left: 16px; z-index: 20; background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: var(--r); font-family: var(--font-mono), monospace; font-size: var(--fs-label); text-decoration: none; transition: top 0.2s var(--ease); }
+.skip { position: fixed; top: -60px; left: 16px; z-index: 20; background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: var(--r); font-family: var(--font-mono), monospace; font-size: var(--fs-label); text-decoration: none; transition: top var(--dur-fast) var(--ease); }
 .skip:focus { top: 16px; }
 
 .grain {
@@ -100,10 +104,10 @@ nav {
 nav .navright { display: flex; align-items: center; gap: clamp(18px, 3vw, 36px); }
 nav .logo { font-size: var(--fs-md); font-weight: 500; letter-spacing: -0.01em; }
 nav .links { display: flex; gap: 36px; font-family: var(--font-mono), monospace; font-size: var(--fs-label); letter-spacing: 0.04em; color: var(--mute); text-transform: uppercase; }
-nav .links button { position: relative; background: none; border: 0; color: inherit; cursor: pointer; transition: color 0.2s var(--ease); font: inherit; letter-spacing: inherit; text-transform: inherit; padding: 8px 4px; }
+nav .links button { position: relative; background: none; border: 0; color: inherit; cursor: pointer; transition: color var(--dur-fast) var(--ease); font: inherit; letter-spacing: inherit; text-transform: inherit; padding: 8px 4px; }
 nav .links button:hover, nav .links button.active { color: var(--ink); }
 /* hairline draws in under the link — same voice as .more */
-nav .links button::after { content: ""; position: absolute; left: 4px; right: 4px; bottom: 3px; height: 1px; background: var(--ink); transform: scaleX(0); transform-origin: left; transition: transform 0.3s var(--ease); }
+nav .links button::after { content: ""; position: absolute; left: 4px; right: 4px; bottom: 3px; height: 1px; background: var(--ink); transform: scaleX(0); transform-origin: left; transition: transform var(--dur-fast) var(--ease); }
 nav .links button:hover::after, nav .links button.active::after { transform: scaleX(1); }
 
 /* raised clear of the cover-foot row so the scroll cue / CTA never collide */
@@ -115,7 +119,7 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 .prog .bead { fill: var(--ink); }
 
 .controls { display: flex; gap: 10px; }
-.toggle { font-family: var(--font-mono), monospace; font-size: var(--fs-cap); letter-spacing: 0.08em; text-transform: uppercase; color: var(--mute); background: none; border: 1px solid var(--line); border-radius: var(--pill); padding: 8px 14px; cursor: pointer; transition: color 0.2s var(--ease), border-color 0.2s var(--ease), transform 0.2s var(--ease); }
+.toggle { font-family: var(--font-mono), monospace; font-size: var(--fs-cap); letter-spacing: 0.08em; text-transform: uppercase; color: var(--mute); background: none; border: 1px solid var(--line); border-radius: var(--pill); padding: 8px 14px; cursor: pointer; transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease); }
 .toggle:hover { color: var(--ink); border-color: var(--ink); }
 .toggle:active { transform: scale(0.95); }
 
@@ -139,7 +143,7 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 .l2 { font-size: clamp(76px, 15.5vw, 236px); animation-delay: 0.26s; }
 .l2 em { font-style: italic; }
 /* each name word breathes toward the cursor — Fraunces weight eases up on hover */
-.cover h1 .minner { transition: font-weight 0.55s var(--ease); will-change: font-weight; }
+.cover h1 .minner { transition: font-weight var(--dur) var(--ease); will-change: font-weight; }
 .cover h1 .minner:hover { font-weight: 440; }
 /* standfirst: a narrow measure hanging under the offset second line */
 .hero .sub { align-self: flex-end; max-width: 36ch; margin: clamp(18px, 3.6vh, 40px) clamp(4px, 5vw, 120px) 0 0; font-size: clamp(15px, 1.5vw, 18px); line-height: 1.65; color: var(--text); opacity: 0; animation: heroIn 0.8s var(--ease) 0.52s forwards; }
@@ -147,7 +151,7 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 .cover-foot { display: flex; justify-content: space-between; align-items: center; gap: 20px; border-top: 1px solid var(--line); padding-top: 16px; opacity: 0; animation: heroIn 0.8s var(--ease) 0.72s forwards; }
 .cover-foot .hint { font-family: var(--font-mono), monospace; font-size: var(--fs-cap); letter-spacing: 0.22em; color: var(--mute); text-transform: uppercase; animation: hintFloat 3.4s var(--ease-loop) 1.8s infinite; }
 @keyframes hintFloat { 0%, 100% { transform: translateY(-2px); } 50% { transform: translateY(3px); } }
-.cover-foot .cta { font-family: var(--font-mono), monospace; font-size: var(--fs-label); letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); background: none; border: 1px solid var(--line); border-radius: var(--pill); padding: 12px 24px; cursor: pointer; transition: color 0.25s var(--ease), border-color 0.25s var(--ease), background 0.25s var(--ease); }
+.cover-foot .cta { font-family: var(--font-mono), monospace; font-size: var(--fs-label); letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); background: none; border: 1px solid var(--line); border-radius: var(--pill); padding: 12px 24px; cursor: pointer; transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease); }
 .cover-foot .cta:hover { border-color: var(--ink); background: var(--field-bg); }
 @keyframes heroIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
 
@@ -163,29 +167,30 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
    list items enter one by one — choreography, not a block fade */
 .sec .label, .sec .lead, .sec .more, .sec .tl li, .sec .clinks a {
   opacity: 0; transform: translateY(26px);
-  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+  transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
 }
 .sec.on .label, .sec.on .lead, .sec.on .more, .sec.on .tl li, .sec.on .clinks a { opacity: 1; transform: none; }
 /* the big heading wipes up out of a mask (matches the cover's line reveal) */
 .sec h2 {
   opacity: 0; clip-path: inset(0 0 100% 0); transform: translateY(0.24em);
-  transition: opacity 0.85s var(--ease), transform 0.85s var(--ease), clip-path 0.85s var(--ease), font-weight 0.5s var(--ease);
+  transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease), clip-path var(--dur) var(--ease), font-weight var(--dur) var(--ease);
 }
 .sec.on h2 { opacity: 1; clip-path: inset(0 0 -0.14em 0); transform: none; }
 .sec h2:hover { font-weight: 440; }
 /* the kicker bar draws itself in */
-.sec .label::before { transform: scaleX(0); transform-origin: left; transition: transform 0.6s var(--ease) 0.08s; }
+.sec .label::before { transform: scaleX(0); transform-origin: left; transition: transform var(--dur) var(--ease) var(--stagger); }
 .sec.on .label::before { transform: scaleX(1); }
-.sec.on .label { transition-delay: 0.02s; }
-.sec.on h2 { transition-delay: 0.1s; }
-.sec.on .lead { transition-delay: 0.2s; }
-.sec.on .more { transition-delay: 0.32s; }
-.sec.on .tl li:nth-child(1), .sec.on .clinks a:nth-child(1) { transition-delay: 0.2s; }
-.sec.on .tl li:nth-child(2), .sec.on .clinks a:nth-child(2) { transition-delay: 0.28s; }
-.sec.on .tl li:nth-child(3), .sec.on .clinks a:nth-child(3) { transition-delay: 0.36s; }
-.sec.on .tl li:nth-child(4), .sec.on .clinks a:nth-child(4) { transition-delay: 0.44s; }
-.sec.on .clinks a:nth-child(5) { transition-delay: 0.52s; }
-.sec.on .clinks a:nth-child(6) { transition-delay: 0.6s; }
+/* one 0.08s cascade step throughout — left column then list rows */
+.sec.on .label { transition-delay: 0s; }
+.sec.on h2 { transition-delay: var(--stagger); }
+.sec.on .lead { transition-delay: calc(2 * var(--stagger)); }
+.sec.on .more { transition-delay: calc(3 * var(--stagger)); }
+.sec.on .tl li:nth-child(1), .sec.on .clinks a:nth-child(1) { transition-delay: calc(2 * var(--stagger)); }
+.sec.on .tl li:nth-child(2), .sec.on .clinks a:nth-child(2) { transition-delay: calc(3 * var(--stagger)); }
+.sec.on .tl li:nth-child(3), .sec.on .clinks a:nth-child(3) { transition-delay: calc(4 * var(--stagger)); }
+.sec.on .tl li:nth-child(4), .sec.on .clinks a:nth-child(4) { transition-delay: calc(5 * var(--stagger)); }
+.sec.on .clinks a:nth-child(5) { transition-delay: calc(6 * var(--stagger)); }
+.sec.on .clinks a:nth-child(6) { transition-delay: calc(7 * var(--stagger)); }
 
 /* kicker: a short thick bar over the mono label — thick-vs-hairline contrast */
 .sec .label { font-family: var(--font-mono), monospace; font-size: var(--fs-sm); letter-spacing: 0.22em; text-transform: uppercase; color: var(--mute); margin-bottom: 24px; }
@@ -195,12 +200,12 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 .sec .lead { margin-top: 32px; max-width: 460px; font-size: clamp(16px, 1.5vw, 17px); line-height: 1.72; color: var(--text); }
 .sec .more { position: relative; margin-top: 40px; display: inline-flex; gap: 10px; font-family: var(--font-mono), monospace; font-size: var(--fs-label); letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--line); padding-bottom: 8px; }
 /* hover: an ink line grows left-to-right over the resting hairline */
-.sec .more::after { content: ""; position: absolute; left: 0; bottom: -1px; width: 100%; height: 1px; background: var(--ink); transform: scaleX(0); transform-origin: left; transition: transform 0.35s var(--ease); }
+.sec .more::after { content: ""; position: absolute; left: 0; bottom: -1px; width: 100%; height: 1px; background: var(--ink); transform: scaleX(0); transform-origin: left; transition: transform var(--dur-fast) var(--ease); }
 .sec .more:hover::after { transform: scaleX(1); }
 .sec .right { max-width: 460px; justify-self: end; width: 100%; }
 
 .rows { list-style: none; }
-.rows li { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; padding: 16px 6px; border-top: 1px solid var(--line); transition: 0.25s var(--ease); }
+.rows li { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; padding: 16px 6px; border-top: 1px solid var(--line); transition: var(--dur-fast) var(--ease); }
 .rows li:last-child { border-bottom: 1px solid var(--line); }
 .rinfo { display: flex; flex-direction: column; gap: 5px; }
 .rows .n { font-family: var(--font-fraunces), serif; font-size: var(--fs-lg); font-weight: 330; letter-spacing: -0.01em; color: var(--ink); font-variant-numeric: lining-nums tabular-nums; }
@@ -221,7 +226,7 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 .hp { position: absolute !important; left: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
 .cform input, .cform textarea {
   width: 100%; background: var(--field-bg); border: 1px solid var(--line); border-radius: var(--r);
-  padding: 12px 14px; font-family: var(--font-mono), monospace; font-size: var(--fs-sm); color: var(--ink); transition: 0.25s var(--ease); caret-color: var(--ink);
+  padding: 12px 14px; font-family: var(--font-mono), monospace; font-size: var(--fs-sm); color: var(--ink); transition: var(--dur-fast) var(--ease); caret-color: var(--ink);
 }
 .cform textarea { resize: vertical; min-height: 96px; }
 .cform input::placeholder, .cform textarea::placeholder { color: var(--mute); }
@@ -230,7 +235,7 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
   align-self: flex-start; margin-top: 4px; padding: 12px 26px; border: 0; border-radius: var(--pill); cursor: pointer;
   background: var(--ink); color: var(--bg);
   font-family: var(--font-mono), monospace; font-size: var(--fs-label); letter-spacing: 0.08em; text-transform: uppercase;
-  transition: transform 0.25s var(--ease), opacity 0.25s var(--ease);
+  transition: transform var(--dur-fast) var(--ease), opacity var(--dur-fast) var(--ease);
 }
 /* flat like the rest of the system — a small lift on hover, no drop shadow */
 .cform button:hover:not(:disabled) { transform: translateY(-2px); }
@@ -241,9 +246,9 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 .cform .status.err { color: var(--err); }
 
 .clinks { display: flex; flex-direction: column; }
-.clinks a { display: flex; justify-content: space-between; align-items: baseline; padding: 16px 6px; border-top: 1px solid var(--line); text-decoration: none; font-family: var(--font-fraunces), serif; font-size: var(--fs-xl); font-weight: 330; color: var(--ink); transition: 0.25s var(--ease); }
+.clinks a { display: flex; justify-content: space-between; align-items: baseline; padding: 16px 6px; border-top: 1px solid var(--line); text-decoration: none; font-family: var(--font-fraunces), serif; font-size: var(--fs-xl); font-weight: 330; color: var(--ink); transition: var(--dur-fast) var(--ease); }
 .clinks a:last-child { border-bottom: 1px solid var(--line); }
-.clinks a .ar { font-family: var(--font-mono), monospace; font-size: var(--fs-sm); color: var(--mute); transition: 0.25s var(--ease); }
+.clinks a .ar { font-family: var(--font-mono), monospace; font-size: var(--fs-sm); color: var(--mute); transition: var(--dur-fast) var(--ease); }
 .clinks a:hover { padding-left: 16px; font-style: italic; }
 .clinks a:hover .ar { color: var(--ink); transform: translate(3px, -3px); }
 
