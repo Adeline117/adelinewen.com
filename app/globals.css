@@ -292,6 +292,9 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 .aroad .rp { font-family: var(--font-fraunces), serif; font-weight: 330; font-size: var(--fs-md); color: var(--ink); }
 .aroad .rw { font-family: var(--font-mono), monospace; font-size: var(--fs-cap); text-transform: uppercase; letter-spacing: 0.07em; color: var(--mute); }
 .aroad .rwhat { font-size: var(--fs-body); line-height: 1.55; color: var(--text); }
+/* the dream — the section's landing: full-width, no label, builds to an ink italic payoff */
+.arena-vision { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--line); max-width: 820px; font-size: var(--fs-md); line-height: 1.5; color: var(--text); }
+.arena-vision em { font-style: italic; color: var(--ink); }
 /* product signature lockup at the section exit — Arena's ∞ mark + wordmark, in ink */
 .arena-sign { display: flex; align-items: center; gap: 14px; margin-top: 48px; flex-wrap: wrap; }
 .arena-sign .inf-mark { width: 30px; height: 30px; color: var(--ink); flex: none; }
@@ -323,6 +326,7 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
   .sec.rev .left { order: 0; }
   .sec.rev .right { order: 0; }
   .ablock { grid-template-columns: 1fr; gap: 12px; padding-top: 24px; margin-top: 24px; }
+  .arena-vision { margin-top: 24px; padding-top: 24px; }
   .aroad li { grid-template-columns: 1fr; gap: 4px; }
   .aroad .rw { margin-top: 2px; }
   .sec .inner { grid-template-columns: 1fr; gap: 32px; }
