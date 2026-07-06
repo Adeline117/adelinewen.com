@@ -281,7 +281,7 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 .ablock h3 { font-family: var(--font-mono), monospace; font-size: var(--fs-label); letter-spacing: 0.18em; text-transform: uppercase; color: var(--mute); padding-top: 3px; }
 .ablock p { font-size: var(--fs-body); line-height: 1.65; color: var(--text); max-width: 560px; }
 .abody > *:first-child { margin-top: 0; }
-.abody p + ul, .abody p + .arev { margin-top: 16px; }
+.abody p + ul { margin-top: 16px; }
 .alist { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-top: 0; max-width: 560px; }
 .alist li { font-size: var(--fs-body); line-height: 1.6; color: var(--text); padding-left: 18px; position: relative; }
 .alist li::before { content: "·"; position: absolute; left: 2px; top: -1px; font-size: 20px; line-height: 1.4; color: var(--mute); }
@@ -292,11 +292,6 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 .aroad .rp { font-family: var(--font-fraunces), serif; font-weight: 330; font-size: var(--fs-md); color: var(--ink); }
 .aroad .rw { font-family: var(--font-mono), monospace; font-size: var(--fs-cap); text-transform: uppercase; letter-spacing: 0.07em; color: var(--mute); }
 .aroad .rwhat { font-size: var(--fs-body); line-height: 1.55; color: var(--text); }
-.arev { margin-top: 0; max-width: 600px; }
-.arev > div { display: flex; justify-content: space-between; gap: 24px; padding: 12px 0; border-top: 1px solid var(--line); align-items: baseline; }
-.arev > div:last-child { border-bottom: 1px solid var(--line); }
-.arev dt { font-family: var(--font-fraunces), serif; font-weight: 330; font-size: var(--fs-body); color: var(--ink); }
-.arev dd { font-family: var(--font-mono), monospace; font-size: var(--fs-sm); color: var(--mute); text-align: right; }
 /* product signature lockup at the section exit — Arena's ∞ mark + wordmark, in ink */
 .arena-sign { display: flex; align-items: center; gap: 14px; margin-top: 48px; flex-wrap: wrap; }
 .arena-sign .inf-mark { width: 30px; height: 30px; color: var(--ink); flex: none; }

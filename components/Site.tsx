@@ -13,7 +13,6 @@ type Section = { label: string; title: ReactNode; lead: string; more: { text: st
 type Row = { n: string; d: string; m: string };
 type Val = { h: string; d: string };
 type Road = { phase: string; when: string; what: string };
-type Rev = { k: string; v: string };
 type TL = { y: string; h: string; d: string };
 type CLink = { label: string; val: string; href: string };
 type Form = { name: string; email: string; message: string; send: string; sending: string; sent: string; err: string };
@@ -32,9 +31,7 @@ const COPY: Record<
       stats: Row[];
       funnelIntro: string;
       value: { h: string; items: Val[] };
-      model: { h: string; d: string; points: string[] };
       roadmap: { h: string; steps: Road[] };
-      revenue: { h: string; d: string; rows: Rev[] };
       vision: { h: string; d: string };
     };
     contact: { label: string; title: ReactNode; lead: string; links: CLink[]; form: Form };
@@ -107,31 +104,12 @@ const COPY: Record<
           { h: "Competition, not display", d: "Not a static dashboard but a live contest." },
         ],
       },
-      model: {
-        h: "The business model: UFC + Polymarket",
-        d: "Every breakout crypto product monetizes speculation. Arena makes the traders themselves the show: performers fight, spectators predict and bet, and the house takes a cut from both sides. Three things that have never been combined into one product:",
-        points: [
-          "Real traders competing on their real trades, not virtual athletes, not passive copy-trading.",
-          "Cross-exchange normalization, putting a Binance trader and a Bybit trader on one scale.",
-          "Spectators betting on real humans making real trades, in real time.",
-        ],
-      },
       roadmap: {
         h: "Roadmap",
         steps: [
           { phase: "V1 · Discover", when: "now", what: "Live leaderboard, trader claiming & verification, community cold start." },
           { phase: "V2 · Prove", when: "6–18 mo", what: "A stable in-app currency, head-to-head battles, spectator betting, the first 12-week season." },
           { phase: "V3 · Follow", when: "18–36 mo", what: "Copy-trading vaults, advanced bet types, ARENA token, institutional data API." },
-        ],
-      },
-      revenue: {
-        h: "How it makes money",
-        d: "Revenue comes from several independent layers, each stands on its own, so it holds even when any one slows:",
-        rows: [
-          { k: "Battle rake", v: "5% of bounty pools" },
-          { k: "Betting spread", v: "3% of every bet placed" },
-          { k: "Vault fees", v: "10% management + 10% performance" },
-          { k: "SaaS & data", v: "Pro ($9.99/mo), exchange affiliates, data licensing to funds" },
         ],
       },
       vision: {
@@ -232,31 +210,12 @@ const COPY: Record<
           { h: "是竞技，不是展示", d: "这里的数据不是静态看板，而是实时比赛。" },
         ],
       },
-      model: {
-        h: "商业模式：UFC + Polymarket",
-        d: "所有爆发过的加密产品都在为投机变现。Arena 让交易者本身成为表演：选手对战，观众预测下注，平台从两边抽成。三件从未被组合进同一个产品的事：",
-        points: [
-          "真实交易者用真实交易正面较量，不是虚拟选手，也不是被动跟单。",
-          "跨所归一化，把币安和 Bybit 的交易者放进同一把尺子。",
-          "观众对真实的人、真实的交易、实时下注。",
-        ],
-      },
       roadmap: {
         h: "路线图",
         steps: [
           { phase: "V1 · 发现", when: "现在", what: "排行榜上线、交易者认领与验证、社区冷启动。" },
           { phase: "V2 · 证明", when: "6–18 个月", what: "稳定的站内货币、1v1 对战、观众下注、第一个 12 周赛季。" },
           { phase: "V3 · 跟随", when: "18–36 个月", what: "跟单金库、进阶下注、ARENA 代币、机构数据 API。" },
-        ],
-      },
-      revenue: {
-        h: "怎么赚钱",
-        d: "收入来自多条相互独立的线，每条都能独立支撑，任何一条放缓都不塌：",
-        rows: [
-          { k: "对战抽成", v: "奖池的 5%" },
-          { k: "下注价差", v: "每笔下注的 3%" },
-          { k: "金库费", v: "10% 管理费 + 10% 业绩费" },
-          { k: "SaaS 与数据", v: "Pro（$9.99/月）、交易所返佣、对基金的数据授权" },
         ],
       },
       vision: {
@@ -688,18 +647,6 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
           </div>
 
           <div className="ablock">
-            <h3>{t.arena.model.h}</h3>
-            <div className="abody">
-              <p>{t.arena.model.d}</p>
-              <ul className="alist">
-                {t.arena.model.points.map((p, i) => (
-                  <li key={i}>{p}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          <div className="ablock">
             <h3>{t.arena.roadmap.h}</h3>
             <ul className="aroad abody">
               {t.arena.roadmap.steps.map((s) => (
@@ -710,21 +657,6 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
                 </li>
               ))}
             </ul>
-          </div>
-
-          <div className="ablock">
-            <h3>{t.arena.revenue.h}</h3>
-            <div className="abody">
-              <p>{t.arena.revenue.d}</p>
-              <dl className="arev">
-                {t.arena.revenue.rows.map((r) => (
-                  <div key={r.k}>
-                    <dt>{r.k}</dt>
-                    <dd>{r.v}</dd>
-                  </div>
-                ))}
-              </dl>
-            </div>
           </div>
 
           <div className="ablock">
