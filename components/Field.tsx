@@ -123,11 +123,11 @@ export default function Field() {
         let da = target - p.a;
         da = Math.atan2(Math.sin(da), Math.cos(da));
         p.a += da * (0.06 + en * 0.22);
-        const len = 6 + p.e * 15;
+        const len = 11 + p.e * 12;
         const cx = Math.cos(p.a) * len * 0.5;
         const cy = Math.sin(p.a) * len * 0.5;
-        ctx.globalAlpha = 0.085 + en * 0.5;
-        ctx.lineWidth = 1 + en * 0.7;
+        ctx.globalAlpha = 0.24 + en * 0.4;
+        ctx.lineWidth = 1.1 + en * 0.7;
         ctx.beginPath();
         ctx.moveTo(p.x - cx, p.y - cy);
         ctx.lineTo(p.x + cx, p.y + cy);

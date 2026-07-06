@@ -5,17 +5,18 @@
    All hierarchy comes from scale, whitespace, hairlines and grey steps — zero hue.
    The single functional exception is --err (form errors need to read as errors). */
 :root {
-  --ink: #141414;
+  /* a whisper of warmth — reads as ink on paper, not screen-grey (no hue, luminance kept) */
+  --ink: #15130f;
   /* --text: readable body prose · --mute: small uppercase labels/captions (both pass WCAG AA) */
-  --text: #3d3d3d;
-  --mute: #6b6b6b;
-  --line: rgba(20, 20, 20, 0.12);
-  --bg-grad: radial-gradient(ellipse 80% 68% at 50% 44%, #fdfdfd, #f5f5f5 56%, #ededed);
+  --text: #3d3a34;
+  --mute: #6b675f;
+  --line: rgba(24, 20, 12, 0.12);
+  --bg-grad: radial-gradient(ellipse 80% 68% at 50% 44%, #fdfcf9, #f6f4ef 56%, #edeae3);
   /* frosted nav bar so content scrolls cleanly underneath (esp. on mobile) */
-  --nav-bg: rgba(247, 247, 247, 0.72);
-  --bg: #f7f7f7; /* solid bg color (timeline dot ring, inverted-button text) */
-  --field-bg: rgba(20, 20, 20, 0.04);
-  --field-bg-focus: rgba(20, 20, 20, 0.07);
+  --nav-bg: rgba(247, 245, 241, 0.72);
+  --bg: #f7f5f1; /* solid bg color (timeline dot ring, inverted-button text) */
+  --field-bg: rgba(24, 20, 12, 0.04);
+  --field-bg-focus: rgba(24, 20, 12, 0.07);
   --err: #b23c2a; /* form error — AA on paper */
   --ease: cubic-bezier(0.2, 0.7, 0.2, 1); /* the one easing voice — every transition/reveal */
   --ease-loop: cubic-bezier(0.37, 0, 0.63, 1); /* symmetric sine — the looping float cue only */
@@ -36,16 +37,16 @@
   --fs-xl: 28px;    /* contact link list */
 }
 body.dark {
-  --ink: #f2f2f2;
-  --text: #c9c9c9;
-  --mute: #9a9a9a;
-  --line: rgba(255, 255, 255, 0.14);
-  /* charcoal, not pure black — gallery dark */
-  --bg-grad: radial-gradient(ellipse 80% 68% at 50% 44%, #1a1a1a, #131313 62%, #0e0e0e);
-  --nav-bg: rgba(19, 19, 19, 0.6);
-  --bg: #131313;
-  --field-bg: rgba(255, 255, 255, 0.05);
-  --field-bg-focus: rgba(255, 255, 255, 0.09);
+  --ink: #f3f1eb;
+  --text: #c9c5bd;
+  --mute: #9a958c;
+  --line: rgba(252, 248, 240, 0.14);
+  /* warm charcoal, not pure black — gallery dark */
+  --bg-grad: radial-gradient(ellipse 80% 68% at 50% 44%, #1a1815, #141210 62%, #100e0b);
+  --nav-bg: rgba(20, 18, 14, 0.6);
+  --bg: #141210;
+  --field-bg: rgba(252, 248, 240, 0.05);
+  --field-bg-focus: rgba(252, 248, 240, 0.09);
   --err: #e08a76;
 }
 
@@ -84,6 +85,9 @@ body {
 
 /* modern line-breaking: balanced headings, no orphan words in prose */
 h1, h2, .tl li .h { text-wrap: balance; }
+/* CJK display micro-typography: let trailing 。／，hang past the edge (Safari),
+   and use proportional widths so full-width punctuation stops carrying a full em */
+h1, h2 { hanging-punctuation: allow-end; font-variant-east-asian: proportional-width; }
 .hero .sub, .sec .lead, .tl li .dsc { text-wrap: pretty; }
 
 /* skip-to-content for keyboard users */
@@ -222,15 +226,16 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 .tl li .dsc { font-size: var(--fs-body); color: var(--text); margin-top: 5px; line-height: 1.6; }
 
 /* contact form */
-.cform { display: flex; flex-direction: column; gap: 12px; max-width: 420px; margin-top: 32px; }
+.cform { display: flex; flex-direction: column; gap: 16px; max-width: 420px; margin-top: 32px; }
 .hp { position: absolute !important; left: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+/* ruled inputs: a single hairline, drawn to ink on focus — same language as .more / nav */
 .cform input, .cform textarea {
-  width: 100%; background: var(--field-bg); border: 1px solid var(--line); border-radius: var(--r);
-  padding: 12px 14px; font-family: var(--font-mono), monospace; font-size: var(--fs-sm); color: var(--ink); transition: var(--dur-fast) var(--ease); caret-color: var(--ink);
+  width: 100%; background: none; border: 0; border-bottom: 1px solid var(--line); border-radius: 0;
+  padding: 10px 2px; font-family: var(--font-mono), monospace; font-size: var(--fs-sm); color: var(--ink); transition: border-color var(--dur-fast) var(--ease); caret-color: var(--ink);
 }
-.cform textarea { resize: vertical; min-height: 96px; }
+.cform textarea { resize: vertical; min-height: 88px; }
 .cform input::placeholder, .cform textarea::placeholder { color: var(--mute); }
-.cform input:focus, .cform textarea:focus { outline: none; border-color: var(--ink); background: var(--field-bg-focus); }
+.cform input:focus, .cform textarea:focus { outline: none; border-bottom-color: var(--ink); }
 .cform button {
   align-self: flex-start; margin-top: 4px; padding: 12px 26px; border: 0; border-radius: var(--pill); cursor: pointer;
   background: var(--ink); color: var(--bg);
