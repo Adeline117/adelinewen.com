@@ -32,7 +32,7 @@ const COPY: Record<
       funnelIntro: string;
       value: { h: string; items: Val[] };
       roadmap: { h: string; steps: Road[] };
-      vision: { h: string; d: string };
+      vision: { d: ReactNode };
     };
     contact: { label: string; title: ReactNode; lead: string; links: CLink[]; form: Form };
   }
@@ -113,8 +113,11 @@ const COPY: Record<
         ],
       },
       vision: {
-        h: "Long-term vision",
-        d: "Trading is fiercely competitive, yet it's the only sport with no world ranking, no official matches, and no star system. Arena fills in all three, in order: discover the best, let them prove it in public, then let anyone follow.",
+        d: (
+          <>
+            Trading is fiercely competitive, yet it&apos;s the only sport with no world ranking, no official matches, and no star system. Arena fills in all three, in order: <em>discover the best, let them prove it in public, then let anyone follow.</em>
+          </>
+        ),
       },
     },
     contact: {
@@ -219,8 +222,11 @@ const COPY: Record<
         ],
       },
       vision: {
-        h: "长期愿景",
-        d: "交易竞争激烈，却是唯一没有世界排名、没有官方比赛、没有明星体系的运动。Arena 依次补上这三样：先发现最强者，再让他们公开证明，最后让任何人都能跟随。",
+        d: (
+          <>
+            交易竞争激烈，却是唯一没有世界排名、没有官方比赛、没有明星体系的运动。Arena 依次补上这三样：<em>先发现最强者，再让他们公开证明，最后让任何人都能跟随。</em>
+          </>
+        ),
       },
     },
     contact: {
@@ -659,10 +665,8 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
             </ul>
           </div>
 
-          <div className="ablock">
-            <h3>{t.arena.vision.h}</h3>
-            <p className="abody">{t.arena.vision.d}</p>
-          </div>
+          {/* the section lands on the dream — a full-width closing statement, no label */}
+          <p className="arena-vision">{t.arena.vision.d}</p>
 
           {/* product signature: Arena's own ∞ mark, rendered in ink to stay in-system */}
           <div className="arena-sign">
