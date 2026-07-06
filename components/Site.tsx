@@ -732,9 +732,19 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
             <p className="abody">{t.arena.vision.d}</p>
           </div>
 
-          <a className="more" href={t.arena.more.href} target="_blank" rel="noopener noreferrer">
-            {t.arena.more.text}
-          </a>
+          {/* product signature: Arena's own ∞ mark, rendered in ink to stay in-system */}
+          <div className="arena-sign">
+            <svg className="inf-mark" viewBox="0 0 512 512" aria-hidden="true" focusable="false">
+              <path
+                d="M256 256c0 0-28-68-76-68c-34 0-60 30-60 68s26 68 60 68c48 0 76-68 76-68s28-68 76-68c34 0 60 30 60 68s-26 68-60 68c-48 0-76-68-76-68z"
+                fill="none" stroke="currentColor" strokeWidth="36" strokeLinecap="round" strokeLinejoin="round"
+              />
+            </svg>
+            <span className="wm">arena</span>
+            <a className="more" href={t.arena.more.href} target="_blank" rel="noopener noreferrer">
+              {t.arena.more.text}
+            </a>
+          </div>
         </div>
       </section>
 

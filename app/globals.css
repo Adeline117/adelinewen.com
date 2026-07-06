@@ -297,7 +297,11 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 .arev > div:last-child { border-bottom: 1px solid var(--line); }
 .arev dt { font-family: var(--font-fraunces), serif; font-weight: 330; font-size: var(--fs-body); color: var(--ink); }
 .arev dd { font-family: var(--font-mono), monospace; font-size: var(--fs-sm); color: var(--mute); text-align: right; }
-.arena-wrap > .more { margin-top: 48px; }
+/* product signature lockup at the section exit — Arena's ∞ mark + wordmark, in ink */
+.arena-sign { display: flex; align-items: center; gap: 14px; margin-top: 48px; flex-wrap: wrap; }
+.arena-sign .inf-mark { width: 30px; height: 30px; color: var(--ink); flex: none; }
+.arena-sign .wm { font-family: -apple-system, "Segoe UI", system-ui, sans-serif; font-size: 22px; font-weight: 500; letter-spacing: -0.015em; color: var(--ink); line-height: 1; }
+.arena-sign .more { margin-top: 0; margin-left: 8px; }
 
 /* short viewports (e.g. 1366×700 laptops): trim section padding + link rows
    so the taller Contact section fits within one centered snap, nothing clipped */
