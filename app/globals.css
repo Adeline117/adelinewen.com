@@ -196,6 +196,7 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 .sec.on .tl li:nth-child(4), .sec.on .clinks a:nth-child(4) { transition-delay: calc(5 * var(--stagger)); }
 .sec.on .clinks a:nth-child(5) { transition-delay: calc(6 * var(--stagger)); }
 .sec.on .clinks a:nth-child(6) { transition-delay: calc(7 * var(--stagger)); }
+.sec.on .cv-link { transition-delay: calc(6 * var(--stagger)); }
 
 /* kicker: a short thick bar over the mono label — thick-vs-hairline contrast */
 .sec .label { font-family: var(--font-mono), monospace; font-size: var(--fs-sm); letter-spacing: 0.22em; text-transform: uppercase; color: var(--mute); margin-bottom: 24px; }
