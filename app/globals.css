@@ -169,11 +169,11 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 .sec.rev .right { order: 1; justify-self: start; }
 /* crisp fade + rise reveal (no blur — Swiss wants sharp edges);
    list items enter one by one — choreography, not a block fade */
-.sec .label, .sec .lead, .sec .more, .sec .tl li, .sec .clinks a {
+.sec .label, .sec .lead, .sec .more, .sec .tl li, .sec .clinks a, .sec .honors-wrap {
   opacity: 0; transform: translateY(26px);
   transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
 }
-.sec.on .label, .sec.on .lead, .sec.on .more, .sec.on .tl li, .sec.on .clinks a { opacity: 1; transform: none; }
+.sec.on .label, .sec.on .lead, .sec.on .more, .sec.on .tl li, .sec.on .clinks a, .sec.on .honors-wrap { opacity: 1; transform: none; }
 /* the big heading wipes up out of a mask (matches the cover's line reveal) */
 .sec h2 {
   opacity: 0; clip-path: inset(0 0 100% 0); transform: translateY(0.24em);
@@ -188,7 +188,8 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 .sec.on .label { transition-delay: 0s; }
 .sec.on h2 { transition-delay: var(--stagger); }
 .sec.on .lead { transition-delay: calc(2 * var(--stagger)); }
-.sec.on .more { transition-delay: calc(3 * var(--stagger)); }
+.sec.on .honors-wrap { transition-delay: calc(3 * var(--stagger)); }
+.sec.on .more { transition-delay: calc(4 * var(--stagger)); }
 .sec.on .tl li:nth-child(1), .sec.on .clinks a:nth-child(1) { transition-delay: calc(2 * var(--stagger)); }
 .sec.on .tl li:nth-child(2), .sec.on .clinks a:nth-child(2) { transition-delay: calc(3 * var(--stagger)); }
 .sec.on .tl li:nth-child(3), .sec.on .clinks a:nth-child(3) { transition-delay: calc(4 * var(--stagger)); }
@@ -224,6 +225,21 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 .tl li .y { font-family: var(--font-mono), monospace; font-size: var(--fs-cap); letter-spacing: 0.1em; color: var(--mute); text-transform: uppercase; }
 .tl li .h { font-family: var(--font-fraunces), serif; font-size: var(--fs-lg); font-weight: 330; line-height: 1.22; margin-top: 4px; }
 .tl li .dsc { font-size: var(--fs-body); color: var(--text); margin-top: 5px; line-height: 1.6; }
+
+/* honors & fellowships — a compact ruled list in the About left column */
+.honors-wrap { margin-top: 32px; max-width: 460px; }
+.honors-label { font-family: var(--font-mono), monospace; font-size: var(--fs-cap); letter-spacing: 0.18em; text-transform: uppercase; color: var(--mute); margin-bottom: 6px; }
+.honors { list-style: none; }
+.honors li { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; padding: 12px 0; border-top: 1px solid var(--line); }
+.honors li:last-child { border-bottom: 1px solid var(--line); }
+.honors .hinfo { display: flex; flex-direction: column; gap: 3px; }
+.honors .hn { font-family: var(--font-fraunces), serif; font-size: var(--fs-md); font-weight: 330; line-height: 1.15; color: var(--ink); }
+.honors .hd { font-size: var(--fs-body); line-height: 1.5; color: var(--text); }
+.honors .hm { font-family: var(--font-mono), monospace; font-size: var(--fs-cap); letter-spacing: 0.04em; text-transform: uppercase; color: var(--mute); white-space: nowrap; text-align: right; }
+@media (max-width: 480px) {
+  .honors li { flex-direction: column; gap: 4px; }
+  .honors .hm { text-align: left; }
+}
 
 /* contact form */
 .cform { display: flex; flex-direction: column; gap: 16px; max-width: 420px; margin-top: 32px; }
@@ -332,7 +348,7 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
   .sec .inner { grid-template-columns: 1fr; gap: 32px; }
   /* show content immediately on mobile — the opacity scroll-reveal could
      leave sections invisible (and transitions janked touch scrolling) */
-  .sec .label, .sec h2, .sec .lead, .sec .more, .sec .tl li, .sec .clinks a {
+  .sec .label, .sec h2, .sec .lead, .sec .more, .sec .tl li, .sec .clinks a, .sec .honors-wrap {
     opacity: 1 !important; transform: none !important; transition: none !important; clip-path: none !important;
   }
   .sec .label::before { transform: none !important; }
@@ -363,7 +379,7 @@ main:focus { outline: none; } /* skip-link target — focused programmatically, 
 /* respect reduced-motion: reveal content immediately, drop transitions */
 @media (prefers-reduced-motion: reduce) {
   * { transition-duration: 0.001ms !important; animation-duration: 0.001ms !important; animation-delay: 0s !important; }
-  .sec .label, .sec h2, .sec .lead, .sec .more, .sec .tl li, .sec .clinks a { opacity: 1 !important; transform: none !important; clip-path: none !important; }
+  .sec .label, .sec h2, .sec .lead, .sec .more, .sec .tl li, .sec .clinks a, .sec .honors-wrap { opacity: 1 !important; transform: none !important; clip-path: none !important; }
   .sec .label::before { transform: none !important; }
   html { scroll-behavior: auto !important; }
 }
