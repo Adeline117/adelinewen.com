@@ -15,7 +15,7 @@ type Val = { h: string; d: string };
 type Road = { phase: string; when: string; what: string };
 type TL = { y: string; h: string; d: string };
 type Honor = { t: string; d: string; m: string };
-type CLink = { label: string; val: string; href: string };
+type CLink = { label: string; val: string; href: string; download?: boolean };
 type Form = { name: string; email: string; message: string; send: string; sending: string; sent: string; err: string };
 
 const COPY: Record<
@@ -137,6 +137,7 @@ const COPY: Record<
       lead: "Based in Seattle, open to research and building opportunities, always up for a good problem.",
       links: [
         { label: "Email", val: "adelinewen1107@outlook.com", href: "mailto:adelinewen1107@outlook.com" },
+        { label: "Résumé", val: "PDF ↓", href: "/Adeline-Wen-CV.pdf", download: true },
         { label: "GitHub", val: "@Adeline117 ↗", href: "https://github.com/Adeline117" },
         { label: "LinkedIn", val: "/in/adeline1107 ↗", href: "https://www.linkedin.com/in/adeline1107" },
         { label: "X", val: "@AdelineWen07 ↗", href: "https://x.com/AdelineWen07" },
@@ -252,6 +253,7 @@ const COPY: Record<
       lead: "常驻西雅图，对研究与构建的机会开放，随时欢迎好问题。",
       links: [
         { label: "邮箱", val: "adelinewen1107@outlook.com", href: "mailto:adelinewen1107@outlook.com" },
+        { label: "简历", val: "PDF ↓", href: "/Adeline-Wen-CV.pdf", download: true },
         { label: "GitHub", val: "@Adeline117 ↗", href: "https://github.com/Adeline117" },
         { label: "LinkedIn", val: "/in/adeline1107 ↗", href: "https://www.linkedin.com/in/adeline1107" },
         { label: "X", val: "@AdelineWen07 ↗", href: "https://x.com/AdelineWen07" },
@@ -774,8 +776,9 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
                 <a
                   key={l.label}
                   href={l.href}
-                  target={l.href.startsWith("mailto") ? undefined : "_blank"}
-                  rel={l.href.startsWith("mailto") ? undefined : "noopener noreferrer"}
+                  download={l.download || undefined}
+                  target={l.href.startsWith("mailto") || l.download ? undefined : "_blank"}
+                  rel={l.href.startsWith("mailto") || l.download ? undefined : "noopener noreferrer"}
                 >
                   {l.label}
                   <span className="ar">{l.val}</span>
