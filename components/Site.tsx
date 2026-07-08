@@ -886,7 +886,7 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
         <div className="count">
           <b>{String(active + 1).padStart(2, "0")}</b> / 04
         </div>
-        <svg width="84" height="44" viewBox="0 0 84 44">
+        <svg width="70" height="44" viewBox="7 0 70 44">
           <path
             ref={trackRef}
             className="track"
