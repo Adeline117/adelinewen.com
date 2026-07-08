@@ -146,10 +146,6 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; position: relative; z-index: 2; padding: 92px clamp(24px, 5vw, 72px) 40px; }
 .cover, .cover-foot { position: relative; z-index: 1; }
 .cover { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; justify-content: center; }
-/* cursor-reactive needle field: fills the cover, behind the type */
-.hero-field { position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: 0; animation: fieldFade 1.4s var(--ease) 0.5s forwards; }
-.field-canvas { width: 100%; height: 100%; display: block; }
-@keyframes fieldFade { to { opacity: 1; } }
 .cover h1 { display: flex; flex-direction: column; font-weight: 330; line-height: 0.86; letter-spacing: -0.035em; }
 /* line-mask reveal: each giant line rises out of an overflow-hidden slot */
 .mline { display: block; overflow: hidden; padding-bottom: 0.06em; }
@@ -159,9 +155,16 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 .l2w { align-self: flex-end; margin-right: clamp(4px, 5vw, 120px); }
 .l2 { font-size: clamp(76px, 15.5vw, 236px); animation-delay: 0.26s; }
 .l2 em { font-style: italic; }
-/* each name word breathes toward the cursor — Fraunces weight eases up on hover */
-.cover h1 .minner { transition: font-weight var(--dur) var(--ease); will-change: font-weight; }
-.cover h1 .minner:hover { font-weight: 440; }
+/* ink lens: a stroke-thickened copy of the name, revealed under a soft circle
+   that tracks the cursor — the type "inks in" where you point. No layout shift
+   (SVG dilate + mask only), no ambient motion. */
+.namewrap { position: relative; }
+.inkl {
+  position: absolute; inset: 0; pointer-events: none; z-index: 1;
+  filter: url(#thicken);
+  -webkit-mask: radial-gradient(circle var(--lr, 0px) at var(--lx, -300px) var(--ly, -300px), #000 40%, rgba(0, 0, 0, 0) 72%);
+  mask: radial-gradient(circle var(--lr, 0px) at var(--lx, -300px) var(--ly, -300px), #000 40%, rgba(0, 0, 0, 0) 72%);
+}
 /* standfirst: a narrow measure hanging under the offset second line */
 .hero .sub { align-self: flex-end; max-width: 36ch; margin: clamp(18px, 3.6vh, 40px) clamp(4px, 5vw, 120px) 0 0; font-size: clamp(15px, 1.5vw, 18px); line-height: 1.65; color: var(--text); opacity: 0; animation: heroIn 0.8s var(--ease) 0.52s forwards; }
 .hero .sub b { color: var(--ink); font-weight: 500; }
