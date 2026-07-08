@@ -280,6 +280,7 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
   const trackRef = useRef<SVGPathElement>(null);
   const beadRef = useRef<SVGCircleElement>(null);
   const cursorRef = useRef<HTMLDivElement>(null);
+  const nameRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const obs = new IntersectionObserver(
@@ -375,6 +376,39 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
       document.removeEventListener("pointerleave", onLeave);
       document.removeEventListener("pointerenter", onEnter);
       document.body.classList.remove("has-cursor");
+    };
+  }, []);
+
+  // Ink lens on the cover name: a soft circle following the cursor reveals a
+  // stroke-thickened copy of the type, so letters "ink in" where you point.
+  // No layout change (mask + SVG dilate only), no ambient motion.
+  useEffect(() => {
+    const wrap = nameRef.current;
+    if (!wrap) return;
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let lx = -300, ly = -300, tx = -300, ty = -300, lr = 0, tlr = 0, raf = 0, shown = false;
+    const onMove = (e: PointerEvent) => {
+      const r = wrap.getBoundingClientRect();
+      tx = e.clientX - r.left; ty = e.clientY - r.top; tlr = 175;
+      if (!shown) { shown = true; lx = tx; ly = ty; }
+    };
+    const onLeave = () => { tlr = 0; };
+    window.addEventListener("pointermove", onMove, { passive: true });
+    document.addEventListener("pointerleave", onLeave);
+    const loop = () => {
+      raf = requestAnimationFrame(loop);
+      const k = reduced ? 1 : 0.2;
+      lx += (tx - lx) * k; ly += (ty - ly) * k; lr += (tlr - lr) * 0.12;
+      wrap.style.setProperty("--lx", lx + "px");
+      wrap.style.setProperty("--ly", ly + "px");
+      wrap.style.setProperty("--lr", lr.toFixed(1) + "px");
+    };
+    raf = requestAnimationFrame(loop);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("pointermove", onMove);
+      document.removeEventListener("pointerleave", onLeave);
     };
   }, []);
 
@@ -589,6 +623,10 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
           <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7" result="n" />
           <feDisplacementMap in="SourceGraphic" in2="n" scale="3" xChannelSelector="R" yChannelSelector="G" />
         </filter>
+        {/* thickens glyph strokes in place (no layout shift) for the cover ink lens */}
+        <filter id="thicken" x="-10%" y="-10%" width="120%" height="120%">
+          <feMorphology operator="dilate" radius="1.4" />
+        </filter>
       </svg>
       <div className="cursor" ref={cursorRef} aria-hidden="true" />
 
@@ -627,14 +665,25 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
         {/* cover kept clean — no animated field (the noise-field experiments read greasy) */}
         {/* the cover lines: huge, stacked, offset — each revealed through a line mask */}
         <div className="cover">
-          <h1>
-            <span className="mline"><span className="minner l1">Adeline</span></span>
-            <span className="mline l2w">
-              <span className="minner l2">
-                <em>Wen</em>
+          <div className="namewrap" ref={nameRef}>
+            <h1>
+              <span className="mline"><span className="minner l1">Adeline</span></span>
+              <span className="mline l2w">
+                <span className="minner l2">
+                  <em>Wen</em>
+                </span>
               </span>
-            </span>
-          </h1>
+            </h1>
+            {/* ink lens: identical name, stroke-thickened, revealed under the cursor */}
+            <h1 className="inkl" aria-hidden="true">
+              <span className="mline"><span className="minner l1">Adeline</span></span>
+              <span className="mline l2w">
+                <span className="minner l2">
+                  <em>Wen</em>
+                </span>
+              </span>
+            </h1>
+          </div>
           <p className="sub">{t.heroSub}</p>
         </div>
         {/* cover foot: scroll cue left, CTA right */}
