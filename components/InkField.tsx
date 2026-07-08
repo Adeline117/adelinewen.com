@@ -7,6 +7,7 @@ import { useEffect, useRef } from "react";
 // banknote/engraving marbling rather than a gradient. Warm ink on warm paper,
 // pure monochrome. Replaces the technical needle field with something hand-made.
 const FRAG = `
+#extension GL_OES_standard_derivatives : enable
 precision highp float;
 uniform vec2 uRes;
 uniform float uTime;
@@ -45,12 +46,16 @@ void main(){
   vec2 r = vec2(fbm(p + warp + vec2(1.7, 9.2)), fbm(p + warp + vec2(8.3, 2.8)));
   float f = fbm(p + 3.4 * r);
 
-  // engraving: soften then pull toward quantized bands
-  f = smoothstep(0.30, 0.78, f);
-  float bands = floor(f * 4.0 + 0.5) / 4.0;
-  f = mix(f, bands, 0.5);
-
-  float ink = f * 0.165 + md * 0.03;          // faint enough to sit behind the type
+  // fine ink CONTOUR LINES (engraving / topographic), no fill — so it can never
+  // read as a greasy fluid. Lines ripple as the field warps and the cursor stirs.
+  float NLEV = 10.0;
+  float v = f * NLEV;
+  float dist = min(fract(v), 1.0 - fract(v));      // 0 exactly on each isoline
+  float aa = fwidth(v) * 1.3;                        // constant screen-space line width
+  float contour = 1.0 - smoothstep(0.0, aa, dist);
+  // a whisper of tonal wash so it reads as inked paper, not bare wireframe
+  float wash = floor(f * 3.0) / 3.0 * 0.045;
+  float ink = contour * 0.28 + wash + md * 0.05;
   vec3 col = mix(uPaper, uInk, clamp(ink, 0.0, 1.0));
   gl_FragColor = vec4(col, 1.0);
 }`;
@@ -72,6 +77,7 @@ export default function InkField() {
     if (!canvas) return;
     const gl = canvas.getContext("webgl", { antialias: false, alpha: false });
     if (!gl) return;
+    gl.getExtension("OES_standard_derivatives"); // for fwidth() in the contour shader
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const sh = (type: number, src: string) => {
