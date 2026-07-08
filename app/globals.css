@@ -330,7 +330,7 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 .arena-vision em { font-style: italic; color: var(--ink); }
 /* product signature lockup at the section exit — Arena's ∞ mark + wordmark, in ink */
 .arena-sign { display: flex; align-items: center; gap: 14px; margin-top: 48px; flex-wrap: wrap; }
-.arena-sign .inf-mark { width: 30px; height: 30px; color: var(--ink); flex: none; filter: url(#ink); }
+.arena-sign .inf-mark { width: 40px; height: 21px; color: var(--ink); flex: none; filter: url(#ink); }
 .arena-sign .wm { font-family: -apple-system, "Segoe UI", system-ui, sans-serif; font-size: 22px; font-weight: 500; letter-spacing: -0.015em; color: var(--ink); line-height: 1; }
 .arena-sign .more { margin-top: 0; margin-left: 8px; }
 
