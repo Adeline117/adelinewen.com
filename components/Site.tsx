@@ -674,15 +674,16 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
                 </span>
               </span>
             </h1>
-            {/* ink lens: identical name, stroke-thickened, revealed under the cursor */}
-            <h1 className="inkl" aria-hidden="true">
+            {/* ink lens: identical name (decorative div, not a 2nd h1), stroke-
+                thickened, revealed under the cursor */}
+            <div className="inkl" aria-hidden="true">
               <span className="mline"><span className="minner l1">Adeline</span></span>
               <span className="mline l2w">
                 <span className="minner l2">
                   <em>Wen</em>
                 </span>
               </span>
-            </h1>
+            </div>
           </div>
           <p className="sub">{t.heroSub}</p>
         </div>
