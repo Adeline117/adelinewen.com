@@ -94,6 +94,19 @@ h1, h2 { hanging-punctuation: allow-end; font-variant-east-asian: proportional-w
 .skip { position: fixed; top: -60px; left: 16px; z-index: 20; background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: var(--r); font-family: var(--font-mono), monospace; font-size: var(--fs-label); text-decoration: none; transition: top var(--dur-fast) var(--ease); }
 .skip:focus { top: 16px; }
 
+/* inverting cursor — a difference-blend dot, GPU-transformed, grows over links */
+.cursor {
+  position: fixed; top: 0; left: 0; width: 13px; height: 13px; border-radius: 50%;
+  background: #fff; mix-blend-mode: difference; pointer-events: none; z-index: 9999;
+  opacity: 0; will-change: transform;
+  transition: opacity 0.3s var(--ease), width 0.28s var(--ease), height 0.28s var(--ease);
+}
+.cursor.on { opacity: 1; }
+.cursor.link { width: 40px; height: 40px; }
+body.has-cursor, body.has-cursor a, body.has-cursor button { cursor: none; }
+body.has-cursor input, body.has-cursor textarea { cursor: text; }
+@media (hover: none), (pointer: coarse) { .cursor { display: none; } }
+
 .grain {
   position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: 0.04;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
@@ -177,10 +190,9 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 /* the big heading wipes up out of a mask (matches the cover's line reveal) */
 .sec h2 {
   opacity: 0; clip-path: inset(0 0 100% 0); transform: translateY(0.24em);
-  transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease), clip-path var(--dur) var(--ease), font-weight var(--dur) var(--ease);
+  transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease), clip-path var(--dur) var(--ease), font-weight 0.5s var(--ease);
 }
 .sec.on h2 { opacity: 1; clip-path: inset(0 0 -0.14em 0); transform: none; }
-.sec h2:hover { font-weight: 440; }
 /* the kicker bar draws itself in */
 .sec .label::before { transform: scaleX(0); transform-origin: left; transition: transform var(--dur) var(--ease) var(--stagger); }
 .sec.on .label::before { transform: scaleX(1); }
@@ -201,7 +213,8 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 /* kicker: a short thick bar over the mono label — thick-vs-hairline contrast */
 .sec .label { font-family: var(--font-mono), monospace; font-size: var(--fs-sm); letter-spacing: 0.22em; text-transform: uppercase; color: var(--mute); margin-bottom: 24px; }
 .sec .label::before { content: ""; display: block; width: 52px; height: 3px; background: var(--ink); margin-bottom: 14px; }
-.sec h2 { font-weight: 330; font-size: clamp(46px, 7vw, 118px); line-height: 0.92; letter-spacing: -0.03em; }
+/* weight morphs on scroll via --hw (set in JS); opsz stays on auto */
+.sec h2 { font-weight: var(--hw, 330); font-size: clamp(46px, 7vw, 118px); line-height: 0.92; letter-spacing: -0.03em; }
 .sec h2 em { font-style: italic; }
 .sec .lead { margin-top: 32px; max-width: 460px; font-size: clamp(16px, 1.5vw, 17px); line-height: 1.72; color: var(--text); }
 .sec .more { position: relative; margin-top: 40px; display: inline-flex; gap: 10px; font-family: var(--font-mono), monospace; font-size: var(--fs-label); letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--line); padding-bottom: 8px; }
@@ -314,7 +327,7 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 .arena-vision em { font-style: italic; color: var(--ink); }
 /* product signature lockup at the section exit — Arena's ∞ mark + wordmark, in ink */
 .arena-sign { display: flex; align-items: center; gap: 14px; margin-top: 48px; flex-wrap: wrap; }
-.arena-sign .inf-mark { width: 30px; height: 30px; color: var(--ink); flex: none; }
+.arena-sign .inf-mark { width: 30px; height: 30px; color: var(--ink); flex: none; filter: url(#ink); }
 .arena-sign .wm { font-family: -apple-system, "Segoe UI", system-ui, sans-serif; font-size: 22px; font-weight: 500; letter-spacing: -0.015em; color: var(--ink); line-height: 1; }
 .arena-sign .more { margin-top: 0; margin-left: 8px; }
 

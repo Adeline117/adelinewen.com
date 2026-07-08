@@ -282,6 +282,7 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
   const heroRef = useRef<HTMLElement>(null);
   const trackRef = useRef<SVGPathElement>(null);
   const beadRef = useRef<SVGCircleElement>(null);
+  const cursorRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const obs = new IntersectionObserver(
@@ -312,13 +313,22 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
       }
       let best = 0;
       let bd = Infinity;
+      const mid = window.innerHeight / 2;
       secRefs.current.forEach((s, i) => {
         if (!s) return;
         const r = s.getBoundingClientRect();
-        const d = Math.abs(r.top + r.height / 2 - window.innerHeight / 2);
+        const d = Math.abs(r.top + r.height / 2 - mid);
         if (d < bd) {
           bd = d;
           best = i;
+        }
+        // variable-font morph: each heading gains weight as it reaches reading
+        // position (compositor-only — just a CSS var the GPU interpolates)
+        const h2 = s.querySelector("h2") as HTMLElement | null;
+        if (h2) {
+          const hr = h2.getBoundingClientRect();
+          const t = Math.min(1, Math.abs(hr.top + hr.height / 2 - mid) / (mid * 1.1));
+          h2.style.setProperty("--hw", String(Math.round(392 - t * 84))); // 392 centred → 308 far
         }
       });
       setActive(best);
@@ -333,6 +343,42 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
     window.addEventListener("scroll", onScroll, { passive: true });
     update();
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Inverting cursor: a mix-blend-difference dot that lerps to the pointer and
+  // grows over interactive targets. Desktop pointers only; native cursor hidden
+  // while active (restored to a text caret over form fields).
+  useEffect(() => {
+    const el = cursorRef.current;
+    if (!el) return;
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    const ease = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 1 : 0.28;
+    document.body.classList.add("has-cursor");
+    let x = -100, y = -100, tx = -100, ty = -100, shown = false, raf = 0;
+    const onMove = (e: PointerEvent) => {
+      tx = e.clientX; ty = e.clientY;
+      if (!shown) { shown = true; x = tx; y = ty; el.classList.add("on"); }
+      const t = e.target as HTMLElement | null;
+      el.classList.toggle("link", !!t?.closest("a,button,[role=button]"));
+    };
+    const onLeave = () => el.classList.remove("on");
+    const onEnter = () => { if (shown) el.classList.add("on"); };
+    const loop = () => {
+      raf = requestAnimationFrame(loop);
+      x += (tx - x) * ease; y += (ty - y) * ease;
+      el.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%)`;
+    };
+    window.addEventListener("pointermove", onMove, { passive: true });
+    document.addEventListener("pointerleave", onLeave);
+    document.addEventListener("pointerenter", onEnter);
+    raf = requestAnimationFrame(loop);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("pointermove", onMove);
+      document.removeEventListener("pointerleave", onLeave);
+      document.removeEventListener("pointerenter", onEnter);
+      document.body.classList.remove("has-cursor");
+    };
   }, []);
 
   // Mouse-wheel / keyboard paging: one section per gesture, then center.
@@ -549,6 +595,14 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
         {lang === "zh" ? "跳到内容" : "Skip to content"}
       </a>
       <div className="grain" />
+      {/* ink-bleed filter: roughens the ∞ mark's vector edges so it reads pen-on-paper */}
+      <svg width="0" height="0" aria-hidden="true" focusable="false" style={{ position: "absolute" }}>
+        <filter id="ink" x="-20%" y="-20%" width="140%" height="140%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7" result="n" />
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="3" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+      </svg>
+      <div className="cursor" ref={cursorRef} aria-hidden="true" />
 
       <nav>
         <div className="logo">Adeline Wen</div>
