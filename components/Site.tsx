@@ -2,11 +2,9 @@
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { flushSync } from "react-dom";
-import dynamic from "next/dynamic";
 
 // cursor-reactive needle field behind the cover — desktop only (it's a pointer
 // interaction), loaded after the text paints
-const Field = dynamic(() => import("@/components/InkField"), { ssr: false });
 
 type Lang = "en" | "zh";
 type Section = { label: string; title: ReactNode; lead: string; more: { text: string; href: string } };
@@ -277,7 +275,6 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [hp, setHp] = useState(""); // honeypot, humans leave it empty, bots fill it
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
-  const [wide, setWide] = useState(false); // gate the cursor field to desktop widths
   const secRefs = useRef<(HTMLElement | null)[]>([]);
   const heroRef = useRef<HTMLElement>(null);
   const trackRef = useRef<SVGPathElement>(null);
@@ -481,15 +478,6 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
     };
   }, []);
 
-  // the cursor field is a pointer interaction — mount it only on desktop widths
-  useEffect(() => {
-    const mq = window.matchMedia("(min-width: 1024px)");
-    const sync = () => setWide(mq.matches);
-    sync();
-    mq.addEventListener("change", sync);
-    return () => mq.removeEventListener("change", sync);
-  }, []);
-
   useEffect(() => {
     const stored = localStorage.getItem("theme");
     setDark(stored ? stored === "dark" : false); // default light — Swiss paper is the primary face
@@ -636,10 +624,7 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
 
       <main id="main" tabIndex={-1}>
       <header className="hero" ref={heroRef}>
-        {/* cursor-reactive needle field behind the cover */}
-        {wide && (
-          <div className="hero-field" aria-hidden="true"><Field /></div>
-        )}
+        {/* cover kept clean — no animated field (the noise-field experiments read greasy) */}
         {/* the cover lines: huge, stacked, offset — each revealed through a line mask */}
         <div className="cover">
           <h1>
