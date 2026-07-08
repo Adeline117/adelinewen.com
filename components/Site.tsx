@@ -6,7 +6,7 @@ import dynamic from "next/dynamic";
 
 // cursor-reactive needle field behind the cover — desktop only (it's a pointer
 // interaction), loaded after the text paints
-const Field = dynamic(() => import("@/components/Field"), { ssr: false });
+const Field = dynamic(() => import("@/components/InkField"), { ssr: false });
 
 type Lang = "en" | "zh";
 type Section = { label: string; title: ReactNode; lead: string; more: { text: string; href: string } };
