@@ -14,7 +14,7 @@ type Road = { phase: string; when: string; what: string };
 type TL = { y: string; h: string; d: string };
 type Honor = { t: string; d: string; m: string };
 type CLink = { label: string; val: string; href: string; download?: boolean };
-type Form = { name: string; email: string; message: string; send: string; sending: string; sent: string; err: string };
+type Form = { name: string; email: string; message: string; send: string; sending: string; sent: string; mailed: string; err: string };
 
 const COPY: Record<
   Lang,
@@ -147,6 +147,7 @@ const COPY: Record<
         send: "Send message",
         sending: "Sending…",
         sent: "Thanks, I'll be in touch soon.",
+        mailed: "Opening your email app — if nothing happens, write to adelinewen1107@outlook.com.",
         err: "Couldn't send, please email adelinewen1107@outlook.com directly.",
       },
     },
@@ -262,6 +263,7 @@ const COPY: Record<
         send: "发送",
         sending: "发送中…",
         sent: "谢谢，我会尽快回复你。",
+        mailed: "正在打开你的邮件应用——若没反应，请直接写信到 adelinewen1107@outlook.com。",
         err: "发送失败，请直接邮件 adelinewen1107@outlook.com。",
       },
     },
@@ -274,7 +276,7 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
   const [lang, setLang] = useState<Lang>(routeLang ?? "en");
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [hp, setHp] = useState(""); // honeypot, humans leave it empty, bots fill it
-  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error" | "mailed">("idle");
   const secRefs = useRef<(HTMLElement | null)[]>([]);
   const heroRef = useRef<HTMLElement>(null);
   const trackRef = useRef<SVGPathElement>(null);
@@ -582,7 +584,7 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
         const body = encodeURIComponent(`From: ${form.name} <${form.email}>\n\n${form.message}`);
         const subject = encodeURIComponent(`Portfolio contact, ${form.name}`);
         window.location.href = `mailto:adelinewen1107@outlook.com?subject=${subject}&body=${body}`;
-        setStatus("idle");
+        setStatus("mailed");
         return;
       }
       setStatus("error");
@@ -858,6 +860,7 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
               </button>
               <div role="status" aria-live="polite">
                 {status === "sent" && <div className="status ok">{t.contact.form.sent}</div>}
+                {status === "mailed" && <div className="status ok">{t.contact.form.mailed}</div>}
                 {status === "error" && <div className="status err">{t.contact.form.err}</div>}
               </div>
             </form>
