@@ -27,13 +27,14 @@ export default function OpengraphImage() {
         </div>
 
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <svg width="180" height="96" viewBox="0 0 32 18" style={{ marginBottom: 28 }}>
+          <svg width="184" height="96" viewBox="0 0 84 44" style={{ marginBottom: 28 }}>
             <path
-              d="M16 9 C16 3 6 3 6 9 C6 15 16 15 16 9 C16 3 26 3 26 9 C26 15 16 15 16 9 Z"
+              d="M42 22 C 35 12 28 8 22 8 A 14 14 0 1 0 22 36 C 28 36 35 32 42 22 C 49 12 56 8 62 8 A 14 14 0 1 1 62 36 C 56 36 49 32 42 22 Z"
               fill="none"
               stroke="#141414"
-              strokeWidth="1.1"
+              strokeWidth="2.2"
               strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </svg>
           <div style={{ fontSize: 96, fontWeight: 600, letterSpacing: -3, lineHeight: 1 }}>
