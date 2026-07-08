@@ -792,10 +792,10 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
 
           {/* product signature: Arena's own ∞ mark, rendered in ink to stay in-system */}
           <div className="arena-sign">
-            <svg className="inf-mark" viewBox="0 0 512 512" aria-hidden="true" focusable="false">
+            <svg className="inf-mark" viewBox="0 0 84 44" aria-hidden="true" focusable="false">
               <path
-                d="M256 256c0 0-28-68-76-68c-34 0-60 30-60 68s26 68 60 68c48 0 76-68 76-68s28-68 76-68c34 0 60 30 60 68s-26 68-60 68c-48 0-76-68-76-68z"
-                fill="none" stroke="currentColor" strokeWidth="36" strokeLinecap="round" strokeLinejoin="round"
+                d="M42 22 C 35 12 28 8 22 8 A 14 14 0 1 0 22 36 C 28 36 35 32 42 22 C 49 12 56 8 62 8 A 14 14 0 1 1 62 36 C 56 36 49 32 42 22 Z"
+                fill="none" stroke="currentColor" strokeWidth="9" strokeLinecap="round" strokeLinejoin="round"
               />
             </svg>
             <span className="wm">arena</span>
@@ -890,7 +890,7 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
           <path
             ref={trackRef}
             className="track"
-            d="M42,22 C34,8 10,8 10,22 C10,36 34,36 42,22 C50,8 74,8 74,22 C74,36 50,36 42,22 Z"
+            d="M42 22 C 35 12 28 8 22 8 A 14 14 0 1 0 22 36 C 28 36 35 32 42 22 C 49 12 56 8 62 8 A 14 14 0 1 1 62 36 C 56 36 49 32 42 22 Z"
           />
           <circle ref={beadRef} className="bead" r="3" cx="42" cy="22" />
         </svg>
