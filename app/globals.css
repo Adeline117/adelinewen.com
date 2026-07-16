@@ -13,7 +13,8 @@
   --line: rgba(24, 20, 12, 0.12);
   --bg-grad: radial-gradient(ellipse 80% 68% at 50% 44%, #fdfcf9, #f6f4ef 56%, #edeae3);
   /* frosted nav bar so content scrolls cleanly underneath (esp. on mobile) */
-  --nav-bg: rgba(247, 245, 241, 0.72);
+  /* near-opaque: at lower alpha, scrolled text collides legibly with nav links */
+  --nav-bg: rgba(247, 245, 241, 0.96);
   --bg: #f7f5f1; /* solid bg color (timeline dot ring, inverted-button text) */
   --field-bg: rgba(24, 20, 12, 0.04);
   --field-bg-focus: rgba(24, 20, 12, 0.07);
@@ -43,7 +44,7 @@ body.dark {
   --line: rgba(252, 248, 240, 0.14);
   /* warm charcoal, not pure black — gallery dark */
   --bg-grad: radial-gradient(ellipse 80% 68% at 50% 44%, #1a1815, #141210 62%, #100e0b);
-  --nav-bg: rgba(20, 18, 14, 0.6);
+  --nav-bg: rgba(20, 18, 14, 0.94);
   --bg: #141210;
   --field-bg: rgba(252, 248, 240, 0.05);
   --field-bg-focus: rgba(252, 248, 240, 0.09);
@@ -219,6 +220,9 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 /* weight morphs on scroll via --hw (set in JS); opsz stays on auto */
 .sec h2 { font-weight: var(--hw, 330); font-size: clamp(46px, 7vw, 118px); line-height: 0.92; letter-spacing: -0.03em; }
 .sec h2 em { font-style: italic; }
+/* CJK has no italic convention — synthetic obliques distort hanzi. In the ZH
+   locale the accent word carries weight instead of slant. (Cover stays Latin.) */
+:lang(zh) .sec h2 em, :lang(zh) .arena-vision em { font-style: normal; font-weight: 500; }
 .sec .lead { margin-top: 32px; max-width: 460px; font-size: clamp(16px, 1.5vw, 17px); line-height: 1.72; color: var(--text); }
 .sec .more { position: relative; margin-top: 40px; display: inline-flex; gap: 10px; font-family: var(--font-mono), monospace; font-size: var(--fs-label); letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--line); padding-bottom: 8px; }
 /* hover: an ink line grows left-to-right over the resting hairline */
@@ -250,6 +254,10 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
    grows to a full underline on hover (same voice as .more / nav) */
 .ilink { color: inherit; text-decoration: none; background-image: linear-gradient(var(--ink), var(--ink)); background-repeat: no-repeat; background-position: 0 100%; background-size: 0% 1px; transition: background-size 0.35s var(--ease); padding-bottom: 1px; }
 .ilink:hover, .ilink:focus-visible { background-size: 100% 1px; }
+/* body-copy variant: needs a RESTING affordance (a hairline) or it reads as plain
+   text — the ink line still grows over it on hover */
+.tlink { color: inherit; text-decoration: none; border-bottom: 1px solid var(--line); background-image: linear-gradient(var(--ink), var(--ink)); background-repeat: no-repeat; background-position: 0 100%; background-size: 0% 1px; transition: background-size 0.35s var(--ease); }
+.tlink:hover, .tlink:focus-visible { background-size: 100% 1px; }
 
 /* honors & fellowships — a compact ruled list in the About left column */
 .honors-wrap { margin-top: 32px; max-width: 460px; }
@@ -274,7 +282,9 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
   width: 100%; background: none; border: 0; border-bottom: 1px solid var(--line); border-radius: 0;
   padding: 10px 2px; font-family: var(--font-mono), monospace; font-size: var(--fs-sm); color: var(--ink); transition: border-color var(--dur-fast) var(--ease); caret-color: var(--ink);
 }
-.cform textarea { resize: vertical; min-height: 88px; }
+/* no native resize gripper (a stray artifact on ruled inputs); grows with content
+   where field-sizing is supported */
+.cform textarea { resize: none; field-sizing: content; min-height: 88px; }
 .cform input::placeholder, .cform textarea::placeholder { color: var(--mute); }
 .cform input:focus, .cform textarea:focus { outline: none; border-bottom-color: var(--ink); }
 .cform button {
@@ -315,6 +325,9 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 .arena-wrap > .lead { max-width: 760px; margin-top: 24px; }
 .arena-stats { display: grid !important; grid-template-columns: repeat(4, 1fr); gap: 0 28px; margin: 40px 0 8px; }
 .arena-stats li { border-top: 1px solid var(--line); flex-direction: column; align-items: flex-start; gap: 5px; padding: 16px 4px; }
+/* all stat cells open (top rule only) — the inherited last-child bottom rule closed
+   just one cell of the grid, an asymmetric stray */
+.arena-stats li:last-child { border-bottom: 0; }
 .arena-stats .rm { white-space: normal; }
 .ablock-intro { margin-top: 40px; font-size: var(--fs-body); line-height: 1.65; color: var(--text); max-width: 640px; }
 /* two-column editorial blocks: mono label left, content right (matches the site) */
