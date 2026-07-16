@@ -532,7 +532,8 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
 
   useEffect(() => {
     const stored = localStorage.getItem("theme");
-    setDark(stored ? stored === "dark" : false); // default light — Swiss paper is the primary face
+    // stored choice wins; otherwise follow the OS scheme (matches the noFlash script)
+    setDark(stored ? stored === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches);
   }, []);
   useEffect(() => {
     if (dark === null) return;

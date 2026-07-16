@@ -65,7 +65,7 @@ export const viewport: Viewport = {
 };
 
 // Default to light (Swiss paper is the primary face); a saved choice still wins.
-const noFlash = `try{var t=localStorage.getItem('theme');if(t==='dark')document.body.classList.add('dark');if(location.pathname.indexOf('/zh')===0)document.documentElement.lang='zh';}catch(e){}`;
+const noFlash = `try{var t=localStorage.getItem('theme');var d=t?t==='dark':matchMedia('(prefers-color-scheme: dark)').matches;if(d)document.body.classList.add('dark');if(location.pathname.indexOf('/zh')===0)document.documentElement.lang='zh';}catch(e){}`;
 
 const personLd = {
   "@context": "https://schema.org",
