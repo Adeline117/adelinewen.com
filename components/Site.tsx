@@ -11,9 +11,19 @@ type Section = { label: string; title: ReactNode; lead: string; more: { text: st
 type Row = { n: string; d: string; m: string };
 type Val = { h: string; d: string };
 type Road = { phase: string; when: string; what: string };
-type TL = { y: string; h: string; d: string };
-type Honor = { t: string; d: string; m: string };
+type TL = { y: string; h: string; d: string; href?: string };
+type Honor = { t: string; d: string; m: string; href?: string };
 type CLink = { label: string; val: string; href: string; download?: boolean };
+
+// wrap text in an inline link (external) when an href is present, else plain text
+const linked = (text: string, href?: string): ReactNode =>
+  href ? (
+    <a className="ilink" href={href} target="_blank" rel="noopener noreferrer">
+      {text}
+    </a>
+  ) : (
+    text
+  );
 type Form = { name: string; email: string; message: string; send: string; sending: string; sent: string; mailed: string; err: string };
 
 const COPY: Record<
@@ -57,16 +67,16 @@ const COPY: Record<
         "I'm Adeline (she/her), an Economics undergrad at the University of Washington. I'm fascinated by how decentralized systems and markets actually behave, and I like to understand them by researching and building things of my own.",
       more: { text: "Connect on LinkedIn ↗", href: "https://www.linkedin.com/in/adeline1107" },
       resume: [
-        { y: "Apr 2026 – Present", h: "Crypto Analyst · Stably", d: "Research & growth at a stablecoin infrastructure company." },
-        { y: "Feb 2026 – Present", h: "Undergraduate Research Assistant · UW Decentralized Computing Lab", d: "Research under Prof. Wei Cai; built hascidb.org (open-source Sybil database, 2.5M+ wallets) and published on blockchain, crypto, and decentralized AI." },
-        { y: "Dec 2025 – Present", h: "Independent Developer · Arena", d: "Solo-built arenafi.org, ranking 68,000+ traders." },
-        { y: "2025 – 2029", h: "Bachelor of Economics · University of Washington", d: "Informatics minor · Dean's List." },
+        { y: "Apr 2026 – Present", h: "Crypto Analyst · Stably", d: "Research & growth at a stablecoin infrastructure company.", href: "https://www.stably.io/" },
+        { y: "Feb 2026 – Present", h: "Undergraduate Research Assistant · UW Decentralized Computing Lab", d: "Research under Prof. Wei Cai; built hascidb.org (open-source Sybil database, 2.5M+ wallets) and published on blockchain, crypto, and decentralized AI.", href: "https://faculty.washington.edu/weicaics/" },
+        { y: "Dec 2025 – Present", h: "Independent Developer · Arena", d: "Solo-built arenafi.org, ranking 68,000+ traders.", href: "https://arenafi.org" },
+        { y: "2025 – 2029", h: "Bachelor of Economics · University of Washington", d: "Informatics minor · Dean's List.", href: "https://www.washington.edu/" },
       ],
       honorsLabel: "Honors & Fellowships",
       honors: [
-        { t: "Paradigm Fellowship 2026", d: "One of ~30 fellows selected worldwide — leading crypto & frontier-tech VC.", m: "N. California · Aug 2026" },
-        { t: "Y Combinator Startup School 2026", d: "Selected to attend.", m: "San Francisco · Jul 2026" },
-        { t: "Dempsey Startup Competition 2026", d: "Investment Round — Top 40 of 174 teams.", m: "Pacific NW · May 2026" },
+        { t: "Paradigm Fellowship 2026", d: "One of ~30 fellows selected worldwide — leading crypto & frontier-tech VC.", m: "N. California · Aug 2026", href: "https://paradigm.xyz/fellowship-2026/" },
+        { t: "Y Combinator Startup School 2026", d: "Selected to attend.", m: "San Francisco · Jul 2026", href: "https://www.startupschool.org/" },
+        { t: "Dempsey Startup Competition 2026", d: "Investment Round — Top 40 of 174 teams.", m: "Pacific NW · May 2026", href: "https://foster.uw.edu/centers/buerk-ctr-entrepreneurship/entrepreneurship-competitions/dempsey-startup-competition/" },
       ],
     },
     research: {
@@ -173,16 +183,16 @@ const COPY: Record<
         "我是 Adeline（她/她），华盛顿大学经济学本科生。我着迷于去中心化系统与市场真实的运转方式，喜欢通过研究和亲手构建去理解它们。",
       more: { text: "在 LinkedIn 联系 ↗", href: "https://www.linkedin.com/in/adeline1107" },
       resume: [
-        { y: "2026.04 – 至今", h: "加密分析师 · Stably", d: "稳定币基础设施公司的研究与增长。" },
-        { y: "2026.02 – 至今", h: "本科研究助理 · UW 去中心化计算实验室", d: "导师 Wei Cai 教授；构建了 hascidb.org（开源 Sybil 检测数据库，250 万+ 钱包），并发表区块链、加密与去中心化 AI 方向的多篇论文。" },
-        { y: "2025.12 – 至今", h: "独立开发 · Arena", d: "独立构建 arenafi.org，为 68,000+ 交易者排名。" },
-        { y: "2025 – 2029", h: "经济学学士 · 华盛顿大学", d: "辅修信息学 · 院长名单。" },
+        { y: "2026.04 – 至今", h: "加密分析师 · Stably", d: "稳定币基础设施公司的研究与增长。", href: "https://www.stably.io/" },
+        { y: "2026.02 – 至今", h: "本科研究助理 · UW 去中心化计算实验室", d: "导师 Wei Cai 教授；构建了 hascidb.org（开源 Sybil 检测数据库，250 万+ 钱包），并发表区块链、加密与去中心化 AI 方向的多篇论文。", href: "https://faculty.washington.edu/weicaics/" },
+        { y: "2025.12 – 至今", h: "独立开发 · Arena", d: "独立构建 arenafi.org，为 68,000+ 交易者排名。", href: "https://arenafi.org" },
+        { y: "2025 – 2029", h: "经济学学士 · 华盛顿大学", d: "辅修信息学 · 院长名单。", href: "https://www.washington.edu/" },
       ],
       honorsLabel: "荣誉与入选",
       honors: [
-        { t: "Paradigm Fellowship 2026", d: "全球约 30 名入选者之一 —— 顶级加密与前沿科技风投。", m: "北加州 · 2026.08" },
-        { t: "Y Combinator Startup School 2026", d: "获选参加。", m: "旧金山 · 2026.07" },
-        { t: "Dempsey 创业大赛 2026", d: "投资轮 —— 174 支队伍中前 40。", m: "太平洋西北 · 2026.05" },
+        { t: "Paradigm Fellowship 2026", d: "全球约 30 名入选者之一 —— 顶级加密与前沿科技风投。", m: "北加州 · 2026.08", href: "https://paradigm.xyz/fellowship-2026/" },
+        { t: "Y Combinator Startup School 2026", d: "获选参加。", m: "旧金山 · 2026.07", href: "https://www.startupschool.org/" },
+        { t: "Dempsey 创业大赛 2026", d: "投资轮 —— 174 支队伍中前 40。", m: "太平洋西北 · 2026.05", href: "https://foster.uw.edu/centers/buerk-ctr-entrepreneurship/entrepreneurship-competitions/dempsey-startup-competition/" },
       ],
     },
     research: {
@@ -704,7 +714,7 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
             {t.about.resume.map((item) => (
               <li key={item.h}>
                 <div className="y">{item.y}</div>
-                <div className="h">{item.h}</div>
+                <div className="h">{linked(item.h, item.href)}</div>
                 <div className="dsc">{item.d}</div>
               </li>
             ))}
@@ -720,7 +730,7 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
             {t.about.honors.map((h) => (
               <li key={h.t}>
                 <div className="hinfo">
-                  <span className="hn">{h.t}</span>
+                  <span className="hn">{linked(h.t, h.href)}</span>
                   <span className="hd">{h.d}</span>
                 </div>
                 <span className="hm">{h.m}</span>
