@@ -150,7 +150,7 @@ const COPY: Record<
       ),
       lead: "Based in Seattle, open to research and building opportunities, always up for a good problem.",
       links: [
-        { label: "Email", val: "adelinewen1107@outlook.com", href: "mailto:adelinewen1107@outlook.com" },
+        { label: "Email", val: "adelinewen1107@outlook.com ↗", href: "mailto:adelinewen1107@outlook.com" },
         { label: "GitHub", val: "@Adeline117 ↗", href: "https://github.com/Adeline117" },
         { label: "LinkedIn", val: "/in/adeline1107 ↗", href: "https://www.linkedin.com/in/adeline1107" },
         { label: "X", val: "@AdelineWen07 ↗", href: "https://x.com/AdelineWen07" },
@@ -272,7 +272,7 @@ const COPY: Record<
       ),
       lead: "常驻西雅图，对研究与构建的机会开放，随时欢迎好问题。",
       links: [
-        { label: "邮箱", val: "adelinewen1107@outlook.com", href: "mailto:adelinewen1107@outlook.com" },
+        { label: "邮箱", val: "adelinewen1107@outlook.com ↗", href: "mailto:adelinewen1107@outlook.com" },
         { label: "GitHub", val: "@Adeline117 ↗", href: "https://github.com/Adeline117" },
         { label: "LinkedIn", val: "/in/adeline1107 ↗", href: "https://www.linkedin.com/in/adeline1107" },
         { label: "X", val: "@AdelineWen07 ↗", href: "https://x.com/AdelineWen07" },
