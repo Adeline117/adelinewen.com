@@ -351,7 +351,9 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
      fought touch on tall sections); content-height sections so there's no dead
      whitespace to scroll past; scroll-margin keeps nav jumps clear of the bar */
   html { scroll-snap-type: none; }
-  .sec { min-height: auto; padding: 56px clamp(20px, 6vw, 40px); scroll-margin-top: 54px; }
+  /* block flow on mobile: the desktop flex centering would make the (now static)
+     colophon a second row-item beside .inner — stack them instead */
+  .sec { display: block; min-height: auto; padding: 56px clamp(20px, 6vw, 40px); scroll-margin-top: 54px; }
   .arena-sec { min-height: auto; padding: 56px clamp(20px, 6vw, 40px); }
   .arena-stats { grid-template-columns: repeat(2, 1fr); }
   /* cover collapses gracefully: keep the offset stack, full-width standfirst */
