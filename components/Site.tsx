@@ -7,7 +7,7 @@ import { flushSync } from "react-dom";
 // interaction), loaded after the text paints
 
 type Lang = "en" | "zh";
-type Section = { label: string; title: ReactNode; lead: string; more: { text: string; href: string } };
+type Section = { label: string; title: ReactNode; lead: ReactNode; more: { text: string; href: string } };
 type Row = { n: string; d: string; m: string };
 type Val = { h: string; d: string };
 type Road = { phase: string; when: string; what: string };
@@ -47,11 +47,11 @@ const COPY: Record<
   }
 > = {
   en: {
-    nav: ["About", "Research", "Work", "Contact"],
+    nav: ["About", "Research", "Arena", "Contact"],
     colophon: "© 2026 Adeline Wen",
     heroSub: (
       <>
-        Research assistant at the University of Washington Decentralized Computing Lab, and independent developer of <b>arenafi.org</b>.
+        Research assistant at the University of Washington Decentralized Computing Lab, and independent developer of <a className="tlink" href="https://arenafi.org" target="_blank" rel="noopener noreferrer"><b>arenafi.org</b></a>.
       </>
     ),
     heroHint: "Scroll ↓",
@@ -64,19 +64,19 @@ const COPY: Record<
         </>
       ),
       lead:
-        "I'm Adeline (she/her), an Economics undergrad at the University of Washington. I'm fascinated by how decentralized systems and markets actually behave, and I like to understand them by researching and building things of my own.",
+        "I’m Adeline (she/her), an Economics undergrad at the University of Washington. I’m fascinated by how decentralized systems and markets actually behave, and I like to understand them by researching and building things of my own.",
       more: { text: "Connect on LinkedIn ↗", href: "https://www.linkedin.com/in/adeline1107" },
       resume: [
-        { y: "Apr 2026 – Present", h: "Crypto Analyst · Stably", d: "Research & growth at a stablecoin infrastructure company.", href: "https://www.stably.io/" },
-        { y: "Feb 2026 – Present", h: "Undergraduate Research Assistant · UW Decentralized Computing Lab", d: "Research under Prof. Wei Cai; built hascidb.org (open-source Sybil database, 2.5M+ wallets) and published on blockchain, crypto, and decentralized AI.", href: "https://faculty.washington.edu/weicaics/" },
-        { y: "Dec 2025 – Present", h: "Independent Developer · Arena", d: "Solo-built arenafi.org, ranking 68,000+ traders.", href: "https://arenafi.org" },
-        { y: "2025 – 2029", h: "Bachelor of Economics · University of Washington", d: "Informatics minor · Dean's List.", href: "https://www.washington.edu/" },
+        { y: "Apr 2026 – Present", h: "Crypto Analyst · Stably", d: "Research & growth at a stablecoin infrastructure company.", href: "https://www.stably.io/" },
+        { y: "Feb 2026 – Present", h: "Undergraduate Research Assistant · UW Decentralized Computing Lab", d: "Research under Prof. Wei Cai; built hascidb.org (open-source Sybil database, 2.5M+ wallets) and published on blockchain, crypto, and decentralized AI.", href: "https://faculty.washington.edu/weicaics/" },
+        { y: "Dec 2025 – Present", h: "Independent Developer · Arena", d: "Solo-built arenafi.org, ranking 68,000+ traders.", href: "https://arenafi.org" },
+        { y: "2025 – 2029", h: "Bachelor of Economics · University of Washington", d: "Informatics minor · Dean’s List.", href: "https://www.washington.edu/" },
       ],
       honorsLabel: "Honors & Fellowships",
       honors: [
-        { t: "Paradigm Fellowship 2026", d: "One of ~30 fellows selected worldwide — leading crypto & frontier-tech VC.", m: "N. California · Aug 2026", href: "https://paradigm.xyz/fellowship-2026/" },
-        { t: "Y Combinator Startup School 2026", d: "Selected to attend.", m: "San Francisco · Jul 2026", href: "https://www.startupschool.org/" },
-        { t: "Dempsey Startup Competition 2026", d: "Investment Round — Top 40 of 174 teams.", m: "Pacific NW · May 2026", href: "https://foster.uw.edu/centers/buerk-ctr-entrepreneurship/entrepreneurship-competitions/dempsey-startup-competition/" },
+        { t: "Paradigm Fellowship 2026", d: "One of ~30 fellows selected worldwide — leading crypto & frontier-tech VC.", m: "N. California · Aug 2026", href: "https://paradigm.xyz/fellowship-2026/" },
+        { t: "Y Combinator Startup School 2026", d: "Selected to attend.", m: "San Francisco · Jul 2026", href: "https://www.startupschool.org/" },
+        { t: "Dempsey Startup Competition 2026", d: "Investment Round — Top 40 of 174 teams.", m: "Pacific NW · May 2026", href: "https://foster.uw.edu/centers/buerk-ctr-entrepreneurship/entrepreneurship-competitions/dempsey-startup-competition/" },
       ],
     },
     research: {
@@ -87,11 +87,11 @@ const COPY: Record<
         </>
       ),
       lead:
-        "At the UW Decentralized Computing Lab with Prof. Wei Cai, first-author and co-authored research in blockchain and decentralized AI, from airdrop Sybil detection (catching one person who fakes thousands of wallets to farm token giveaways) to interpretable on-chain governance.",
+        "At the UW Decentralized Computing Lab with Prof. Wei Cai, first-author and co-authored research in blockchain and decentralized AI, from airdrop Sybil detection (catching one person who fakes thousands of wallets to farm token giveaways) to interpretable on⁠-⁠chain governance.",
       more: { text: "Explore HasciDB ↗", href: "https://hascidb.org" },
       tl: [
-        { y: "Accepted · Nanyang Blockchain Conference 2026", h: "HasciDB: A Database for Identifying Crypto Sybil Airdrop Hunters", d: "First author. The largest open-source cross-project airdrop Sybil-detection database (hascidb.org, 2.5M+ wallets). With Wei Cai et al." },
-        { y: "Accepted · IEEE SMC 2026 · IEEE Xplore", h: "Human-Centered Decision Support for Crypto Airdrop Governance: Interpretable Behavioral Modeling of Strategic Hunters", d: "Co-author. An extension of HasciDB toward interpretable, human-centered airdrop governance. With Wei Cai et al." },
+        { y: "Accepted · Nanyang Blockchain Conference 2026", h: "HasciDB: A Database for Identifying Crypto Sybil Airdrop Hunters", d: "First author. The largest open-source cross-project airdrop Sybil-detection database (hascidb.org, 2.5M+ wallets). With Wei Cai et al." },
+        { y: "Accepted · IEEE SMC 2026 · IEEE Xplore", h: "Human-Centered Decision Support for Crypto Airdrop Governance: Interpretable Behavioral Modeling of Strategic Hunters", d: "Co-author. An extension of HasciDB toward interpretable, human-centered airdrop governance. With Wei Cai et al." },
       ],
     },
     arena: {
@@ -101,20 +101,23 @@ const COPY: Record<
           Arena, <em>solo-built</em>.
         </>
       ),
-      lead:
-        "Tennis has the ATP rankings; chess has Elo. Crypto trading moves hundreds of billions a day, yet no one could answer the simplest question: who are the best traders? Arena (arenafi.org) is the cross-platform answer. I designed, built, and shipped it solo, unifying 68,000+ traders across 44+ exchanges (CEX + DEX) into one transparent Arena Score, giving crypto trading a world ranking for the first time.",
+      lead: (
+        <>
+          Tennis has the ATP rankings; chess has Elo. Crypto trading moves hundreds of billions a day, yet no one could answer the simplest question: who are the best traders? Arena (<a className="tlink" href="https://arenafi.org" target="_blank" rel="noopener noreferrer">arenafi.org</a>) is the cross-platform answer. I designed, built, and shipped it solo, unifying 68,000+ traders across 44+ exchanges (CEX + DEX) into one transparent Arena Score, giving crypto trading a world ranking for the first time.
+        </>
+      ),
       more: { text: "Visit arenafi.org ↗", href: "https://arenafi.org" },
       stats: [
         { n: "68,000+", d: "traders ranked", m: "" },
-        { n: "44+", d: "exchanges · CEX + DEX", m: "" },
+        { n: "44+", d: "exchanges · CEX + DEX", m: "" },
         { n: "60", d: "automated data pipelines", m: "" },
         { n: "Solo", d: "designed, built & shipped", m: "Next.js · Supabase · Redis" },
       ],
-      funnelIntro: "Rankings are only step one. Arena's full form is a three-stage funnel, where each step builds on the data of the last.",
+      funnelIntro: "Rankings are only step one. Arena’s full form is a three-stage funnel, where each step builds on the data of the last.",
       value: {
-        h: "Why it's different",
+        h: "Why it’s different",
         items: [
-          { h: "Cross-platform visibility", d: "The only place that sees every trader on every exchange. Binance won't show you Bybit's traders; Arena shows them all." },
+          { h: "Cross-platform visibility", d: "The only place that sees every trader on every exchange. Binance won’t show you Bybit’s traders; Arena shows them all." },
           { h: "One transparent standard", d: "Arena Score, 0–100, weighted 60% return-on-investment and 40% absolute profit, with a published methodology anyone can audit. Accounts under $500 profit are filtered out, and my own Sybil-detection research keeps fake-wallet farming off the board." },
           { h: "Competition, not display", d: "Not a static dashboard but a live contest." },
         ],
@@ -130,7 +133,7 @@ const COPY: Record<
       vision: {
         d: (
           <>
-            Trading is fiercely competitive, yet it&apos;s the only sport with no world ranking, no official matches, and no star system. Arena fills in all three, in order: <em>discover the best, let them prove it in public, then let anyone follow.</em>
+            Trading is fiercely competitive, yet it’s the only sport with no world ranking, no official matches, and no star system. Arena fills in all three, in order: <em>discover the best, let them prove it in public, then let anyone follow.</em>
           </>
         ),
       },
@@ -139,7 +142,7 @@ const COPY: Record<
       label: "04 · Contact",
       title: (
         <>
-          Let&apos;s <em>talk</em>.
+          Let’s <em>talk</em>.
         </>
       ),
       lead: "Based in Seattle, open to research and building opportunities, always up for a good problem.",
@@ -156,18 +159,18 @@ const COPY: Record<
         message: "Message",
         send: "Send message",
         sending: "Sending…",
-        sent: "Thanks, I'll be in touch soon.",
+        sent: "Thanks, I’ll be in touch soon.",
         mailed: "Opening your email app — if nothing happens, write to adelinewen1107@outlook.com.",
-        err: "Couldn't send, please email adelinewen1107@outlook.com directly.",
+        err: "Couldn’t send, please email adelinewen1107@outlook.com directly.",
       },
     },
   },
   zh: {
-    nav: ["关于", "研究", "项目", "联系"],
+    nav: ["关于", "研究", "Arena", "联系"],
     colophon: "© 2026 Adeline Wen",
     heroSub: (
       <>
-        华盛顿大学去中心化计算实验室研究助理，<b>arenafi.org</b> 独立开发者。
+        华盛顿大学去中心化计算实验室研究助理，<a className="tlink" href="https://arenafi.org" target="_blank" rel="noopener noreferrer"><b>arenafi.org</b></a> 独立开发者。
       </>
     ),
     heroHint: "滚动 ↓",
@@ -180,19 +183,19 @@ const COPY: Record<
         </>
       ),
       lead:
-        "我是 Adeline（她/她），华盛顿大学经济学本科生。我着迷于去中心化系统与市场真实的运转方式，喜欢通过研究和亲手构建去理解它们。",
+        "我是 Adeline，华盛顿大学经济学本科生。我着迷于去中心化系统与市场真实的运转方式，喜欢通过研究和亲手构建去理解它们。",
       more: { text: "在 LinkedIn 联系 ↗", href: "https://www.linkedin.com/in/adeline1107" },
       resume: [
-        { y: "2026.04 – 至今", h: "加密分析师 · Stably", d: "稳定币基础设施公司的研究与增长。", href: "https://www.stably.io/" },
-        { y: "2026.02 – 至今", h: "本科研究助理 · UW 去中心化计算实验室", d: "导师 Wei Cai 教授；构建了 hascidb.org（开源 Sybil 检测数据库，250 万+ 钱包），并发表区块链、加密与去中心化 AI 方向的多篇论文。", href: "https://faculty.washington.edu/weicaics/" },
-        { y: "2025.12 – 至今", h: "独立开发 · Arena", d: "独立构建 arenafi.org，为 68,000+ 交易者排名。", href: "https://arenafi.org" },
-        { y: "2025 – 2029", h: "经济学学士 · 华盛顿大学", d: "辅修信息学 · 院长名单。", href: "https://www.washington.edu/" },
+        { y: "2026.04 – 至今", h: "加密分析师 · Stably", d: "稳定币基础设施公司的研究与增长。", href: "https://www.stably.io/" },
+        { y: "2026.02 – 至今", h: "本科研究助理 · UW 去中心化计算实验室", d: "导师 Wei Cai 教授；构建了 hascidb.org（开源 Sybil 检测数据库，250 万+ 钱包），并发表区块链、加密与去中心化 AI 方向的多篇论文。", href: "https://faculty.washington.edu/weicaics/" },
+        { y: "2025.12 – 至今", h: "独立开发 · Arena", d: "独立构建 arenafi.org，为 68,000+ 交易者排名。", href: "https://arenafi.org" },
+        { y: "2025 – 2029", h: "经济学学士 · 华盛顿大学", d: "辅修信息学 · 院长名单。", href: "https://www.washington.edu/" },
       ],
       honorsLabel: "荣誉与入选",
       honors: [
-        { t: "Paradigm Fellowship 2026", d: "全球约 30 名入选者之一 —— 顶级加密与前沿科技风投。", m: "北加州 · 2026.08", href: "https://paradigm.xyz/fellowship-2026/" },
-        { t: "Y Combinator Startup School 2026", d: "获选参加。", m: "旧金山 · 2026.07", href: "https://www.startupschool.org/" },
-        { t: "Dempsey 创业大赛 2026", d: "投资轮 —— 174 支队伍中前 40。", m: "太平洋西北 · 2026.05", href: "https://foster.uw.edu/centers/buerk-ctr-entrepreneurship/entrepreneurship-competitions/dempsey-startup-competition/" },
+        { t: "Paradigm Fellowship 2026", d: "全球约 30 名入选者之一 —— 顶级加密与前沿科技风投。", m: "北加州 · 2026.08", href: "https://paradigm.xyz/fellowship-2026/" },
+        { t: "Y Combinator Startup School 2026", d: "获选参加。", m: "旧金山 · 2026.07", href: "https://www.startupschool.org/" },
+        { t: "Dempsey 创业大赛 2026", d: "投资轮 —— 174 支队伍中前 40。", m: "太平洋西北 · 2026.05", href: "https://foster.uw.edu/centers/buerk-ctr-entrepreneurship/entrepreneurship-competitions/dempsey-startup-competition/" },
       ],
     },
     research: {
@@ -207,7 +210,7 @@ const COPY: Record<
       more: { text: "查看 HasciDB ↗", href: "https://hascidb.org" },
       tl: [
         { y: "已接收 · 南洋区块链大会 2026", h: "HasciDB：识别加密 Sybil 空投猎人的数据库", d: "第一作者。最大的开源跨项目空投 Sybil 检测数据库（hascidb.org，250 万+ 钱包）。与 Wei Cai 教授等合作。" },
-        { y: "已接收 · IEEE SMC 2026 · IEEE Xplore", h: "面向加密空投治理的以人为本决策支持：策略型猎手的可解释行为建模", d: "合作者。HasciDB 的延伸工作，面向可解释、以人为本的空投治理。与 Wei Cai 教授等合作。" },
+        { y: "已接收 · IEEE SMC 2026 · IEEE Xplore", h: "面向加密空投治理的以人为本决策支持：策略型猎手的可解释行为建模", d: "合作者。HasciDB 的延伸工作，面向可解释、以人为本的空投治理。与 Wei Cai 教授等合作。" },
       ],
     },
     arena: {
@@ -217,12 +220,15 @@ const COPY: Record<
           Arena，<em>独立打造</em>。
         </>
       ),
-      lead:
-        "网球有 ATP 排名，国际象棋有 Elo。加密交易每天成交数千亿美元，却没人能回答最基本的问题：谁是最好的交易者？Arena（arenafi.org）是跨平台的答案。我独立设计、开发并上线，把 44+ 交易所（中心化 + 去中心化）上分散的 68,000+ 交易者，统一进一个透明的 Arena 评分，第一次给加密交易一个世界排名。",
+      lead: (
+        <>
+          网球有 ATP 排名，国际象棋有 Elo。加密交易每天成交数千亿美元，却没人能回答最基本的问题：谁是最好的交易者？Arena（<a className="tlink" href="https://arenafi.org" target="_blank" rel="noopener noreferrer">arenafi.org</a>）是跨平台的答案。我独立设计、开发并上线，把 44+ 交易所（中心化 + 去中心化）上分散的 68,000+ 交易者，统一进一个透明的 Arena 评分，第一次给加密交易一个世界排名。
+        </>
+      ),
       more: { text: "访问 arenafi.org ↗", href: "https://arenafi.org" },
       stats: [
         { n: "68,000+", d: "交易者排名", m: "" },
-        { n: "44+", d: "交易所 · CEX + DEX", m: "" },
+        { n: "44+", d: "交易所 · CEX + DEX", m: "" },
         { n: "60", d: "自动化数据管线", m: "" },
         { n: "独立", d: "设计、开发、上线", m: "Next.js · Supabase · Redis" },
       ],
