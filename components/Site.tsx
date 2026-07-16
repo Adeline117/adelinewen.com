@@ -26,12 +26,6 @@ const linked = (text: string, href?: string): ReactNode =>
   );
 type Form = { name: string; email: string; message: string; send: string; sending: string; sent: string; mailed: string; err: string };
 
-// the Arena Score specimen — illustrative rows (anonymised wallet handles), not product data
-const SPEC_ROWS = [
-  { rk: "01", hd: "0x9F42…B7D1", v: 94.2 },
-  { rk: "02", hd: "0x3C8A…E605", v: 81.7 },
-  { rk: "03", hd: "0xD210…4F9C", v: 67.5 },
-];
 
 const COPY: Record<
   Lang,
@@ -48,7 +42,6 @@ const COPY: Record<
       funnelIntro: string;
       value: { h: string; items: Val[] };
       roadmap: { h: string; steps: Road[] };
-      spec: { label: string; note: string; formula: string };
       vision: { d: ReactNode };
     };
     contact: { label: string; title: ReactNode; lead: string; links: CLink[]; form: Form };
@@ -125,7 +118,6 @@ const COPY: Record<
         { n: "Solo", d: "designed, built & shipped", m: "Next.js · Supabase · Redis" },
       ],
       funnelIntro: "Rankings are only step one. Arena’s full form is a three-stage funnel, where each step builds on the data of the last.",
-      spec: { label: "Fig · how an Arena Score reads", note: "Illustrative", formula: "ROI 60% · absolute P&L 40%" },
       value: {
         h: "Why it’s different",
         items: [
@@ -248,7 +240,6 @@ const COPY: Record<
         { n: "独立", d: "设计、开发、上线", m: "Next.js · Supabase · Redis" },
       ],
       funnelIntro: "排名只是第一步。Arena 的完整形态是一个三段漏斗，每一步都建立在上一步的数据之上。",
-      spec: { label: "图 · Arena 评分怎么读", note: "示意", formula: "收益率 60% · 绝对盈亏 40%" },
       value: {
         h: "为什么不一样",
         items: [
@@ -808,27 +799,6 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
             ))}
           </ul>
 
-          {/* score specimen: an illustrative figure of how the ranking reads —
-              a diagram in the site's ink, explicitly not a product screenshot */}
-          <figure className="spec">
-            <figcaption className="spec-cap">
-              <span>{t.arena.spec.label}</span>
-              <span className="spec-note">{t.arena.spec.note}</span>
-            </figcaption>
-            {SPEC_ROWS.map((r, i) => (
-              <div className="spec-row" key={r.rk}>
-                <span className="rk">{r.rk}</span>
-                <span className="hd">{r.hd}</span>
-                <span className="bar"><i style={{ "--v": r.v / 100, "--i": i } as React.CSSProperties} /></span>
-                <span className="sc">{r.v.toFixed(1)}</span>
-              </div>
-            ))}
-            <div className="spec-scale">
-              <span>0</span>
-              <span>{t.arena.spec.formula}</span>
-              <span>100</span>
-            </div>
-          </figure>
 
           <p className="ablock-intro">{t.arena.funnelIntro}</p>
 
