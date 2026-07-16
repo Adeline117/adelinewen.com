@@ -577,6 +577,17 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
     vt.finished.finally(() => document.documentElement.classList.remove("theme-wiping"));
   };
 
+  // Language switch as a soft crossfade (same API, no wipe class → fade rules apply)
+  const flipLang = () => {
+    const next: Lang = lang === "en" ? "zh" : "en";
+    const doc = document as Document & { startViewTransition?: (cb: () => void) => { finished: Promise<void> } };
+    if (!doc.startViewTransition || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setLang(next);
+      return;
+    }
+    doc.startViewTransition(() => flushSync(() => setLang(next)));
+  };
+
   const goTo = (i: number) => {
     const el = secRefs.current[i];
     if (!el) return;
@@ -669,7 +680,7 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
             <button
               className="toggle"
               aria-label={lang === "en" ? "切换到中文" : "Switch to English"}
-              onClick={() => setLang((l) => (l === "en" ? "zh" : "en"))}
+              onClick={flipLang}
             >
               {lang === "en" ? "中文" : "EN"}
             </button>
