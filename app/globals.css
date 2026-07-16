@@ -334,6 +334,22 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
    just one cell of the grid, an asymmetric stray */
 .arena-stats li:last-child { border-bottom: 0; }
 .arena-stats .rm { white-space: normal; }
+/* the score specimen — an illustrative ruled figure (rank · handle · bar · score) */
+.spec { margin: 40px 0 0; max-width: 640px; }
+.spec-cap { display: flex; justify-content: space-between; align-items: baseline; font-family: var(--font-mono), monospace; font-size: var(--fs-cap); letter-spacing: 0.18em; text-transform: uppercase; color: var(--mute); margin-bottom: 8px; }
+.spec-note { letter-spacing: 0.12em; }
+.spec-row { display: grid; grid-template-columns: 24px 128px 1fr 52px; gap: 18px; align-items: center; padding: 13px 0; border-top: 1px solid var(--line); }
+.spec .rk { font-family: var(--font-mono), monospace; font-size: var(--fs-cap); color: var(--mute); }
+.spec .hd { font-family: var(--font-mono), monospace; font-size: var(--fs-sm); color: var(--text); }
+.spec .bar { position: relative; height: 2px; background: var(--line); }
+.spec .bar i { position: absolute; inset: 0; background: var(--ink); transform: scaleX(0); transform-origin: left; transition: transform 0.9s var(--ease); transition-delay: calc(var(--i, 0) * var(--stagger) * 2); }
+.sec.on .spec .bar i { transform: scaleX(var(--v, 0)); }
+.spec .sc { font-family: var(--font-fraunces), serif; font-size: var(--fs-md); font-weight: 330; font-variant-numeric: lining-nums tabular-nums; text-align: right; color: var(--ink); }
+.spec-scale { display: flex; justify-content: space-between; font-family: var(--font-mono), monospace; font-size: var(--fs-cap); letter-spacing: 0.08em; text-transform: uppercase; color: var(--mute); padding-top: 10px; border-top: 1px solid var(--line); }
+@media (max-width: 480px) {
+  .spec-row { grid-template-columns: 20px 96px 1fr 46px; gap: 10px; }
+}
+
 .ablock-intro { margin-top: 40px; font-size: var(--fs-body); line-height: 1.65; color: var(--text); max-width: 640px; }
 /* two-column editorial blocks: mono label left, content right (matches the site) */
 .ablock { display: grid; grid-template-columns: 170px 1fr; gap: clamp(24px, 4vw, 56px); align-items: start; margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--line); }
