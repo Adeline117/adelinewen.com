@@ -435,7 +435,13 @@ main:focus { outline: none; } /* skip-link target — focused programmatically, 
    Progressive enhancement via the View Transitions API. */
 .theme-wiping body { transition: none; }
 ::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
-::view-transition-new(root) { animation: themeWipe 0.6s var(--ease); }
+/* theme flip: circular ink wipe (scoped — other view transitions get the fade) */
+:root.theme-wiping::view-transition-new(root) { animation: themeWipe 0.6s var(--ease); }
+/* language switch: a soft crossfade instead of a hard swap */
+:root:not(.theme-wiping)::view-transition-old(root) { animation: vtFadeOut 0.22s var(--ease) both; }
+:root:not(.theme-wiping)::view-transition-new(root) { animation: vtFadeIn 0.34s var(--ease) both; }
+@keyframes vtFadeOut { to { opacity: 0; } }
+@keyframes vtFadeIn { from { opacity: 0; } }
 @keyframes themeWipe {
   from { clip-path: circle(0 at var(--wx, 50%) var(--wy, 50%)); }
   to { clip-path: circle(150% at var(--wx, 50%) var(--wy, 50%)); }
