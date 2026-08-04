@@ -12,7 +12,17 @@ type Row = { n: string; d: string; m: string };
 type Val = { h: string; d: string };
 type Road = { phase: string; when: string; what: string };
 type TL = { y: string; h: string; d: string; href?: string };
-type Honor = { t: string; d: string; m: string; href?: string };
+// img: an event photograph. Optional — a missing file degrades to the plain row.
+type Honor = { t: string; d: string; m: string; href?: string; img?: string };
+
+// Event photographs, shared by both locales. Each is probed at mount; a file
+// that isn't there simply never reveals, so the list reads exactly as it does
+// today until the picture lands in public/photos/.
+const PHOTO = {
+  paradigm: "/photos/paradigm-fellowship.jpg",
+  yc: "/photos/yc-startup-school.jpg",
+  dempsey: "/photos/dempsey-startup.jpg",
+} as const;
 type CLink = { label: string; val: string; href: string; download?: boolean };
 
 // wrap text in an inline link (external) when an href is present, else plain text
@@ -75,9 +85,9 @@ const COPY: Record<
       ],
       honorsLabel: "Honors & Fellowships",
       honors: [
-        { t: "Paradigm Fellowship 2026", d: "One of ~30 fellows selected worldwide — leading crypto & frontier-tech VC.", m: "N. California · Aug 2026", href: "https://paradigm.xyz/fellowship-2026/" },
-        { t: "Y Combinator Startup School 2026", d: "Selected to attend.", m: "San Francisco · Jul 2026", href: "https://www.startupschool.org/" },
-        { t: "Dempsey Startup Competition 2026", d: "Investment Round — Top 40 of 174 teams.", m: "Pacific NW · May 2026", href: "https://foster.uw.edu/centers/buerk-ctr-entrepreneurship/entrepreneurship-competitions/dempsey-startup-competition/" },
+        { t: "Paradigm Fellowship 2026", d: "One of ~30 fellows selected worldwide — leading crypto & frontier-tech VC.", m: "N. California · Aug 2026", href: "https://paradigm.xyz/fellowship-2026/", img: PHOTO.paradigm },
+        { t: "Y Combinator Startup School 2026", d: "Selected to attend.", m: "San Francisco · Jul 2026", href: "https://www.startupschool.org/", img: PHOTO.yc },
+        { t: "Dempsey Startup Competition 2026", d: "Investment Round — Top 40 of 174 teams.", m: "Pacific NW · May 2026", href: "https://foster.uw.edu/centers/buerk-ctr-entrepreneurship/entrepreneurship-competitions/dempsey-startup-competition/", img: PHOTO.dempsey },
       ],
     },
     research: {
@@ -197,9 +207,9 @@ const COPY: Record<
       ],
       honorsLabel: "荣誉与入选",
       honors: [
-        { t: "Paradigm Fellowship 2026", d: "全球约 30 名入选者之一 —— 顶级加密与前沿科技风投。", m: "北加州 · 2026.08", href: "https://paradigm.xyz/fellowship-2026/" },
-        { t: "Y Combinator Startup School 2026", d: "获选参加。", m: "旧金山 · 2026.07", href: "https://www.startupschool.org/" },
-        { t: "Dempsey 创业大赛 2026", d: "投资轮 —— 174 支队伍中前 40。", m: "太平洋西北 · 2026.05", href: "https://foster.uw.edu/centers/buerk-ctr-entrepreneurship/entrepreneurship-competitions/dempsey-startup-competition/" },
+        { t: "Paradigm Fellowship 2026", d: "全球约 30 名入选者之一 —— 顶级加密与前沿科技风投。", m: "北加州 · 2026.08", href: "https://paradigm.xyz/fellowship-2026/", img: PHOTO.paradigm },
+        { t: "Y Combinator Startup School 2026", d: "获选参加。", m: "旧金山 · 2026.07", href: "https://www.startupschool.org/", img: PHOTO.yc },
+        { t: "Dempsey 创业大赛 2026", d: "投资轮 —— 174 支队伍中前 40。", m: "太平洋西北 · 2026.05", href: "https://foster.uw.edu/centers/buerk-ctr-entrepreneurship/entrepreneurship-competitions/dempsey-startup-competition/", img: PHOTO.dempsey },
       ],
     },
     research: {
@@ -300,6 +310,11 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [hp, setHp] = useState(""); // honeypot, humans leave it empty, bots fill it
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error" | "mailed">("idle");
+  const [shot, setShot] = useState<string | null>(null); // hovered honour's photo
+  const [ready, setReady] = useState<ReadonlySet<string>>(new Set()); // photos that actually exist
+  const shotRef = useRef<HTMLDivElement>(null);
+  const shotSrc = useRef<string | null>(null);
+  const ptr = useRef({ x: -400, y: -400 });
   const secRefs = useRef<(HTMLElement | null)[]>([]);
   const heroRef = useRef<HTMLElement>(null);
   const trackRef = useRef<SVGPathElement>(null);
@@ -436,6 +451,62 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
       document.removeEventListener("pointerleave", onLeave);
     };
   }, []);
+
+  // Event photos, part 1 — probe which files exist and warm the cache, so a
+  // hover reveals instantly instead of flashing a half-loaded frame. A 404 just
+  // never joins `ready`, and that honour keeps its text-only row.
+  useEffect(() => {
+    let alive = true;
+    // deferred to idle so three photographs never compete with the cover's type.
+    // The timeout is load-bearing: the cursor + ink-lens rAF loops run forever,
+    // and an idle callback with no deadline can be starved behind them.
+    const idle: typeof window.requestIdleCallback =
+      window.requestIdleCallback ?? ((cb) => window.setTimeout(cb, 1200));
+    const id = idle(() => {
+      Object.values(PHOTO).forEach((src) => {
+        const im = new window.Image();
+        im.onload = () => alive && setReady((s) => new Set(s).add(src));
+        im.src = src;
+      });
+    }, { timeout: 1500 });
+    return () => {
+      alive = false;
+      window.cancelIdleCallback?.(id as number);
+    };
+  }, []);
+
+  // Event photos, part 2 — the plate floats beside the pointer with the same
+  // lerped lag as the cursor dot. The loop only runs while a photo is up.
+  useEffect(() => {
+    const on = (e: PointerEvent) => {
+      ptr.current = { x: e.clientX, y: e.clientY };
+    };
+    window.addEventListener("pointermove", on, { passive: true });
+    return () => window.removeEventListener("pointermove", on);
+  }, []);
+  useEffect(() => {
+    const el = shotRef.current;
+    if (!el || !shot) return;
+    const k = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 1 : 0.16;
+    const W = 300, H = 200; // must match .shot in globals.css
+    // x clears the 40px link-hover cursor dot; y hangs below the pointer and
+    // flips above when the fold is close — either way the hovered row (and its
+    // date) stays readable instead of sitting under the picture
+    const at = (p: { x: number; y: number }) => ({
+      x: Math.min(p.x + 36, window.innerWidth - W - 24),
+      y: p.y + 24 + H <= window.innerHeight - 16 ? p.y + 24 : Math.max(16, p.y - 24 - H),
+    });
+    let { x, y } = at(ptr.current);
+    el.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+    let raf = requestAnimationFrame(function loop() {
+      raf = requestAnimationFrame(loop);
+      const t = at(ptr.current);
+      x += (t.x - x) * k;
+      y += (t.y - y) * k;
+      el.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+    });
+    return () => cancelAnimationFrame(raf);
+  }, [shot]);
 
   // Mouse-wheel / keyboard paging: one section per gesture, then center.
   // (Touch keeps the native CSS scroll-snap; we only hijack wheel + keys.)
@@ -630,6 +701,10 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
 
   const t = COPY[lang];
   const ids = ["about", "research", "arena", "contact"];
+  // keep the last photo mounted through the fade-out, so it doesn't blink empty
+  if (shot) shotSrc.current = shot;
+  // a photo only becomes interactive once it's confirmed to exist
+  const has = (h: Honor) => !!h.img && ready.has(h.img);
 
   const renderSection = (i: number, sec: Section, right: ReactNode, rev = false, leftExtra: ReactNode = null) => (
     <section className={`sec${rev ? " rev" : ""}`} id={ids[i]} data-i={i} ref={setRef(i)}>
@@ -666,6 +741,12 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
         </filter>
       </svg>
       <div className="cursor" ref={cursorRef} aria-hidden="true" />
+      {/* event photo plate — floats beside the pointer over a hovered honour.
+          Decorative here: the mobile layout renders the same picture inline,
+          captioned, where it can actually be read. */}
+      <div className={`shot plate${shot ? " on" : ""}`} ref={shotRef} aria-hidden="true">
+        {shotSrc.current && <img src={shotSrc.current} alt="" />}
+      </div>
 
       <nav>
         <div className="logo">Adeline Wen</div>
@@ -753,12 +834,24 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
           <div className="honors-label">{t.about.honorsLabel}</div>
           <ul className="honors">
             {t.about.honors.map((h) => (
-              <li key={h.t}>
+              <li
+                key={h.t}
+                className={has(h) ? "shot-row" : undefined}
+                onPointerEnter={(e) => {
+                  if (e.pointerType !== "touch" && has(h)) setShot(h.img!);
+                }}
+                onPointerLeave={() => setShot(null)}
+              >
                 <div className="hinfo">
                   <span className="hn">{linked(h.t, h.href)}</span>
                   <span className="hd">{h.d}</span>
                 </div>
                 <span className="hm">{h.m}</span>
+                {has(h) && (
+                  <span className="hshot plate">
+                    <img src={h.img} alt={`${h.t} — ${h.m}`} loading="lazy" />
+                  </span>
+                )}
               </li>
             ))}
           </ul>
