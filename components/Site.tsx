@@ -44,7 +44,6 @@ const COPY: Record<
     research: Section & { tl: TL[] };
     arena: Section & {
       stats: Row[];
-      funnelIntro: string;
       value: { h: string; items: Val[] };
       roadmap: { h: string; steps: Road[] };
       vision: { d: ReactNode };
@@ -117,28 +116,26 @@ const COPY: Record<
       label: "04 · Arena",
       title: (
         <>
-          Arena, <em>solo-built</em>.
+          Crypto’s <em>world ranking</em>.
         </>
       ),
       lead: (
         <>
-          Tennis has the ATP rankings; chess has Elo. Crypto trading moves hundreds of billions a day, yet no one could answer the simplest question: who are the best traders? Arena (<a className="tlink" href="https://arenafi.org" target="_blank" rel="noopener noreferrer">arenafi.org</a>) is the cross-platform answer. I designed, built, and shipped it solo, unifying 68,000+ traders across 44+ exchanges (CEX + DEX) into one transparent Arena Score, giving crypto trading a world ranking for the first time.
+          Tennis has the ATP rankings; chess has Elo. Crypto trading moves hundreds of billions a day, yet no one could answer the simplest question: who are the best traders? Arena (<a className="tlink" href="https://arenafi.org" target="_blank" rel="noopener noreferrer">arenafi.org</a>) answers it: 68,000+ traders from 44+ exchanges, centralized and decentralized, ranked on one transparent Arena Score. For the first time, crypto trading has a world ranking. I designed and built it solo.
         </>
       ),
       more: { text: "Visit arenafi.org ↗", href: "https://arenafi.org" },
       stats: [
         { n: "68,000+", d: "traders ranked", m: "" },
         { n: "44+", d: "exchanges · CEX + DEX", m: "" },
-        { n: "60", d: "automated data pipelines", m: "" },
-        { n: "Solo", d: "designed, built & shipped", m: "Next.js · Supabase · Redis" },
+        { n: "0–100", d: "one Arena Score, open methodology", m: "" },
       ],
-      funnelIntro: "Rankings are only step one. Arena’s full form is a three-stage funnel, where each step builds on the data of the last.",
       value: {
         h: "Why it’s different",
         items: [
           { h: "Cross-platform visibility", d: "The only place that sees every trader on every exchange. Binance won’t show you Bybit’s traders; Arena shows them all." },
-          { h: "One transparent standard", d: "Arena Score, 0–100, weighted 60% return-on-investment and 40% absolute profit, with a published methodology anyone can audit. Accounts under $500 profit are filtered out, and my own Sybil-detection research keeps fake-wallet farming off the board." },
-          { h: "Competition, not display", d: "Not a static dashboard but a live contest." },
+          { h: "A score you can check", d: "One 0–100 Arena Score, weighted 60% return on investment and 40% absolute profit, with a methodology anyone can read. Tiny accounts (under $500 profit) and fake-wallet farms stay off the board, so the ranks are real traders." },
+          { h: "Built for competition", d: "Traders can claim and verify their profiles today; head-to-head battles and seasons come next." },
         ],
       },
       roadmap: {
@@ -248,28 +245,26 @@ const COPY: Record<
       label: "04 · Arena",
       title: (
         <>
-          Arena，<em>独立打造</em>。
+          加密交易的<em>世界排名</em>。
         </>
       ),
       lead: (
         <>
-          网球有 ATP 排名，国际象棋有 Elo。加密交易每天成交数千亿美元，却没人能回答最基本的问题：谁是最好的交易者？Arena（<a className="tlink" href="https://arenafi.org" target="_blank" rel="noopener noreferrer">arenafi.org</a>）是跨平台的答案。我独立设计、开发并上线，把 44+ 交易所（中心化 + 去中心化）上分散的 68,000+ 交易者，统一进一个透明的 Arena 评分，第一次给加密交易一个世界排名。
+          网球有 ATP 排名，国际象棋有 Elo。加密交易每天成交数千亿美元，却没人能回答最基本的问题：谁是最好的交易者？Arena（<a className="tlink" href="https://arenafi.org" target="_blank" rel="noopener noreferrer">arenafi.org</a>）给出了答案：44+ 交易所（中心化 + 去中心化）上的 68,000+ 交易者，按同一个透明的 Arena 评分排名。加密交易第一次有了世界排名。由我独立设计和开发。
         </>
       ),
       more: { text: "访问 arenafi.org ↗", href: "https://arenafi.org" },
       stats: [
         { n: "68,000+", d: "交易者排名", m: "" },
         { n: "44+", d: "交易所 · CEX + DEX", m: "" },
-        { n: "60", d: "自动化数据管线", m: "" },
-        { n: "独立", d: "设计、开发、上线", m: "Next.js · Supabase · Redis" },
+        { n: "0–100", d: "一个 Arena 评分，方法公开", m: "" },
       ],
-      funnelIntro: "排名只是第一步。Arena 的完整形态是一个三段漏斗，每一步都建立在上一步的数据之上。",
       value: {
         h: "为什么不一样",
         items: [
           { h: "跨平台可见", d: "唯一能看见每个交易所、每位交易者的地方。币安不会告诉你 Bybit 的交易者；Arena 全都看得见。" },
-          { h: "统一透明的标准", d: "Arena 评分，0–100，其中收益率（ROI）占 60%、绝对盈亏占 40%，方法论公开、任何人可审计。绝对盈利低于 $500 的账户被过滤，我自己的 Sybil 检测研究也把伪造钱包刷分挡在榜外。" },
-          { h: "是竞技，不是展示", d: "这里的数据不是静态看板，而是实时比赛。" },
+          { h: "看得懂的分数", d: "Arena 评分 0–100，收益率（ROI）占 60%、绝对盈亏占 40%，方法论公开，任何人都能查看。盈利不到 $500 的小账户和伪造钱包刷分都挡在榜外，榜上是真实的交易者。" },
+          { h: "为竞技而生", d: "交易者现在就能认领并验证自己的主页；接下来是 1v1 对战和赛季。" },
         ],
       },
       roadmap: {
@@ -739,7 +734,6 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
           </ul>
 
 
-          <p className="ablock-intro">{t.arena.funnelIntro}</p>
 
           <div className="ablock">
             <h3>{t.arena.value.h}</h3>

@@ -398,13 +398,12 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.88); }
 }
 .arena-sec .label::before { transform: none !important; }
 .arena-wrap > .lead { max-width: 760px; margin-top: 24px; }
-.arena-stats { display: grid !important; grid-template-columns: repeat(4, 1fr); gap: 0 28px; margin: 40px 0 8px; }
+.arena-stats { display: grid !important; grid-template-columns: repeat(3, 1fr); gap: 0 28px; margin: 40px 0 8px; }
 .arena-stats li { border-top: 1px solid var(--line); flex-direction: column; align-items: flex-start; gap: 5px; padding: 16px 4px; }
 /* all stat cells open (top rule only) — the inherited last-child bottom rule closed
    just one cell of the grid, an asymmetric stray */
 .arena-stats li:last-child { border-bottom: 0; }
 .arena-stats .rm { white-space: normal; }
-.ablock-intro { margin-top: 40px; font-size: var(--fs-body); line-height: 1.65; color: var(--text); max-width: 640px; }
 /* two-column editorial blocks: mono label left, content right (matches the site) */
 .ablock { display: grid; grid-template-columns: 170px 1fr; gap: clamp(24px, 4vw, 56px); align-items: start; margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--line); }
 .ablock h3 { font-family: var(--font-mono), monospace; font-size: var(--fs-label); letter-spacing: 0.18em; text-transform: uppercase; color: var(--mute); padding-top: 3px; }
@@ -448,7 +447,7 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.88); }
      colophon a second row-item beside .inner — stack them instead */
   .sec { display: block; padding: 64px clamp(20px, 6vw, 40px); }
   .arena-sec { padding: 64px clamp(20px, 6vw, 40px); }
-  .arena-stats { grid-template-columns: repeat(2, 1fr); }
+  .arena-stats { grid-template-columns: repeat(3, 1fr); }
   /* cover collapses gracefully: keep the offset stack, full-width standfirst */
   .hero { height: auto; min-height: 100svh; padding: 74px 20px 26px; }
   .l2w { margin-right: 4vw; }
