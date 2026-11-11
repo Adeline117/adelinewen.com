@@ -86,7 +86,7 @@ const COPY: Record<
       ],
       honorsLabel: "Honors & Fellowships",
       honors: [
-        { t: "INFORMS Annual Meeting 2026", d: "Invited talk — “When AI Learns to Hide: Upper and Lower Bounds on Behavioral Identification of Automated Accounts.”", m: "San Francisco · Nov 2026", href: "https://meetings.informs.org/wordpress/annual/", img: PHOTO.informs },
+        { t: "INFORMS Annual Meeting 2026", d: "Poster presentation — “When AI Learns to Hide: Upper and Lower Bounds on Behavioral Identification of Automated Accounts.”", m: "San Francisco · Nov 2026", href: "https://meetings.informs.org/wordpress/annual/", img: PHOTO.informs },
         { t: "Paradigm Fellowship 2026", d: "One of ~30 fellows selected worldwide — leading crypto & frontier-tech VC.", m: "N. California · Aug 2026", href: "https://paradigm.xyz/fellowship-2026/", img: PHOTO.paradigm },
         { t: "Y Combinator Startup School 2026", d: "Selected to attend.", m: "San Francisco · Jul 2026", href: "https://www.startupschool.org/", img: PHOTO.yc },
         { t: "Dempsey Startup Competition 2026", d: "Investment Round — Top 40 of 174 teams.", m: "Pacific NW · May 2026", href: "https://foster.uw.edu/centers/buerk-ctr-entrepreneurship/entrepreneurship-competitions/dempsey-startup-competition/", img: PHOTO.dempsey },
@@ -207,7 +207,7 @@ const COPY: Record<
       ],
       honorsLabel: "荣誉与入选",
       honors: [
-        { t: "INFORMS 年会 2026", d: "受邀报告 ——《When AI Learns to Hide: Upper and Lower Bounds on Behavioral Identification of Automated Accounts》。", m: "旧金山 · 2026.11", href: "https://meetings.informs.org/wordpress/annual/", img: PHOTO.informs },
+        { t: "INFORMS 年会 2026", d: "海报展示 ——《When AI Learns to Hide: Upper and Lower Bounds on Behavioral Identification of Automated Accounts》。", m: "旧金山 · 2026.11", href: "https://meetings.informs.org/wordpress/annual/", img: PHOTO.informs },
         { t: "Paradigm Fellowship 2026", d: "全球约 30 名入选者之一 —— 顶级加密与前沿科技风投。", m: "北加州 · 2026.08", href: "https://paradigm.xyz/fellowship-2026/", img: PHOTO.paradigm },
         { t: "Y Combinator Startup School 2026", d: "获选参加。", m: "旧金山 · 2026.07", href: "https://www.startupschool.org/", img: PHOTO.yc },
         { t: "Dempsey 创业大赛 2026", d: "投资轮 —— 174 支队伍中前 40。", m: "太平洋西北 · 2026.05", href: "https://foster.uw.edu/centers/buerk-ctr-entrepreneurship/entrepreneurship-competitions/dempsey-startup-competition/", img: PHOTO.dempsey },
