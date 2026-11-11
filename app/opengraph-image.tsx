@@ -44,7 +44,7 @@ export default async function OpengraphImage() {
             Adeline Wen
           </div>
           <div style={{ fontSize: 32, color: "#6b675f", marginTop: 22 }}>
-            UW Decentralized Computing Lab · independent developer of arenafi.org
+            UW CAIS Lab · independent developer of arenafi.org
           </div>
         </div>
 

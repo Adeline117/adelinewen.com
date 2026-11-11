@@ -62,7 +62,7 @@ const COPY: Record<
     colophon: "© 2026 Adeline Wen",
     heroSub: (
       <>
-        Research assistant at the University of Washington Decentralized Computing Lab, and independent developer of <a className="tlink" href="https://arenafi.org" target="_blank" rel="noopener noreferrer"><b>arenafi.org</b></a>.
+        Research assistant at the University of Washington CAIS Lab, and independent developer of <a className="tlink" href="https://arenafi.org" target="_blank" rel="noopener noreferrer"><b>arenafi.org</b></a>.
       </>
     ),
     heroHint: "Scroll ↓",
@@ -79,7 +79,7 @@ const COPY: Record<
       more: { text: "Connect on LinkedIn ↗", href: "https://www.linkedin.com/in/adeline1107" },
       resume: [
         { y: "Apr 2026 – Present", h: "Crypto Analyst · Stably", d: "Research & growth at a stablecoin infrastructure company.", href: "https://www.stably.io/" },
-        { y: "Feb 2026 – Present", h: "Undergraduate Research Assistant · UW Decentralized Computing Lab", d: "Research under Prof. Wei Cai; built hascidb.org (open-source Sybil database, 2.5M+ wallets) and published on blockchain, crypto, and decentralized AI.", href: "https://sites.uw.edu/weicaics/members/" },
+        { y: "Feb 2026 – Present", h: "Undergraduate Research Assistant · UW CAIS Lab", d: "Research under Prof. Wei Cai; built hascidb.org (open-source Sybil database, 2.5M+ wallets) and published on blockchain, crypto, and decentralized AI.", href: "https://sites.uw.edu/weicaics/members/" },
         { y: "Dec 2025 – Present", h: "Independent Developer · Arena", d: "Solo-built arenafi.org, ranking 68,000+ traders.", href: "https://arenafi.org" },
         { y: "2025 – 2029", h: "Bachelor of Economics · University of Washington", d: "Informatics minor · Dean’s List.", href: "https://www.washington.edu/" },
       ],
@@ -99,7 +99,7 @@ const COPY: Record<
       ),
       lead: (
         <>
-          At the <a className="tlink" href="https://sites.uw.edu/weicaics/" target="_blank" rel="noopener noreferrer">UW Decentralized Computing Lab</a> with <a className="tlink" href="https://faculty.washington.edu/weicaics/" target="_blank" rel="noopener noreferrer">Prof. Wei Cai</a>, first-author and co-authored research in blockchain and decentralized AI, from airdrop Sybil detection (catching one person who fakes thousands of wallets to farm token giveaways) to interpretable on⁠-⁠chain governance.
+          At the <a className="tlink" href="https://sites.uw.edu/weicaics/" target="_blank" rel="noopener noreferrer">UW CAIS Lab</a> (Collective, AI, and Interactive Systems) with <a className="tlink" href="https://faculty.washington.edu/weicaics/" target="_blank" rel="noopener noreferrer">Prof. Wei Cai</a>, first-author and co-authored research in blockchain and decentralized AI, from airdrop Sybil detection (catching one person who fakes thousands of wallets to farm token giveaways) to interpretable on⁠-⁠chain governance.
         </>
       ),
       more: { text: "Explore HasciDB ↗", href: "https://hascidb.org" },
@@ -182,7 +182,7 @@ const COPY: Record<
     colophon: "© 2026 Adeline Wen",
     heroSub: (
       <>
-        华盛顿大学去中心化计算实验室研究助理，<a className="tlink" href="https://arenafi.org" target="_blank" rel="noopener noreferrer"><b>arenafi.org</b></a> 独立开发者。
+        华盛顿大学 CAIS 实验室研究助理，<a className="tlink" href="https://arenafi.org" target="_blank" rel="noopener noreferrer"><b>arenafi.org</b></a> 独立开发者。
       </>
     ),
     heroHint: "滚动 ↓",
@@ -199,7 +199,7 @@ const COPY: Record<
       more: { text: "在 LinkedIn 联系 ↗", href: "https://www.linkedin.com/in/adeline1107" },
       resume: [
         { y: "2026.04 – 至今", h: "加密分析师 · Stably", d: "稳定币基础设施公司的研究与增长。", href: "https://www.stably.io/" },
-        { y: "2026.02 – 至今", h: "本科研究助理 · UW 去中心化计算实验室", d: "导师 Wei Cai 教授；构建了 hascidb.org（开源 Sybil 检测数据库，250 万+ 钱包），并发表区块链、加密与去中心化 AI 方向的多篇论文。", href: "https://sites.uw.edu/weicaics/members/" },
+        { y: "2026.02 – 至今", h: "本科研究助理 · UW CAIS 实验室", d: "导师 Wei Cai 教授；构建了 hascidb.org（开源 Sybil 检测数据库，250 万+ 钱包），并发表区块链、加密与去中心化 AI 方向的多篇论文。", href: "https://sites.uw.edu/weicaics/members/" },
         { y: "2025.12 – 至今", h: "独立开发 · Arena", d: "独立构建 arenafi.org，为 68,000+ 交易者排名。", href: "https://arenafi.org" },
         { y: "2025 – 2029", h: "经济学学士 · 华盛顿大学", d: "辅修信息学 · 院长名单。", href: "https://www.washington.edu/" },
       ],
@@ -219,7 +219,7 @@ const COPY: Record<
       ),
       lead: (
         <>
-          在<a className="tlink" href="https://sites.uw.edu/weicaics/" target="_blank" rel="noopener noreferrer">华盛顿大学去中心化计算实验室</a>，导师 <a className="tlink" href="https://faculty.washington.edu/weicaics/" target="_blank" rel="noopener noreferrer">Wei Cai 教授</a>，区块链与去中心化 AI 研究（第一作者及合作者），涵盖空投 Sybil 检测（识别一个人伪造成千上万个钱包来套取代币空投）与可解释的链上治理。
+          在<a className="tlink" href="https://sites.uw.edu/weicaics/" target="_blank" rel="noopener noreferrer">华盛顿大学 CAIS 实验室</a>（Collective, AI, and Interactive Systems），导师 <a className="tlink" href="https://faculty.washington.edu/weicaics/" target="_blank" rel="noopener noreferrer">Wei Cai 教授</a>，区块链与去中心化 AI 研究（第一作者及合作者），涵盖空投 Sybil 检测（识别一个人伪造成千上万个钱包来套取代币空投）与可解释的链上治理。
         </>
       ),
       more: { text: "查看 HasciDB ↗", href: "https://hascidb.org" },
