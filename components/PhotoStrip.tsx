@@ -18,6 +18,10 @@ export default function PhotoStrip({ shots, label, lang }: { shots: Shot[]; labe
   const big = useRef<HTMLUListElement>(null);
   const [edge, setEdge] = useState({ start: true, end: false });
   const [idx, setIdx] = useState(0);
+  // the lightbox list mounts on first open, so a page visit never fetches
+  // the full-screen copies of photos nobody enlarged
+  const [lb, setLb] = useState(false);
+  const want = useRef(0);
 
   const calm = () =>
     window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
@@ -53,15 +57,25 @@ export default function PhotoStrip({ shots, label, lang }: { shots: Shot[]; labe
   const page = (dir: 1 | -1) =>
     reel.current?.scrollBy({ left: dir * reel.current.clientWidth * 0.8, behavior: calm() ? "auto" : "smooth" });
 
+  const land = (i: number) => {
+    const item = big.current?.children[i] as HTMLElement | undefined;
+    if (!item) return;
+    item.scrollIntoView({ behavior: "instant", inline: "start", block: "nearest" });
+    if (!calm()) (item.querySelector("video") as HTMLVideoElement | null)?.play().catch(() => {});
+  };
   const open = (i: number) => {
     const d = box.current;
     if (!d) return;
     d.showModal();
     setIdx(i);
-    const item = big.current?.children[i] as HTMLElement | undefined;
-    item?.scrollIntoView({ behavior: "instant", inline: "start", block: "nearest" });
-    if (!calm()) (item?.querySelector("video") as HTMLVideoElement | null)?.play().catch(() => {});
+    want.current = i;
+    if (lb) land(i);
+    else setLb(true); // first open: land once the list has mounted (effect below)
   };
+  useEffect(() => {
+    if (lb) land(want.current);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lb]);
   const step = (dir: 1 | -1) => {
     const n = Math.min(shots.length - 1, Math.max(0, idx + dir));
     (big.current?.children[n] as HTMLElement | undefined)?.scrollIntoView({
@@ -121,7 +135,7 @@ export default function PhotoStrip({ shots, label, lang }: { shots: Shot[]; labe
         onClose={() => box.current?.querySelectorAll("video").forEach((v) => v.pause())}
       >
         <ul ref={big} role="list" onScroll={onBigScroll}>
-          {shots.map((s, i) => (
+          {lb && shots.map((s, i) => (
             <li key={s.src}>
               {s.live ? (
                 <video src={s.live} poster={s.src} muted loop playsInline preload="none" width={s.w} height={s.h} />

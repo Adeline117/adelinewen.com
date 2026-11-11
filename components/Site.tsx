@@ -39,7 +39,8 @@ const COPY: Record<
     heroHint: string;
     heroCta: string;
     colophon: string;
-    about: Section & { resume: TL[]; honorsLabel: string; honors: Honor[] };
+    about: Section & { resume: TL[] };
+    honors: { label: string; title: ReactNode; items: Honor[] };
     research: Section & { tl: TL[] };
     arena: Section & {
       stats: Row[];
@@ -52,7 +53,7 @@ const COPY: Record<
   }
 > = {
   en: {
-    nav: ["About", "Research", "Arena", "Contact"],
+    nav: ["About", "Honors", "Research", "Arena", "Contact"],
     colophon: "© 2026 Adeline Wen",
     heroSub: (
       <>
@@ -77,8 +78,15 @@ const COPY: Record<
         { y: "Dec 2025 – Present", h: "Independent Developer · Arena", d: "Solo-built arenafi.org, ranking 68,000+ traders.", href: "https://arenafi.org" },
         { y: "2025 – 2029", h: "Bachelor of Economics · University of Washington", d: "Informatics minor · Dean’s List.", href: "https://www.washington.edu/" },
       ],
-      honorsLabel: "Honors & Fellowships",
-      honors: [
+    },
+    honors: {
+      label: "02 · Talks & Honors",
+      title: (
+        <>
+          Talks &amp; <em>honors</em>.
+        </>
+      ),
+      items: [
         { t: "INFORMS Annual Meeting 2026", d: "Poster presentation — “When AI Learns to Hide: Upper and Lower Bounds on Behavioral Identification of Automated Accounts.”", m: "San Francisco · Nov 2026", href: "https://meetings.informs.org/wordpress/annual/", gallery: GALLERY.informs },
         { t: "IEEE SMC 2026", d: "Paper presentation — “Human-Centered Decision Support for Crypto Airdrop Governance: Interpretable Behavioral Modeling of Strategic Hunters.”", m: "Bellevue, WA · Oct 2026", href: "https://www.ieeesmc.org/events/ieee-international-conference-on-systems-man-and-cybernetics/", gallery: GALLERY.smc },
         { t: "Paradigm Fellowship 2026", d: "One of ~30 fellows selected worldwide — leading crypto & frontier-tech VC.", m: "N. California · Aug 2026", href: "https://paradigm.xyz/fellowship-2026/", gallery: GALLERY.paradigm },
@@ -88,7 +96,7 @@ const COPY: Record<
       ],
     },
     research: {
-      label: "02 · Research",
+      label: "03 · Research",
       title: (
         <>
           Papers &amp; <em>research</em>.
@@ -106,7 +114,7 @@ const COPY: Record<
       ],
     },
     arena: {
-      label: "03 · Arena",
+      label: "04 · Arena",
       title: (
         <>
           Arena, <em>solo-built</em>.
@@ -150,7 +158,7 @@ const COPY: Record<
       },
     },
     contact: {
-      label: "04 · Contact",
+      label: "05 · Contact",
       title: (
         <>
           Let’s <em>talk</em>.
@@ -175,7 +183,7 @@ const COPY: Record<
     },
   },
   zh: {
-    nav: ["关于", "研究", "Arena", "联系"],
+    nav: ["关于", "荣誉", "研究", "Arena", "联系"],
     colophon: "© 2026 Adeline Wen",
     heroSub: (
       <>
@@ -200,8 +208,15 @@ const COPY: Record<
         { y: "2025.12 – 至今", h: "独立开发 · Arena", d: "独立构建 arenafi.org，为 68,000+ 交易者排名。", href: "https://arenafi.org" },
         { y: "2025 – 2029", h: "经济学学士 · 华盛顿大学", d: "辅修信息学 · 院长名单。", href: "https://www.washington.edu/" },
       ],
-      honorsLabel: "荣誉与入选",
-      honors: [
+    },
+    honors: {
+      label: "02 · 演讲与荣誉",
+      title: (
+        <>
+          演讲与<em>荣誉</em>。
+        </>
+      ),
+      items: [
         { t: "INFORMS 年会 2026", d: "海报展示 ——《When AI Learns to Hide: Upper and Lower Bounds on Behavioral Identification of Automated Accounts》。", m: "旧金山 · 2026.11", href: "https://meetings.informs.org/wordpress/annual/", gallery: GALLERY.informs },
         { t: "IEEE SMC 2026", d: "论文报告 ——《面向加密空投治理的以人为本决策支持：策略型猎手的可解释行为建模》。", m: "贝尔维尤 · 2026.10", href: "https://www.ieeesmc.org/events/ieee-international-conference-on-systems-man-and-cybernetics/", gallery: GALLERY.smc },
         { t: "Paradigm Fellowship 2026", d: "全球约 30 名入选者之一 —— 顶级加密与前沿科技风投。", m: "北加州 · 2026.08", href: "https://paradigm.xyz/fellowship-2026/", gallery: GALLERY.paradigm },
@@ -211,7 +226,7 @@ const COPY: Record<
       ],
     },
     research: {
-      label: "02 · 研究",
+      label: "03 · 研究",
       title: (
         <>
           论文与<em>研究</em>。
@@ -229,7 +244,7 @@ const COPY: Record<
       ],
     },
     arena: {
-      label: "03 · Arena",
+      label: "04 · Arena",
       title: (
         <>
           Arena，<em>独立打造</em>。
@@ -273,7 +288,7 @@ const COPY: Record<
       },
     },
     contact: {
-      label: "04 · 联系",
+      label: "05 · 联系",
       title: (
         <>
           聊聊<em>吧</em>。
@@ -300,7 +315,7 @@ const COPY: Record<
 };
 
 export default function Site({ routeLang }: { routeLang?: Lang }) {
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState(-1); // -1 = the cover
   const [dark, setDark] = useState<boolean | null>(null);
   const [lang, setLang] = useState<Lang>(routeLang ?? "en");
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -320,10 +335,30 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
           if (e.isIntersecting) e.target.classList.add("on");
         });
       },
-      { threshold: 0.2 }
+      { threshold: 0, rootMargin: "0px 0px -15% 0px" }
     );
     secRefs.current.forEach((s) => s && obs.observe(s));
-    return () => obs.disconnect();
+    // active section = the one crossing a line ~45% down the viewport —
+    // right whatever a section's height (the old centre-distance pick
+    // mislabelled tall sections)
+    const spyOpts = { rootMargin: "-45% 0px -54% 0px" };
+    const spy = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((e) => {
+          if (e.isIntersecting) setActive(Number((e.target as HTMLElement).dataset.i));
+        }),
+      spyOpts
+    );
+    secRefs.current.forEach((s) => s && spy.observe(s));
+    const cover = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) setActive(-1);
+    }, spyOpts);
+    if (heroRef.current) cover.observe(heroRef.current);
+    return () => {
+      obs.disconnect();
+      spy.disconnect();
+      cover.disconnect();
+    };
   }, []);
 
   useEffect(() => {
@@ -340,17 +375,9 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
         beadRef.current.setAttribute("cx", String(pt.x));
         beadRef.current.setAttribute("cy", String(pt.y));
       }
-      let best = 0;
-      let bd = Infinity;
       const mid = window.innerHeight / 2;
-      secRefs.current.forEach((s, i) => {
+      secRefs.current.forEach((s) => {
         if (!s) return;
-        const r = s.getBoundingClientRect();
-        const d = Math.abs(r.top + r.height / 2 - mid);
-        if (d < bd) {
-          bd = d;
-          best = i;
-        }
         // variable-font morph: each heading gains weight as it reaches reading
         // position (compositor-only — just a CSS var the GPU interpolates)
         const h2 = s.querySelector("h2") as HTMLElement | null;
@@ -360,7 +387,6 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
           h2.style.setProperty("--hw", String(Math.round(392 - t * 84))); // 392 centred → 308 far
         }
       });
-      setActive(best);
     };
     // rAF-throttle: coalesce scroll bursts into one layout read per frame
     const onScroll = () => {
@@ -443,109 +469,6 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
     };
   }, []);
 
-  // Mouse-wheel / keyboard paging: one section per gesture, then center.
-  // (Touch keeps the native CSS scroll-snap; we only hijack wheel + keys.)
-  useEffect(() => {
-    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const items = () =>
-      [heroRef.current, ...secRefs.current].filter(Boolean) as HTMLElement[];
-
-    // index of the section currently closest to the viewport center
-    const currentIndex = () => {
-      const list = items();
-      let best = 0;
-      let bd = Infinity;
-      list.forEach((el, i) => {
-        const r = el.getBoundingClientRect();
-        const d = Math.abs(r.top + r.height / 2 - window.innerHeight / 2);
-        if (d < bd) {
-          bd = d;
-          best = i;
-        }
-      });
-      return best;
-    };
-
-    const go = (dir: number) => {
-      const list = items();
-      const next = Math.min(list.length - 1, Math.max(0, currentIndex() + dir));
-      const el = list[next];
-      if (!el) return;
-      // land tall sections (e.g. the long Arena page) at the top, others centered
-      const tall = el.getBoundingClientRect().height > window.innerHeight + 10;
-      el.scrollIntoView({
-        behavior: prefersReduced ? "auto" : "smooth",
-        block: tall ? "start" : "center",
-      });
-    };
-
-    let locked = false;
-    let triggerAt = 0;
-    let lastWheel = 0;
-    let unlockTimer: ReturnType<typeof setTimeout>;
-    // release the lock only once the wheel has gone quiet AND the scroll animation
-    // has had time to finish — so one gesture (incl. its inertia tail) = one page
-    const scheduleUnlock = () => {
-      clearTimeout(unlockTimer);
-      unlockTimer = setTimeout(() => {
-        const now = performance.now();
-        if (now - lastWheel >= 140 && now - triggerAt >= 600) locked = false;
-        else scheduleUnlock();
-      }, 80);
-    };
-    const onWheel = (e: WheelEvent) => {
-      if (Math.abs(e.deltaY) < 4) return;
-      if ((e.target as HTMLElement).closest("textarea")) return;
-      // sideways intent over a photo reel (trackpad swipe, shift+wheel) belongs to the reel
-      if ((e.shiftKey || Math.abs(e.deltaX) > Math.abs(e.deltaY)) && (e.target as HTMLElement).closest(".strip")) return;
-      const dir = e.deltaY > 0 ? 1 : -1;
-      const vh = window.innerHeight;
-      const cur = items().find((el) => {
-        const r = el.getBoundingClientRect();
-        return r.top <= vh / 2 && r.bottom >= vh / 2;
-      });
-      // a section taller than the screen (Arena; About with its photo reels)
-      // scrolls natively to its edge before paging, so nothing is skipped;
-      // every section that fits always pages exactly one
-      if (cur && cur.getBoundingClientRect().height > vh + 10) {
-        const r = cur.getBoundingClientRect();
-        const EDGE = 6;
-        if (dir > 0 && r.bottom > vh + EDGE) return;
-        if (dir < 0 && r.top < -EDGE) return;
-      }
-      e.preventDefault();
-      lastWheel = performance.now();
-      if (!locked) {
-        locked = true;
-        triggerAt = lastWheel;
-        go(dir);
-      }
-      scheduleUnlock();
-    };
-    window.addEventListener("wheel", onWheel, { passive: false });
-
-    const onKey = (e: KeyboardEvent) => {
-      // don't hijack keys when a control is focused (Space/Enter must activate it)
-      if ((e.target as HTMLElement).closest("input, textarea, button, a, select, [role=button], [role=region], dialog")) return;
-      const down = e.key === "ArrowDown" || e.key === "PageDown" || e.key === " ";
-      const up = e.key === "ArrowUp" || e.key === "PageUp";
-      if (!down && !up) return;
-      e.preventDefault();
-      if (locked) return;
-      locked = true;
-      triggerAt = lastWheel = performance.now();
-      go(down ? 1 : -1);
-      scheduleUnlock();
-    };
-    window.addEventListener("keydown", onKey);
-
-    return () => {
-      window.removeEventListener("wheel", onWheel);
-      window.removeEventListener("keydown", onKey);
-      clearTimeout(unlockTimer);
-    };
-  }, []);
-
   useEffect(() => {
     const stored = localStorage.getItem("theme");
     // stored choice wins; otherwise follow the OS scheme (matches the noFlash script)
@@ -558,12 +481,6 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
   }, [dark]);
 
   useEffect(() => {
-    if (routeLang) return; // explicit /zh or / route decides the language
-    const stored = localStorage.getItem("lang") as Lang | null;
-    setLang(stored ?? (navigator.language.startsWith("zh") ? "zh" : "en"));
-  }, [routeLang]);
-  useEffect(() => {
-    localStorage.setItem("lang", lang);
     document.documentElement.lang = lang === "zh" ? "zh" : "en";
   }, [lang]);
 
@@ -587,23 +504,29 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
     vt.finished.finally(() => document.documentElement.classList.remove("theme-wiping"));
   };
 
-  // Language switch as a soft crossfade (same API, no wipe class → fade rules apply)
+  // Language lives in the URL (/ = English, /zh = 中文), so a shared link
+  // always opens in the language it was shared in. Swap in place under the
+  // soft crossfade, then sync the address bar (no reload, no scroll jump).
   const flipLang = () => {
     const next: Lang = lang === "en" ? "zh" : "en";
+    const href = (next === "zh" ? "/zh" : "/") + window.location.hash;
+    const swap = () => {
+      setLang(next);
+      window.history.replaceState(null, "", href);
+    };
     const doc = document as Document & { startViewTransition?: (cb: () => void) => { finished: Promise<void> } };
     if (!doc.startViewTransition || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setLang(next);
+      swap();
       return;
     }
-    doc.startViewTransition(() => flushSync(() => setLang(next)));
+    doc.startViewTransition(() => flushSync(swap));
   };
 
   const goTo = (i: number) => {
     const el = secRefs.current[i];
     if (!el) return;
-    // match the wheel/key paging: tall Arena lands at top, others centered
-    const tall = el.getBoundingClientRect().height > window.innerHeight + 10;
-    el.scrollIntoView({ behavior: "smooth", block: tall ? "start" : "center" });
+    const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    el.scrollIntoView({ behavior: still ? "auto" : "smooth", block: "start" });
   };
   const setRef = (i: number) => (el: HTMLElement | null) => {
     secRefs.current[i] = el;
@@ -638,7 +561,7 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
   };
 
   const t = COPY[lang];
-  const ids = ["about", "research", "arena", "contact"];
+  const ids = ["about", "honors", "research", "arena", "contact"];
 
   const renderSection = (i: number, sec: Section, right: ReactNode, rev = false, leftExtra: ReactNode = null) => (
     <section className={`sec${rev ? " rev" : ""}`} id={ids[i]} data-i={i} ref={setRef(i)}>
@@ -736,7 +659,7 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
         {/* cover foot: scroll cue left, CTA right */}
         <div className="cover-foot">
           <div className="hint">{t.heroHint}</div>
-          <button className="cta" onClick={() => goTo(3)}>{t.heroCta}</button>
+          <button className="cta" onClick={() => goTo(4)}>{t.heroCta}</button>
         </div>
       </header>
 
@@ -757,28 +680,30 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
             {lang === "zh" ? "下载完整简历 ↓" : "Download full CV ↓"}
           </a>
         </>,
-        false,
-        <div className="honors-wrap">
-          <div className="honors-label">{t.about.honorsLabel}</div>
-          <ul className="honors">
-            {t.about.honors.map((h) => (
-              <li key={h.t} className={h.gallery ? "has-reel" : undefined}>
+      )}
+
+      {/* 02, Talks & Honors — full width, one photo reel per event */}
+      <section className="sec honors-sec" id="honors" data-i={1} ref={setRef(1)}>
+        <div className="honors-inner">
+          <div className="label">{t.honors.label}</div>
+          <h2>{t.honors.title}</h2>
+          <ul className="honors honors-wrap">
+            {t.honors.items.map((h) => (
+              <li key={h.t}>
                 <div className="hrow">
-                  <div className="hinfo">
-                    <span className="hn">{linked(h.t, h.href)}</span>
-                    <span className="hd">{h.d}</span>
-                  </div>
+                  <h3 className="hn">{linked(h.t, h.href)}</h3>
                   <span className="hm">{h.m}</span>
+                  <p className="hd">{h.d}</p>
                 </div>
                 {h.gallery && <PhotoStrip shots={h.gallery} label={h.t} lang={lang} />}
               </li>
             ))}
           </ul>
         </div>
-      )}
+      </section>
 
       {renderSection(
-        1,
+        2,
         t.research,
         <ul className="tl">
           {t.research.tl.map((item) => (
@@ -792,8 +717,8 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
         true // zig-zag: this spread runs right-to-left
       )}
 
-      {/* 03, Arena (full project page) */}
-      <section className="sec arena-sec" id="arena" data-i={2} ref={setRef(2)}>
+      {/* 04, Arena (full project page) */}
+      <section className="sec arena-sec" id="arena" data-i={3} ref={setRef(3)}>
         <div className="arena-wrap">
           <div className="label">{t.arena.label}</div>
           <h2>{t.arena.title}</h2>
@@ -857,8 +782,8 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
         </div>
       </section>
 
-      {/* 04, Contact (with working form) */}
-      <section className="sec" id="contact" data-i={3} ref={setRef(3)}>
+      {/* 05, Contact (with working form) */}
+      <section className="sec" id="contact" data-i={4} ref={setRef(4)}>
         <div className="inner">
           <div className="left">
             <div className="label">{t.contact.label}</div>
@@ -936,7 +861,7 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
 
       <div className="prog" aria-hidden="true">
         <div className="count">
-          <b>{String(active + 1).padStart(2, "0")}</b> / 04
+          <b>{String(Math.max(active, 0) + 1).padStart(2, "0")}</b> / {String(ids.length).padStart(2, "0")}
         </div>
         <svg width="70" height="44" viewBox="7 0 70 44">
           <path
