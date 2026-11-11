@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import PhotoStrip from "./PhotoStrip";
+import { GALLERY, type Shot } from "./gallery";
 import { flushSync } from "react-dom";
 
 // cursor-reactive needle field behind the cover — desktop only (it's a pointer
@@ -12,25 +14,9 @@ type Row = { n: string; d: string; m: string };
 type Val = { h: string; d: string };
 type Road = { phase: string; when: string; what: string };
 type TL = { y: string; h: string; d: string; href?: string };
-// img: an event photograph. Optional — a missing file degrades to the plain row.
-// live: the motion half of a Live Photo (muted mp4); img doubles as its poster.
-type Honor = { t: string; d: string; m: string; href?: string; img?: string; live?: string };
+// gallery: the event's photographs, shown as a scrolling reel under the row.
+type Honor = { t: string; d: string; m: string; href?: string; gallery?: Shot[] };
 
-// Event photographs, shared by both locales. Each is probed at mount; a file
-// that isn't there simply never reveals, so the list reads exactly as it does
-// today until the picture lands in public/photos/.
-const PHOTO = {
-  informs: "/photos/informs-2026.jpg",
-  smc: "/photos/ieee-smc-2026.jpg",
-  nbc: "/photos/nanyang-blockchain-2026.jpg",
-  paradigm: "/photos/paradigm-fellowship.jpg",
-  yc: "/photos/yc-startup-school.jpg",
-  dempsey: "/photos/dempsey-startup.jpg",
-} as const;
-// Live Photo motion clips, keyed like PHOTO
-const LIVE = {
-  smc: "/photos/ieee-smc-2026.mp4",
-} as const;
 type CLink = { label: string; val: string; href: string; download?: boolean };
 
 // wrap text in an inline link (external) when an href is present, else plain text
@@ -93,12 +79,12 @@ const COPY: Record<
       ],
       honorsLabel: "Honors & Fellowships",
       honors: [
-        { t: "INFORMS Annual Meeting 2026", d: "Poster presentation — “When AI Learns to Hide: Upper and Lower Bounds on Behavioral Identification of Automated Accounts.”", m: "San Francisco · Nov 2026", href: "https://meetings.informs.org/wordpress/annual/", img: PHOTO.informs },
-        { t: "IEEE SMC 2026", d: "Paper presentation — “Human-Centered Decision Support for Crypto Airdrop Governance: Interpretable Behavioral Modeling of Strategic Hunters.”", m: "Bellevue, WA · Oct 2026", href: "https://www.ieeesmc.org/events/ieee-international-conference-on-systems-man-and-cybernetics/", img: PHOTO.smc, live: LIVE.smc },
-        { t: "Paradigm Fellowship 2026", d: "One of ~30 fellows selected worldwide — leading crypto & frontier-tech VC.", m: "N. California · Aug 2026", href: "https://paradigm.xyz/fellowship-2026/", img: PHOTO.paradigm },
-        { t: "Nanyang Blockchain Conference 2026", d: "Paper presentation, first author — “HasciDB: A Database for Identifying Crypto Sybil Airdrop Hunters.”", m: "Singapore · Aug 2026", href: "https://www.ntu.edu.sg/cctf/cctf-community/2026-nanyang-blockchain-conference", img: PHOTO.nbc },
-        { t: "Y Combinator Startup School 2026", d: "Selected to attend.", m: "San Francisco · Jul 2026", href: "https://www.startupschool.org/", img: PHOTO.yc },
-        { t: "Dempsey Startup Competition 2026", d: "Investment Round — Top 40 of 174 teams.", m: "Pacific NW · May 2026", href: "https://foster.uw.edu/centers/buerk-ctr-entrepreneurship/entrepreneurship-competitions/dempsey-startup-competition/", img: PHOTO.dempsey },
+        { t: "INFORMS Annual Meeting 2026", d: "Poster presentation — “When AI Learns to Hide: Upper and Lower Bounds on Behavioral Identification of Automated Accounts.”", m: "San Francisco · Nov 2026", href: "https://meetings.informs.org/wordpress/annual/", gallery: GALLERY.informs },
+        { t: "IEEE SMC 2026", d: "Paper presentation — “Human-Centered Decision Support for Crypto Airdrop Governance: Interpretable Behavioral Modeling of Strategic Hunters.”", m: "Bellevue, WA · Oct 2026", href: "https://www.ieeesmc.org/events/ieee-international-conference-on-systems-man-and-cybernetics/", gallery: GALLERY.smc },
+        { t: "Paradigm Fellowship 2026", d: "One of ~30 fellows selected worldwide — leading crypto & frontier-tech VC.", m: "N. California · Aug 2026", href: "https://paradigm.xyz/fellowship-2026/", gallery: GALLERY.paradigm },
+        { t: "Nanyang Blockchain Conference 2026", d: "Paper presentation, first author — “HasciDB: A Database for Identifying Crypto Sybil Airdrop Hunters.”", m: "Singapore · Aug 2026", href: "https://www.ntu.edu.sg/cctf/cctf-community/2026-nanyang-blockchain-conference", gallery: GALLERY.nbc },
+        { t: "Y Combinator Startup School 2026", d: "Selected to attend.", m: "San Francisco · Jul 2026", href: "https://www.startupschool.org/", gallery: GALLERY.yc },
+        { t: "Dempsey Startup Competition 2026", d: "Investment Round — Top 40 of 174 teams.", m: "Pacific NW · May 2026", href: "https://foster.uw.edu/centers/buerk-ctr-entrepreneurship/entrepreneurship-competitions/dempsey-startup-competition/", gallery: GALLERY.dempsey },
       ],
     },
     research: {
@@ -216,12 +202,12 @@ const COPY: Record<
       ],
       honorsLabel: "荣誉与入选",
       honors: [
-        { t: "INFORMS 年会 2026", d: "海报展示 ——《When AI Learns to Hide: Upper and Lower Bounds on Behavioral Identification of Automated Accounts》。", m: "旧金山 · 2026.11", href: "https://meetings.informs.org/wordpress/annual/", img: PHOTO.informs },
-        { t: "IEEE SMC 2026", d: "论文报告 ——《面向加密空投治理的以人为本决策支持：策略型猎手的可解释行为建模》。", m: "贝尔维尤 · 2026.10", href: "https://www.ieeesmc.org/events/ieee-international-conference-on-systems-man-and-cybernetics/", img: PHOTO.smc, live: LIVE.smc },
-        { t: "Paradigm Fellowship 2026", d: "全球约 30 名入选者之一 —— 顶级加密与前沿科技风投。", m: "北加州 · 2026.08", href: "https://paradigm.xyz/fellowship-2026/", img: PHOTO.paradigm },
-        { t: "南洋区块链大会 2026", d: "论文报告（第一作者）——《HasciDB：识别加密 Sybil 空投猎人的数据库》。", m: "新加坡 · 2026.08", href: "https://www.ntu.edu.sg/cctf/cctf-community/2026-nanyang-blockchain-conference", img: PHOTO.nbc },
-        { t: "Y Combinator Startup School 2026", d: "获选参加。", m: "旧金山 · 2026.07", href: "https://www.startupschool.org/", img: PHOTO.yc },
-        { t: "Dempsey 创业大赛 2026", d: "投资轮 —— 174 支队伍中前 40。", m: "太平洋西北 · 2026.05", href: "https://foster.uw.edu/centers/buerk-ctr-entrepreneurship/entrepreneurship-competitions/dempsey-startup-competition/", img: PHOTO.dempsey },
+        { t: "INFORMS 年会 2026", d: "海报展示 ——《When AI Learns to Hide: Upper and Lower Bounds on Behavioral Identification of Automated Accounts》。", m: "旧金山 · 2026.11", href: "https://meetings.informs.org/wordpress/annual/", gallery: GALLERY.informs },
+        { t: "IEEE SMC 2026", d: "论文报告 ——《面向加密空投治理的以人为本决策支持：策略型猎手的可解释行为建模》。", m: "贝尔维尤 · 2026.10", href: "https://www.ieeesmc.org/events/ieee-international-conference-on-systems-man-and-cybernetics/", gallery: GALLERY.smc },
+        { t: "Paradigm Fellowship 2026", d: "全球约 30 名入选者之一 —— 顶级加密与前沿科技风投。", m: "北加州 · 2026.08", href: "https://paradigm.xyz/fellowship-2026/", gallery: GALLERY.paradigm },
+        { t: "南洋区块链大会 2026", d: "论文报告（第一作者）——《HasciDB：识别加密 Sybil 空投猎人的数据库》。", m: "新加坡 · 2026.08", href: "https://www.ntu.edu.sg/cctf/cctf-community/2026-nanyang-blockchain-conference", gallery: GALLERY.nbc },
+        { t: "Y Combinator Startup School 2026", d: "获选参加。", m: "旧金山 · 2026.07", href: "https://www.startupschool.org/", gallery: GALLERY.yc },
+        { t: "Dempsey 创业大赛 2026", d: "投资轮 —— 174 支队伍中前 40。", m: "太平洋西北 · 2026.05", href: "https://foster.uw.edu/centers/buerk-ctr-entrepreneurship/entrepreneurship-competitions/dempsey-startup-competition/", gallery: GALLERY.dempsey },
       ],
     },
     research: {
@@ -320,7 +306,6 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [hp, setHp] = useState(""); // honeypot, humans leave it empty, bots fill it
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error" | "mailed">("idle");
-  const [ready, setReady] = useState<ReadonlySet<string>>(new Set()); // photos that actually exist
   const secRefs = useRef<(HTMLElement | null)[]>([]);
   const heroRef = useRef<HTMLElement>(null);
   const trackRef = useRef<SVGPathElement>(null);
@@ -458,39 +443,6 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
     };
   }, []);
 
-  // Event photos, part 1 — probe which files exist and warm the cache, so a
-  // hover reveals instantly instead of flashing a half-loaded frame. A 404 just
-  // never joins `ready`, and that honour keeps its text-only row.
-  useEffect(() => {
-    let alive = true;
-    // deferred to idle so three photographs never compete with the cover's type.
-    // The timeout is load-bearing: the cursor + ink-lens rAF loops run forever,
-    // and an idle callback with no deadline can be starved behind them.
-    const idle: typeof window.requestIdleCallback =
-      window.requestIdleCallback ?? ((cb) => window.setTimeout(cb, 1200));
-    const id = idle(() => {
-      Object.values(PHOTO).forEach((src) => {
-        const im = new window.Image();
-        im.onload = () => alive && setReady((s) => new Set(s).add(src));
-        im.src = src;
-      });
-    }, { timeout: 1500 });
-    return () => {
-      alive = false;
-      window.cancelIdleCallback?.(id as number);
-    };
-  }, []);
-
-  // Live Photos play like they do on the phone — silently, on a loop — unless
-  // the visitor asked for less motion, in which case the poster still stands.
-  useEffect(() => {
-    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    document.querySelectorAll<HTMLVideoElement>(".hshot video").forEach((v) => {
-      v.pause();
-      v.removeAttribute("autoplay");
-    });
-  }, [ready]);
-
   // Mouse-wheel / keyboard paging: one section per gesture, then center.
   // (Touch keeps the native CSS scroll-snap; we only hijack wheel + keys.)
   useEffect(() => {
@@ -544,15 +496,18 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
     const onWheel = (e: WheelEvent) => {
       if (Math.abs(e.deltaY) < 4) return;
       if ((e.target as HTMLElement).closest("textarea")) return;
+      // sideways intent over a photo reel (trackpad swipe, shift+wheel) belongs to the reel
+      if ((e.shiftKey || Math.abs(e.deltaX) > Math.abs(e.deltaY)) && (e.target as HTMLElement).closest(".strip")) return;
       const dir = e.deltaY > 0 ? 1 : -1;
       const vh = window.innerHeight;
       const cur = items().find((el) => {
         const r = el.getBoundingClientRect();
         return r.top <= vh / 2 && r.bottom >= vh / 2;
       });
-      // ONLY the long Arena page scrolls natively (to its edge) before paging;
-      // every other section always pages exactly one — never skips
-      if (cur && cur.id === "arena") {
+      // a section taller than the screen (Arena; About with its photo reels)
+      // scrolls natively to its edge before paging, so nothing is skipped;
+      // every section that fits always pages exactly one
+      if (cur && cur.getBoundingClientRect().height > vh + 10) {
         const r = cur.getBoundingClientRect();
         const EDGE = 6;
         if (dir > 0 && r.bottom > vh + EDGE) return;
@@ -571,7 +526,7 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
 
     const onKey = (e: KeyboardEvent) => {
       // don't hijack keys when a control is focused (Space/Enter must activate it)
-      if ((e.target as HTMLElement).closest("input, textarea, button, a, select, [role=button]")) return;
+      if ((e.target as HTMLElement).closest("input, textarea, button, a, select, [role=button], [role=region], dialog")) return;
       const down = e.key === "ArrowDown" || e.key === "PageDown" || e.key === " ";
       const up = e.key === "ArrowUp" || e.key === "PageUp";
       if (!down && !up) return;
@@ -684,8 +639,6 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
 
   const t = COPY[lang];
   const ids = ["about", "research", "arena", "contact"];
-  // a photo only becomes interactive once it's confirmed to exist
-  const has = (h: Honor) => !!h.img && ready.has(h.img);
 
   const renderSection = (i: number, sec: Section, right: ReactNode, rev = false, leftExtra: ReactNode = null) => (
     <section className={`sec${rev ? " rev" : ""}`} id={ids[i]} data-i={i} ref={setRef(i)}>
@@ -809,21 +762,15 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
           <div className="honors-label">{t.about.honorsLabel}</div>
           <ul className="honors">
             {t.about.honors.map((h) => (
-              <li key={h.t} className={has(h) ? "shot-row" : undefined}>
-                <div className="hinfo">
-                  <span className="hn">{linked(h.t, h.href)}</span>
-                  <span className="hd">{h.d}</span>
+              <li key={h.t} className={h.gallery ? "has-reel" : undefined}>
+                <div className="hrow">
+                  <div className="hinfo">
+                    <span className="hn">{linked(h.t, h.href)}</span>
+                    <span className="hd">{h.d}</span>
+                  </div>
+                  <span className="hm">{h.m}</span>
                 </div>
-                <span className="hm">{h.m}</span>
-                {has(h) && (
-                  <span className="hshot plate">
-                    {h.live ? (
-                      <video src={h.live} poster={h.img} autoPlay muted loop playsInline preload="metadata" aria-label={`${h.t} — ${h.m}`} />
-                    ) : (
-                      <img src={h.img} alt={`${h.t} — ${h.m}`} loading="lazy" />
-                    )}
-                  </span>
-                )}
+                {h.gallery && <PhotoStrip shots={h.gallery} label={h.t} lang={lang} />}
               </li>
             ))}
           </ul>

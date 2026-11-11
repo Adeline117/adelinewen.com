@@ -268,14 +268,15 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 .honors-wrap { margin-top: 32px; max-width: 460px; }
 .honors-label { font-family: var(--font-mono), monospace; font-size: var(--fs-cap); letter-spacing: 0.18em; text-transform: uppercase; color: var(--mute); margin-bottom: 6px; }
 .honors { list-style: none; }
-.honors li { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; padding: 12px 0; border-top: 1px solid var(--line); }
-.honors li:last-child { border-bottom: 1px solid var(--line); }
+.honors > li { padding: 16px 0; border-top: 1px solid var(--line); }
+.honors .hrow { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; }
+.honors > li:last-child { border-bottom: 1px solid var(--line); }
 .honors .hinfo { display: flex; flex-direction: column; gap: 3px; }
 .honors .hn { font-family: var(--font-fraunces), serif; font-size: var(--fs-md); font-weight: 330; line-height: 1.15; color: var(--ink); }
 .honors .hd { font-size: var(--fs-body); line-height: 1.5; color: var(--text); }
 .honors .hm { font-family: var(--font-mono), monospace; font-size: var(--fs-cap); letter-spacing: 0.04em; text-transform: uppercase; color: var(--mute); white-space: nowrap; text-align: right; }
 @media (max-width: 480px) {
-  .honors li { flex-direction: column; gap: 4px; }
+  .honors .hrow { flex-direction: column; gap: 4px; }
   .honors .hm { text-align: left; }
 }
 
@@ -287,6 +288,7 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
    becomes the only smooth surface on the page. */
 .plate { position: relative; overflow: hidden; border: 1px solid var(--line); border-radius: var(--r); background: var(--field-bg); }
 .plate img, .plate video { display: block; width: 100%; height: 100%; object-fit: cover; }
+.strip .plate img, .strip .plate video { width: auto; }
 /* on dark paper a full-bright photo glares — pull it back to the page */
 body.dark .plate img, body.dark .plate video { filter: brightness(0.88); }
 .plate::after {
@@ -294,11 +296,48 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.88); }
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* every honour with a photo shows it, always: a small 3:2 plate leading the
-   row on desktop, full measure under the row on narrow screens (below) */
-.honors li.shot-row { align-items: flex-start; }
-.honors li.shot-row .hinfo { flex: 1; }
-.hshot { display: block; flex: none; order: -1; width: 112px; aspect-ratio: 3 / 2; }
+/* ===== Photo reels — one event's pictures under its honour row =====
+   Fixed height, natural widths (portrait + landscape side by side), so the
+   next picture always peeks past the edge. Height follows the column the
+   reel sits in (container units), stepping 160 → ~232px. */
+.strip-wrap { position: relative; container-type: inline-size; margin-top: 12px; }
+.strip { overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x proximity; scrollbar-width: none; border-radius: var(--r); }
+.strip::-webkit-scrollbar { display: none; }
+.strip:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+.strip ul { display: flex; gap: 8px; list-style: none; height: clamp(160px, 46cqi, 232px); }
+.strip li { flex: none; height: 100%; scroll-snap-align: start; }
+.strip .plate { display: block; height: 100%; padding: 0; cursor: zoom-in; }
+.strip .plate:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+/* mouse users: show the scrollbar thinly + paging buttons; touch gets neither */
+.strip-btn { display: none; }
+@media (hover: hover) and (pointer: fine) {
+  .strip { scrollbar-width: thin; scrollbar-color: var(--line) transparent; padding-bottom: 6px; }
+  .strip-btn {
+    display: grid; place-items: center; position: absolute; top: calc(50% - 22px); width: 44px; height: 44px;
+    border: 0; background: none; cursor: pointer; color: var(--ink); font-size: var(--fs-sm);
+    opacity: 0; transition: opacity var(--dur-fast) var(--ease);
+  }
+  .strip-btn::before {
+    content: ""; position: absolute; inset: 6px; border-radius: var(--pill); z-index: -1;
+    background: var(--nav-bg); border: 1px solid var(--line);
+  }
+  .strip-btn.prev { left: 4px; }
+  .strip-btn.next { right: 4px; }
+  .strip-wrap:hover .strip-btn:not(:disabled), .strip-wrap:focus-within .strip-btn:not(:disabled) { opacity: 1; }
+  .strip-btn:disabled { pointer-events: none; }
+}
+
+/* lightbox — native <dialog>: one picture per screen, swipe or ←/→ */
+.lightbox { position: fixed; inset: 0; width: 100vw; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: rgba(12, 10, 8, 0.94); color: #f7f5f1; }
+.lightbox::backdrop { background: transparent; }
+.lightbox ul { display: flex; height: 100%; list-style: none; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior: contain; }
+.lightbox ul::-webkit-scrollbar { display: none; }
+.lightbox li { flex: none; width: 100vw; height: 100%; display: grid; place-items: center; scroll-snap-align: start; padding: max(56px, env(safe-area-inset-top)) 16px max(72px, env(safe-area-inset-bottom)); }
+.lightbox img, .lightbox video { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; border-radius: var(--r); }
+.lb-bar { position: absolute; left: 0; right: 0; bottom: max(16px, env(safe-area-inset-bottom)); display: flex; justify-content: center; align-items: center; gap: 8px; }
+.lb-count { font-family: var(--font-mono), monospace; font-size: var(--fs-label); letter-spacing: 0.08em; margin-right: 8px; }
+.lb-bar button { width: 44px; height: 44px; border-radius: var(--pill); border: 1px solid rgba(247, 245, 241, 0.24); background: none; color: inherit; cursor: pointer; font-size: var(--fs-sm); }
+.lb-bar button:disabled { opacity: 0.3; cursor: default; }
 
 /* contact form */
 .cform { display: flex; flex-direction: column; gap: 16px; max-width: 420px; margin-top: 32px; }
@@ -421,8 +460,8 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.88); }
   .sec .right { display: block; justify-self: stretch; max-width: 100%; }
   /* no hover on touch: the event photo becomes part of the row, full measure,
      wrapping onto its own line under the title/meta */
-  .honors li { flex-wrap: wrap; }
-  .hshot { order: 0; width: 100%; margin-top: 12px; }
+  /* phones/tablets: the reel bleeds to the screen edge so the peek reads */
+  .strip { --bleed: clamp(20px, 6vw, 40px); margin-inline: calc(-1 * var(--bleed)); padding-inline: max(var(--bleed), env(safe-area-inset-left)) max(var(--bleed), env(safe-area-inset-right)); scroll-padding-inline: var(--bleed); border-radius: 0; }
   .colophon { position: static; margin-top: 40px; }
   .prog { display: none; }
   nav { padding: 10px 16px; }
