@@ -13,7 +13,8 @@ type Val = { h: string; d: string };
 type Road = { phase: string; when: string; what: string };
 type TL = { y: string; h: string; d: string; href?: string };
 // img: an event photograph. Optional — a missing file degrades to the plain row.
-type Honor = { t: string; d: string; m: string; href?: string; img?: string };
+// live: the motion half of a Live Photo (muted mp4); img doubles as its poster.
+type Honor = { t: string; d: string; m: string; href?: string; img?: string; live?: string };
 
 // Event photographs, shared by both locales. Each is probed at mount; a file
 // that isn't there simply never reveals, so the list reads exactly as it does
@@ -25,6 +26,10 @@ const PHOTO = {
   paradigm: "/photos/paradigm-fellowship.jpg",
   yc: "/photos/yc-startup-school.jpg",
   dempsey: "/photos/dempsey-startup.jpg",
+} as const;
+// Live Photo motion clips, keyed like PHOTO
+const LIVE = {
+  smc: "/photos/ieee-smc-2026.mp4",
 } as const;
 type CLink = { label: string; val: string; href: string; download?: boolean };
 
@@ -89,7 +94,7 @@ const COPY: Record<
       honorsLabel: "Honors & Fellowships",
       honors: [
         { t: "INFORMS Annual Meeting 2026", d: "Poster presentation — “When AI Learns to Hide: Upper and Lower Bounds on Behavioral Identification of Automated Accounts.”", m: "San Francisco · Nov 2026", href: "https://meetings.informs.org/wordpress/annual/", img: PHOTO.informs },
-        { t: "IEEE SMC 2026", d: "Paper presentation — “Human-Centered Decision Support for Crypto Airdrop Governance: Interpretable Behavioral Modeling of Strategic Hunters.”", m: "Bellevue, WA · Oct 2026", href: "https://www.ieeesmc.org/events/ieee-international-conference-on-systems-man-and-cybernetics/", img: PHOTO.smc },
+        { t: "IEEE SMC 2026", d: "Paper presentation — “Human-Centered Decision Support for Crypto Airdrop Governance: Interpretable Behavioral Modeling of Strategic Hunters.”", m: "Bellevue, WA · Oct 2026", href: "https://www.ieeesmc.org/events/ieee-international-conference-on-systems-man-and-cybernetics/", img: PHOTO.smc, live: LIVE.smc },
         { t: "Paradigm Fellowship 2026", d: "One of ~30 fellows selected worldwide — leading crypto & frontier-tech VC.", m: "N. California · Aug 2026", href: "https://paradigm.xyz/fellowship-2026/", img: PHOTO.paradigm },
         { t: "Nanyang Blockchain Conference 2026", d: "Paper presentation, first author — “HasciDB: A Database for Identifying Crypto Sybil Airdrop Hunters.”", m: "Singapore · Aug 2026", href: "https://www.ntu.edu.sg/cctf/cctf-community/2026-nanyang-blockchain-conference", img: PHOTO.nbc },
         { t: "Y Combinator Startup School 2026", d: "Selected to attend.", m: "San Francisco · Jul 2026", href: "https://www.startupschool.org/", img: PHOTO.yc },
@@ -212,7 +217,7 @@ const COPY: Record<
       honorsLabel: "荣誉与入选",
       honors: [
         { t: "INFORMS 年会 2026", d: "海报展示 ——《When AI Learns to Hide: Upper and Lower Bounds on Behavioral Identification of Automated Accounts》。", m: "旧金山 · 2026.11", href: "https://meetings.informs.org/wordpress/annual/", img: PHOTO.informs },
-        { t: "IEEE SMC 2026", d: "论文报告 ——《面向加密空投治理的以人为本决策支持：策略型猎手的可解释行为建模》。", m: "贝尔维尤 · 2026.10", href: "https://www.ieeesmc.org/events/ieee-international-conference-on-systems-man-and-cybernetics/", img: PHOTO.smc },
+        { t: "IEEE SMC 2026", d: "论文报告 ——《面向加密空投治理的以人为本决策支持：策略型猎手的可解释行为建模》。", m: "贝尔维尤 · 2026.10", href: "https://www.ieeesmc.org/events/ieee-international-conference-on-systems-man-and-cybernetics/", img: PHOTO.smc, live: LIVE.smc },
         { t: "Paradigm Fellowship 2026", d: "全球约 30 名入选者之一 —— 顶级加密与前沿科技风投。", m: "北加州 · 2026.08", href: "https://paradigm.xyz/fellowship-2026/", img: PHOTO.paradigm },
         { t: "南洋区块链大会 2026", d: "论文报告（第一作者）——《HasciDB：识别加密 Sybil 空投猎人的数据库》。", m: "新加坡 · 2026.08", href: "https://www.ntu.edu.sg/cctf/cctf-community/2026-nanyang-blockchain-conference", img: PHOTO.nbc },
         { t: "Y Combinator Startup School 2026", d: "获选参加。", m: "旧金山 · 2026.07", href: "https://www.startupschool.org/", img: PHOTO.yc },
@@ -315,11 +320,7 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [hp, setHp] = useState(""); // honeypot, humans leave it empty, bots fill it
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error" | "mailed">("idle");
-  const [shot, setShot] = useState<string | null>(null); // hovered honour's photo
   const [ready, setReady] = useState<ReadonlySet<string>>(new Set()); // photos that actually exist
-  const shotRef = useRef<HTMLDivElement>(null);
-  const shotSrc = useRef<string | null>(null);
-  const ptr = useRef({ x: -400, y: -400 });
   const secRefs = useRef<(HTMLElement | null)[]>([]);
   const heroRef = useRef<HTMLElement>(null);
   const trackRef = useRef<SVGPathElement>(null);
@@ -480,38 +481,15 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
     };
   }, []);
 
-  // Event photos, part 2 — the plate floats beside the pointer with the same
-  // lerped lag as the cursor dot. The loop only runs while a photo is up.
+  // Live Photos play like they do on the phone — silently, on a loop — unless
+  // the visitor asked for less motion, in which case the poster still stands.
   useEffect(() => {
-    const on = (e: PointerEvent) => {
-      ptr.current = { x: e.clientX, y: e.clientY };
-    };
-    window.addEventListener("pointermove", on, { passive: true });
-    return () => window.removeEventListener("pointermove", on);
-  }, []);
-  useEffect(() => {
-    const el = shotRef.current;
-    if (!el || !shot) return;
-    const k = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 1 : 0.16;
-    const W = 300, H = 200; // must match .shot in globals.css
-    // x clears the 40px link-hover cursor dot; y hangs below the pointer and
-    // flips above when the fold is close — either way the hovered row (and its
-    // date) stays readable instead of sitting under the picture
-    const at = (p: { x: number; y: number }) => ({
-      x: Math.min(p.x + 36, window.innerWidth - W - 24),
-      y: p.y + 24 + H <= window.innerHeight - 16 ? p.y + 24 : Math.max(16, p.y - 24 - H),
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    document.querySelectorAll<HTMLVideoElement>(".hshot video").forEach((v) => {
+      v.pause();
+      v.removeAttribute("autoplay");
     });
-    let { x, y } = at(ptr.current);
-    el.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-    let raf = requestAnimationFrame(function loop() {
-      raf = requestAnimationFrame(loop);
-      const t = at(ptr.current);
-      x += (t.x - x) * k;
-      y += (t.y - y) * k;
-      el.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-    });
-    return () => cancelAnimationFrame(raf);
-  }, [shot]);
+  }, [ready]);
 
   // Mouse-wheel / keyboard paging: one section per gesture, then center.
   // (Touch keeps the native CSS scroll-snap; we only hijack wheel + keys.)
@@ -706,8 +684,6 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
 
   const t = COPY[lang];
   const ids = ["about", "research", "arena", "contact"];
-  // keep the last photo mounted through the fade-out, so it doesn't blink empty
-  if (shot) shotSrc.current = shot;
   // a photo only becomes interactive once it's confirmed to exist
   const has = (h: Honor) => !!h.img && ready.has(h.img);
 
@@ -746,12 +722,6 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
         </filter>
       </svg>
       <div className="cursor" ref={cursorRef} aria-hidden="true" />
-      {/* event photo plate — floats beside the pointer over a hovered honour.
-          Decorative here: the mobile layout renders the same picture inline,
-          captioned, where it can actually be read. */}
-      <div className={`shot plate${shot ? " on" : ""}`} ref={shotRef} aria-hidden="true">
-        {shotSrc.current && <img src={shotSrc.current} alt="" />}
-      </div>
 
       <nav>
         <div className="logo">Adeline Wen</div>
@@ -839,14 +809,7 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
           <div className="honors-label">{t.about.honorsLabel}</div>
           <ul className="honors">
             {t.about.honors.map((h) => (
-              <li
-                key={h.t}
-                className={has(h) ? "shot-row" : undefined}
-                onPointerEnter={(e) => {
-                  if (e.pointerType !== "touch" && has(h)) setShot(h.img!);
-                }}
-                onPointerLeave={() => setShot(null)}
-              >
+              <li key={h.t} className={has(h) ? "shot-row" : undefined}>
                 <div className="hinfo">
                   <span className="hn">{linked(h.t, h.href)}</span>
                   <span className="hd">{h.d}</span>
@@ -854,7 +817,11 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
                 <span className="hm">{h.m}</span>
                 {has(h) && (
                   <span className="hshot plate">
-                    <img src={h.img} alt={`${h.t} — ${h.m}`} loading="lazy" />
+                    {h.live ? (
+                      <video src={h.live} poster={h.img} autoPlay muted loop playsInline preload="metadata" aria-label={`${h.t} — ${h.m}`} />
+                    ) : (
+                      <img src={h.img} alt={`${h.t} — ${h.m}`} loading="lazy" />
+                    )}
                   </span>
                 )}
               </li>

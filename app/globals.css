@@ -281,35 +281,24 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 
 /* ===== Photo plates =====
    The one treatment every photograph on this site gets, so pictures read as
-   printed plates rather than pasted screenshots: ink-and-paper greyscale, the
+   printed plates rather than pasted screenshots: true colour, the
    site's hairline + single radius, and its own grain — the global .grain layer
    sits UNDER the content (z-1 vs z-2), so a plate must carry its own or it
    becomes the only smooth surface on the page. */
 .plate { position: relative; overflow: hidden; border: 1px solid var(--line); border-radius: var(--r); background: var(--field-bg); }
-.plate img { display: block; width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.06); }
-/* on dark paper a plain greyscale plate glares — pull it back to the page */
-body.dark .plate img { filter: grayscale(1) contrast(1.02) brightness(0.82); }
+.plate img, .plate video { display: block; width: 100%; height: 100%; object-fit: cover; }
+/* on dark paper a full-bright photo glares — pull it back to the page */
+body.dark .plate img, body.dark .plate video { filter: brightness(0.88); }
 .plate::after {
   content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0.05;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* desktop: the plate floats beside the pointer over a hovered honour.
-   Width/height are read by the JS clamp — keep the two in step. */
-.shot {
-  position: fixed; top: 0; left: 0; z-index: 8; width: 300px; aspect-ratio: 3 / 2;
-  pointer-events: none; opacity: 0; scale: 0.97; will-change: transform;
-  transition: opacity var(--dur-fast) var(--ease), scale var(--dur-fast) var(--ease);
-}
-.shot.on { opacity: 1; scale: 1; }
-/* rows that carry a photo answer the pointer in the site's existing hover
-   vocabulary (the .rows / .clinks nudge) — no new mark, just a response */
-.honors li.shot-row { transition: padding-left var(--dur-fast) var(--ease); }
-.honors li.shot-row:hover { padding-left: 12px; }
-.honors li.shot-row:hover .hm { color: var(--ink); }
-/* touch has no hover — there the same picture renders inline in the row */
-.hshot { display: none; }
-@media (hover: none), (pointer: coarse) { .shot { display: none; } }
+/* every honour with a photo shows it, always: a small 3:2 plate leading the
+   row on desktop, full measure under the row on narrow screens (below) */
+.honors li.shot-row { align-items: flex-start; }
+.honors li.shot-row .hinfo { flex: 1; }
+.hshot { display: block; flex: none; order: -1; width: 112px; aspect-ratio: 3 / 2; }
 
 /* contact form */
 .cform { display: flex; flex-direction: column; gap: 16px; max-width: 420px; margin-top: 32px; }
@@ -433,8 +422,7 @@ body.dark .plate img { filter: grayscale(1) contrast(1.02) brightness(0.82); }
   /* no hover on touch: the event photo becomes part of the row, full measure,
      wrapping onto its own line under the title/meta */
   .honors li { flex-wrap: wrap; }
-  .hshot { display: block; width: 100%; aspect-ratio: 3 / 2; margin-top: 12px; }
-  .honors li.shot-row:hover { padding-left: 0; }
+  .hshot { order: 0; width: 100%; margin-top: 12px; }
   .colophon { position: static; margin-top: 40px; }
   .prog { display: none; }
   nav { padding: 10px 16px; }
