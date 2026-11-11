@@ -12,6 +12,26 @@ import type { Shot } from "./gallery";
 // - Live Photos loop silently while half on screen; reduced-motion or
 //   Save-Data visitors get the still
 // - every photo opens a native <dialog> lightbox (focus trap + Esc for free)
+// Every photo ships as 240/480/720px-tall AVIF + WebP (plus the 720 JPEG as
+// the universal fallback); the browser picks format and size for its screen.
+const HEIGHTS = [240, 480, 720];
+const stem = (s: Shot) => s.src.replace(/\.jpg$/, "");
+const srcSet = (s: Shot, ext: "avif" | "webp") =>
+  HEIGHTS.map((h) => `${stem(s)}-${h}.${ext} ${Math.round((s.w * h) / s.h)}w`).join(", ");
+// a reel is 160px tall on phones and at most 240px elsewhere (globals.css .strip ul)
+const reelSizes = (s: Shot) =>
+  `(max-width: 480px) ${Math.round((s.w * 160) / s.h)}px, ${Math.round((s.w * 240) / s.h)}px`;
+
+function Pic({ s, alt, sizes, lazy = true }: { s: Shot; alt: string; sizes: string; lazy?: boolean }) {
+  return (
+    <picture>
+      <source type="image/avif" srcSet={srcSet(s, "avif")} sizes={sizes} />
+      <source type="image/webp" srcSet={srcSet(s, "webp")} sizes={sizes} />
+      <img src={s.src} width={s.w} height={s.h} alt={alt} loading={lazy ? "lazy" : undefined} decoding="async" />
+    </picture>
+  );
+}
+
 export default function PhotoStrip({ shots, label, lang }: { shots: Shot[]; label: string; lang: "en" | "zh" }) {
   const reel = useRef<HTMLUListElement>(null);
   const box = useRef<HTMLDialogElement>(null);
@@ -107,9 +127,9 @@ export default function PhotoStrip({ shots, label, lang }: { shots: Shot[]; labe
                 aria-label={zh ? `放大查看 ${alt(i)}` : `Enlarge ${alt(i)}`}
               >
                 {s.live ? (
-                  <video src={s.live} poster={s.src} muted loop playsInline preload="none" width={s.w} height={s.h} aria-hidden="true" />
+                  <video src={s.live} poster={`${stem(s)}-480.webp`} muted loop playsInline preload="none" width={s.w} height={s.h} aria-hidden="true" />
                 ) : (
-                  <img src={s.src} width={s.w} height={s.h} alt={alt(i)} loading="lazy" decoding="async" />
+                  <Pic s={s} alt={alt(i)} sizes={reelSizes(s)} />
                 )}
               </button>
             </li>
@@ -138,9 +158,9 @@ export default function PhotoStrip({ shots, label, lang }: { shots: Shot[]; labe
           {lb && shots.map((s, i) => (
             <li key={s.src}>
               {s.live ? (
-                <video src={s.live} poster={s.src} muted loop playsInline preload="none" width={s.w} height={s.h} />
+                <video src={s.live} poster={`${stem(s)}-720.webp`} muted loop playsInline preload="none" width={s.w} height={s.h} />
               ) : (
-                <img src={s.src} width={s.w} height={s.h} alt={alt(i)} loading="lazy" decoding="async" />
+                <Pic s={s} alt={alt(i)} sizes="100vw" />
               )}
             </li>
           ))}

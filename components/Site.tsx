@@ -73,9 +73,9 @@ const COPY: Record<
         "I’m Adeline (she/her), an Economics undergrad at the University of Washington. I’m fascinated by how decentralized systems and markets actually behave, and I like to understand them by researching and building things of my own.",
       more: { text: "Connect on LinkedIn ↗", href: "https://www.linkedin.com/in/adeline1107" },
       resume: [
-        { y: "Apr 2026 – Present", h: "Crypto Analyst · Stably", d: "Research & growth at a stablecoin infrastructure company.", href: "https://www.stably.io/" },
         { y: "Feb 2026 – Present", h: "Undergraduate Research Assistant · UW CAIS Lab", d: "Research under Prof. Wei Cai; built hascidb.org (open-source Sybil database, 2.5M+ wallets) and published on blockchain, crypto, and decentralized AI.", href: "https://sites.uw.edu/weicaics/members/" },
         { y: "Dec 2025 – Present", h: "Independent Developer · Arena", d: "Solo-built arenafi.org, ranking 68,000+ traders.", href: "https://arenafi.org" },
+        { y: "Apr – Aug 2026", h: "Analyst Intern · Stably", d: "Research & growth at a stablecoin infrastructure company.", href: "https://www.stably.io/" },
         { y: "2025 – 2029", h: "Bachelor of Economics · University of Washington", d: "Informatics minor · Dean’s List.", href: "https://www.washington.edu/" },
       ],
     },
@@ -169,6 +169,7 @@ const COPY: Record<
         { label: "Email", val: "adelinewen1107@outlook.com ↗", href: "mailto:adelinewen1107@outlook.com" },
         { label: "GitHub", val: "@Adeline117 ↗", href: "https://github.com/Adeline117" },
         { label: "LinkedIn", val: "/in/adeline1107 ↗", href: "https://www.linkedin.com/in/adeline1107" },
+        { label: "CV", val: "PDF ↓", href: "/Adeline-Wen-CV.pdf", download: true },
       ],
       form: {
         name: "Name",
@@ -203,9 +204,9 @@ const COPY: Record<
         "我是 Adeline，华盛顿大学经济学本科生。我着迷于去中心化系统与市场真实的运转方式，喜欢通过研究和亲手构建去理解它们。",
       more: { text: "在 LinkedIn 联系 ↗", href: "https://www.linkedin.com/in/adeline1107" },
       resume: [
-        { y: "2026.04 – 至今", h: "加密分析师 · Stably", d: "稳定币基础设施公司的研究与增长。", href: "https://www.stably.io/" },
         { y: "2026.02 – 至今", h: "本科研究助理 · UW CAIS 实验室", d: "导师 Wei Cai 教授；构建了 hascidb.org（开源 Sybil 检测数据库，250 万+ 钱包），并发表区块链、加密与去中心化 AI 方向的多篇论文。", href: "https://sites.uw.edu/weicaics/members/" },
         { y: "2025.12 – 至今", h: "独立开发 · Arena", d: "独立构建 arenafi.org，为 68,000+ 交易者排名。", href: "https://arenafi.org" },
+        { y: "2026.04 – 2026.08", h: "分析师实习 · Stably", d: "稳定币基础设施公司的研究与增长。", href: "https://www.stably.io/" },
         { y: "2025 – 2029", h: "经济学学士 · 华盛顿大学", d: "辅修信息学 · 院长名单。", href: "https://www.washington.edu/" },
       ],
     },
@@ -299,6 +300,7 @@ const COPY: Record<
         { label: "邮箱", val: "adelinewen1107@outlook.com ↗", href: "mailto:adelinewen1107@outlook.com" },
         { label: "GitHub", val: "@Adeline117 ↗", href: "https://github.com/Adeline117" },
         { label: "LinkedIn", val: "/in/adeline1107 ↗", href: "https://www.linkedin.com/in/adeline1107" },
+        { label: "简历", val: "PDF ↓", href: "/Adeline-Wen-CV.pdf", download: true },
       ],
       form: {
         name: "你的称呼",
@@ -801,33 +803,36 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
                 value={hp}
                 onChange={(e) => setHp(e.target.value)}
               />
-              <label htmlFor="cf-name" className="sr-only">{t.contact.form.name}</label>
-              <input
-                id="cf-name"
-                required
-                autoComplete="name"
-                placeholder={t.contact.form.name}
-                value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
-              />
-              <label htmlFor="cf-email" className="sr-only">{t.contact.form.email}</label>
-              <input
-                id="cf-email"
-                required
-                type="email"
-                autoComplete="email"
-                placeholder={t.contact.form.email}
-                value={form.email}
-                onChange={(e) => setForm({ ...form, email: e.target.value })}
-              />
-              <label htmlFor="cf-message" className="sr-only">{t.contact.form.message}</label>
-              <textarea
-                id="cf-message"
-                required
-                placeholder={t.contact.form.message}
-                value={form.message}
-                onChange={(e) => setForm({ ...form, message: e.target.value })}
-              />
+              <div className="field">
+                <label htmlFor="cf-name">{t.contact.form.name}</label>
+                <input
+                  id="cf-name"
+                  required
+                  autoComplete="name"
+                  value={form.name}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                />
+              </div>
+              <div className="field">
+                <label htmlFor="cf-email">{t.contact.form.email}</label>
+                <input
+                  id="cf-email"
+                  required
+                  type="email"
+                  autoComplete="email"
+                  value={form.email}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                />
+              </div>
+              <div className="field">
+                <label htmlFor="cf-message">{t.contact.form.message}</label>
+                <textarea
+                  id="cf-message"
+                  required
+                  value={form.message}
+                  onChange={(e) => setForm({ ...form, message: e.target.value })}
+                />
+              </div>
               <button type="submit" disabled={status === "sending"}>
                 {status === "sending" ? t.contact.form.sending : t.contact.form.send}
               </button>

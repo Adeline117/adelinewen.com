@@ -292,6 +292,8 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
    sits UNDER the content (z-1 vs z-2), so a plate must carry its own or it
    becomes the only smooth surface on the page. */
 .plate { position: relative; overflow: hidden; border: 1px solid var(--line); border-radius: var(--r); background: var(--field-bg); }
+/* <picture> only chooses the file — layout-wise the <img> sits in the plate directly */
+.plate picture, .lightbox picture { display: contents; }
 .plate img, .plate video { display: block; width: 100%; height: 100%; object-fit: cover; }
 .strip .plate img, .strip .plate video { width: auto; }
 /* on dark paper a full-bright photo glares — pull it back to the page */
@@ -355,7 +357,10 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.88); }
 /* no native resize gripper (a stray artifact on ruled inputs); grows with content
    where field-sizing is supported */
 .cform textarea { resize: none; field-sizing: content; min-height: 88px; }
-.cform input::placeholder, .cform textarea::placeholder { color: var(--mute); }
+/* visible labels: small mono caps above each field, inking up while it's in use */
+.cform .field { display: flex; flex-direction: column; gap: 4px; }
+.cform label { font-family: var(--font-mono), monospace; font-size: var(--fs-cap); letter-spacing: 0.14em; text-transform: uppercase; color: var(--mute); transition: color var(--dur-fast) var(--ease); }
+.cform .field:focus-within label { color: var(--ink); }
 .cform input:focus, .cform textarea:focus { outline: none; border-bottom-color: var(--ink); }
 .cform button {
   align-self: flex-start; margin-top: 4px; padding: 12px 26px; border: 0; border-radius: var(--pill); cursor: pointer;
@@ -484,6 +489,14 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.88); }
   nav .navright { gap: 8px; }
   .clinks a { font-size: 22px; }
   .rows .n { font-size: 20px; }
+}
+
+/* portrait tablets (iPad mini → iPad Pro): the width-driven name left the
+   tall cover mostly empty. Size the name by whichever runs out first —
+   width or height — so the block fills the cover with even air around it. */
+@media (min-width: 601px) and (max-width: 1199px) and (orientation: portrait) {
+  .l1, .l2 { font-size: min(21vw, 15.5vh); }
+  .hero .sub { font-size: clamp(17px, 2.4vw, 22px); max-width: 34ch; }
 }
 
 /* keyboard focus */
