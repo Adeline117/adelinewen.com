@@ -52,7 +52,6 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Adeline Wen | Researcher & Builder",
     description: "UW Decentralized Computing Lab · solo founder of arenafi.org · blockchain & decentralized-AI research.",
-    creator: "@AdelineWen07",
   },
 };
 
@@ -77,8 +76,6 @@ const personLd = {
   sameAs: [
     "https://github.com/Adeline117",
     "https://www.linkedin.com/in/adeline1107",
-    "https://x.com/AdelineWen07",
-    "https://www.instagram.com/adelinew07/",
     "https://arenafi.org",
   ],
 };

@@ -164,8 +164,6 @@ const COPY: Record<
         { label: "Email", val: "adelinewen1107@outlook.com ↗", href: "mailto:adelinewen1107@outlook.com" },
         { label: "GitHub", val: "@Adeline117 ↗", href: "https://github.com/Adeline117" },
         { label: "LinkedIn", val: "/in/adeline1107 ↗", href: "https://www.linkedin.com/in/adeline1107" },
-        { label: "X", val: "@AdelineWen07 ↗", href: "https://x.com/AdelineWen07" },
-        { label: "Instagram", val: "@adelinew07 ↗", href: "https://www.instagram.com/adelinew07/" },
       ],
       form: {
         name: "Name",
@@ -286,8 +284,6 @@ const COPY: Record<
         { label: "邮箱", val: "adelinewen1107@outlook.com ↗", href: "mailto:adelinewen1107@outlook.com" },
         { label: "GitHub", val: "@Adeline117 ↗", href: "https://github.com/Adeline117" },
         { label: "LinkedIn", val: "/in/adeline1107 ↗", href: "https://www.linkedin.com/in/adeline1107" },
-        { label: "X", val: "@AdelineWen07 ↗", href: "https://x.com/AdelineWen07" },
-        { label: "Instagram", val: "@adelinew07 ↗", href: "https://www.instagram.com/adelinew07/" },
       ],
       form: {
         name: "你的称呼",

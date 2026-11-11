@@ -20,7 +20,6 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Adeline Wen | 研究者与构建者",
     description: "华盛顿大学去中心化计算实验室研究助理，arenafi.org 独立创始人。",
-    creator: "@AdelineWen07",
   },
 };
 
