@@ -20,6 +20,8 @@ type Honor = { t: string; d: string; m: string; href?: string; img?: string };
 // today until the picture lands in public/photos/.
 const PHOTO = {
   informs: "/photos/informs-2026.jpg",
+  smc: "/photos/ieee-smc-2026.jpg",
+  nbc: "/photos/nanyang-blockchain-2026.jpg",
   paradigm: "/photos/paradigm-fellowship.jpg",
   yc: "/photos/yc-startup-school.jpg",
   dempsey: "/photos/dempsey-startup.jpg",
@@ -87,7 +89,9 @@ const COPY: Record<
       honorsLabel: "Honors & Fellowships",
       honors: [
         { t: "INFORMS Annual Meeting 2026", d: "Poster presentation — “When AI Learns to Hide: Upper and Lower Bounds on Behavioral Identification of Automated Accounts.”", m: "San Francisco · Nov 2026", href: "https://meetings.informs.org/wordpress/annual/", img: PHOTO.informs },
+        { t: "IEEE SMC 2026", d: "Paper presentation — “Human-Centered Decision Support for Crypto Airdrop Governance: Interpretable Behavioral Modeling of Strategic Hunters.”", m: "Bellevue, WA · Oct 2026", href: "https://www.ieeesmc.org/events/ieee-international-conference-on-systems-man-and-cybernetics/", img: PHOTO.smc },
         { t: "Paradigm Fellowship 2026", d: "One of ~30 fellows selected worldwide — leading crypto & frontier-tech VC.", m: "N. California · Aug 2026", href: "https://paradigm.xyz/fellowship-2026/", img: PHOTO.paradigm },
+        { t: "Nanyang Blockchain Conference 2026", d: "Paper presentation, first author — “HasciDB: A Database for Identifying Crypto Sybil Airdrop Hunters.”", m: "Singapore · Aug 2026", href: "https://www.ntu.edu.sg/cctf/cctf-community/2026-nanyang-blockchain-conference", img: PHOTO.nbc },
         { t: "Y Combinator Startup School 2026", d: "Selected to attend.", m: "San Francisco · Jul 2026", href: "https://www.startupschool.org/", img: PHOTO.yc },
         { t: "Dempsey Startup Competition 2026", d: "Investment Round — Top 40 of 174 teams.", m: "Pacific NW · May 2026", href: "https://foster.uw.edu/centers/buerk-ctr-entrepreneurship/entrepreneurship-competitions/dempsey-startup-competition/", img: PHOTO.dempsey },
       ],
@@ -106,8 +110,8 @@ const COPY: Record<
       ),
       more: { text: "Explore HasciDB ↗", href: "https://hascidb.org" },
       tl: [
-        { y: "Accepted · Nanyang Blockchain Conference 2026", h: "HasciDB: A Database for Identifying Crypto Sybil Airdrop Hunters", d: "First author. The largest open-source cross-project airdrop Sybil-detection database (hascidb.org, 2.5M+ wallets). With Wei Cai et al." },
-        { y: "Accepted · IEEE SMC 2026 · IEEE Xplore", h: "Human-Centered Decision Support for Crypto Airdrop Governance: Interpretable Behavioral Modeling of Strategic Hunters", d: "Co-author. An extension of HasciDB toward interpretable, human-centered airdrop governance. With Wei Cai et al." },
+        { y: "Presented · Nanyang Blockchain Conference 2026", h: "HasciDB: A Database for Identifying Crypto Sybil Airdrop Hunters", d: "First author. The largest open-source cross-project airdrop Sybil-detection database (hascidb.org, 2.5M+ wallets). With Wei Cai et al." },
+        { y: "Presented · IEEE SMC 2026 · IEEE Xplore", h: "Human-Centered Decision Support for Crypto Airdrop Governance: Interpretable Behavioral Modeling of Strategic Hunters", d: "Co-author. An extension of HasciDB toward interpretable, human-centered airdrop governance. With Wei Cai et al." },
       ],
     },
     arena: {
@@ -208,7 +212,9 @@ const COPY: Record<
       honorsLabel: "荣誉与入选",
       honors: [
         { t: "INFORMS 年会 2026", d: "海报展示 ——《When AI Learns to Hide: Upper and Lower Bounds on Behavioral Identification of Automated Accounts》。", m: "旧金山 · 2026.11", href: "https://meetings.informs.org/wordpress/annual/", img: PHOTO.informs },
+        { t: "IEEE SMC 2026", d: "论文报告 ——《面向加密空投治理的以人为本决策支持：策略型猎手的可解释行为建模》。", m: "贝尔维尤 · 2026.10", href: "https://www.ieeesmc.org/events/ieee-international-conference-on-systems-man-and-cybernetics/", img: PHOTO.smc },
         { t: "Paradigm Fellowship 2026", d: "全球约 30 名入选者之一 —— 顶级加密与前沿科技风投。", m: "北加州 · 2026.08", href: "https://paradigm.xyz/fellowship-2026/", img: PHOTO.paradigm },
+        { t: "南洋区块链大会 2026", d: "论文报告（第一作者）——《HasciDB：识别加密 Sybil 空投猎人的数据库》。", m: "新加坡 · 2026.08", href: "https://www.ntu.edu.sg/cctf/cctf-community/2026-nanyang-blockchain-conference", img: PHOTO.nbc },
         { t: "Y Combinator Startup School 2026", d: "获选参加。", m: "旧金山 · 2026.07", href: "https://www.startupschool.org/", img: PHOTO.yc },
         { t: "Dempsey 创业大赛 2026", d: "投资轮 —— 174 支队伍中前 40。", m: "太平洋西北 · 2026.05", href: "https://foster.uw.edu/centers/buerk-ctr-entrepreneurship/entrepreneurship-competitions/dempsey-startup-competition/", img: PHOTO.dempsey },
       ],
@@ -227,8 +233,8 @@ const COPY: Record<
       ),
       more: { text: "查看 HasciDB ↗", href: "https://hascidb.org" },
       tl: [
-        { y: "已接收 · 南洋区块链大会 2026", h: "HasciDB：识别加密 Sybil 空投猎人的数据库", d: "第一作者。最大的开源跨项目空投 Sybil 检测数据库（hascidb.org，250 万+ 钱包）。与 Wei Cai 教授等合作。" },
-        { y: "已接收 · IEEE SMC 2026 · IEEE Xplore", h: "面向加密空投治理的以人为本决策支持：策略型猎手的可解释行为建模", d: "合作者。HasciDB 的延伸工作，面向可解释、以人为本的空投治理。与 Wei Cai 教授等合作。" },
+        { y: "已报告 · 南洋区块链大会 2026", h: "HasciDB：识别加密 Sybil 空投猎人的数据库", d: "第一作者。最大的开源跨项目空投 Sybil 检测数据库（hascidb.org，250 万+ 钱包）。与 Wei Cai 教授等合作。" },
+        { y: "已报告 · IEEE SMC 2026 · IEEE Xplore", h: "面向加密空投治理的以人为本决策支持：策略型猎手的可解释行为建模", d: "合作者。HasciDB 的延伸工作，面向可解释、以人为本的空投治理。与 Wei Cai 教授等合作。" },
       ],
     },
     arena: {
