@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import PhotoStrip from "./PhotoStrip";
+import PhotoWall from "./PhotoWall";
 import Leaderboard from "./Leaderboard";
 import type { Board } from "@/lib/arena";
 import { GALLERY, type Shot } from "./gallery";
@@ -161,17 +162,16 @@ const COPY: Record<
           Earlier, on <em>stage</em>.
         </>
       ),
-      lead: "Before research, there was a microphone. I grew up hosting, reciting and acting: the Hubei TV Children's Spring Festival Gala, CCTV-14, a feature film released in cinemas across China, and a Hubei historical drama.",
+      lead: "Before research, there was a microphone. I grew up hosting, reciting and acting: CCTV-14, four consecutive years hosting the Hubei Children's Spring Festival Gala, and on the big screen, in cinemas across China.",
       stats: [
         { n: "40", d: "awards in recitation, speech and hosting" },
         { n: "12", d: "at national or international level" },
       ],
       credits: [
-        { role: "Host", work: "Hubei TV Children's Spring Festival Gala" },
-        { role: "Performer", work: "CCTV-14" },
-        { role: "Recitation", work: "Hubei TV, Voice of Kids" },
         { role: "Feature film", work: <><a className="tlink" href="https://movie.douban.com/subject/26955897/" target="_blank" rel="noopener noreferrer"><i>Superposition of Love</i></a> (2017), released in cinemas across China</> },
-        { role: "TV drama", work: "A Hubei historical drama series" },
+        { role: "Performer", work: "CCTV-14" },
+        { role: "Host", work: "Hubei Children's Spring Festival Gala, four years running" },
+        { role: "Recitation", work: "Hubei TV, Voice of Kids" },
       ],
     },
     contact: {
@@ -310,17 +310,16 @@ const COPY: Record<
           更早以前，在<em>舞台</em>上
         </>
       ),
-      lead: "做研究之前，我是拿着话筒长大的：主持、朗诵、表演。湖北电视台少儿春晚、CCTV-14，一部在全国院线上映的电影，还有一部湖北历史剧。",
+      lead: "做研究之前，我是拿着话筒长大的。主持、朗诵、表演：央视 CCTV-14，连续四年主持湖北少儿春晚，还有全国院线上映的电影。",
       stats: [
         { n: "40", d: "朗诵、演讲与主持奖项" },
         { n: "12", d: "国家级与国际级" },
       ],
       credits: [
-        { role: "主持", work: "湖北电视台少儿春晚" },
-        { role: "演出", work: "CCTV-14 少儿频道" },
-        { role: "朗诵", work: "湖北卫视《童声朗朗》" },
         { role: "电影", work: <><a className="tlink" href="https://movie.douban.com/subject/26955897/" target="_blank" rel="noopener noreferrer">《欧爸的情人》</a>（2017），全国院线上映</> },
-        { role: "电视剧", work: "一部湖北历史剧" },
+        { role: "演出", work: "CCTV-14 少儿频道" },
+        { role: "主持", work: "湖北少儿春晚，连续四年" },
+        { role: "朗诵", work: "湖北卫视《童声朗朗》" },
       ],
     },
     contact: {
@@ -782,6 +781,7 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
         <div className="stage-reel">
           <PhotoStrip shots={GALLERY.stage} label={lang === "zh" ? "舞台与银幕" : "Stage and screen"} lang={lang} />
         </div>
+        <PhotoWall label={lang === "zh" ? "更多舞台照片" : "More from the stage"} />
       </section>
 
       <section className="sec" id="contact" data-i={5} ref={setRef(5)}>

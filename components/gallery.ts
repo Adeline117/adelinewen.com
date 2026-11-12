@@ -63,6 +63,8 @@ export const GALLERY = {
     { src: "/photos/stage/02.jpg", w: 1458, h: 720, alt: ["Reciting in costume on Hubei TV's Voice of Kids", "在湖北卫视《童声朗朗》古装朗诵"] },
     { src: "/photos/stage/03.jpg", w: 1276, h: 720, alt: ["Performing on CCTV-14", "在 CCTV-14 少儿频道演出"] },
     { src: "/photos/stage/13.jpg", w: 445, h: 720, alt: ["On set, in Republican-era costume", "片场，一身民国戏服"] },
+    { src: "/photos/stage/15.jpg", w: 608, h: 720, alt: ["Playing the pipa on stage, 2018", "2018 年，在台上弹琵琶"] },
+    { src: "/photos/stage/14.jpg", w: 540, h: 720, alt: ["Two pipas, after the show", "演出后，两把琵琶"] },
     { src: "/photos/stage/04.jpg", w: 540, h: 720, alt: ["With the gold-award trophy, 2017 Hubei Children's Spring Festival Gala host competition", "2017 年湖北少儿春晚主持人大赛，捧着金奖奖杯"] },
     { src: "/photos/stage/09.jpg", w: 960, h: 720, alt: ["On Hubei TV's Voice of Kids", "在湖北卫视《童声朗朗》"] },
     { src: "/photos/stage/06.jpg", w: 720, h: 720, alt: ["The 2020 Future Dream Children's Spring Festival Gala stage", "2020「未来梦」少儿春晚舞台"] },
