@@ -75,7 +75,8 @@ body {
   font-family: var(--font-fraunces), var(--font-cjk), serif;
   font-optical-sizing: auto; /* Fraunces opsz axis: display cuts tighten, small text opens up */
   color: var(--ink);
-  background: var(--bg-grad);
+  /* paper: the grain is part of the sheet (a 4% noise tile), not a layer over the screen */
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E"), var(--bg-grad);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   transition: background 0.6s, color 0.6s;
@@ -107,10 +108,6 @@ h1, h2 { hanging-punctuation: allow-end; font-variant-east-asian: proportional-w
 .skip { position: fixed; top: -60px; left: 16px; z-index: 20; background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: var(--r); font-family: var(--font-mono), monospace; font-size: var(--fs-label); text-decoration: none; transition: top var(--dur-fast) var(--ease); }
 .skip:focus { top: 16px; }
 
-.grain {
-  position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: 0.04;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
 
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 3;
@@ -165,6 +162,19 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 .hero .sub b { color: var(--ink); font-weight: 500; }
 .cover-foot { display: flex; justify-content: space-between; align-items: center; gap: 20px; border-top: 1px solid var(--line); padding-top: 16px; opacity: 0; animation: heroIn 0.8s var(--ease) 0.72s forwards; }
 .cover-foot .hint { font-family: var(--font-mono), monospace; font-size: var(--fs-cap); letter-spacing: var(--track-caps); color: var(--mute); text-transform: uppercase; animation: hintFloat 3.4s var(--ease-loop) 1.8s 2; } /* two nudges, then still */
+/* printer's crop marks just outside the cover's trim — the page as a printed sheet */
+@media (min-width: 821px) {
+  .hero::before {
+    content: ""; position: absolute; pointer-events: none; z-index: 0;
+    inset: 92px calc(var(--gutter) - 28px) 12px;
+    --cm: linear-gradient(color-mix(in srgb, var(--mute) 55%, transparent), color-mix(in srgb, var(--mute) 55%, transparent));
+    background:
+      var(--cm) left 0 top 28px / 18px 1px no-repeat, var(--cm) left 28px top 0 / 1px 18px no-repeat,
+      var(--cm) right 0 top 28px / 18px 1px no-repeat, var(--cm) right 28px top 0 / 1px 18px no-repeat,
+      var(--cm) left 0 bottom 28px / 18px 1px no-repeat, var(--cm) left 28px bottom 0 / 1px 18px no-repeat,
+      var(--cm) right 0 bottom 28px / 18px 1px no-repeat, var(--cm) right 28px bottom 0 / 1px 18px no-repeat;
+  }
+}
 /* the cover ∞: one pen stroke, inked through the same bleed filter as Arena's mark */
 .cover-foot .hint { display: inline-flex; align-items: center; gap: 14px; }
 .cover-mark { width: 34px; height: 18px; flex: none; filter: url(#ink); overflow: visible; }
@@ -284,9 +294,9 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 /* ===== Photo plates =====
    The one treatment every photograph on this site gets, so pictures read as
    printed plates rather than pasted screenshots: true colour, the
-   site's hairline + single radius, and its own grain — the global .grain layer
-   sits UNDER the content (z-1 vs z-2), so a plate must carry its own or it
-   becomes the only smooth surface on the page. */
+   site's hairline + single radius, and its own grain — the page's grain is part of the background, under
+   the content, so a plate must carry its own or it becomes the only smooth
+   surface on the page. */
 .plate { position: relative; overflow: hidden; border: 1px solid var(--line); border-radius: var(--r); background: var(--field-bg); }
 /* <picture> only chooses the file — layout-wise the <img> sits in the plate directly */
 .plate picture, .lightbox picture { display: contents; }

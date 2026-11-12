@@ -506,7 +506,6 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
       <a href="#main" className="skip">
         {lang === "zh" ? "跳到内容" : "Skip to content"}
       </a>
-      <div className="grain" />
       {/* ink-bleed filter: roughens the ∞ mark's vector edges so it reads pen-on-paper */}
       <svg width="0" height="0" aria-hidden="true" focusable="false" style={{ position: "absolute" }}>
         <filter id="ink" x="-20%" y="-20%" width="140%" height="140%">
