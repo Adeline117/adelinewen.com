@@ -704,6 +704,9 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
           <figure className="arena-shot">
             <a href="https://arenafi.org" target="_blank" rel="noopener noreferrer">
               <picture>
+                {/* phones get the first four columns, so the numbers stay legible */}
+                <source media="(max-width: 600px)" type="image/avif" srcSet={`/arena/board-${lang}-narrow.avif`} width={1280} height={1080} />
+                <source media="(max-width: 600px)" type="image/webp" srcSet={`/arena/board-${lang}-narrow.webp`} width={1280} height={1080} />
                 <source type="image/avif" srcSet={`/arena/board-${lang}-960.avif 960w, /arena/board-${lang}-1912.avif 1912w`} sizes="(max-width: 820px) calc(100vw - 48px), 880px" />
                 <source type="image/webp" srcSet={`/arena/board-${lang}-960.webp 960w, /arena/board-${lang}-1912.webp 1912w`} sizes="(max-width: 820px) calc(100vw - 48px), 880px" />
                 <img src={`/arena/board-${lang}-960.webp`} width={1912} height={1080} alt={t.arena.shot.alt} loading="lazy" decoding="async" />
