@@ -68,6 +68,5 @@ export const GALLERY = {
     { src: "/photos/stage/19.jpg", w: 1208, h: 720, alt: ["In costume for a classical recitation", "古装朗诵"] },
     { src: "/photos/stage/20.jpg", w: 1079, h: 720, alt: ["On stage under “The road ahead is long”", "「路漫漫其修远兮」舞台上"] },
     { src: "/photos/stage/14.jpg", w: 540, h: 720, alt: ["Two pipas, after the show", "演出后，两把琵琶"] },
-    { src: "/photos/stage/21.jpg", w: 540, h: 720, alt: ["Finalist notice, 2017 Hubei Children's Spring Festival Gala host competition", "2017 湖北少儿春晚主持人大赛决赛入选通知书"] },
   ],
 } satisfies Record<string, Shot[]>;
