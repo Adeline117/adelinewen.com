@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Fraunces, JetBrains_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
@@ -10,6 +11,17 @@ const fraunces = Fraunces({
   style: ["normal", "italic"],
   display: "swap",
   axes: ["opsz"], // optical size: display cuts tighten, text sizes open up
+});
+
+// Chinese serif behind Fraunces: Noto Serif SC cut to the ~480 hanzi the site
+// uses (scripts/subset-cjk.py, ~150 KB). Not preloaded — the English page never
+// renders a hanzi in the serif, so it never downloads this file.
+const cjk = localFont({
+  src: "./fonts/noto-serif-sc-subset.woff2",
+  variable: "--font-cjk",
+  weight: "300 600",
+  preload: false,
+  display: "swap",
 });
 
 const mono = JetBrains_Mono({
@@ -86,7 +98,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${fraunces.variable} ${mono.variable}`}>
+    <html lang="en" className={`${fraunces.variable} ${cjk.variable} ${mono.variable}`}>
       <body>
         <script dangerouslySetInnerHTML={{ __html: noFlash }} />
         <script

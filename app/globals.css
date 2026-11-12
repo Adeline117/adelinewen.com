@@ -69,7 +69,7 @@ body.dark {
    scroll-padding keeps anchor/nav jumps clear of the fixed bar */
 html { scroll-behavior: smooth; scroll-padding-top: 72px; scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--mute) 45%, transparent) transparent; }
 body {
-  font-family: var(--font-fraunces), serif;
+  font-family: var(--font-fraunces), var(--font-cjk), serif;
   font-optical-sizing: auto; /* Fraunces opsz axis: display cuts tighten, small text opens up */
   color: var(--ink);
   background: var(--bg-grad);
@@ -230,7 +230,7 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 .rows li { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; padding: 16px 6px; border-top: 1px solid var(--line); transition: var(--dur-fast) var(--ease); }
 .rows li:last-child { border-bottom: 1px solid var(--line); }
 .rinfo { display: flex; flex-direction: column; gap: 5px; }
-.rows .n { font-family: var(--font-fraunces), serif; font-size: var(--fs-lg); font-weight: 330; letter-spacing: -0.01em; color: var(--ink); font-variant-numeric: lining-nums tabular-nums; }
+.rows .n { font-family: var(--font-fraunces), var(--font-cjk), serif; font-size: var(--fs-lg); font-weight: 330; letter-spacing: -0.01em; color: var(--ink); font-variant-numeric: lining-nums tabular-nums; }
 .rows .rd { font-size: var(--fs-body); line-height: 1.5; color: var(--text); max-width: 34ch; }
 .rows .rm { font-family: var(--font-mono), monospace; font-size: var(--fs-cap); letter-spacing: 0.04em; color: var(--mute); text-transform: uppercase; white-space: nowrap; }
 .rows li:hover { padding-left: 16px; }
@@ -240,7 +240,7 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 .tl li { padding: 20px 0 20px 24px; border-left: 1px solid var(--line); position: relative; margin-left: 4px; }
 .tl li::before { content: ""; position: absolute; left: -4.5px; top: 22px; width: 8px; height: 8px; border-radius: 50%; background: var(--ink); box-shadow: 0 0 0 4px var(--bg); }
 .tl li .y { font-family: var(--font-mono), monospace; font-size: var(--fs-cap); letter-spacing: 0.1em; color: var(--mute); text-transform: uppercase; }
-.tl li .h { font-family: var(--font-fraunces), serif; font-size: var(--fs-lg); font-weight: 330; line-height: 1.22; margin-top: 4px; }
+.tl li .h { font-family: var(--font-fraunces), var(--font-cjk), serif; font-size: var(--fs-lg); font-weight: 330; line-height: 1.22; margin-top: 4px; }
 .tl li .dsc { font-size: var(--fs-body); color: var(--text); margin-top: 5px; line-height: 1.6; }
 
 /* inline link on an entry heading/title — inherits type, gains a hairline that
@@ -265,7 +265,7 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 .honors > li:last-child { border-bottom: 1px solid var(--line); }
 .honors .hrow { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 32px; row-gap: 6px; align-items: baseline; }
 .honors .hd { grid-column: 1; max-width: 68ch; margin: 0; }
-.honors .hn { margin: 0; font-family: var(--font-fraunces), serif; font-size: var(--fs-lg); font-weight: 330; line-height: 1.15; color: var(--ink); }
+.honors .hn { margin: 0; font-family: var(--font-fraunces), var(--font-cjk), serif; font-size: var(--fs-lg); font-weight: 330; line-height: 1.15; color: var(--ink); }
 .honors .hd { font-size: var(--fs-body); line-height: 1.5; color: var(--text); }
 .honors .hm { font-family: var(--font-mono), monospace; font-size: var(--fs-cap); letter-spacing: 0.04em; text-transform: uppercase; color: var(--mute); white-space: nowrap; text-align: right; }
 @media (max-width: 480px) {
@@ -371,7 +371,7 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
 .cform .status.err { color: var(--err); }
 
 .clinks { display: flex; flex-direction: column; }
-.clinks a { display: flex; justify-content: space-between; align-items: baseline; padding: 16px 6px; border-top: 1px solid var(--line); text-decoration: none; font-family: var(--font-fraunces), serif; font-size: var(--fs-xl); font-weight: 330; color: var(--ink); transition: var(--dur-fast) var(--ease); }
+.clinks a { display: flex; justify-content: space-between; align-items: baseline; padding: 16px 6px; border-top: 1px solid var(--line); text-decoration: none; font-family: var(--font-fraunces), var(--font-cjk), serif; font-size: var(--fs-xl); font-weight: 330; color: var(--ink); transition: var(--dur-fast) var(--ease); }
 .clinks a:last-child { border-bottom: 1px solid var(--line); }
 .clinks a .ar { font-family: var(--font-mono), monospace; font-size: var(--fs-sm); color: var(--mute); transition: var(--dur-fast) var(--ease); }
 .clinks a:hover { padding-left: 16px; font-style: italic; }
@@ -423,7 +423,7 @@ body.dark .arena-shot img { filter: brightness(0.88); }
 .aroad li { display: grid; grid-template-columns: 150px 86px 1fr; gap: 20px; padding: 16px 0; border-top: 1px solid var(--line); align-items: baseline; }
 /* the block above already draws the opening rule */
 .aroad li:first-child { border-top: 0; padding-top: 0; }
-.aroad .rp { font-family: var(--font-fraunces), serif; font-weight: 330; font-size: var(--fs-md); color: var(--ink); }
+.aroad .rp { font-family: var(--font-fraunces), var(--font-cjk), serif; font-weight: 330; font-size: var(--fs-md); color: var(--ink); }
 .aroad .rw { font-family: var(--font-mono), monospace; font-size: var(--fs-cap); text-transform: uppercase; letter-spacing: 0.07em; color: var(--mute); }
 .aroad .rwhat { font-size: var(--fs-body); line-height: 1.55; color: var(--text); }
 /* the dream — the section's landing: full-width, no label, builds to an ink italic payoff */
