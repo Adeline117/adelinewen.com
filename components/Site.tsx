@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import PhotoStrip from "./PhotoStrip";
+import PhotoWall from "./PhotoWall";
 import Leaderboard from "./Leaderboard";
 import type { Board } from "@/lib/arena";
 import { GALLERY, type Shot } from "./gallery";
@@ -161,7 +162,7 @@ const COPY: Record<
           Earlier, on <em>stage</em>.
         </>
       ),
-      lead: "Before research, there was a microphone. I grew up hosting, reciting and acting: CCTV-14, four consecutive years hosting the Hubei Children's Spring Festival Gala, and a feature film released in cinemas across China.",
+      lead: "Before research, there was a microphone. I grew up hosting, reciting and acting: CCTV-14, four consecutive years hosting the Hubei Children's Spring Festival Gala, and on the big screen, in cinemas across China.",
       stats: [
         { n: "40", d: "awards in recitation, speech and hosting" },
         { n: "12", d: "at national or international level" },
@@ -780,6 +781,7 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
         <div className="stage-reel">
           <PhotoStrip shots={GALLERY.stage} label={lang === "zh" ? "舞台与银幕" : "Stage and screen"} lang={lang} />
         </div>
+        <PhotoWall label={lang === "zh" ? "更多舞台照片" : "More from the stage"} />
       </section>
 
       <section className="sec" id="contact" data-i={5} ref={setRef(5)}>
