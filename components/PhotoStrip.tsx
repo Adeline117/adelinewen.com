@@ -111,7 +111,7 @@ export default function PhotoStrip({ shots, label, lang }: { shots: Shot[]; labe
   };
 
   const zh = lang === "zh";
-  const alt = (i: number) => `${label} — ${i + 1}/${shots.length}`;
+  const alt = (i: number) => shots[i].alt[zh ? 1 : 0];
 
   return (
     <div className={`strip-wrap${edge.start ? " at-start" : ""}${edge.end ? " at-end" : ""}`}>
@@ -124,7 +124,7 @@ export default function PhotoStrip({ shots, label, lang }: { shots: Shot[]; labe
                 className="plate"
                 style={{ aspectRatio: `${s.w} / ${s.h}` }}
                 onClick={() => open(i)}
-                aria-label={zh ? `放大查看 ${alt(i)}` : `Enlarge ${alt(i)}`}
+                aria-label={zh ? `放大查看：${alt(i)}` : `Enlarge: ${alt(i)}`}
               >
                 {s.live ? (
                   <video src={s.live} poster={`${stem(s)}-480.webp`} muted loop playsInline preload="none" width={s.w} height={s.h} aria-hidden="true" />
@@ -158,7 +158,7 @@ export default function PhotoStrip({ shots, label, lang }: { shots: Shot[]; labe
           {lb && shots.map((s, i) => (
             <li key={s.src}>
               {s.live ? (
-                <video src={s.live} poster={`${stem(s)}-720.webp`} muted loop playsInline preload="none" width={s.w} height={s.h} />
+                <video src={s.live} poster={`${stem(s)}-720.webp`} muted loop playsInline preload="none" width={s.w} height={s.h} aria-label={alt(i)} />
               ) : (
                 <Pic s={s} alt={alt(i)} sizes="100vw" />
               )}
