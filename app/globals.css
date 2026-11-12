@@ -143,7 +143,7 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; position: relative; z-index: 2; padding: 92px clamp(24px, 5vw, 72px) 40px; }
 .cover, .cover-foot { position: relative; z-index: 1; }
 .cover { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; justify-content: center; }
-.cover h1, .cover .inkl { display: flex; flex-direction: column; font-weight: 330; line-height: 0.86; letter-spacing: -0.035em; }
+.cover h1 { display: flex; flex-direction: column; font-weight: 330; line-height: 0.86; letter-spacing: -0.035em; }
 /* line-mask reveal: each giant line rises out of an overflow-hidden slot */
 .mline { display: block; overflow: hidden; padding-bottom: 0.06em; }
 .minner { display: inline-block; transform: translateY(115%); animation: lineUp 0.95s var(--ease) 0.12s forwards; }
@@ -152,22 +152,12 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 .l2w { align-self: flex-end; margin-right: clamp(4px, 5vw, 120px); }
 .l2 { font-size: clamp(76px, 15.5vw, 236px); animation-delay: 0.26s; }
 .l2 em { font-style: italic; }
-/* ink lens: a stroke-thickened copy of the name, revealed under a soft circle
-   that tracks the cursor — the type "inks in" where you point. No layout shift
-   (SVG dilate + mask only), no ambient motion. */
 .namewrap { position: relative; }
-@media not ((hover: hover) and (pointer: fine)) { .inkl { display: none; } }
-.inkl {
-  position: absolute; inset: 0; pointer-events: none; z-index: 1;
-  filter: url(#thicken);
-  -webkit-mask: radial-gradient(circle var(--lr, 0px) at var(--lx, -300px) var(--ly, -300px), #000 40%, rgba(0, 0, 0, 0) 72%);
-  mask: radial-gradient(circle var(--lr, 0px) at var(--lx, -300px) var(--ly, -300px), #000 40%, rgba(0, 0, 0, 0) 72%);
-}
 /* standfirst: a narrow measure hanging under the offset second line */
 .hero .sub { align-self: flex-end; max-width: 36ch; margin: clamp(18px, 3.6vh, 40px) clamp(4px, 5vw, 120px) 0 0; font-size: clamp(15px, 1.5vw, 18px); line-height: 1.65; color: var(--text); opacity: 0; animation: heroIn 0.8s var(--ease) 0.52s forwards; }
 .hero .sub b { color: var(--ink); font-weight: 500; }
 .cover-foot { display: flex; justify-content: space-between; align-items: center; gap: 20px; border-top: 1px solid var(--line); padding-top: 16px; opacity: 0; animation: heroIn 0.8s var(--ease) 0.72s forwards; }
-.cover-foot .hint { font-family: var(--font-mono), monospace; font-size: var(--fs-cap); letter-spacing: 0.22em; color: var(--mute); text-transform: uppercase; animation: hintFloat 3.4s var(--ease-loop) 1.8s infinite; }
+.cover-foot .hint { font-family: var(--font-mono), monospace; font-size: var(--fs-cap); letter-spacing: 0.22em; color: var(--mute); text-transform: uppercase; animation: hintFloat 3.4s var(--ease-loop) 1.8s 2; } /* two nudges, then still */
 @keyframes hintFloat { 0%, 100% { transform: translateY(-2px); } 50% { transform: translateY(3px); } }
 .cover-foot .cta { font-family: var(--font-mono), monospace; font-size: var(--fs-label); letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); background: none; border: 1px solid var(--line); border-radius: var(--pill); padding: 12px 24px; cursor: pointer; transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease); }
 .cover-foot .cta:hover { border-color: var(--ink); background: var(--field-bg); }
@@ -211,8 +201,7 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 /* kicker: a short thick bar over the mono label — thick-vs-hairline contrast */
 .sec .label { font-family: var(--font-mono), monospace; font-size: var(--fs-sm); letter-spacing: 0.22em; text-transform: uppercase; color: var(--mute); margin-bottom: 24px; }
 .sec .label::before { content: ""; display: block; width: 52px; height: 3px; background: var(--ink); margin-bottom: 14px; }
-/* weight morphs on scroll via --hw (set in JS); opsz stays on auto */
-.sec h2 { font-weight: var(--hw, 330); font-size: clamp(46px, 7vw, 118px); line-height: 0.92; letter-spacing: -0.03em; }
+.sec h2 { font-weight: 330; font-size: clamp(46px, 7vw, 118px); line-height: 0.92; letter-spacing: -0.03em; }
 .sec h2 em { font-style: italic; }
 /* CJK has no italic convention — synthetic obliques distort hanzi. In the ZH
    locale the accent word carries weight instead of slant. (Cover stays Latin.) */
@@ -535,12 +524,12 @@ main:focus { outline: none; } /* skip-link target — focused programmatically, 
    reader scrolls away — depth without JS (compositor-only scroll timeline) */
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: scroll()) {
-    .cover h1 .mline:not(.l2w), .cover .inkl .mline:not(.l2w) { animation: coverExitA linear both; animation-timeline: scroll(); animation-range: 0 100vh; }
+    .cover h1 .mline:not(.l2w) { animation: coverExitA linear both; animation-timeline: scroll(); animation-range: 0 100vh; }
     .l2w { animation: coverExitB linear both; animation-timeline: scroll(); animation-range: 0 100vh; }
   }
 }
-@keyframes coverExitA { to { transform: translateY(-7vh); opacity: 0.15; } }
-@keyframes coverExitB { to { transform: translateY(-13vh); opacity: 0.15; } }
+@keyframes coverExitA { to { transform: translateY(-7vh); opacity: 0; } }
+@keyframes coverExitB { to { transform: translateY(-13vh); opacity: 0; } }
 
 /* touch screens: 16px fields, or iOS Safari zooms the page on focus */
 @media (pointer: coarse) { .cform input, .cform textarea { font-size: 16px; } }

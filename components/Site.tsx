@@ -322,7 +322,6 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
   const heroRef = useRef<HTMLElement>(null);
   const trackRef = useRef<SVGPathElement>(null);
   const beadRef = useRef<SVGCircleElement>(null);
-  const nameRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const obs = new IntersectionObserver(
@@ -371,18 +370,6 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
         beadRef.current.setAttribute("cx", String(pt.x));
         beadRef.current.setAttribute("cy", String(pt.y));
       }
-      const mid = window.innerHeight / 2;
-      secRefs.current.forEach((s) => {
-        if (!s) return;
-        // variable-font morph: each heading gains weight as it reaches reading
-        // position (compositor-only — just a CSS var the GPU interpolates)
-        const h2 = s.querySelector("h2") as HTMLElement | null;
-        if (h2) {
-          const hr = h2.getBoundingClientRect();
-          const t = Math.min(1, Math.abs(hr.top + hr.height / 2 - mid) / (mid * 1.1));
-          h2.style.setProperty("--hw", String(Math.round(392 - t * 84))); // 392 centred → 308 far
-        }
-      });
     };
     // rAF-throttle: coalesce scroll bursts into one layout read per frame
     const onScroll = () => {
@@ -394,39 +381,6 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
     window.addEventListener("scroll", onScroll, { passive: true });
     update();
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  // Ink lens on the cover name: a soft circle following the cursor reveals a
-  // stroke-thickened copy of the type, so letters "ink in" where you point.
-  // No layout change (mask + SVG dilate only), no ambient motion.
-  useEffect(() => {
-    const wrap = nameRef.current;
-    if (!wrap) return;
-    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    let lx = -300, ly = -300, tx = -300, ty = -300, lr = 0, tlr = 0, raf = 0, shown = false;
-    const onMove = (e: PointerEvent) => {
-      const r = wrap.getBoundingClientRect();
-      tx = e.clientX - r.left; ty = e.clientY - r.top; tlr = 175;
-      if (!shown) { shown = true; lx = tx; ly = ty; }
-    };
-    const onLeave = () => { tlr = 0; };
-    window.addEventListener("pointermove", onMove, { passive: true });
-    document.addEventListener("pointerleave", onLeave);
-    const loop = () => {
-      raf = requestAnimationFrame(loop);
-      const k = reduced ? 1 : 0.2;
-      lx += (tx - lx) * k; ly += (ty - ly) * k; lr += (tlr - lr) * 0.12;
-      wrap.style.setProperty("--lx", lx + "px");
-      wrap.style.setProperty("--ly", ly + "px");
-      wrap.style.setProperty("--lr", lr.toFixed(1) + "px");
-    };
-    raf = requestAnimationFrame(loop);
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("pointermove", onMove);
-      document.removeEventListener("pointerleave", onLeave);
-    };
   }, []);
 
   useEffect(() => {
@@ -557,10 +511,6 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
           <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7" result="n" />
           <feDisplacementMap in="SourceGraphic" in2="n" scale="3" xChannelSelector="R" yChannelSelector="G" />
         </filter>
-        {/* thickens glyph strokes in place (no layout shift) for the cover ink lens */}
-        <filter id="thicken" x="-10%" y="-10%" width="120%" height="120%">
-          <feMorphology operator="dilate" radius="1.4" />
-        </filter>
       </svg>
 
       <nav>
@@ -611,7 +561,7 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
         {/* cover kept clean — no animated field (the noise-field experiments read greasy) */}
         {/* the cover lines: huge, stacked, offset — each revealed through a line mask */}
         <div className="cover">
-          <div className="namewrap" ref={nameRef}>
+          <div className="namewrap">
             <h1>
               <span className="mline"><span className="minner l1">Adeline</span></span>
               <span className="mline l2w">
@@ -620,16 +570,6 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
                 </span>
               </span>
             </h1>
-            {/* ink lens: identical name (decorative div, not a 2nd h1), stroke-
-                thickened, revealed under the cursor */}
-            <div className="inkl" aria-hidden="true">
-              <span className="mline"><span className="minner l1">Adeline</span></span>
-              <span className="mline l2w">
-                <span className="minner l2">
-                  <em>Wen</em>
-                </span>
-              </span>
-            </div>
           </div>
           <p className="sub">{t.heroSub}</p>
         </div>
