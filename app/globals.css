@@ -211,6 +211,11 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 /* CJK has no italic convention — synthetic obliques distort hanzi. In the ZH
    locale the accent word carries weight instead of slant. (Cover stays Latin.) */
 :lang(zh) .sec h2 em, :lang(zh) .arena-vision em { font-style: normal; font-weight: 500; }
+/* hanzi set tight: Latin display tracking crushes them, wide caps tracking spaces them into "关 于" */
+:lang(zh) .sec h2 { letter-spacing: 0; }
+:lang(zh) .label, :lang(zh) .cform label, :lang(zh) .ablock h3, :lang(zh) .cover-foot .hint, :lang(zh) .strip-cap { letter-spacing: 0.08em; }
+/* break Chinese only at spaces and marked phrase boundaries (zero-width spaces in the copy), never inside a word like 支持 */
+:lang(zh) .hero .sub, :lang(zh) .tl .h { word-break: keep-all; overflow-wrap: anywhere; }
 .sec .lead { margin-top: 32px; max-width: 460px; font-size: clamp(16px, 1.5vw, 17px); line-height: 1.72; color: var(--text); }
 .sec .more { position: relative; margin-top: 40px; display: inline-flex; gap: 10px; font-family: var(--font-mono), monospace; font-size: var(--fs-label); letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--ulink); padding-bottom: 8px; }
 /* hover: an ink line grows left-to-right over the resting hairline */

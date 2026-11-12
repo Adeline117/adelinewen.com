@@ -193,7 +193,7 @@ const COPY: Record<
       label: "01 · 关于",
       title: (
         <>
-          关于<em>我</em>。
+          关于<em>我</em>
         </>
       ),
       lead:
@@ -210,23 +210,23 @@ const COPY: Record<
       label: "02 · 演讲与荣誉",
       title: (
         <>
-          演讲与<em>荣誉</em>。
+          演讲与<em>荣誉</em>
         </>
       ),
       items: [
-        { t: "INFORMS 年会 2026", d: "海报展示 ——《When AI Learns to Hide: Upper and Lower Bounds on Behavioral Identification of Automated Accounts》。", m: "旧金山 · 2026.11", href: "https://meetings.informs.org/wordpress/annual/", gallery: GALLERY.informs },
-        { t: "IEEE SMC 2026", d: "论文报告 ——《面向加密空投治理的以人为本决策支持：策略型猎手的可解释行为建模》。", m: "贝尔维尤 · 2026.10", href: "https://www.ieeesmc.org/events/ieee-international-conference-on-systems-man-and-cybernetics/", gallery: GALLERY.smc },
-        { t: "Paradigm Fellowship 2026", d: "全球约 30 名入选者之一 —— 顶级加密与前沿科技风投。", m: "北加州 · 2026.08", href: "https://paradigm.xyz/fellowship-2026/", gallery: GALLERY.paradigm },
-        { t: "南洋区块链大会 2026", d: "论文报告（第一作者）——《HasciDB：识别加密 Sybil 空投猎人的数据库》。", m: "新加坡 · 2026.08", href: "https://www.ntu.edu.sg/cctf/cctf-community/2026-nanyang-blockchain-conference", gallery: GALLERY.nbc },
+        { t: "INFORMS 年会 2026", d: "海报展示：《When AI Learns to Hide: Upper and Lower Bounds on Behavioral Identification of Automated Accounts》。", m: "旧金山 · 2026.11", href: "https://meetings.informs.org/wordpress/annual/", gallery: GALLERY.informs },
+        { t: "IEEE SMC 2026", d: "论文报告：《面向加密空投治理的以人为本决策支持：策略型猎手的可解释行为建模》。", m: "贝尔维尤 · 2026.10", href: "https://www.ieeesmc.org/events/ieee-international-conference-on-systems-man-and-cybernetics/", gallery: GALLERY.smc },
+        { t: "Paradigm Fellowship 2026", d: "全球约 30 名入选者之一，顶级加密与前沿科技风投。", m: "北加州 · 2026.08", href: "https://paradigm.xyz/fellowship-2026/", gallery: GALLERY.paradigm },
+        { t: "南洋区块链大会 2026", d: "论文报告（第一作者）：《HasciDB：识别加密 Sybil 空投猎人的数据库》。", m: "新加坡 · 2026.08", href: "https://www.ntu.edu.sg/cctf/cctf-community/2026-nanyang-blockchain-conference", gallery: GALLERY.nbc },
         { t: "Y Combinator Startup School 2026", d: "获选参加。", m: "旧金山 · 2026.07", href: "https://www.startupschool.org/", gallery: GALLERY.yc },
-        { t: "Dempsey 创业大赛 2026", d: "投资轮 —— 174 支队伍中前 40。", m: "太平洋西北 · 2026.05", href: "https://foster.uw.edu/centers/buerk-ctr-entrepreneurship/entrepreneurship-competitions/dempsey-startup-competition/", gallery: GALLERY.dempsey },
+        { t: "Dempsey 创业大赛 2026", d: "投资轮，174 支队伍中前 40。", m: "太平洋西北 · 2026.05", href: "https://foster.uw.edu/centers/buerk-ctr-entrepreneurship/entrepreneurship-competitions/dempsey-startup-competition/", gallery: GALLERY.dempsey },
       ],
     },
     research: {
       label: "03 · 研究",
       title: (
         <>
-          论文与<em>研究</em>。
+          论文与<em>研究</em>
         </>
       ),
       lead: (
@@ -237,14 +237,14 @@ const COPY: Record<
       more: { text: "查看 HasciDB ↗", href: "https://hascidb.org" },
       tl: [
         { y: "已报告 · 南洋区块链大会 2026", h: "HasciDB：识别加密 Sybil 空投猎人的数据库", d: "第一作者。最大的开源跨项目空投 Sybil 检测数据库（hascidb.org，250 万+ 钱包）。与 Wei Cai 教授等合作。" },
-        { y: "已报告 · IEEE SMC 2026 · IEEE Xplore", h: "面向加密空投治理的以人为本决策支持：策略型猎手的可解释行为建模", d: "合作者。HasciDB 的延伸工作，面向可解释、以人为本的空投治理。与 Wei Cai 教授等合作。" },
+        { y: "已报告 · IEEE SMC 2026 · IEEE Xplore", h: "面向加密空投治理的\u200b以人为本决策支持：\u200b策略型猎手的\u200b可解释行为建模", d: "合作者。HasciDB 的延伸工作，面向可解释、以人为本的空投治理。与 Wei Cai 教授等合作。" },
       ],
     },
     arena: {
       label: "04 · Arena",
       title: (
         <>
-          加密交易的<em>世界排名</em>。
+          加密交易的<em>世界排名</em>
         </>
       ),
       lead: (
@@ -287,7 +287,7 @@ const COPY: Record<
       label: "05 · 联系",
       title: (
         <>
-          聊聊<em>吧</em>。
+          聊聊<em>吧</em>
         </>
       ),
       lead: "常驻西雅图，对研究与构建的机会开放，随时欢迎好问题。",
@@ -304,7 +304,7 @@ const COPY: Record<
         send: "发送",
         sending: "发送中…",
         sent: "谢谢，我会尽快回复你。",
-        mailed: "正在打开你的邮件应用——若没反应，请直接写信到 adelinewen1107@outlook.com。",
+        mailed: "正在打开你的邮件应用，若没反应，请直接写信到 adelinewen1107@outlook.com。",
         err: "发送失败，请直接邮件 adelinewen1107@outlook.com。",
       },
     },
