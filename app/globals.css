@@ -16,6 +16,8 @@
   /* near-opaque: at lower alpha, scrolled text collides legibly with nav links */
   --nav-bg: rgba(247, 245, 241, 0.985);
   --bg: #f7f5f1; /* solid bg color (timeline dot ring, inverted-button text) */
+  /* paper grain: grey noise, strong enough to clear one 8-bit level on screen */
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.10'/%3E%3C/svg%3E");
   --field-bg: rgba(24, 20, 12, 0.04);
   --field-bg-focus: rgba(24, 20, 12, 0.07);
   --err: #b23c2a; /* form error — AA on paper */
@@ -55,6 +57,7 @@ body.dark {
   --bg-grad: radial-gradient(ellipse 80% 68% at 50% 44%, #1a1815, #141210 62%, #100e0b);
   --nav-bg: rgba(20, 18, 14, 0.98);
   --bg: #141210;
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.07'/%3E%3C/svg%3E");
   --field-bg: rgba(252, 248, 240, 0.05);
   --field-bg-focus: rgba(252, 248, 240, 0.09);
   --err: #e08a76;
@@ -75,13 +78,17 @@ body {
   font-family: var(--font-fraunces), var(--font-cjk), serif;
   font-optical-sizing: auto; /* Fraunces opsz axis: display cuts tighten, small text opens up */
   color: var(--ink);
-  /* paper: the grain is part of the sheet (a 4% noise tile), not a layer over the screen */
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E"), var(--bg-grad);
+  background: var(--bg); /* solid under everything; the lit sheet is body::before */
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   transition: background 0.6s, color 0.6s;
   overflow-x: hidden;
 }
+/* the sheet: gradient + grain pinned to the viewport, so the light falls on the
+   screen you're reading (a body background stretches over the whole 8,000px page
+   and lit mid-document instead). A fixed pseudo-element, not background-attachment:
+   fixed, which iOS ignores. Painted once, no per-frame work. */
+body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; background: var(--grain), var(--bg-grad); transition: background 0.6s; }
 .mono { font-family: var(--font-mono), monospace; }
 
 /* inverted selection — ink paper swap */
