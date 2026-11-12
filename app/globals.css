@@ -164,6 +164,7 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
    that tracks the cursor — the type "inks in" where you point. No layout shift
    (SVG dilate + mask only), no ambient motion. */
 .namewrap { position: relative; }
+@media not ((hover: hover) and (pointer: fine)) { .inkl { display: none; } }
 .inkl {
   position: absolute; inset: 0; pointer-events: none; z-index: 1;
   filter: url(#thicken);
@@ -339,7 +340,7 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.88); }
 .lightbox::backdrop { background: transparent; }
 .lightbox ul { display: flex; height: 100%; list-style: none; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior: contain; }
 .lightbox ul::-webkit-scrollbar { display: none; }
-.lightbox li { flex: none; width: 100vw; height: 100%; display: grid; place-items: center; scroll-snap-align: start; padding: max(56px, env(safe-area-inset-top)) 16px max(72px, env(safe-area-inset-bottom)); }
+.lightbox li { flex: none; width: 100vw; height: 100%; min-height: 0; display: flex; align-items: center; justify-content: center; scroll-snap-align: start; padding: max(56px, env(safe-area-inset-top)) 16px max(72px, env(safe-area-inset-bottom)); }
 .lightbox img, .lightbox video { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; border-radius: var(--r); }
 .lb-bar { position: absolute; left: 0; right: 0; bottom: max(16px, env(safe-area-inset-bottom)); display: flex; justify-content: center; align-items: center; gap: 8px; }
 .lb-count { font-family: var(--font-mono), monospace; font-size: var(--fs-label); letter-spacing: 0.08em; margin-right: 8px; }
@@ -475,7 +476,7 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.88); }
   nav .navright { gap: 12px; }
   nav .links { gap: 4px; font-size: var(--fs-cap); }
   nav .links button { padding: 0 6px; min-height: 44px; }
-  .toggle { min-height: 36px; min-width: 44px; padding: 0 12px; font-size: var(--fs-cap); }
+  .toggle { min-height: 44px; min-width: 44px; padding: 0 12px; font-size: var(--fs-cap); }
 }
 @media (max-width: 600px) {
   /* five section links can't fit legibly beside the toggles on a phone —
@@ -538,3 +539,14 @@ main:focus { outline: none; } /* skip-link target — focused programmatically, 
 }
 @keyframes coverExitA { to { transform: translateY(-7vh); opacity: 0.15; } }
 @keyframes coverExitB { to { transform: translateY(-13vh); opacity: 0.15; } }
+
+/* touch screens: 16px fields, or iOS Safari zooms the page on focus */
+@media (pointer: coarse) { .cform input, .cform textarea { font-size: 16px; } }
+/* phones on their side: the cover grows with its content instead of
+   squeezing the name under the bar, and the loop counter steps aside */
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero { height: auto; min-height: 100svh; padding-top: 88px; }
+  .l1, .l2 { font-size: clamp(56px, 19vh, 120px); }
+  .prog { display: none; }
+  .toggle, nav .links button { min-height: 44px; }
+}

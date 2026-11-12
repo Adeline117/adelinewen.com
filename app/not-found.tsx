@@ -1,4 +1,7 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = { title: "Page not found · Adeline Wen" };
 
 // In-system 404: same paper, same type, the ∞ as the quiet mark.
 export default function NotFound() {

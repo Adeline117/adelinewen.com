@@ -507,16 +507,21 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
   const flipLang = () => {
     const next: Lang = lang === "en" ? "zh" : "en";
     const href = (next === "zh" ? "/zh" : "/") + window.location.hash;
+    // the other language reflows every section above the fold; pin the
+    // section being read to the same spot on screen across the swap
+    const anchor = secRefs.current.find((el) => el && el.getBoundingClientRect().bottom > 80);
+    const before = anchor?.getBoundingClientRect().top ?? 0;
     const swap = () => {
-      setLang(next);
+      flushSync(() => setLang(next));
       window.history.replaceState(null, "", href);
+      if (anchor && window.scrollY > 0) window.scrollBy({ top: anchor.getBoundingClientRect().top - before, behavior: "instant" });
     };
     const doc = document as Document & { startViewTransition?: (cb: () => void) => { finished: Promise<void> } };
     if (!doc.startViewTransition || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       swap();
       return;
     }
-    doc.startViewTransition(() => flushSync(swap));
+    doc.startViewTransition(swap);
   };
 
   const goTo = (i: number) => {
