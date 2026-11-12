@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Site from "@/components/Site";
+import { getBoard } from "@/lib/arena";
 
 export const metadata: Metadata = {
   title: "Adeline Wen | 研究者与构建者",
@@ -23,6 +24,6 @@ export const metadata: Metadata = {
   },
 };
 
-export default function ZhHome() {
-  return <Site routeLang="zh" />;
+export default async function ZhHome() {
+  return <Site routeLang="zh" board={await getBoard()} />;
 }

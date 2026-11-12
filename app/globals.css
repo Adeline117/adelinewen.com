@@ -395,13 +395,19 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
 }
 .arena-sec .label::before { transform: none !important; }
 .arena-wrap > .lead { max-width: 760px; margin-top: 24px; }
-/* product snapshot: framed like the photo plates, links to the live board */
-.arena-shot { max-width: 880px; margin: 40px 0 0; }
-.arena-shot a { display: block; border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; transition: border-color var(--dur-fast) var(--ease); }
-.arena-shot a:hover { border-color: var(--ink); }
-.arena-shot img { display: block; width: 100%; height: auto; }
-body.dark .arena-shot img { filter: brightness(0.88); }
-.arena-shot figcaption { margin-top: 8px; font-family: var(--font-mono), monospace; font-size: var(--fs-cap); letter-spacing: var(--track-meta); color: var(--mute); }
+/* Arena's leaderboard, typeset: hairline rows on the site's grid, no product colour */
+.board { margin: 48px 0 0; }
+.board-row { display: grid; grid-template-columns: 2.5rem minmax(0, 1fr) 5rem 7rem 6.5rem 6rem; gap: 0 clamp(12px, 2vw, 28px); align-items: baseline; padding: 18px 0; border-bottom: 1px solid var(--line); }
+.board-head { padding: 0 0 12px; font-family: var(--font-mono), monospace; font-size: var(--fs-cap); letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--mute); }
+.board-row .c0 { font-family: var(--font-mono), monospace; font-size: var(--fs-cap); letter-spacing: var(--track-meta); color: var(--mute); }
+.board-row .c1 { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.b-name { font-size: var(--fs-md); color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.b-src { font-family: var(--font-mono), monospace; font-size: var(--fs-cap); letter-spacing: var(--track-meta); text-transform: uppercase; color: var(--mute); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.board-row .c2, .board-row .c3, .board-row .c4, .board-row .c5 { text-align: right; font-variant-numeric: lining-nums tabular-nums; }
+.board-row:not(.board-head) .c2 { font-size: clamp(24px, 2.4vw, 32px); font-weight: 330; letter-spacing: -0.01em; color: var(--ink); }
+.board-row:not(.board-head) .c3 { font-size: var(--fs-md); color: var(--ink); }
+.board-row:not(.board-head) .c4, .board-row:not(.board-head) .c5 { font-size: var(--fs-body); color: var(--text); }
+.board figcaption { margin-top: 14px; font-size: var(--fs-sm); line-height: 1.6; color: var(--mute); max-width: 760px; }
 .arena-stats { display: grid !important; grid-template-columns: repeat(3, 1fr); gap: 0 28px; margin: 40px 0 8px; }
 .arena-stats li { border-top: 1px solid var(--line); flex-direction: column; align-items: flex-start; gap: 5px; padding: 20px 0 0; }
 .arena-stats li:hover { padding-left: 0; }
@@ -483,6 +489,12 @@ body.dark .arena-shot img { filter: brightness(0.88); }
 @media (max-width: 600px) {
   /* 11px mono caps read too small on a phone held at arm's length */
   :root { --fs-cap: 12px; }
+  /* leaderboard: rank, trader, score, return — PnL and drawdown stay on the live board */
+  .board-row { grid-template-columns: 1.75rem minmax(0, 1fr) 2.75rem 5rem; gap: 0 10px; }
+  .b-name { font-size: var(--fs-body); }
+  .board-row:not(.board-head) .c2 { font-size: 22px; }
+  .board-row:not(.board-head) .c3 { font-size: var(--fs-body); }
+  .board-row .c4, .board-row .c5 { display: none; }
   /* one stat per row, number and label on a shared baseline */
   .arena-stats { grid-template-columns: 1fr; margin-bottom: 0; }
   .arena-stats li { padding: 16px 0; }

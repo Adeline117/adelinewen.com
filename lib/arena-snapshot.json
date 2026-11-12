@@ -1,0 +1,88 @@
+{
+ "traders": [
+  {
+   "platform": "okx_futures",
+   "display_name": "好望角9999",
+   "arena_score": 100,
+   "roi": 379.63,
+   "pnl": 523560.7854577198,
+   "win_rate": 65.56,
+   "max_drawdown": 0.7,
+   "computed_at": "2026-08-18T15:52:45.167+00:00",
+   "is_bot": false,
+   "quality_flags": {
+    "is_suspicious": false
+   }
+  },
+  {
+   "platform": "binance_futures",
+   "display_name": "笨猪吃老虎",
+   "arena_score": 98.75,
+   "roi": 151.82941998,
+   "pnl": 20689.50782253,
+   "win_rate": 99.0341,
+   "max_drawdown": 2.1840162,
+   "computed_at": "2026-07-18T02:52:10.671+00:00",
+   "is_bot": false,
+   "quality_flags": {
+    "is_suspicious": false
+   }
+  },
+  {
+   "platform": "hyperliquid",
+   "display_name": "0xa032...02aa",
+   "arena_score": 97.99,
+   "roi": 368.11318023944216,
+   "pnl": 3098529.3232381893,
+   "win_rate": 40,
+   "max_drawdown": 0.74,
+   "computed_at": "2026-07-20T06:52:26.228+00:00",
+   "is_bot": false,
+   "quality_flags": {
+    "is_suspicious": false
+   }
+  },
+  {
+   "platform": "hyperliquid",
+   "display_name": "0xed48...7c9b",
+   "arena_score": 97.55,
+   "roi": 93.03575889042723,
+   "pnl": 1238125.3416561356,
+   "win_rate": 93.8,
+   "max_drawdown": 1.4576,
+   "computed_at": "2026-07-20T06:52:26.228+00:00",
+   "is_bot": false,
+   "quality_flags": {
+    "is_suspicious": false
+   }
+  },
+  {
+   "platform": "bybit_mt5",
+   "display_name": "GENCOM VIP 10k",
+   "arena_score": 97.53,
+   "roi": 210.57,
+   "pnl": 284979.78,
+   "win_rate": 78.61,
+   "max_drawdown": 12.92,
+   "computed_at": "2026-07-24T20:11:09.858+00:00",
+   "is_bot": false,
+   "quality_flags": {
+    "is_suspicious": false
+   }
+  },
+  {
+   "platform": "okx_futures",
+   "display_name": "Amusing-PoW-AirBags",
+   "arena_score": 97.33,
+   "roi": 97.48,
+   "pnl": 217377.67841710808,
+   "win_rate": 83.58,
+   "max_drawdown": 9.29,
+   "computed_at": "2026-08-18T15:52:45.168+00:00",
+   "is_bot": false,
+   "quality_flags": {
+    "is_suspicious": false
+   }
+  }
+ ]
+}

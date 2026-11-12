@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import PhotoStrip from "./PhotoStrip";
+import Leaderboard from "./Leaderboard";
+import type { Board } from "@/lib/arena";
 import { GALLERY, type Shot } from "./gallery";
 import { flushSync } from "react-dom";
 
@@ -40,7 +42,6 @@ const COPY: Record<
     honors: { label: string; title: ReactNode; items: Honor[] };
     research: Section & { tl: TL[] };
     arena: Section & {
-      shot: { alt: string; cap: string };
       stats: Row[];
       value: { h: string; items: Val[] };
       roadmap: { h: string; steps: Road[] };
@@ -123,7 +124,6 @@ const COPY: Record<
         </>
       ),
       more: { text: "Visit arenafi.org ↗", href: "https://arenafi.org" },
-      shot: { alt: "The Arena leaderboard: the top six traders by Arena Score, with 90-day return, profit, win rate and drawdown", cap: "arenafi.org leaderboard, Nov 2026" },
       stats: [
         { n: "68,000+", d: "traders ranked", m: "" },
         { n: "44+", d: "exchanges · CEX + DEX", m: "" },
@@ -253,7 +253,6 @@ const COPY: Record<
         </>
       ),
       more: { text: "访问 arenafi.org ↗", href: "https://arenafi.org" },
-      shot: { alt: "Arena 排行榜：按 Arena 评分排名的前六位交易者，以及 90 天收益率、盈亏、胜率和最大回撤", cap: "arenafi.org 排行榜，2026 年 11 月" },
       stats: [
         { n: "68,000+", d: "交易者排名", m: "" },
         { n: "44+", d: "交易所 · CEX + DEX", m: "" },
@@ -311,7 +310,7 @@ const COPY: Record<
   },
 };
 
-export default function Site({ routeLang }: { routeLang?: Lang }) {
+export default function Site({ routeLang, board }: { routeLang?: Lang; board: Board }) {
   const [active, setActive] = useState(-1); // -1 = the cover
   const [dark, setDark] = useState<boolean | null>(null);
   const [lang, setLang] = useState<Lang>(routeLang ?? "en");
@@ -640,20 +639,8 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
           <h2>{t.arena.title}</h2>
           <p className="lead">{t.arena.lead}</p>
 
-          {/* the product itself: a snapshot of the leaderboard, linking to the live one */}
-          <figure className="arena-shot">
-            <a href="https://arenafi.org" target="_blank" rel="noopener noreferrer">
-              <picture>
-                {/* phones get the first four columns, so the numbers stay legible */}
-                <source media="(max-width: 600px)" type="image/avif" srcSet={`/arena/board-${lang}-narrow.avif`} width={1280} height={1080} />
-                <source media="(max-width: 600px)" type="image/webp" srcSet={`/arena/board-${lang}-narrow.webp`} width={1280} height={1080} />
-                <source type="image/avif" srcSet={`/arena/board-${lang}-960.avif 960w, /arena/board-${lang}-1912.avif 1912w`} sizes="(max-width: 820px) calc(100vw - 48px), 880px" />
-                <source type="image/webp" srcSet={`/arena/board-${lang}-960.webp 960w, /arena/board-${lang}-1912.webp 1912w`} sizes="(max-width: 820px) calc(100vw - 48px), 880px" />
-                <img src={`/arena/board-${lang}-960.webp`} width={1912} height={1080} alt={t.arena.shot.alt} loading="lazy" decoding="async" />
-              </picture>
-            </a>
-            <figcaption>{t.arena.shot.cap}</figcaption>
-          </figure>
+          {/* the product itself, typeset from arenafi.org's public leaderboard */}
+          <Leaderboard board={board} lang={lang} />
 
           <ul className="rows arena-stats">
             {t.arena.stats.map((r) => (
