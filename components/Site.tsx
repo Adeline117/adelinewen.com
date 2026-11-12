@@ -161,7 +161,7 @@ const COPY: Record<
           Earlier, on <em>stage</em>.
         </>
       ),
-      lead: "Before research, there was a microphone. I grew up hosting, reciting and acting: on CCTV, on satellite television, and in a feature film released in cinemas across China.",
+      lead: "Before research, there was a microphone. I grew up hosting, reciting and acting: CCTV-14, four consecutive years hosting the Hubei Children's Spring Festival Gala, and a feature film released in cinemas across China.",
       stats: [
         { n: "40", d: "awards in recitation, speech and hosting" },
         { n: "12", d: "at national or international level" },
@@ -169,7 +169,7 @@ const COPY: Record<
       credits: [
         { role: "Feature film", work: <><a className="tlink" href="https://movie.douban.com/subject/26955897/" target="_blank" rel="noopener noreferrer"><i>Superposition of Love</i></a> (2017), released in cinemas across China</> },
         { role: "Performer", work: "CCTV-14" },
-        { role: "Host", work: "Hubei TV Children's Spring Festival Gala" },
+        { role: "Host", work: "Hubei Children's Spring Festival Gala, four years running" },
         { role: "Recitation", work: "Hubei TV, Voice of Kids" },
       ],
     },
@@ -309,7 +309,7 @@ const COPY: Record<
           更早以前，在<em>舞台</em>上
         </>
       ),
-      lead: "做研究之前，我是拿着话筒长大的：主持、朗诵、表演。上过央视和卫视的舞台，也演过一部全国院线上映的电影。",
+      lead: "做研究之前，我是拿着话筒长大的。主持、朗诵、表演：央视 CCTV-14，连续四年主持湖北少儿春晚，还有一部全国院线上映的电影。",
       stats: [
         { n: "40", d: "朗诵、演讲与主持奖项" },
         { n: "12", d: "国家级与国际级" },
@@ -317,7 +317,7 @@ const COPY: Record<
       credits: [
         { role: "电影", work: <><a className="tlink" href="https://movie.douban.com/subject/26955897/" target="_blank" rel="noopener noreferrer">《欧爸的情人》</a>（2017），全国院线上映</> },
         { role: "演出", work: "CCTV-14 少儿频道" },
-        { role: "主持", work: "湖北电视台少儿春晚" },
+        { role: "主持", work: "湖北少儿春晚，连续四年" },
         { role: "朗诵", work: "湖北卫视《童声朗朗》" },
       ],
     },
