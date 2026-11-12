@@ -98,8 +98,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${fraunces.variable} ${cjk.variable} ${mono.variable}`}>
-      <body>
+    <html lang="en" suppressHydrationWarning className={`${fraunces.variable} ${cjk.variable} ${mono.variable}`}>
+      <body suppressHydrationWarning>
         <script dangerouslySetInnerHTML={{ __html: noFlash }} />
         <script
           type="application/ld+json"
