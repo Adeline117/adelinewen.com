@@ -47,7 +47,7 @@ const COPY: Record<
       roadmap: { h: string; steps: Road[] };
       vision: { d: ReactNode };
     };
-    stage: { label: string; title: ReactNode; lead: string; stats: { n: string; d: string }[]; credits: { role: string; work: string }[] };
+    stage: { label: string; title: ReactNode; lead: string; stats: { n: string; d: string }[]; credits: { role: string; work: ReactNode }[] };
     contact: { label: string; title: ReactNode; lead: string; links: CLink[]; form: Form };
   }
 > = {
@@ -170,7 +170,7 @@ const COPY: Record<
         { role: "Host", work: "Hubei TV Children's Spring Festival Gala" },
         { role: "Performer", work: "CCTV-14" },
         { role: "Recitation", work: "Hubei TV, Voice of Kids" },
-        { role: "Feature film", work: "Superposition of Love (2017), released in cinemas across China" },
+        { role: "Feature film", work: <><a className="tlink" href="https://movie.douban.com/subject/26955897/" target="_blank" rel="noopener noreferrer"><i>Superposition of Love</i></a> (2017), released in cinemas across China</> },
         { role: "TV drama", work: "A Hubei historical drama series" },
       ],
     },
@@ -319,7 +319,7 @@ const COPY: Record<
         { role: "主持", work: "湖北电视台少儿春晚" },
         { role: "演出", work: "CCTV-14 少儿频道" },
         { role: "朗诵", work: "湖北卫视《童声朗朗》" },
-        { role: "电影", work: "Superposition of Love（2017），全国院线上映" },
+        { role: "电影", work: <><a className="tlink" href="https://movie.douban.com/subject/26955897/" target="_blank" rel="noopener noreferrer">《欧爸的情人》</a>（2017），全国院线上映</> },
         { role: "电视剧", work: "一部湖北历史剧" },
       ],
     },
@@ -771,7 +771,7 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
           <div className="right">
             <ul className="credits">
               {t.stage.credits.map((c) => (
-                <li key={c.work}>
+                <li key={c.role}>
                   <span className="cr-role">{c.role}</span>
                   <span className="cr-work">{c.work}</span>
                 </li>
