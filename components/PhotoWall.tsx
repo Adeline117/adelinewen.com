@@ -1,13 +1,13 @@
 import { WALL } from "./wall";
 
-// Two rows of small photos drifting in opposite directions: the sheer amount of
+// Rows of small photos drifting, neighbours in opposite directions: the sheer amount of
 // it, not any one picture. Pure CSS (each row is the list twice, translated by
 // half its width), paused on hover; reduced motion gets a plain scrollable row.
 export default function PhotoWall({ label }: { label: string }) {
   return (
     <div className="wall" role="group" aria-label={label}>
       {WALL.map((row, r) => (
-        <div className={`wall-row${r ? " rev" : ""}`} key={r}>
+        <div className={`wall-row${r % 2 ? " rev" : ""}`} key={r}>
           <ul className="wall-track">
             {[0, 1].map((copy) =>
               row.map(([n, w]) => {
