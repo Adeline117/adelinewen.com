@@ -16,6 +16,7 @@
   /* near-opaque: at lower alpha, scrolled text collides legibly with nav links */
   --nav-bg: rgba(247, 245, 241, 0.985);
   --bg: #f7f5f1; /* solid bg color (timeline dot ring, inverted-button text) */
+  --paper-plate: #ebeae5;
   /* paper grain: grey noise, strong enough to clear one 8-bit level on screen */
   --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.10'/%3E%3C/svg%3E");
   --field-bg: rgba(24, 20, 12, 0.04);
@@ -57,6 +58,7 @@ body.dark {
   --bg-grad: radial-gradient(ellipse 80% 68% at 50% 44%, #1a1815, #141210 62%, #100e0b);
   --nav-bg: rgba(20, 18, 14, 0.98);
   --bg: #141210;
+  --paper-plate: #1d1c19;
   --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.07'/%3E%3C/svg%3E");
   --field-bg: rgba(252, 248, 240, 0.05);
   --field-bg-focus: rgba(252, 248, 240, 0.09);
@@ -407,6 +409,9 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
 /* ===== Arena: full project section (long-form, scrolls freely) =====
    Same paper as the rest of the site — differentiation comes from the
    editorial layout, not a color block. */
+/* Arena on its own stock: one step cooler and deeper than the page, edge to edge,
+   like a plate bound into a book — the product chapter reads as a separate sheet */
+.arena-sec { background: var(--grain), var(--paper-plate); border-block: 1px solid var(--line); }
 .arena-sec { display: block; padding: clamp(96px, 14vh, 160px) clamp(24px, 5vw, 72px); }
 /* match the other sections' container so headings left-align across the site */
 .arena-wrap { max-width: var(--measure); margin: 0 auto; }
