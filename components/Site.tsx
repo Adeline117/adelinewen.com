@@ -704,9 +704,9 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
           <figure className="arena-shot">
             <a href="https://arenafi.org" target="_blank" rel="noopener noreferrer">
               <picture>
-                <source type="image/avif" srcSet={`/arena/board-${lang}-800.avif 800w, /arena/board-${lang}-1592.avif 1592w`} sizes="(max-width: 820px) calc(100vw - 48px), 880px" />
-                <source type="image/webp" srcSet={`/arena/board-${lang}-800.webp 800w, /arena/board-${lang}-1592.webp 1592w`} sizes="(max-width: 820px) calc(100vw - 48px), 880px" />
-                <img src={`/arena/board-${lang}-800.webp`} width={1592} height={1070} alt={t.arena.shot.alt} loading="lazy" decoding="async" />
+                <source type="image/avif" srcSet={`/arena/board-${lang}-960.avif 960w, /arena/board-${lang}-1912.avif 1912w`} sizes="(max-width: 820px) calc(100vw - 48px), 880px" />
+                <source type="image/webp" srcSet={`/arena/board-${lang}-960.webp 960w, /arena/board-${lang}-1912.webp 1912w`} sizes="(max-width: 820px) calc(100vw - 48px), 880px" />
+                <img src={`/arena/board-${lang}-960.webp`} width={1912} height={1080} alt={t.arena.shot.alt} loading="lazy" decoding="async" />
               </picture>
             </a>
             <figcaption>{t.arena.shot.cap}</figcaption>
