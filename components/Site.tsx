@@ -47,11 +47,12 @@ const COPY: Record<
       roadmap: { h: string; steps: Road[] };
       vision: { d: ReactNode };
     };
+    stage: { label: string; title: ReactNode; lead: string; stats: { n: string; d: string }[]; credits: { role: string; work: string }[] };
     contact: { label: string; title: ReactNode; lead: string; links: CLink[]; form: Form };
   }
 > = {
   en: {
-    nav: ["About", "Honors", "Research", "Arena", "Contact"],
+    nav: ["About", "Honors", "Research", "Arena", "Earlier", "Contact"],
     colophon: "© 2026 Adeline Wen",
     heroSub: (
       <>
@@ -153,8 +154,28 @@ const COPY: Record<
         ),
       },
     },
+    stage: {
+      label: "05 · Earlier",
+      title: (
+        <>
+          Earlier, on <em>stage</em>.
+        </>
+      ),
+      lead: "Before research, there was a microphone. I grew up hosting, reciting and acting: the Hubei TV Children's Spring Festival Gala, CCTV-14, a feature film released in cinemas across China, and a Hubei historical drama.",
+      stats: [
+        { n: "40", d: "awards in recitation, speech and hosting" },
+        { n: "12", d: "at national or international level" },
+      ],
+      credits: [
+        { role: "Host", work: "Hubei TV Children's Spring Festival Gala" },
+        { role: "Performer", work: "CCTV-14" },
+        { role: "Recitation", work: "Hubei TV, Voice of Kids" },
+        { role: "Feature film", work: "Superposition of Love (2017), released in cinemas across China" },
+        { role: "TV drama", work: "A Hubei historical drama series" },
+      ],
+    },
     contact: {
-      label: "05 · Contact",
+      label: "06 · Contact",
       title: (
         <>
           Let’s <em>talk</em>.
@@ -180,7 +201,7 @@ const COPY: Record<
     },
   },
   zh: {
-    nav: ["关于", "荣誉", "研究", "Arena", "联系"],
+    nav: ["关于", "荣誉", "研究", "Arena", "更早", "联系"],
     colophon: "© 2026 Adeline Wen",
     heroSub: (
       <>
@@ -282,8 +303,28 @@ const COPY: Record<
         ),
       },
     },
+    stage: {
+      label: "05 · 更早",
+      title: (
+        <>
+          更早以前，在<em>舞台</em>上
+        </>
+      ),
+      lead: "做研究之前，我是拿着话筒长大的：主持、朗诵、表演。湖北电视台少儿春晚、CCTV-14，一部在全国院线上映的电影，还有一部湖北历史剧。",
+      stats: [
+        { n: "40", d: "朗诵、演讲与主持奖项" },
+        { n: "12", d: "国家级与国际级" },
+      ],
+      credits: [
+        { role: "主持", work: "湖北电视台少儿春晚" },
+        { role: "演出", work: "CCTV-14 少儿频道" },
+        { role: "朗诵", work: "湖北卫视《童声朗朗》" },
+        { role: "电影", work: "Superposition of Love（2017），全国院线上映" },
+        { role: "电视剧", work: "一部湖北历史剧" },
+      ],
+    },
     contact: {
-      label: "05 · 联系",
+      label: "06 · 联系",
       title: (
         <>
           聊聊<em>吧</em>
@@ -482,7 +523,7 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
   };
 
   const t = COPY[lang];
-  const ids = ["about", "honors", "research", "arena", "contact"];
+  const ids = ["about", "honors", "research", "arena", "stage", "contact"];
 
   const renderSection = (i: number, sec: Section, right: ReactNode, leftExtra: ReactNode = null) => (
     <section className="sec" id={ids[i]} data-i={i} ref={setRef(i)}>
@@ -584,7 +625,7 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
             </svg>
             {t.heroHint}
           </div>
-          <button className="cta" onClick={() => goTo(4)}>{t.heroCta}</button>
+          <button className="cta" onClick={() => goTo(5)}>{t.heroCta}</button>
         </div>
       </header>
 
@@ -709,7 +750,41 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
       </section>
 
       {/* 05, Contact (with working form) */}
-      <section className="sec" id="contact" data-i={4} ref={setRef(4)}>
+      {/* 05, Earlier — childhood stage and screen work, the roots of the talks above */}
+      <section className="sec stage-sec" id="stage" data-i={4} ref={setRef(4)}>
+        <div className="inner">
+          <div className="left">
+            <div className="label">{t.stage.label}</div>
+            <h2>{t.stage.title}</h2>
+            <p className="lead">{t.stage.lead}</p>
+            <ul className="rows arena-stats stage-stats">
+              {t.stage.stats.map((r) => (
+                <li key={r.d}>
+                  <div className="rinfo">
+                    <span className="n">{r.n}</span>
+                    <span className="rd">{r.d}</span>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="right">
+            <ul className="credits">
+              {t.stage.credits.map((c) => (
+                <li key={c.work}>
+                  <span className="cr-role">{c.role}</span>
+                  <span className="cr-work">{c.work}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        <div className="stage-reel">
+          <PhotoStrip shots={GALLERY.stage} label={lang === "zh" ? "舞台与银幕" : "Stage and screen"} lang={lang} />
+        </div>
+      </section>
+
+      <section className="sec" id="contact" data-i={5} ref={setRef(5)}>
         <div className="inner">
           <div className="left">
             <div className="label">{t.contact.label}</div>

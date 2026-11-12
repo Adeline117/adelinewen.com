@@ -57,4 +57,18 @@ export const GALLERY = {
     { src: "/photos/dempsey/03.jpg", w: 960, h: 720, alt: ["Adeline talking with a visitor at the showcase", "Adeline 在展会上和来访者交流"] },
     { src: "/photos/dempsey/04.jpg", w: 557, h: 720, alt: ["The Arena poster: problem, solution, market and team", "Arena 海报：问题、方案、市场和团队"] },
   ],
+  // childhood stage and screen work; names on screens and posters blurred or left out
+  stage: [
+    { src: "/photos/stage/01.jpg", w: 960, h: 720, alt: ["Hosting on Hubei TV", "在湖北卫视主持"] },
+    { src: "/photos/stage/02.jpg", w: 1458, h: 720, alt: ["Reciting in costume on Hubei TV's Voice of Kids", "在湖北卫视《童声朗朗》古装朗诵"] },
+    { src: "/photos/stage/03.jpg", w: 1276, h: 720, alt: ["Performing on CCTV-14", "在 CCTV-14 少儿频道演出"] },
+    { src: "/photos/stage/04.jpg", w: 540, h: 720, alt: ["With the gold-award trophy, 2017 Hubei Children's Spring Festival Gala host competition", "2017 年湖北少儿春晚主持人大赛，捧着金奖奖杯"] },
+    { src: "/photos/stage/09.jpg", w: 960, h: 720, alt: ["On Hubei TV's Voice of Kids", "在湖北卫视《童声朗朗》"] },
+    { src: "/photos/stage/06.jpg", w: 720, h: 720, alt: ["The 2020 Future Dream Children's Spring Festival Gala stage", "2020「未来梦」少儿春晚舞台"] },
+    { src: "/photos/stage/08.jpg", w: 540, h: 720, alt: ["At the 2019 Future Dream Children's Spring Festival Gala", "2019「未来梦」少儿春晚"] },
+    { src: "/photos/stage/07.jpg", w: 1356, h: 720, alt: ["On stage at the 2018 Future Dream children's gala host competition", "2018「未来梦」少儿春晚小主持人大赛"] },
+    { src: "/photos/stage/10.jpg", w: 1044, h: 720, alt: ["Reciting “Love Song of the Yangtze” on stage", "舞台朗诵《长江恋歌》"] },
+    { src: "/photos/stage/11.jpg", w: 960, h: 720, alt: ["China Huayang Youth Language Arts Competition, Hubei division", "中国花样少年语言艺术大赛湖北赛区"] },
+    { src: "/photos/stage/12.jpg", w: 960, h: 720, alt: ["Some of the trophies", "部分奖杯"] },
+  ],
 } satisfies Record<string, Shot[]>;

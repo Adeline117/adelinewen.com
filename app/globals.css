@@ -364,6 +364,18 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
 .lb-bar button { width: 44px; height: 44px; border-radius: var(--pill); border: 1px solid rgba(247, 245, 241, 0.24); background: none; color: inherit; cursor: pointer; font-size: var(--fs-sm); }
 .lb-bar button:disabled { opacity: 0.3; cursor: default; }
 
+/* Earlier: credits as a typeset list (role in mono caps, work in serif), the
+   counts beneath the lead, and the photo reel running the full measure below */
+.stage-sec { flex-direction: column; }
+.stage-sec > .inner, .stage-reel { width: 100%; }
+.stage-stats { grid-template-columns: repeat(2, 1fr); margin-top: 40px; }
+.credits { list-style: none; border-top: 1px solid var(--line); }
+.credits li { display: grid; grid-template-columns: 8.5rem 1fr; gap: 0 20px; align-items: baseline; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.cr-role { font-family: var(--font-mono), monospace; font-size: var(--fs-cap); letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--mute); }
+.cr-work { font-size: var(--fs-md); line-height: 1.4; color: var(--ink); }
+.stage-reel { max-width: var(--measure); margin: clamp(48px, 7vh, 80px) auto 0; }
+@media (max-width: 600px) { .credits li { grid-template-columns: 1fr; gap: 4px; } }
+
 /* contact form */
 .cform { display: flex; flex-direction: column; gap: 16px; max-width: 420px; margin-top: 32px; }
 .hp { position: absolute !important; left: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
