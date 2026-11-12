@@ -17,11 +17,14 @@
   --nav-bg: rgba(247, 245, 241, 0.985);
   --bg: #f7f5f1; /* solid bg color (timeline dot ring, inverted-button text) */
   /* Arena on newsprint: yellowed stock, ink specks, browned edges */
-  --news: #e8dcc0;
+  --news: #eadcb8;
   --news-ink: #1c1810;
   --news-mute: #5a5040;
   --news-line: rgba(70, 50, 20, 0.24);
-  --news-age: rgba(130, 90, 30, 0.22);
+  --news-age: rgba(120, 78, 22, 0.38);
+  --news-fold: rgba(255, 250, 235, 0.3);
+  --news-crease: url("/paper-crumple.webp");
+  --news-stain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1100' height='900'%3E%3Cfilter id='t' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.003' numOctaves='3' seed='21' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .55  0 0 0 0 .38  0 0 0 0 .12  2.2 0 0 0 -1.12'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23t)'/%3E%3C/svg%3E");
   --news-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.2'/%3E%3C/svg%3E");
   --news-speck: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='s'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.35' numOctaves='1' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .2  0 0 0 0 .14  0 0 0 0 .06  -40 0 0 0 11.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23s)'/%3E%3C/svg%3E");
   --news-fiber: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.004 .12' numOctaves='3' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)' opacity='.1'/%3E%3C/svg%3E");
@@ -72,6 +75,7 @@ body.dark {
   --news-line: rgba(230, 210, 170, 0.2);
   --news-fiber: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.004 .12' numOctaves='3' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)' opacity='.045'/%3E%3C/svg%3E");
   --news-age: rgba(0, 0, 0, 0.35);
+  --news-fold: rgba(255, 245, 225, 0.06);
   --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.07'/%3E%3C/svg%3E");
   --field-bg: rgba(252, 248, 240, 0.05);
   --field-bg-focus: rgba(252, 248, 240, 0.09);
@@ -445,8 +449,11 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
     linear-gradient(var(--news-ink), var(--news-ink)) 0 6px / 100% 1px no-repeat,
     linear-gradient(var(--news-ink), var(--news-ink)) 0 calc(100% - 6px) / 100% 1px no-repeat,
     linear-gradient(var(--news-ink), var(--news-ink)) 0 100% / 100% 3px no-repeat,
-    radial-gradient(ellipse 75% 85% at 50% 45%, transparent 55%, var(--news-age)),
+    radial-gradient(ellipse 72% 80% at 50% 45%, transparent 45%, var(--news-age)),
+    linear-gradient(90deg, transparent calc(50% - 26px), rgba(60, 40, 10, 0.12) calc(50% - 1px), var(--news-fold) calc(50% + 1px), transparent calc(50% + 22px)),
+    var(--news-stain), var(--news-crease) 0 0 / 1100px auto,
     var(--news-speck), var(--news-grain), var(--news-fiber), var(--news);
+  background-blend-mode: normal, normal, normal, normal, multiply, normal, multiply, multiply, normal, normal, normal, normal;
 }
 .arena-sec { display: block; padding: clamp(96px, 14vh, 160px) clamp(24px, 5vw, 72px); }
 /* match the other sections' container so headings left-align across the site */
