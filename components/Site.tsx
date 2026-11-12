@@ -321,6 +321,7 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
   const heroRef = useRef<HTMLElement>(null);
   const trackRef = useRef<SVGPathElement>(null);
   const beadRef = useRef<SVGCircleElement>(null);
+  const traceRef = useRef<SVGPathElement>(null);
 
   useEffect(() => {
     const obs = new IntersectionObserver(
@@ -361,11 +362,12 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
     let ticking = false;
     const update = () => {
       ticking = false;
-      // the bead travels the ∞ once over the full page scroll
+      // the pen draws the ∞ once over the full page scroll: the loop closes at Contact
       const max = document.body.scrollHeight - window.innerHeight;
-      const u = max > 0 ? window.scrollY / max : 0;
+      const u = max > 0 ? Math.min(1, window.scrollY / max) : 0;
+      if (traceRef.current) traceRef.current.style.strokeDashoffset = String(len * (1 - u));
       if (track && beadRef.current) {
-        const pt = track.getPointAtLength((u % 1) * len);
+        const pt = track.getPointAtLength(u * len);
         beadRef.current.setAttribute("cx", String(pt.x));
         beadRef.current.setAttribute("cy", String(pt.y));
       }
@@ -377,6 +379,7 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
         requestAnimationFrame(update);
       }
     };
+    if (traceRef.current) traceRef.current.style.strokeDasharray = String(len);
     window.addEventListener("scroll", onScroll, { passive: true });
     update();
     return () => window.removeEventListener("scroll", onScroll);
@@ -574,7 +577,14 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
         </div>
         {/* cover foot: scroll cue left, CTA right */}
         <div className="cover-foot">
-          <div className="hint">{t.heroHint}</div>
+          <div className="hint">
+            {/* the ∞ is drawn once, by hand, as the cover settles; the same mark later
+                traces the page's progress and Arena's signature */}
+            <svg className="cover-mark" viewBox="0 0 84 44" aria-hidden="true" focusable="false">
+              <path d="M42 22 C 35 12 28 8 22 8 A 14 14 0 1 0 22 36 C 28 36 35 32 42 22 C 49 12 56 8 62 8 A 14 14 0 1 1 62 36 C 56 36 49 32 42 22 Z" pathLength={1} />
+            </svg>
+            {t.heroHint}
+          </div>
           <button className="cta" onClick={() => goTo(4)}>{t.heroCta}</button>
         </div>
       </header>
@@ -780,15 +790,13 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
       </main>
 
       <div className="prog" aria-hidden="true">
-        <div className="count">
-          <b>{String(Math.max(active, 0) + 1).padStart(2, "0")}</b> / {String(ids.length).padStart(2, "0")}
-        </div>
         <svg width="70" height="44" viewBox="7 0 70 44">
           <path
             ref={trackRef}
             className="track"
             d="M42 22 C 35 12 28 8 22 8 A 14 14 0 1 0 22 36 C 28 36 35 32 42 22 C 49 12 56 8 62 8 A 14 14 0 1 1 62 36 C 56 36 49 32 42 22 Z"
           />
+          <path ref={traceRef} className="trace" d="M42 22 C 35 12 28 8 22 8 A 14 14 0 1 0 22 36 C 28 36 35 32 42 22 C 49 12 56 8 62 8 A 14 14 0 1 1 62 36 C 56 36 49 32 42 22 Z" />
           <circle ref={beadRef} className="bead" r="3" cx="42" cy="22" />
         </svg>
       </div>
