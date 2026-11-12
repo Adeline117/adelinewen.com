@@ -16,6 +16,14 @@
   /* near-opaque: at lower alpha, scrolled text collides legibly with nav links */
   --nav-bg: rgba(247, 245, 241, 0.985);
   --bg: #f7f5f1; /* solid bg color (timeline dot ring, inverted-button text) */
+  /* Arena on newsprint: yellowed stock, ink specks, browned edges */
+  --news: #f2ecdf;
+  --news-ink: #17140f;
+  --news-mute: #645e53;
+  --news-line: rgba(50, 40, 20, 0.16);
+  --news-blend: multiply;
+  --news-crease: url("/paper-crumple.webp");
+  --news-fiber: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.004 .12' numOctaves='3' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)' opacity='.1'/%3E%3C/svg%3E");
   /* paper grain: grey noise, strong enough to clear one 8-bit level on screen */
   --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.10'/%3E%3C/svg%3E");
   --field-bg: rgba(24, 20, 12, 0.04);
@@ -57,6 +65,12 @@ body.dark {
   --bg-grad: radial-gradient(ellipse 80% 68% at 50% 44%, #1a1815, #141210 62%, #100e0b);
   --nav-bg: rgba(20, 18, 14, 0.98);
   --bg: #141210;
+  --news: #1c1a16;
+  --news-ink: #ebe5d8;
+  --news-mute: #9d968a;
+  --news-line: rgba(240, 230, 210, 0.15);
+  --news-fiber: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.004 .12' numOctaves='3' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)' opacity='.022'/%3E%3C/svg%3E");
+  --news-blend: multiply;
   --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.07'/%3E%3C/svg%3E");
   --field-bg: rgba(252, 248, 240, 0.05);
   --field-bg-focus: rgba(252, 248, 240, 0.09);
@@ -438,6 +452,22 @@ body.dark .wall li:hover img { filter: brightness(0.92); }
 /* ===== Arena: full project section (long-form, scrolls freely) =====
    Same paper as the rest of the site — differentiation comes from the
    editorial layout, not a color block. */
+/* Arena printed on newsprint: its own yellowed stock, edge to edge, framed by a
+   thick-and-thin rule like a broadsheet section front */
+.arena-sec {
+  position: relative; z-index: 1;
+  --ink: var(--news-ink); --text: var(--news-ink); --mute: var(--news-mute); --line: var(--news-line);
+  color: var(--ink);
+  /* thick-and-thin rules top and bottom, a sheet barely crumpled, the site's own grain */
+  background:
+    linear-gradient(var(--news-ink), var(--news-ink)) 0 0 / 100% 2px no-repeat,
+    linear-gradient(var(--line), var(--line)) 0 5px / 100% 1px no-repeat,
+    linear-gradient(var(--line), var(--line)) 0 calc(100% - 5px) / 100% 1px no-repeat,
+    linear-gradient(var(--news-ink), var(--news-ink)) 0 100% / 100% 2px no-repeat,
+    var(--news-crease) 0 0 / 1100px auto,
+    var(--grain), var(--news-fiber), var(--news);
+  background-blend-mode: normal, normal, normal, normal, var(--news-blend), normal, normal, normal;
+}
 .arena-sec { display: block; padding: clamp(96px, 14vh, 160px) clamp(24px, 5vw, 72px); }
 /* match the other sections' container so headings left-align across the site */
 .arena-wrap { max-width: var(--measure); margin: 0 auto; }
