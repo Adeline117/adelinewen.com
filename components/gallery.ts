@@ -6,11 +6,11 @@ export type Shot = { src: string; w: number; h: number; live?: string; alt: [str
 
 export const GALLERY = {
   informs: [
-    { src: "/photos/informs/01.jpg", w: 960, h: 720, alt: ["Adeline beside her poster, “When AI Learns to Hide”, at board 5", "Adeline 站在 5 号展板旁，身边是她的海报《When AI Learns to Hide》"] },
+    { src: "/photos/informs/05.jpg", w: 958, h: 720, alt: ["Adeline walking through her poster", "Adeline 在海报前讲解"] },
     { src: "/photos/informs/02.jpg", w: 540, h: 720, live: "/photos/informs/02.mp4", alt: ["The INFORMS sign in the convention hall", "会场里的 INFORMS 标志"] },
     { src: "/photos/informs/03.jpg", w: 540, h: 720, alt: ["Adeline’s student badge and the Annual Meeting programme", "Adeline 的学生胸牌和年会手册"] },
     { src: "/photos/informs/04.jpg", w: 529, h: 720, alt: ["Adeline in front of the giant INFORMS letters", "Adeline 站在巨大的 INFORMS 字母前"] },
-    { src: "/photos/informs/05.jpg", w: 958, h: 720, alt: ["Adeline walking through her poster", "Adeline 在海报前讲解"] },
+    { src: "/photos/informs/01.jpg", w: 960, h: 720, alt: ["Adeline beside her poster, “When AI Learns to Hide”, at board 5", "Adeline 站在 5 号展板旁，身边是她的海报《When AI Learns to Hide》"] },
     { src: "/photos/informs/06.jpg", w: 560, h: 720, alt: ["The INFORMS letter inviting Adeline to present at the 2026 Annual Meeting", "INFORMS 发来的 2026 年会邀请函"] },
   ],
   smc: [
@@ -21,9 +21,9 @@ export const GALLERY = {
     { src: "/photos/smc/05.jpg", w: 540, h: 720, live: "/photos/smc/05.mp4", alt: ["Adeline answering the room", "Adeline 回应台下听众"] },
   ],
   nbc: [
-    { src: "/photos/nbc/01.jpg", w: 1080, h: 720, alt: ["Adeline presenting HasciDB at Nanyang Technological University", "Adeline 在南洋理工大学报告 HasciDB"] },
-    { src: "/photos/nbc/02.jpg", w: 540, h: 720, alt: ["The conference programme and Adeline’s “Paper Author” badge", "会议议程和 Adeline 的 “Paper Author” 胸牌"] },
     { src: "/photos/nbc/03.jpg", w: 1080, h: 720, alt: ["Adeline at the NTU lectern", "Adeline 在南洋理工的讲台上"] },
+    { src: "/photos/nbc/02.jpg", w: 540, h: 720, alt: ["The conference programme and Adeline’s “Paper Author” badge", "会议议程和 Adeline 的 “Paper Author” 胸牌"] },
+    { src: "/photos/nbc/01.jpg", w: 1080, h: 720, alt: ["Adeline presenting HasciDB at Nanyang Technological University", "Adeline 在南洋理工大学报告 HasciDB"] },
     { src: "/photos/nbc/04.jpg", w: 1080, h: 720, alt: ["A full room during a conference session", "座无虚席的会场"] },
     { src: "/photos/nbc/05.jpg", w: 1080, h: 720, alt: ["Adeline at the lectern, smiling", "讲台旁微笑的 Adeline"] },
     { src: "/photos/nbc/06.jpg", w: 1080, h: 720, alt: ["Adeline asking a question from the audience", "Adeline 在观众席提问"] },
