@@ -16,7 +16,10 @@
   /* near-opaque: at lower alpha, scrolled text collides legibly with nav links */
   --nav-bg: rgba(247, 245, 241, 0.985);
   --bg: #f7f5f1; /* solid bg color (timeline dot ring, inverted-button text) */
-  --paper-plate: #ebeae5;
+  --paper-plate: #e8e6df;
+  --fiber: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.005 .09' numOctaves='3' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)' opacity='.07'/%3E%3C/svg%3E");
+  --plate-shadow: rgba(24, 20, 12, 0.28);
+  --plate-edge: rgba(255, 255, 255, 0.7);
   /* paper grain: grey noise, strong enough to clear one 8-bit level on screen */
   --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.10'/%3E%3C/svg%3E");
   --field-bg: rgba(24, 20, 12, 0.04);
@@ -58,7 +61,10 @@ body.dark {
   --bg-grad: radial-gradient(ellipse 80% 68% at 50% 44%, #1a1815, #141210 62%, #100e0b);
   --nav-bg: rgba(20, 18, 14, 0.98);
   --bg: #141210;
-  --paper-plate: #1d1c19;
+  --paper-plate: #201e1a;
+  --fiber: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.005 .09' numOctaves='3' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)' opacity='.045'/%3E%3C/svg%3E");
+  --plate-shadow: rgba(0, 0, 0, 0.6);
+  --plate-edge: rgba(255, 248, 235, 0.06);
   --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.07'/%3E%3C/svg%3E");
   --field-bg: rgba(252, 248, 240, 0.05);
   --field-bg-focus: rgba(252, 248, 240, 0.09);
@@ -411,7 +417,14 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
    editorial layout, not a color block. */
 /* Arena on its own stock: one step cooler and deeper than the page, edge to edge,
    like a plate bound into a book — the product chapter reads as a separate sheet */
-.arena-sec { background: var(--grain), var(--paper-plate); border-block: 1px solid var(--line); }
+.arena-sec {
+  position: relative; z-index: 1;
+  /* three layers of paper: fine grain, long horizontal fibres, the stock itself */
+  background: var(--grain), var(--fiber), var(--paper-plate);
+  border-block: 1px solid var(--line);
+  /* the sheet sits on the page: a soft shadow above and below, a lit top edge */
+  box-shadow: 0 -18px 36px -24px var(--plate-shadow), 0 18px 36px -24px var(--plate-shadow), inset 0 1px 0 var(--plate-edge);
+}
 .arena-sec { display: block; padding: clamp(96px, 14vh, 160px) clamp(24px, 5vw, 72px); }
 /* match the other sections' container so headings left-align across the site */
 .arena-wrap { max-width: var(--measure); margin: 0 auto; }
