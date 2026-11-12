@@ -121,7 +121,7 @@ const COPY: Record<
       ),
       lead: (
         <>
-          Tennis has the ATP rankings; chess has Elo. Crypto trading moves hundreds of billions a day, yet no one could answer the simplest question: who are the best traders? Arena (<a className="tlink" href="https://arenafi.org" target="_blank" rel="noopener noreferrer">arenafi.org</a>) answers it: 68,000+ traders from 44+ exchanges, centralized and decentralized, ranked on one transparent Arena Score. For the first time, crypto trading has a world ranking. I designed and built it solo.
+          Tennis has the ATP rankings; chess has Elo. Crypto trading moves hundreds of billions a day, yet no one could answer the simplest question: who are the best traders? Arena (<a className="tlink" href="https://arenafi.org" target="_blank" rel="noopener noreferrer">arenafi.org</a>) answers it: 68,000+ traders from 44+ exchanges, centralized and decentralized, ranked on one transparent Arena Score. For the first time, crypto trading has a world ranking.
         </>
       ),
       more: { text: "Visit arenafi.org ↗", href: "https://arenafi.org" },
@@ -143,7 +143,7 @@ const COPY: Record<
         steps: [
           { phase: "V1 · Discover", when: "now", what: "Live leaderboard, trader claiming & verification, community cold start." },
           { phase: "V2 · Prove", when: "6–18 mo", what: "A stable in-app currency, head-to-head battles, spectator betting, the first 12-week season." },
-          { phase: "V3 · Follow", when: "18–36 mo", what: "Copy-trading vaults, advanced bet types, ARENA token, institutional data API." },
+          { phase: "V3 · Follow", when: "18–36 mo", what: "Copy-trading vaults, advanced bet types, institutional data API." },
         ],
       },
       vision: {
@@ -250,7 +250,7 @@ const COPY: Record<
       ),
       lead: (
         <>
-          网球有 ATP 排名，国际象棋有 Elo。加密交易每天成交数千亿美元，却没人能回答最基本的问题：谁是最好的交易者？Arena（<a className="tlink" href="https://arenafi.org" target="_blank" rel="noopener noreferrer">arenafi.org</a>）给出了答案：44+ 交易所（中心化 + 去中心化）上的 68,000+ 交易者，按同一个透明的 Arena 评分排名。加密交易第一次有了世界排名。由我独立设计和开发。
+          网球有 ATP 排名，国际象棋有 Elo。加密交易每天成交数千亿美元，却没人能回答最基本的问题：谁是最好的交易者？Arena（<a className="tlink" href="https://arenafi.org" target="_blank" rel="noopener noreferrer">arenafi.org</a>）给出了答案：44+ 交易所（中心化 + 去中心化）上的 68,000+ 交易者，按同一个透明的 Arena 评分排名。加密交易第一次有了世界排名。
         </>
       ),
       more: { text: "访问 arenafi.org ↗", href: "https://arenafi.org" },
@@ -272,7 +272,7 @@ const COPY: Record<
         steps: [
           { phase: "V1 · 发现", when: "现在", what: "排行榜上线、交易者认领与验证、社区冷启动。" },
           { phase: "V2 · 证明", when: "6–18 个月", what: "稳定的站内货币、1v1 对战、观众下注、第一个 12 周赛季。" },
-          { phase: "V3 · 跟随", when: "18–36 个月", what: "跟单金库、进阶下注、ARENA 代币、机构数据 API。" },
+          { phase: "V3 · 跟随", when: "18–36 个月", what: "跟单金库、进阶下注、机构数据 API。" },
         ],
       },
       vision: {

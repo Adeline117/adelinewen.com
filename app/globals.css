@@ -479,6 +479,8 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.88); }
   .toggle { min-height: 44px; min-width: 44px; padding: 0 12px; font-size: var(--fs-cap); }
 }
 @media (max-width: 600px) {
+  /* 11px mono caps read too small on a phone held at arm's length */
+  :root { --fs-cap: 12px; }
   /* five section links can't fit legibly beside the toggles on a phone —
      free scroll makes them non-essential, so the bar keeps name + controls */
   nav .links { display: none; }
