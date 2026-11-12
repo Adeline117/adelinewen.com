@@ -343,6 +343,9 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
 .strip ul { display: flex; align-items: flex-end; gap: 8px; list-style: none; height: clamp(220px, 60cqi, 340px); }
 .strip li { flex: none; height: 70%; scroll-snap-align: start; }
 .strip li:first-child { height: 100%; }
+/* even reels: no enlarged lead — every photo at the reel's standard (70%) height */
+.even .strip ul { height: clamp(154px, 42cqi, 238px); }
+.even .strip li, .even .strip li:first-child { height: 100%; }
 .strip .plate { display: block; height: 100%; padding: 0; cursor: zoom-in; transition: border-color var(--dur-fast) var(--ease); }
 .strip .plate:hover { border-color: var(--ink); }
 .strip .plate:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }

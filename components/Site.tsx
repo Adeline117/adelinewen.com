@@ -779,7 +779,7 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
           </div>
         </div>
         <div className="stage-reel">
-          <PhotoStrip shots={GALLERY.stage} label={lang === "zh" ? "舞台与银幕" : "Stage and screen"} lang={lang} />
+          <PhotoStrip shots={GALLERY.stage} label={lang === "zh" ? "舞台与银幕" : "Stage and screen"} lang={lang} even />
         </div>
         <PhotoWall label={lang === "zh" ? "更多舞台照片" : "More from the stage"} />
       </section>

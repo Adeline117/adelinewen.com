@@ -35,7 +35,8 @@ function Pic({ s, alt, sizes, lazy = true }: { s: Shot; alt: string; sizes: stri
   );
 }
 
-export default function PhotoStrip({ shots, label, lang }: { shots: Shot[]; label: string; lang: "en" | "zh" }) {
+// even: every photo the same height (no enlarged lead) — for reels with no single hero shot
+export default function PhotoStrip({ shots, label, lang, even = false }: { shots: Shot[]; label: string; lang: "en" | "zh"; even?: boolean }) {
   const reel = useRef<HTMLUListElement>(null);
   const box = useRef<HTMLDialogElement>(null);
   const big = useRef<HTMLUListElement>(null);
@@ -117,7 +118,7 @@ export default function PhotoStrip({ shots, label, lang }: { shots: Shot[]; labe
   const alt = (i: number) => shots[i].alt[zh ? 1 : 0];
 
   return (
-    <div className={`strip-wrap${edge.start ? " at-start" : ""}${edge.end ? " at-end" : ""}`}>
+    <div className={`strip-wrap${even ? " even" : ""}${edge.start ? " at-start" : ""}${edge.end ? " at-end" : ""}`}>
       <div className="strip" role="region" aria-label={zh ? `${label} 照片` : `Photos — ${label}`} tabIndex={0}>
         <ul ref={reel} role="list">
           {shots.map((s, i) => (
@@ -132,7 +133,7 @@ export default function PhotoStrip({ shots, label, lang }: { shots: Shot[]; labe
                 {s.live ? (
                   <video src={s.live} poster={`${stem(s)}-480.webp`} muted loop playsInline preload="none" width={s.w} height={s.h} aria-hidden="true" />
                 ) : (
-                  <Pic s={s} alt={alt(i)} sizes={reelSizes(s, i === 0)} />
+                  <Pic s={s} alt={alt(i)} sizes={reelSizes(s, i === 0 && !even)} />
                 )}
               </button>
             </li>
