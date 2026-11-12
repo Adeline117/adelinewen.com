@@ -5,9 +5,6 @@ import PhotoStrip from "./PhotoStrip";
 import { GALLERY, type Shot } from "./gallery";
 import { flushSync } from "react-dom";
 
-// cursor-reactive needle field behind the cover — desktop only (it's a pointer
-// interaction), loaded after the text paints
-
 type Lang = "en" | "zh";
 type Section = { label: string; title: ReactNode; lead: ReactNode; more: { text: string; href: string } };
 type Row = { n: string; d: string; m: string };
@@ -43,6 +40,7 @@ const COPY: Record<
     honors: { label: string; title: ReactNode; items: Honor[] };
     research: Section & { tl: TL[] };
     arena: Section & {
+      shot: { alt: string; cap: string };
       stats: Row[];
       value: { h: string; items: Val[] };
       roadmap: { h: string; steps: Road[] };
@@ -125,6 +123,7 @@ const COPY: Record<
         </>
       ),
       more: { text: "Visit arenafi.org ↗", href: "https://arenafi.org" },
+      shot: { alt: "The Arena leaderboard: the top six traders by Arena Score, with 90-day return, profit, win rate and drawdown", cap: "arenafi.org leaderboard, Nov 2026" },
       stats: [
         { n: "68,000+", d: "traders ranked", m: "" },
         { n: "44+", d: "exchanges · CEX + DEX", m: "" },
@@ -134,7 +133,7 @@ const COPY: Record<
         h: "Why it’s different",
         items: [
           { h: "Cross-platform visibility", d: "The only place that sees every trader on every exchange. Binance won’t show you Bybit’s traders; Arena shows them all." },
-          { h: "A score you can check", d: "One 0–100 Arena Score, weighted 60% return on investment and 40% absolute profit, with a methodology anyone can read. Tiny accounts (under $500 profit) and fake-wallet farms stay off the board, so the ranks are real traders." },
+          { h: "A score you can check", d: "One 0–100 Arena Score that weighs profit, return, drawdown, Sharpe ratio and consistency, with the last 90 days counting most. Thin track records are discounted and one-off extreme returns capped, and the full methodology is public." },
           { h: "Built for competition", d: "Traders can claim and verify their profiles today; head-to-head battles and seasons come next." },
         ],
       },
@@ -254,6 +253,7 @@ const COPY: Record<
         </>
       ),
       more: { text: "访问 arenafi.org ↗", href: "https://arenafi.org" },
+      shot: { alt: "Arena 排行榜：按 Arena 评分排名的前六位交易者，以及 90 天收益率、盈亏、胜率和最大回撤", cap: "arenafi.org 排行榜，2026 年 11 月" },
       stats: [
         { n: "68,000+", d: "交易者排名", m: "" },
         { n: "44+", d: "交易所 · CEX + DEX", m: "" },
@@ -263,7 +263,7 @@ const COPY: Record<
         h: "为什么不一样",
         items: [
           { h: "跨平台可见", d: "唯一能看见每个交易所、每位交易者的地方。币安不会告诉你 Bybit 的交易者；Arena 全都看得见。" },
-          { h: "看得懂的分数", d: "Arena 评分 0–100，收益率（ROI）占 60%、绝对盈亏占 40%，方法论公开，任何人都能查看。盈利不到 $500 的小账户和伪造钱包刷分都挡在榜外，榜上是真实的交易者。" },
+          { h: "看得懂的分数", d: "Arena 评分 0–100，综合盈亏、收益率、回撤、夏普比率和稳定性，近 90 天的表现权重最高。数据太少的账户会被打折，一次性的极端收益会被封顶，完整的评分方法公开可查。" },
           { h: "为竞技而生", d: "交易者现在就能认领并验证自己的主页；接下来是 1v1 对战和赛季。" },
         ],
       },
@@ -322,7 +322,6 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
   const heroRef = useRef<HTMLElement>(null);
   const trackRef = useRef<SVGPathElement>(null);
   const beadRef = useRef<SVGCircleElement>(null);
-  const cursorRef = useRef<HTMLDivElement>(null);
   const nameRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -395,42 +394,6 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
     window.addEventListener("scroll", onScroll, { passive: true });
     update();
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  // Inverting cursor: a mix-blend-difference dot that lerps to the pointer and
-  // grows over interactive targets. Desktop pointers only; native cursor hidden
-  // while active (restored to a text caret over form fields).
-  useEffect(() => {
-    const el = cursorRef.current;
-    if (!el) return;
-    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
-    const ease = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 1 : 0.28;
-    document.body.classList.add("has-cursor");
-    let x = -100, y = -100, tx = -100, ty = -100, shown = false, raf = 0;
-    const onMove = (e: PointerEvent) => {
-      tx = e.clientX; ty = e.clientY;
-      if (!shown) { shown = true; x = tx; y = ty; el.classList.add("on"); }
-      const t = e.target as HTMLElement | null;
-      el.classList.toggle("link", !!t?.closest("a,button,[role=button]"));
-    };
-    const onLeave = () => el.classList.remove("on");
-    const onEnter = () => { if (shown) el.classList.add("on"); };
-    const loop = () => {
-      raf = requestAnimationFrame(loop);
-      x += (tx - x) * ease; y += (ty - y) * ease;
-      el.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%)`;
-    };
-    window.addEventListener("pointermove", onMove, { passive: true });
-    document.addEventListener("pointerleave", onLeave);
-    document.addEventListener("pointerenter", onEnter);
-    raf = requestAnimationFrame(loop);
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("pointermove", onMove);
-      document.removeEventListener("pointerleave", onLeave);
-      document.removeEventListener("pointerenter", onEnter);
-      document.body.classList.remove("has-cursor");
-    };
   }, []);
 
   // Ink lens on the cover name: a soft circle following the cursor reveals a
@@ -565,8 +528,8 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
   const t = COPY[lang];
   const ids = ["about", "honors", "research", "arena", "contact"];
 
-  const renderSection = (i: number, sec: Section, right: ReactNode, rev = false, leftExtra: ReactNode = null) => (
-    <section className={`sec${rev ? " rev" : ""}`} id={ids[i]} data-i={i} ref={setRef(i)}>
+  const renderSection = (i: number, sec: Section, right: ReactNode, leftExtra: ReactNode = null) => (
+    <section className="sec" id={ids[i]} data-i={i} ref={setRef(i)}>
       <div className="inner">
         <div className="left">
           <div className="label">{sec.label}</div>
@@ -599,10 +562,22 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
           <feMorphology operator="dilate" radius="1.4" />
         </filter>
       </svg>
-      <div className="cursor" ref={cursorRef} aria-hidden="true" />
 
       <nav>
-        <div className="logo">Adeline Wen</div>
+        {/* the name doubles as "back to top"; on phones, where the section links
+            don't fit, it turns into the name of the section being read */}
+        <button
+          className={`logo${active >= 0 ? " in-sec" : ""}`}
+          aria-label={lang === "zh" ? "回到顶部" : "Back to top"}
+          onClick={() =>
+            window.scrollTo({ top: 0, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" })
+          }
+        >
+          <span className="logo-name">Adeline Wen</span>
+          <span className="logo-sec" aria-hidden="true">
+            {String(Math.max(active, 0) + 1).padStart(2, "0")} · {t.nav[Math.max(active, 0)]}
+          </span>
+        </button>
         <div className="navright">
           <div className="links">
             {t.nav.map((label, i) => (
@@ -716,7 +691,6 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
             </li>
           ))}
         </ul>,
-        true // zig-zag: this spread runs right-to-left
       )}
 
       {/* 04, Arena (full project page) */}
@@ -725,6 +699,18 @@ export default function Site({ routeLang }: { routeLang?: Lang }) {
           <div className="label">{t.arena.label}</div>
           <h2>{t.arena.title}</h2>
           <p className="lead">{t.arena.lead}</p>
+
+          {/* the product itself: a snapshot of the leaderboard, linking to the live one */}
+          <figure className="arena-shot">
+            <a href="https://arenafi.org" target="_blank" rel="noopener noreferrer">
+              <picture>
+                <source type="image/avif" srcSet={`/arena/board-${lang}-800.avif 800w, /arena/board-${lang}-1592.avif 1592w`} sizes="(max-width: 820px) calc(100vw - 48px), 880px" />
+                <source type="image/webp" srcSet={`/arena/board-${lang}-800.webp 800w, /arena/board-${lang}-1592.webp 1592w`} sizes="(max-width: 820px) calc(100vw - 48px), 880px" />
+                <img src={`/arena/board-${lang}-800.webp`} width={1592} height={1070} alt={t.arena.shot.alt} loading="lazy" decoding="async" />
+              </picture>
+            </a>
+            <figcaption>{t.arena.shot.cap}</figcaption>
+          </figure>
 
           <ul className="rows arena-stats">
             {t.arena.stats.map((r) => (

@@ -18,9 +18,12 @@ const HEIGHTS = [240, 480, 720];
 const stem = (s: Shot) => s.src.replace(/\.jpg$/, "");
 const srcSet = (s: Shot, ext: "avif" | "webp") =>
   HEIGHTS.map((h) => `${stem(s)}-${h}.${ext} ${Math.round((s.w * h) / s.h)}w`).join(", ");
-// a reel is 160px tall on phones and at most 240px elsewhere (globals.css .strip ul)
-const reelSizes = (s: Shot) =>
-  `(max-width: 480px) ${Math.round((s.w * 160) / s.h)}px, ${Math.round((s.w * 240) / s.h)}px`;
+// the lead photo is 220px tall on phones and at most 340px elsewhere; the rest
+// are 70% of that (globals.css .strip ul / li)
+const reelSizes = (s: Shot, lead: boolean) => {
+  const [phone, wide] = lead ? [220, 340] : [154, 238];
+  return `(max-width: 480px) ${Math.round((s.w * phone) / s.h)}px, ${Math.round((s.w * wide) / s.h)}px`;
+};
 
 function Pic({ s, alt, sizes, lazy = true }: { s: Shot; alt: string; sizes: string; lazy?: boolean }) {
   return (
@@ -129,7 +132,7 @@ export default function PhotoStrip({ shots, label, lang }: { shots: Shot[]; labe
                 {s.live ? (
                   <video src={s.live} poster={`${stem(s)}-480.webp`} muted loop playsInline preload="none" width={s.w} height={s.h} aria-hidden="true" />
                 ) : (
-                  <Pic s={s} alt={alt(i)} sizes={reelSizes(s)} />
+                  <Pic s={s} alt={alt(i)} sizes={reelSizes(s, i === 0)} />
                 )}
               </button>
             </li>
@@ -165,6 +168,7 @@ export default function PhotoStrip({ shots, label, lang }: { shots: Shot[]; labe
             </li>
           ))}
         </ul>
+        <p className="lb-cap" aria-live="polite">{alt(idx)}</p>
         <div className="lb-bar">
           <span className="lb-count">
             {idx + 1} / {shots.length}
