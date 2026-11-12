@@ -161,17 +161,16 @@ const COPY: Record<
           Earlier, on <em>stage</em>.
         </>
       ),
-      lead: "Before research, there was a microphone. I grew up hosting, reciting and acting: the Hubei TV Children's Spring Festival Gala, CCTV-14, a feature film released in cinemas across China, and a Hubei historical drama.",
+      lead: "Before research, there was a microphone. I grew up hosting, reciting and acting: on CCTV, on satellite television, and in a feature film released in cinemas across China.",
       stats: [
         { n: "40", d: "awards in recitation, speech and hosting" },
         { n: "12", d: "at national or international level" },
       ],
       credits: [
-        { role: "Host", work: "Hubei TV Children's Spring Festival Gala" },
-        { role: "Performer", work: "CCTV-14" },
-        { role: "Recitation", work: "Hubei TV, Voice of Kids" },
         { role: "Feature film", work: <><a className="tlink" href="https://movie.douban.com/subject/26955897/" target="_blank" rel="noopener noreferrer"><i>Superposition of Love</i></a> (2017), released in cinemas across China</> },
-        { role: "TV drama", work: "A Hubei historical drama series" },
+        { role: "Performer", work: "CCTV-14" },
+        { role: "Host", work: "Hubei TV Children's Spring Festival Gala" },
+        { role: "Recitation", work: "Hubei TV, Voice of Kids" },
       ],
     },
     contact: {
@@ -310,17 +309,16 @@ const COPY: Record<
           更早以前，在<em>舞台</em>上
         </>
       ),
-      lead: "做研究之前，我是拿着话筒长大的：主持、朗诵、表演。湖北电视台少儿春晚、CCTV-14，一部在全国院线上映的电影，还有一部湖北历史剧。",
+      lead: "做研究之前，我是拿着话筒长大的：主持、朗诵、表演。上过央视和卫视的舞台，也演过一部全国院线上映的电影。",
       stats: [
         { n: "40", d: "朗诵、演讲与主持奖项" },
         { n: "12", d: "国家级与国际级" },
       ],
       credits: [
-        { role: "主持", work: "湖北电视台少儿春晚" },
-        { role: "演出", work: "CCTV-14 少儿频道" },
-        { role: "朗诵", work: "湖北卫视《童声朗朗》" },
         { role: "电影", work: <><a className="tlink" href="https://movie.douban.com/subject/26955897/" target="_blank" rel="noopener noreferrer">《欧爸的情人》</a>（2017），全国院线上映</> },
-        { role: "电视剧", work: "一部湖北历史剧" },
+        { role: "演出", work: "CCTV-14 少儿频道" },
+        { role: "主持", work: "湖北电视台少儿春晚" },
+        { role: "朗诵", work: "湖北卫视《童声朗朗》" },
       ],
     },
     contact: {
