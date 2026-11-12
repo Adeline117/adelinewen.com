@@ -395,7 +395,11 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
 body.dark .arena-shot img { filter: brightness(0.88); }
 .arena-shot figcaption { margin-top: 8px; font-family: var(--font-mono), monospace; font-size: var(--fs-cap); letter-spacing: 0.08em; color: var(--mute); }
 .arena-stats { display: grid !important; grid-template-columns: repeat(3, 1fr); gap: 0 28px; margin: 40px 0 8px; }
-.arena-stats li { border-top: 1px solid var(--line); flex-direction: column; align-items: flex-start; gap: 5px; padding: 16px 4px; }
+.arena-stats li { border-top: 1px solid var(--line); flex-direction: column; align-items: flex-start; gap: 5px; padding: 20px 0 0; }
+.arena-stats li:hover { padding-left: 0; }
+.arena-stats li:hover .n { font-style: normal; }
+/* the section's evidence: the loudest numbers on the site */
+.arena-stats .n { display: block; font-size: clamp(40px, 4.4vw, 60px); line-height: 1; letter-spacing: -0.02em; margin-bottom: 10px; }
 /* all stat cells open (top rule only) — the inherited last-child bottom rule closed
    just one cell of the grid, an asymmetric stray */
 .arena-stats li:last-child { border-bottom: 0; }
@@ -412,12 +416,13 @@ body.dark .arena-shot img { filter: brightness(0.88); }
 .alist li b { color: var(--ink); font-weight: 500; }
 .aroad { list-style: none; margin-top: 0; }
 .aroad li { display: grid; grid-template-columns: 150px 86px 1fr; gap: 20px; padding: 16px 0; border-top: 1px solid var(--line); align-items: baseline; }
-.aroad li:last-child { border-bottom: 1px solid var(--line); }
+/* the block above already draws the opening rule */
+.aroad li:first-child { border-top: 0; padding-top: 0; }
 .aroad .rp { font-family: var(--font-fraunces), serif; font-weight: 330; font-size: var(--fs-md); color: var(--ink); }
 .aroad .rw { font-family: var(--font-mono), monospace; font-size: var(--fs-cap); text-transform: uppercase; letter-spacing: 0.07em; color: var(--mute); }
 .aroad .rwhat { font-size: var(--fs-body); line-height: 1.55; color: var(--text); }
 /* the dream — the section's landing: full-width, no label, builds to an ink italic payoff */
-.arena-vision { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--line); max-width: 820px; font-size: var(--fs-md); line-height: 1.5; color: var(--text); }
+.arena-vision { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--line); padding-right: max(0px, calc(100% - 820px)); font-size: var(--fs-md); line-height: 1.5; color: var(--text); }
 .arena-vision em { font-style: italic; color: var(--ink); }
 /* product signature lockup at the section exit — Arena's ∞ mark + wordmark, in ink */
 .arena-sign { display: flex; align-items: center; gap: 14px; margin-top: 48px; flex-wrap: wrap; }
@@ -470,6 +475,11 @@ body.dark .arena-shot img { filter: brightness(0.88); }
 @media (max-width: 600px) {
   /* 11px mono caps read too small on a phone held at arm's length */
   :root { --fs-cap: 12px; }
+  /* one stat per row, number and label on a shared baseline */
+  .arena-stats { grid-template-columns: 1fr; margin-bottom: 0; }
+  .arena-stats li { padding: 16px 0; }
+  .arena-stats .rinfo { display: grid; grid-template-columns: 6.5rem 1fr; align-items: baseline; gap: 12px; }
+  .arena-stats .n { font-size: 36px; margin-bottom: 0; }
   /* five section links can't fit legibly beside the toggles on a phone —
      free scroll makes them non-essential, so the bar keeps name + controls */
   nav .links { display: none; }
