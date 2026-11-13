@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, type PointerEvent, type ReactNode } from "
 import { BRIDGE, H, NUT, PipaBody, STRINGS, W, base } from "./pipa";
 
 // About › Off the clock. The interests in one line of type, each (but the pipa) with a
-// small ink mark that moves once when hovered or tapped; then the pipa itself, drawn
+// small ink mark that moves on its own now and then, and when hovered or tapped; then the pipa itself, drawn
 // lying on its side, with four strings you can pluck. Sweep across them and each string
 // you cross bends where you crossed it and rings down as a damped oscillation (run only
 // while something still moves). Sound is off until the visitor turns it on; then each
@@ -90,6 +90,7 @@ const GLYPHS: ReactNode[] = [
 export default function OffClock({ lang }: { lang: "en" | "zh" }) {
   const t = L[lang];
   const svg = useRef<SVGSVGElement>(null);
+  const list = useRef<HTMLParagraphElement>(null);
   const paths = useRef<(SVGPathElement | null)[]>([]);
   const state = useRef(STRINGS.map(() => ({ a: 0, v: 0, x: W / 2 })));
   const raf = useRef(0);
@@ -98,7 +99,8 @@ export default function OffClock({ lang }: { lang: "en" | "zh" }) {
   const [sound, setSound] = useState(false);
   const soundRef = useRef(false);
   const calm = useRef(false);
-  const [tapped, setTapped] = useState<number | null>(null);
+  const [playing, setPlaying] = useState<number[]>([]);
+  const playTimers = useRef<number[]>([]);
 
   useEffect(() => {
     calm.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -140,35 +142,6 @@ export default function OffClock({ lang }: { lang: "en" | "zh" }) {
     }
     if (soundRef.current && audio.current) pluckSound(audio.current, STRINGS[i].f, 0.12 + Math.min(0.12, force * 0.02));
   };
-
-  // the first time the pipa is drawn in, its strings tremble once, low to high, without
-  // sound: the hint that they can be plucked, said by the strings rather than the caption
-  useEffect(() => {
-    const el = svg.current;
-    if (!el || calm.current) return;
-    const timers: number[] = [];
-    const io = new IntersectionObserver(
-      ([e]) => {
-        if (!e.isIntersecting) return;
-        io.disconnect();
-        [3, 2, 1, 0].forEach((i, k) =>
-          timers.push(
-            window.setTimeout(() => {
-              if (state.current[i].a === 0) pluck(i, W * 0.62, 1, -1);
-            }, 2600 + k * 140),
-          ),
-        );
-      },
-      { threshold: 0.6 },
-    );
-    io.observe(el);
-    return () => {
-      io.disconnect();
-      timers.forEach(clearTimeout);
-    };
-    // pluck reads refs only
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   // pointer in viewBox units (the drawing keeps its aspect ratio)
   const at = (e: PointerEvent) => {
@@ -214,22 +187,71 @@ export default function OffClock({ lang }: { lang: "en" | "zh" }) {
 
   // touch has no hover: a tap plays the mark's move once
   const tap = (i: number) => {
-    setTapped(null);
-    requestAnimationFrame(() => setTapped(i));
-    window.setTimeout(() => setTapped((v) => (v === i ? null : v)), 1800);
+    clearTimeout(playTimers.current[i]);
+    setPlaying((v) => v.filter((x) => x !== i));
+    requestAnimationFrame(() => setPlaying((v) => [...v, i]));
+    playTimers.current[i] = window.setTimeout(() => setPlaying((v) => v.filter((x) => x !== i)), 2000);
   };
+
+  // Left alone, the corner keeps breathing. When the line of interests comes into view
+  // each mark plays its move in turn, then one every few seconds, round and round. When
+  // the pipa comes into view its strings tremble once, low to high, without sound (the
+  // hint that they can be plucked), and after that one string now and then stirs. All of
+  // it pauses off screen and in a background tab.
+  useEffect(() => {
+    if (calm.current || !list.current || !svg.current) return;
+    const seen = new Map<Element, boolean>();
+    const io = new IntersectionObserver(
+      (es) => es.forEach((e) => seen.set(e.target, e.isIntersecting)),
+      { threshold: 0.5 },
+    );
+    io.observe(list.current);
+    io.observe(svg.current);
+    const live = (el: Element | null) => !!el && !!seen.get(el) && !document.hidden;
+    let k = 0;
+    let marks = 0;
+    const markTick = () => {
+      if (live(list.current)) {
+        tap(k % 4);
+        k++;
+      }
+      marks = window.setTimeout(markTick, k > 0 && k < 4 ? 900 : 4200);
+    };
+    marks = window.setTimeout(markTick, 1200);
+    let strummed = false;
+    const later: number[] = [];
+    const strings = window.setInterval(() => {
+      if (!live(svg.current)) return;
+      if (!strummed) {
+        strummed = true;
+        [3, 2, 1, 0].forEach((i, n) => later.push(window.setTimeout(() => pluck(i, W * 0.62, 1, -1), 1800 + n * 140)));
+        return;
+      }
+      if (Math.random() < 0.45 && state.current.every((st) => st.a === 0)) {
+        pluck(Math.floor(Math.random() * 4), 200 + Math.random() * 260, Math.random() < 0.5 ? -1 : 1, -2);
+      }
+    }, 2400);
+    return () => {
+      io.disconnect();
+      clearTimeout(marks);
+      clearInterval(strings);
+      later.forEach(clearTimeout);
+    };
+    // tap and pluck read refs and a state setter only
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const sep = lang === "zh" ? "、" : ", ";
   return (
     <div className="offclock">
       <h3 className="oc-h">{t.h}</h3>
-      <p className="oc-list">
+      <p className="oc-list" ref={list}>
         {t.pipa}
         {t.rest.map((x, i) => (
           <span key={x}>
             {sep}
             <span
-              className={`oc-item oc-${["chess", "poker", "sky", "doc"][i]}${tapped === i ? " on" : ""}`}
+              className={`oc-item oc-${["chess", "poker", "sky", "doc"][i]}${playing.includes(i) ? " on" : ""}`}
               onClick={() => tap(i)}
             >
               {x}

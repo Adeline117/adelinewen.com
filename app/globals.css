@@ -489,7 +489,7 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
 @keyframes gBack { 0%, 25% { opacity: 1; } 26%, 74% { opacity: 0; } 75%, 100% { opacity: 1; } }
 /* skydiving: the canopy opens from nothing and the jumper sinks a little */
 @keyframes gCanopy { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
-@keyframes gSink { 0% { transform: translateY(-3px); } 100% { transform: none; } }
+@keyframes gSink { 0% { transform: translateY(-5px); } 100% { transform: none; } }
 /* documentary: the REC light blinks */
 .oc-doc .g-rec { fill: none; stroke: currentColor; stroke-width: 1; }
 @keyframes gRec { 0%, 100% { fill: currentColor; } 50% { fill: transparent; } }
