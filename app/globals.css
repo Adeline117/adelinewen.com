@@ -429,6 +429,8 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
 .smap-node circle { fill: var(--bg); stroke: var(--ink); stroke-width: 1; transition: fill var(--dur-fast) var(--ease); }
 .smap-node circle.hit { fill: transparent; stroke: none; cursor: grab; touch-action: none; }
 .smap-node:active circle.hit { cursor: grabbing; }
+/* fingers need a bigger handle than a cursor: every circle is at least 44px across on touch */
+@media (pointer: coarse) { .smap-node circle.hit { r: 38px; } }
 .smap-node text { pointer-events: none; user-select: none; }
 .smap-node.on circle:not(.hit) { fill: var(--ink); }
 .smap-node text, .smap-read { font-family: var(--font-mono), monospace; font-size: 13px; paint-order: stroke; stroke: var(--bg); stroke-width: 4px; stroke-linejoin: round; letter-spacing: var(--track-meta); fill: var(--mute); transition: fill var(--dur-fast) var(--ease); }
