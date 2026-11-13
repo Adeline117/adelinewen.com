@@ -48,6 +48,7 @@ export const GALLERY = {
     { src: "/photos/yc/01.jpg", w: 469, h: 720, alt: ["Adeline beside the giant Y Combinator “Y”", "Adeline 站在巨大的 Y Combinator “Y” 标志旁"] },
     { src: "/photos/yc/02.jpg", w: 540, h: 720, alt: ["The arena screen: “Jensen Huang, Founder & CEO, NVIDIA”", "场馆大屏：“Jensen Huang, Founder & CEO, NVIDIA”"] },
     { src: "/photos/yc/03.jpg", w: 540, h: 720, live: "/photos/yc/03.mp4", alt: ["Jensen Huang in conversation on stage", "黄仁勋在台上对谈"] },
+    { src: "/photos/yc/04.jpg", w: 540, h: 720, live: "/photos/yc/04.mp4", alt: ["Jensen Huang on the big screen", "大屏上的黄仁勋"] },
     { src: "/photos/yc/05.jpg", w: 540, h: 720, live: "/photos/yc/05.mp4", alt: ["A fireside chat on the big screen above the stage", "舞台上方大屏里的炉边对谈"] },
   ],
   dempsey: [
