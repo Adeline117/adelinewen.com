@@ -12,9 +12,9 @@ import { BRIDGE, H, NUT, PipaBody, STRINGS, W, base } from "./pipa";
 const L = {
   en: {
     h: "Off the clock",
-    pipa: "Pipa (Level 10)",
-    rest: ["chess", "poker", "skydiving", "documentary film"],
-    note: " (one passed a million views on Douyin, China’s TikTok)",
+    // the two with something to show say it in the sentence; the rest are named lightly.
+    // A number is the index of a mark in GLYPHS: chess, poker, skydiving, film
+    line: ["Pipa, to Level 10. ", [3, "Documentaries"], ", one of them past a million views on Douyin, China’s TikTok. Also ", [0, "chess"], ", ", [1, "poker"], " and ", [2, "skydiving"], "."],
     cap: "Four strings, tuned A D E A. Sweep across them to pluck.",
     on: "Sound on",
     off: "Sound off",
@@ -22,9 +22,7 @@ const L = {
   },
   zh: {
     h: "工作之外",
-    pipa: "琵琶十级",
-    rest: ["国际象棋", "德州扑克", "跳伞", "纪录片拍摄"],
-    note: "（有一条在抖音播放破百万）",
+    line: ["琵琶考到十级。拍", [3, "纪录片"], "，有一条在抖音播放破百万。闲时下", [0, "国际象棋"], "、打", [1, "德州扑克"], "，也", [2, "跳伞"], "。"],
     cap: "四根弦，定弦 A D E A。划过琴弦即可拨响。",
     on: "声音：开",
     off: "声音：关",
@@ -214,7 +212,7 @@ export default function OffClock({ lang }: { lang: "en" | "zh" }) {
     let marks = 0;
     const markTick = () => {
       if (live(list.current)) {
-        tap(k % 4);
+        tap([3, 0, 1, 2][k % 4]); // in reading order
         k++;
       }
       marks = window.setTimeout(markTick, k > 0 && k < 4 ? 900 : 4200);
@@ -243,28 +241,26 @@ export default function OffClock({ lang }: { lang: "en" | "zh" }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const sep = lang === "zh" ? "、" : ", ";
   return (
     <div className="offclock">
       <h3 className="oc-h">{t.h}</h3>
       <p className="oc-list" ref={list}>
-        {t.pipa}
-        {t.rest.map((x, i) => (
-          <span key={x}>
-            {sep}
+        {(t.line as (string | [number, string])[]).map((part, n) =>
+          typeof part === "string" ? (
+            part
+          ) : (
             <span
-              className={`oc-item oc-${["chess", "poker", "sky", "doc"][i]}${playing.includes(i) ? " on" : ""}`}
-              onClick={() => tap(i)}
+              key={n}
+              className={`oc-item oc-${["chess", "poker", "sky", "doc"][part[0]]}${playing.includes(part[0]) ? " on" : ""}`}
+              onClick={() => tap(part[0])}
             >
-              {x}
+              {part[1]}
               <svg className="oc-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                {GLYPHS[i]}
+                {GLYPHS[part[0]]}
               </svg>
             </span>
-          </span>
-        ))}
-        {t.note}
-        {lang === "zh" ? "。" : "."}
+          ),
+        )}
       </p>
       <figure className="strings">
         <svg
