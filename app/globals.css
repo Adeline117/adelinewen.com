@@ -48,6 +48,7 @@
   --fs-md: 18px;    /* logo · roadmap phase · larger UI serif */
   --fs-lg: 24px;    /* sub-heads: timeline titles · stat numbers */
   --fs-xl: 28px;    /* contact link list */
+  --fs-2xl: clamp(26px, 2.6vw, 36px); /* one pull statement per page: Arena's closing line */
   /* mono tracking: two voices only — caps labels and meta (dates, places, counts) */
   --track-caps: 0.14em;
   --track-meta: 0.06em;
@@ -636,7 +637,8 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
 .aroad .rw { font-family: var(--font-mono), monospace; font-size: var(--fs-cap); text-transform: uppercase; letter-spacing: var(--track-meta); color: var(--mute); }
 .aroad .rwhat { font-size: var(--fs-body); line-height: 1.55; color: var(--text); }
 /* the dream — the section's landing: full-width, no label, builds to an ink italic payoff */
-.arena-vision { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--line); padding-right: max(0px, calc(100% - 34em)); font-size: var(--fs-md); line-height: 1.5; color: var(--text); }
+/* the section lands on this line: set as a statement, one step above the body scale */
+.arena-vision { margin-top: 64px; padding-top: 40px; border-top: 1px solid var(--line); padding-right: max(0px, calc(100% - 34ch)); font-family: var(--font-fraunces), var(--font-cjk), serif; font-size: var(--fs-2xl); font-weight: 330; line-height: 1.22; letter-spacing: -0.015em; color: var(--ink); }
 .arena-vision em { font-style: italic; color: var(--ink); }
 /* product signature lockup at the section exit — Arena's ∞ mark + wordmark, in ink */
 .arena-sign { display: flex; align-items: center; gap: 14px; margin-top: 48px; flex-wrap: wrap; }
