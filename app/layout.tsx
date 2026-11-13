@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://adelinewen.com"),
   title: "Adeline Wen | Researcher & Builder",
   description:
-    "Adeline Wen, undergraduate research assistant at the UW CAIS Lab and solo founder of arenafi.org. Blockchain and decentralized-AI research, airdrop Sybil detection, and the first cross-platform crypto trader ranking, built end-to-end.",
+    "Adeline Wen, undergraduate research assistant at the UW CAIS Lab and solo founder of arenafi.org. Blockchain and decentralized-AI research, airdrop Sybil detection, and Arena, a ranking of crypto traders across exchanges.",
   keywords: [
     "Adeline Wen",
     "blockchain research",
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Adeline Wen | Researcher & Builder",
     description:
-      "UW CAIS Lab · solo founder of arenafi.org · blockchain and decentralized-AI research. One infinite loop of craft.",
+      "UW CAIS Lab · solo founder of arenafi.org · blockchain and decentralized-AI research.",
     url: "https://adelinewen.com",
     siteName: "adelinewen.com",
     locale: "en_US",

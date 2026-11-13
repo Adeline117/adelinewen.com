@@ -31,7 +31,7 @@ export default function NotFound() {
         4<em style={{ fontStyle: "italic" }}>0</em>4
       </h1>
       <p style={{ marginTop: 28, fontSize: "clamp(15px, 1.5vw, 18px)", lineHeight: 1.65, color: "var(--text)", maxWidth: "38ch" }}>
-        This page doesn&rsquo;t exist — the loop closes elsewhere. 这一页不存在。
+        This page doesn&rsquo;t exist. 这一页不存在。
       </p>
       <Link
         href="/"

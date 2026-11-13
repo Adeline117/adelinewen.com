@@ -70,7 +70,7 @@ const COPY: Record<
         </>
       ),
       lead:
-        "I’m Adeline (she/her), an Economics undergrad at the University of Washington. I’m fascinated by how decentralized systems and markets actually behave, and I like to understand them by researching and building things of my own.",
+        "I’m Adeline (she/her), an Economics undergrad at the University of Washington. I study how crypto markets and decentralized systems behave in practice, mostly by building the tools I need to measure them.",
       more: { text: "Connect on LinkedIn ↗", href: "https://www.linkedin.com/in/adeline1107" },
       resume: [
         { y: "Feb 2026 – Present", h: "Undergraduate Research Assistant · UW CAIS Lab", d: "Research under Prof. Wei Cai; built hascidb.org (open-source Sybil database, 2.5M+ wallets) and published on blockchain, crypto, and decentralized AI.", href: "https://sites.uw.edu/weicaics/members/" },
@@ -87,12 +87,12 @@ const COPY: Record<
         </>
       ),
       items: [
-        { t: "INFORMS Annual Meeting 2026", d: "Poster presentation — “When AI Learns to Hide: Upper and Lower Bounds on Behavioral Identification of Automated Accounts.”", m: "San Francisco · Nov 2026", href: "https://meetings.informs.org/wordpress/annual/", gallery: GALLERY.informs },
-        { t: "IEEE SMC 2026", d: "Paper presentation — “Human-Centered Decision Support for Crypto Airdrop Governance: Interpretable Behavioral Modeling of Strategic Hunters.”", m: "Bellevue, WA · Oct 2026", href: "https://www.ieeesmc.org/events/ieee-international-conference-on-systems-man-and-cybernetics/", gallery: GALLERY.smc },
-        { t: "Paradigm Fellowship 2026", d: "One of ~30 fellows selected worldwide — leading crypto & frontier-tech VC.", m: "N. California · Aug 2026", href: "https://paradigm.xyz/fellowship-2026/", gallery: GALLERY.paradigm },
-        { t: "Nanyang Blockchain Conference 2026", d: "Paper presentation, first author — “HasciDB: A Database for Identifying Crypto Sybil Airdrop Hunters.”", m: "Singapore · Aug 2026", href: "https://www.ntu.edu.sg/cctf/cctf-community/2026-nanyang-blockchain-conference", gallery: GALLERY.nbc },
+        { t: "INFORMS Annual Meeting 2026", d: "Poster presentation: “When AI Learns to Hide: Upper and Lower Bounds on Behavioral Identification of Automated Accounts.”", m: "San Francisco · Nov 2026", href: "https://meetings.informs.org/wordpress/annual/", gallery: GALLERY.informs },
+        { t: "IEEE SMC 2026", d: "Paper presentation: “Human-Centered Decision Support for Crypto Airdrop Governance: Interpretable Behavioral Modeling of Strategic Hunters.”", m: "Bellevue, WA · Oct 2026", href: "https://www.ieeesmc.org/events/ieee-international-conference-on-systems-man-and-cybernetics/", gallery: GALLERY.smc },
+        { t: "Paradigm Fellowship 2026", d: "One of about 30 fellows selected worldwide by Paradigm, a crypto and frontier-tech venture firm.", m: "N. California · Aug 2026", href: "https://paradigm.xyz/fellowship-2026/", gallery: GALLERY.paradigm },
+        { t: "Nanyang Blockchain Conference 2026", d: "Paper presentation, first author: “HasciDB: A Database for Identifying Crypto Sybil Airdrop Hunters.”", m: "Singapore · Aug 2026", href: "https://www.ntu.edu.sg/cctf/cctf-community/2026-nanyang-blockchain-conference", gallery: GALLERY.nbc },
         { t: "Y Combinator Startup School 2026", d: "Selected to attend.", m: "San Francisco · Jul 2026", href: "https://www.startupschool.org/", gallery: GALLERY.yc },
-        { t: "Dempsey Startup Competition 2026", d: "Investment Round — Top 40 of 174 teams.", m: "Pacific NW · May 2026", href: "https://foster.uw.edu/centers/buerk-ctr-entrepreneurship/entrepreneurship-competitions/dempsey-startup-competition/", gallery: GALLERY.dempsey },
+        { t: "Dempsey Startup Competition 2026", d: "Investment Round: top 40 of 174 teams.", m: "Pacific NW · May 2026", href: "https://foster.uw.edu/centers/buerk-ctr-entrepreneurship/entrepreneurship-competitions/dempsey-startup-competition/", gallery: GALLERY.dempsey },
       ],
     },
     research: {
@@ -104,7 +104,7 @@ const COPY: Record<
       ),
       lead: (
         <>
-          At the <a className="tlink" href="https://sites.uw.edu/weicaics/" target="_blank" rel="noopener noreferrer">UW CAIS Lab</a> (Collective, AI, and Interactive Systems) with <a className="tlink" href="https://faculty.washington.edu/weicaics/" target="_blank" rel="noopener noreferrer">Prof. Wei Cai</a>, first-author and co-authored research in blockchain and decentralized AI, from airdrop Sybil detection (catching one person who fakes thousands of wallets to farm token giveaways) to interpretable on⁠-⁠chain governance.
+          At the <a className="tlink" href="https://sites.uw.edu/weicaics/" target="_blank" rel="noopener noreferrer">UW CAIS Lab</a> (Collective, AI, and Interactive Systems) with <a className="tlink" href="https://faculty.washington.edu/weicaics/" target="_blank" rel="noopener noreferrer">Prof. Wei Cai</a>, I work on blockchain and decentralized AI. My main project is airdrop Sybil detection: catching one person who fakes thousands of wallets to farm token giveaways. I also co-author work on interpretable on⁠-⁠chain governance.
         </>
       ),
       more: { text: "Explore HasciDB ↗", href: "https://hascidb.org" },
@@ -122,7 +122,7 @@ const COPY: Record<
       ),
       lead: (
         <>
-          Tennis has the ATP rankings; chess has Elo. Crypto trading moves hundreds of billions a day, yet no one could answer the simplest question: who are the best traders? Arena (<a className="tlink" href="https://arenafi.org" target="_blank" rel="noopener noreferrer">arenafi.org</a>) answers it: 68,000+ traders from 44+ exchanges, centralized and decentralized, ranked on one transparent Arena Score. For the first time, crypto trading has a world ranking.
+          Tennis has the ATP rankings and chess has Elo. Crypto trading moves hundreds of billions of dollars a day, but there has been no common way to tell who trades best. Arena (<a className="tlink" href="https://arenafi.org" target="_blank" rel="noopener noreferrer">arenafi.org</a>) ranks 68,000+ traders from 44+ centralized and decentralized exchanges on one Arena Score, and publishes how the score is calculated.
         </>
       ),
       more: { text: "Visit arenafi.org ↗", href: "https://arenafi.org" },
@@ -134,7 +134,7 @@ const COPY: Record<
       value: {
         h: "Why it’s different",
         items: [
-          { h: "Cross-platform visibility", d: "The only place that sees every trader on every exchange. Binance won’t show you Bybit’s traders; Arena shows them all." },
+          { h: "Cross-platform visibility", d: "Each exchange only shows its own traders: Binance won’t show you Bybit’s. Arena puts traders from 44+ exchanges on one board." },
           { h: "A score you can check", d: "One 0–100 Arena Score that weighs profit, return, drawdown, Sharpe ratio and consistency, with the last 90 days counting most. Thin track records are discounted and one-off extreme returns capped, and the full methodology is public." },
           { h: "Built for competition", d: "Traders can claim and verify their profiles today; head-to-head battles and seasons come next." },
         ],
@@ -150,7 +150,7 @@ const COPY: Record<
       vision: {
         d: (
           <>
-            Trading is fiercely competitive, yet it’s the only sport with no world ranking, no official matches, and no star system. Arena fills in all three, in order: <em>discover the best, let them prove it in public, then let anyone follow.</em>
+            Traders compete hard, but trading has no world ranking, no official matches and no star traders the public can follow. Arena builds them in that order: <em>find the best traders, let them prove it in public, then let anyone follow them.</em>
           </>
         ),
       },
@@ -162,7 +162,7 @@ const COPY: Record<
           Earlier, on <em>stage</em>.
         </>
       ),
-      lead: "Before research, there was a microphone. I grew up hosting, reciting, acting and playing the pipa: CCTV-14, four consecutive years hosting the Hubei Children's Spring Festival Gala, and on the big screen, in cinemas across China.",
+      lead: "I grew up holding a microphone, hosting, reciting, acting and playing the pipa: CCTV-14, four consecutive years hosting the Hubei Children's Spring Festival Gala, and on the big screen, in cinemas across China.",
       stats: [
         { n: "40", d: "awards in recitation, speech and hosting" },
         { n: "12", d: "at national or international level" },
@@ -181,7 +181,7 @@ const COPY: Record<
           Let’s <em>talk</em>.
         </>
       ),
-      lead: "Based in Seattle, open to research and building opportunities, always up for a good problem.",
+      lead: "Based in Seattle. I’m open to research positions and to building products with others.",
       links: [
         { label: "Email", val: "adelinewen1107@outlook.com ↗", href: "mailto:adelinewen1107@outlook.com" },
         { label: "GitHub", val: "@Adeline117 ↗", href: "https://github.com/Adeline117" },
@@ -195,8 +195,8 @@ const COPY: Record<
         send: "Send message",
         sending: "Sending…",
         sent: "Thanks, I’ll be in touch soon.",
-        mailed: "Opening your email app — if nothing happens, write to adelinewen1107@outlook.com.",
-        err: "Couldn’t send, please email adelinewen1107@outlook.com directly.",
+        mailed: "Opening your email app. If nothing happens, write to adelinewen1107@outlook.com.",
+        err: "Couldn’t send. Please email adelinewen1107@outlook.com directly.",
       },
     },
   },
@@ -218,12 +218,12 @@ const COPY: Record<
         </>
       ),
       lead:
-        "我是 Adeline，华盛顿大学经济学本科生。我着迷于去中心化系统与市场真实的运转方式，喜欢通过研究和亲手构建去理解它们。",
+        "我是 Adeline，华盛顿大学经济学本科生。我研究加密市场和去中心化系统在现实中怎么运转，大多靠自己写工具来测量。",
       more: { text: "在 LinkedIn 联系 ↗", href: "https://www.linkedin.com/in/adeline1107" },
       resume: [
-        { y: "2026.02 – 至今", h: "本科研究助理 · UW CAIS 实验室", d: "导师 Wei Cai 教授；构建了 hascidb.org（开源 Sybil 检测数据库，250 万+ 钱包），并发表区块链、加密与去中心化 AI 方向的多篇论文。", href: "https://sites.uw.edu/weicaics/members/" },
-        { y: "2025.12 – 至今", h: "独立开发 · Arena", d: "独立构建 arenafi.org，为 68,000+ 交易者排名。", href: "https://arenafi.org" },
-        { y: "2026.04 – 2026.08", h: "分析师实习 · Stably", d: "稳定币基础设施公司的研究与增长。", href: "https://www.stably.io/" },
+        { y: "2026.02 – 至今", h: "本科研究助理 · UW CAIS 实验室", d: "导师 Wei Cai 教授；搭建了 hascidb.org（开源 Sybil 检测数据库，250 万+ 钱包），发表了区块链、加密和去中心化 AI 方向的论文。", href: "https://sites.uw.edu/weicaics/members/" },
+        { y: "2025.12 – 至今", h: "独立开发 · Arena", d: "一个人做了 arenafi.org，给 68,000+ 名交易者排名。", href: "https://arenafi.org" },
+        { y: "2026.04 – 2026.08", h: "分析师实习 · Stably", d: "在一家稳定币基础设施公司做研究和增长。", href: "https://www.stably.io/" },
         { y: "2025 – 2029", h: "经济学学士 · 华盛顿大学", d: "辅修信息学 · 院长名单。", href: "https://www.washington.edu/" },
       ],
     },
@@ -237,9 +237,9 @@ const COPY: Record<
       items: [
         { t: "INFORMS 年会 2026", d: "海报展示：《When AI Learns to Hide: Upper and Lower Bounds on Behavioral Identification of Automated Accounts》。", m: "旧金山 · 2026.11", href: "https://meetings.informs.org/wordpress/annual/", gallery: GALLERY.informs },
         { t: "IEEE SMC 2026", d: "论文报告：《面向加密空投治理的以人为本决策支持：策略型猎手的可解释行为建模》。", m: "贝尔维尤 · 2026.10", href: "https://www.ieeesmc.org/events/ieee-international-conference-on-systems-man-and-cybernetics/", gallery: GALLERY.smc },
-        { t: "Paradigm Fellowship 2026", d: "全球约 30 名入选者之一，顶级加密与前沿科技风投。", m: "北加州 · 2026.08", href: "https://paradigm.xyz/fellowship-2026/", gallery: GALLERY.paradigm },
+        { t: "Paradigm Fellowship 2026", d: "全球约 30 人入选。Paradigm 是专注加密和前沿科技的风投机构。", m: "北加州 · 2026.08", href: "https://paradigm.xyz/fellowship-2026/", gallery: GALLERY.paradigm },
         { t: "南洋区块链大会 2026", d: "论文报告（第一作者）：《HasciDB：识别加密 Sybil 空投猎人的数据库》。", m: "新加坡 · 2026.08", href: "https://www.ntu.edu.sg/cctf/cctf-community/2026-nanyang-blockchain-conference", gallery: GALLERY.nbc },
-        { t: "Y Combinator Startup School 2026", d: "获选参加。", m: "旧金山 · 2026.07", href: "https://www.startupschool.org/", gallery: GALLERY.yc },
+        { t: "Y Combinator Startup School 2026", d: "入选。", m: "旧金山 · 2026.07", href: "https://www.startupschool.org/", gallery: GALLERY.yc },
         { t: "Dempsey 创业大赛 2026", d: "投资轮，174 支队伍中前 40。", m: "太平洋西北 · 2026.05", href: "https://foster.uw.edu/centers/buerk-ctr-entrepreneurship/entrepreneurship-competitions/dempsey-startup-competition/", gallery: GALLERY.dempsey },
       ],
     },
@@ -252,7 +252,7 @@ const COPY: Record<
       ),
       lead: (
         <>
-          在<a className="tlink" href="https://sites.uw.edu/weicaics/" target="_blank" rel="noopener noreferrer">华盛顿大学 CAIS 实验室</a>（Collective, AI, and Interactive Systems），导师 <a className="tlink" href="https://faculty.washington.edu/weicaics/" target="_blank" rel="noopener noreferrer">Wei Cai 教授</a>，区块链与去中心化 AI 研究（第一作者及合作者），涵盖空投 Sybil 检测（识别一个人伪造成千上万个钱包来套取代币空投）与可解释的链上治理。
+          我在<a className="tlink" href="https://sites.uw.edu/weicaics/" target="_blank" rel="noopener noreferrer">华盛顿大学 CAIS 实验室</a>（Collective, AI, and Interactive Systems）跟随 <a className="tlink" href="https://faculty.washington.edu/weicaics/" target="_blank" rel="noopener noreferrer">Wei Cai 教授</a>做区块链和去中心化 AI 研究。主要方向是空投 Sybil 检测，也就是找出一个人伪造成千上万个钱包来套取代币空投；另外参与可解释的链上治理研究。
         </>
       ),
       more: { text: "查看 HasciDB ↗", href: "https://hascidb.org" },
@@ -270,7 +270,7 @@ const COPY: Record<
       ),
       lead: (
         <>
-          网球有 ATP 排名，国际象棋有 Elo。加密交易每天成交数千亿美元，却没人能回答最基本的问题：谁是最好的交易者？Arena（<a className="tlink" href="https://arenafi.org" target="_blank" rel="noopener noreferrer">arenafi.org</a>）给出了答案：44+ 交易所（中心化 + 去中心化）上的 68,000+ 交易者，按同一个透明的 Arena 评分排名。加密交易第一次有了世界排名。
+          网球有 ATP 排名，国际象棋有 Elo。加密交易每天成交数千亿美元，却一直没有统一的办法判断谁交易得最好。Arena（<a className="tlink" href="https://arenafi.org" target="_blank" rel="noopener noreferrer">arenafi.org</a>）把 44+ 家中心化和去中心化交易所的 68,000+ 名交易者放在同一个 Arena 评分下排名，评分方法公开。
         </>
       ),
       more: { text: "访问 arenafi.org ↗", href: "https://arenafi.org" },
@@ -282,9 +282,9 @@ const COPY: Record<
       value: {
         h: "为什么不一样",
         items: [
-          { h: "跨平台可见", d: "唯一能看见每个交易所、每位交易者的地方。币安不会告诉你 Bybit 的交易者；Arena 全都看得见。" },
-          { h: "看得懂的分数", d: "Arena 评分 0–100，综合盈亏、收益率、回撤、夏普比率和稳定性，近 90 天的表现权重最高。数据太少的账户会被打折，一次性的极端收益会被封顶，完整的评分方法公开可查。" },
-          { h: "为竞技而生", d: "交易者现在就能认领并验证自己的主页；接下来是 1v1 对战和赛季。" },
+          { h: "跨平台可见", d: "每家交易所只展示自己的交易者，币安不会给你看 Bybit 的。Arena 把 44+ 家交易所的交易者放在同一张榜上。" },
+          { h: "可以核查的分数", d: "Arena 评分 0–100，综合盈亏、收益率、回撤、夏普比率和稳定性，近 90 天的表现权重最高。数据太少的账户会被打折，一次性的极端收益会被封顶，完整的评分方法公开可查。" },
+          { h: "为比赛设计", d: "交易者现在就能认领并验证自己的主页；接下来是 1v1 对战和赛季。" },
         ],
       },
       roadmap: {
@@ -298,7 +298,7 @@ const COPY: Record<
       vision: {
         d: (
           <>
-            交易竞争激烈，却是唯一没有世界排名、没有官方比赛、没有明星体系的运动。Arena 依次补上这三样：<em>先发现最强者，再让他们公开证明，最后让任何人都能跟随。</em>
+            交易者之间竞争很激烈，但交易没有世界排名，没有正式比赛，也没有大众能追随的明星交易者。Arena 按这个顺序来做：<em>先找出最强的人，再让他们公开比，最后让任何人都能跟。</em>
           </>
         ),
       },
@@ -329,7 +329,7 @@ const COPY: Record<
           聊聊<em>吧</em>
         </>
       ),
-      lead: "常驻西雅图，对研究与构建的机会开放，随时欢迎好问题。",
+      lead: "人在西雅图，欢迎研究职位和一起做产品的机会。",
       links: [
         { label: "邮箱", val: "adelinewen1107@outlook.com ↗", href: "mailto:adelinewen1107@outlook.com" },
         { label: "GitHub", val: "@Adeline117 ↗", href: "https://github.com/Adeline117" },
@@ -343,7 +343,7 @@ const COPY: Record<
         send: "发送",
         sending: "发送中…",
         sent: "谢谢，我会尽快回复你。",
-        mailed: "正在打开你的邮件应用，若没反应，请直接写信到 adelinewen1107@outlook.com。",
+        mailed: "正在打开你的邮件应用。如果没有反应，请直接写信到 adelinewen1107@outlook.com。",
         err: "发送失败，请直接邮件 adelinewen1107@outlook.com。",
       },
     },
