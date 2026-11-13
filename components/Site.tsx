@@ -168,7 +168,7 @@ const COPY: Record<
         { n: "12", d: "at national or international level" },
       ],
       credits: [
-        { role: "Feature film", work: <><a className="tlink" href="https://movie.douban.com/subject/26955897/" target="_blank" rel="noopener noreferrer"><i>Superposition of Love</i></a> (2017), released in cinemas across China</> },
+        { role: "Feature film", work: <><a className="tlink" href="https://baike.baidu.com/item/%E6%AC%A7%E7%88%B8%E7%9A%84%E6%83%85%E4%BA%BA/20287640" target="_blank" rel="noopener noreferrer"><i>Superposition of Love</i></a> (2017), released in cinemas across China</> },
         { role: "Performer", work: "CCTV-14" },
         { role: "Host", work: "Hubei Children's Spring Festival Gala, four years running" },
         { role: "Recitation", work: "Hubei TV, Voice of Kids" },
@@ -316,7 +316,7 @@ const COPY: Record<
         { n: "12", d: "国家级与国际级" },
       ],
       credits: [
-        { role: "电影", work: <><a className="tlink" href="https://movie.douban.com/subject/26955897/" target="_blank" rel="noopener noreferrer">《欧爸的情人》</a>（2017），全国院线上映</> },
+        { role: "电影", work: <><a className="tlink" href="https://baike.baidu.com/item/%E6%AC%A7%E7%88%B8%E7%9A%84%E6%83%85%E4%BA%BA/20287640" target="_blank" rel="noopener noreferrer">《欧爸的情人》</a>（2017），全国院线上映</> },
         { role: "演出", work: "CCTV-14 少儿频道" },
         { role: "主持", work: "湖北少儿春晚，连续四年" },
         { role: "朗诵", work: "湖北卫视《童声朗朗》" },
