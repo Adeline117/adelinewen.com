@@ -222,13 +222,14 @@ export default function Hobbies({ lang }: { lang: "en" | "zh" }) {
         {/* documentary: the clapper snaps shut and the timecode starts rolling */}
         <Card k="doc" label={t.items.doc}>
           <rect className="ink" pathLength={1} x="22" y="50" width="76" height="48" rx="2" />
-          <path className="ink thin" pathLength={1} d="M22 62 H98 M34 74 H86 M34 86 H70" />
+          <path className="ink thin" pathLength={1} d="M22 62 H98 M34 74 H86" />
           <g className="clap">
             <rect className="ink" pathLength={1} x="22" y="38" width="76" height="11" />
             <path className="ink thin" pathLength={1} d="M30 38 L36 49 M44 38 L50 49 M58 38 L64 49 M72 38 L78 49 M86 38 L92 49" />
           </g>
-          <circle className="rec" cx="28" cy="24" r="3" />
-          <text className="tc" x="36" y="27">{tc}</text>
+          {/* REC and timecode sit on the slate, clear of the swinging stick */}
+          <circle className="rec fade" cx="32" cy="85" r="2.6" />
+          <text className="tc" x="38" y="88.5">{tc}</text>
         </Card>
       </ul>
     </div>

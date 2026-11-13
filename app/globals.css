@@ -464,12 +464,12 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
 .hob svg .hair { stroke-width: 0.6; opacity: 0.45; }
 .hob svg text { fill: var(--ink); font-family: var(--font-fraunces), serif; }
 /* draw-in, once */
-.hobbies.pre .hob svg .ink { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.hobbies.pre .hob svg .ink { stroke-dasharray: 1; stroke-dashoffset: 1; opacity: 0; } /* no round-cap dots before the pen arrives */
 .hobbies.pre .hob svg text, .hobbies.pre .hob svg .fade { opacity: 0; }
 .hobbies.play .hob svg .ink { stroke-dasharray: 1; animation: hobDraw 1.4s var(--ease) calc(var(--n, 0) * 0.12s) backwards; }
 .hobbies.play .hob svg text, .hobbies.play .hob svg .fade { animation: hobFade var(--dur) var(--ease) calc(0.9s + var(--n, 0) * 0.12s) backwards; }
 .hob:nth-child(2) { --n: 1; } .hob:nth-child(3) { --n: 2; } .hob:nth-child(4) { --n: 3; } .hob:nth-child(5) { --n: 4; }
-@keyframes hobDraw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes hobDraw { from { stroke-dashoffset: 1; opacity: 0; } 1% { opacity: 1; } to { stroke-dashoffset: 0; } }
 @keyframes hobFade { from { opacity: 0; } }
 /* pipa: strings shiver from script; the body tips toward you on hover */
 .hob-pipa .str { transform-box: fill-box; stroke-width: 0.7; }
@@ -510,16 +510,19 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
 .hob-doc.on .clap { transform: none; transition: transform 0.12s cubic-bezier(0.5, 0, 1, 1); }
 .hob-doc .rec { fill: none; stroke: var(--ink); stroke-width: 1; }
 .hob-doc.on .rec { fill: var(--ink); animation: rec 1s steps(2, jump-none) 0.12s infinite; }
-.hob-doc .tc { font-family: var(--font-mono), monospace; font-size: 9px; letter-spacing: 0.06em; fill: var(--mute); font-variant-numeric: tabular-nums; }
+.hob-doc .tc { font-family: var(--font-mono), monospace; font-size: 9.5px; letter-spacing: 0.06em; fill: var(--mute); font-variant-numeric: tabular-nums; }
 .hob-doc.on .tc { fill: var(--ink); }
 @keyframes rec { 50% { opacity: 0.15; } }
 @media (max-width: 820px) {
-  .hob-grid { grid-template-columns: repeat(2, 1fr); }
-  .hob:nth-child(2n) { border-right: 0; }
-  .hob:last-child { grid-column: 1 / -1; }
-  .hob:last-child svg { max-width: 130px; }
   .hob-art { padding: 14px 10px 4px; }
   .hob-label { padding: 4px 12px 14px; }
+}
+/* phones: the pipa (the one that plays) takes a full row, the other four sit 2 x 2 */
+@media (max-width: 600px) {
+  .hob-grid { grid-template-columns: repeat(2, 1fr); }
+  .hob-pipa { grid-column: 1 / -1; border-right: 0; }
+  .hob-pipa svg { max-width: 140px; }
+  .hob:nth-child(2n + 1) { border-right: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
   .hob svg *, .hob svg { animation: none !important; transition: none !important; }
