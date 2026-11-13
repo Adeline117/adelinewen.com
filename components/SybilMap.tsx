@@ -25,6 +25,10 @@ const L = {
 
 const W = 600;
 const H = 380;
+// phones get a taller sheet: the same layout stretched to fill the narrow column, so the
+// map is drawn larger and the labels of neighbouring airdrops stop overprinting
+const TALL_H = 560;
+const tallHome = (n: { x: number; y: number }) => ({ x: 30 + ((n.x - 56) * 540) / 488, y: 44 + ((n.y - 36) * 490) / 308 });
 const fmt = new Intl.NumberFormat("en-US");
 const MAXS = NODES[0].sybils;
 const MAXV = LINKS[0][2];
@@ -40,6 +44,7 @@ export default function SybilMap({ lang }: { lang: "en" | "zh" }) {
   const sim = useRef<Simulation<N, E> | null>(null);
   const nodes = useRef<N[]>(NODES.map((n, i) => ({ i, r: rad(n.sybils), x: n.x, y: n.y })));
   const dragging = useRef<number | null>(null);
+  const sheetH = useRef(H);
   const [on, setOn] = useState<number | null>(null);
   const t = L[lang];
 
@@ -52,6 +57,17 @@ export default function SybilMap({ lang }: { lang: "en" | "zh" }) {
       !!(navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
 
     const ns = nodes.current;
+    const tall = window.matchMedia("(max-width: 820px)").matches;
+    const h = tall ? TALL_H : H;
+    sheetH.current = h;
+    const home = NODES.map((n) => (tall ? tallHome(n) : { x: n.x, y: n.y }));
+    if (tall) {
+      root.setAttribute("viewBox", `0 0 ${W} ${h}`);
+      ns.forEach((n, i) => {
+        n.x = home[i].x;
+        n.y = home[i].y;
+      });
+    }
     const links: E[] = LINKS.map(([a, b, v]) => ({ source: a, target: b, v }));
     const linkEls = [...root.querySelectorAll<SVGPathElement>(".smap-links path")];
     const nodeEls = [...root.querySelectorAll<SVGGElement>(".smap-node")];
@@ -61,7 +77,7 @@ export default function SybilMap({ lang }: { lang: "en" | "zh" }) {
       ns.forEach((n, i) => {
         // keep every circle on the sheet
         n.x = Math.max(n.r + 2, Math.min(W - n.r - 2, n.x!));
-        n.y = Math.max(n.r + 24, Math.min(H - n.r - 2, n.y!)); // the top line is the readout's
+        n.y = Math.max(n.r + 24, Math.min(h - n.r - 2, n.y!)); // the top line is the readout's
         const g = nodeEls[i];
         const [c, hit, txt] = g.children as unknown as [SVGCircleElement, SVGCircleElement, SVGTextElement];
         c.setAttribute("cx", String(n.x));
@@ -85,13 +101,13 @@ export default function SybilMap({ lang }: { lang: "en" | "zh" }) {
         "link",
         forceLink<N, E>(links)
           // each spring's rest length is the distance in the drawn layout, so at rest the map is exactly that layout
-          .distance((l) => Math.hypot(NODES[(l.source as N).i].x - NODES[(l.target as N).i].x, NODES[(l.source as N).i].y - NODES[(l.target as N).i].y))
+          .distance((l) => Math.hypot(home[(l.source as N).i].x - home[(l.target as N).i].x, home[(l.source as N).i].y - home[(l.target as N).i].y))
           .strength((l) => 0.04 + 0.5 * Math.sqrt(l.v / MAXV)),
       )
       .force("charge", forceManyBody<N>().strength(-30).distanceMax(120))
       // a light pull back toward the drawn layout, so the map always settles where it was designed to
-      .force("homeX", forceX<N>((n) => NODES[n.i].x).strength(0.08))
-      .force("homeY", forceY<N>((n) => NODES[n.i].y).strength(0.08))
+      .force("homeX", forceX<N>((n) => home[n.i].x).strength(0.08))
+      .force("homeY", forceY<N>((n) => home[n.i].y).strength(0.08))
       .force("collide", forceCollide<N>().radius((n) => n.r + 5).strength(0.9))
       .alpha(calm ? 0 : 0.35)
       .alphaDecay(0.03)
@@ -201,7 +217,7 @@ export default function SybilMap({ lang }: { lang: "en" | "zh" }) {
     const n = nodes.current[i];
     const p = at(e);
     n.fx = Math.max(n.r, Math.min(W - n.r, p.x));
-    n.fy = Math.max(n.r + 24, Math.min(H - n.r, p.y));
+    n.fy = Math.max(n.r + 24, Math.min(sheetH.current - n.r, p.y));
   };
   const drop = (e: React.PointerEvent) => {
     const i = dragging.current;
