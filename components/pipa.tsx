@@ -60,8 +60,9 @@ const PEGS = [
   [63, 110.4, 206],
   [44, 109.4, 206],
 ];
-// where each string runs on from the nut into the slot, to its peg
-const TO_PEG = [63, 63, 44, 44];
+// past the nut each string runs on into the slot, the four kept in order (no crossing),
+// each stopping at its own peg in turn
+const SLOT_END = [62, 56, 50, 44].map((x, i) => [x, 97.6 + i * 1.6]);
 
 export function PipaBody() {
   return (
@@ -82,7 +83,7 @@ export function PipaBody() {
         <path pathLength={1} d={HEAD} />
         <path pathLength={1} className="fine" d={`${HEAD_LINE}M33.5 91.9V108.1M36 91.8V108.2`} />
         {/* the string slot cut through the pegbox */}
-        <path pathLength={1} className="fine" d="M70 96 L38 97.6 C34 98 34 102 38 102.4 L70 104" />
+        <path pathLength={1} className="fine" d="M73 95 L41 97.2 C37 97.6 37 102.4 41 102.8 L73 105" />
         {/* four turned pegs, two each side, swept back toward the head */}
         {PEGS.map(([x, y, r]) => (
           <path key={`${x}${y}`} pathLength={1} d={PEG} transform={`translate(${x} ${y}) rotate(${r})`} />
@@ -91,7 +92,7 @@ export function PipaBody() {
         <path
           pathLength={1}
           className="fine"
-          d={STRINGS.map((s, i) => `M${NUT} ${s.y0} L${TO_PEG[i]} ${i < 2 ? 98.4 + i * 0.8 : 101.6 - (3 - i) * 0.8}`).join("")}
+          d={STRINGS.map((s, i) => `M${NUT} ${s.y0} L${SLOT_END[i][0]} ${SLOT_END[i][1].toFixed(1)}`).join("")}
         />
         {/* the nut */}
         <path pathLength={1} d="M74 88.5V111.5" />
