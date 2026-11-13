@@ -337,7 +337,12 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
 .strip-wrap { position: relative; container-type: inline-size; margin-top: 12px; }
 .strip { overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x proximity; scrollbar-width: none; border-radius: var(--r); }
 .strip::-webkit-scrollbar { display: none; }
-.strip:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+.strip:focus-visible { outline: 2px solid var(--ink); outline-offset: -2px; }
+/* the reel fades out at whichever edge has more photos behind it */
+.strip { --fade: 48px; -webkit-mask-image: linear-gradient(90deg, transparent, #000 var(--fade), #000 calc(100% - var(--fade)), transparent); mask-image: linear-gradient(90deg, transparent, #000 var(--fade), #000 calc(100% - var(--fade)), transparent); }
+.at-start .strip { -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - var(--fade)), transparent); mask-image: linear-gradient(90deg, #000 calc(100% - var(--fade)), transparent); }
+.at-end .strip { -webkit-mask-image: linear-gradient(90deg, transparent, #000 var(--fade)); mask-image: linear-gradient(90deg, transparent, #000 var(--fade)); }
+.at-start.at-end .strip { -webkit-mask-image: none; mask-image: none; }
 /* the first photo leads at full height; the rest sit at 70%, bottom-aligned,
    so each event opens on one picture instead of a uniform row */
 .strip ul { display: flex; align-items: flex-end; gap: 8px; list-style: none; height: clamp(220px, 60cqi, 340px); }

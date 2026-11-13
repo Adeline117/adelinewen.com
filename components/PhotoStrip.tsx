@@ -37,7 +37,7 @@ function Pic({ s, alt, sizes, lazy = true }: { s: Shot; alt: string; sizes: stri
 
 // even: every photo the same height (no enlarged lead) — for reels with no single hero shot
 export default function PhotoStrip({ shots, label, lang, even = false }: { shots: Shot[]; label: string; lang: "en" | "zh"; even?: boolean }) {
-  const reel = useRef<HTMLUListElement>(null);
+  const reel = useRef<HTMLDivElement>(null); // the element that actually scrolls
   const box = useRef<HTMLDialogElement>(null);
   const big = useRef<HTMLUListElement>(null);
   const [edge, setEdge] = useState({ start: true, end: false });
@@ -119,8 +119,8 @@ export default function PhotoStrip({ shots, label, lang, even = false }: { shots
 
   return (
     <div className={`strip-wrap${even ? " even" : ""}${edge.start ? " at-start" : ""}${edge.end ? " at-end" : ""}`}>
-      <div className="strip" role="region" aria-label={zh ? `${label} 照片` : `Photos: ${label}`} tabIndex={0}>
-        <ul ref={reel} role="list">
+      <div className="strip" ref={reel} role="region" aria-label={zh ? `${label} 照片` : `Photos: ${label}`} tabIndex={0}>
+        <ul role="list">
           {shots.map((s, i) => (
             <li key={s.src}>
               <button
