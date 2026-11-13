@@ -13,7 +13,6 @@ import { flushSync } from "react-dom";
 type Lang = "en" | "zh";
 type Section = { label: string; title: ReactNode; lead: ReactNode; more: { text: string; href: string } };
 type Row = { n: string; d: string; m: string };
-type Val = { h: string; d: string };
 type Road = { phase: string; when: string; what: string };
 type TL = { y: string; h: string; d: string; href?: string };
 // gallery: the event's photographs, shown as a scrolling reel under the row.
@@ -46,7 +45,6 @@ const COPY: Record<
     research: Section & { tl: TL[] };
     arena: Section & {
       stats: Row[];
-      value: { h: string; items: Val[] };
       roadmap: { h: string; steps: Road[] };
       vision: { d: ReactNode };
     };
@@ -124,7 +122,7 @@ const COPY: Record<
       ),
       lead: (
         <>
-          Tennis has the ATP rankings and chess has Elo. Crypto trading moves hundreds of billions of dollars a day, but there has been no common way to tell who trades best. Arena (<a className="tlink" href="https://arenafi.org" target="_blank" rel="noopener noreferrer">arenafi.org</a>) ranks 68,000+ traders from 44+ centralized and decentralized exchanges on one Arena Score, and publishes how the score is calculated.
+          Tennis has the ATP rankings and chess has Elo. Crypto trading moves hundreds of billions of dollars a day, but there has been no common way to tell who trades best. Arena (<a className="tlink" href="https://arenafi.org" target="_blank" rel="noopener noreferrer">arenafi.org</a>) puts 68,000+ traders from 44+ centralized and decentralized exchanges, which otherwise only show their own, on one board. A single 0–100 Arena Score weighs return, profit, drawdown and consistency, counts the last 90 days most, discounts thin track records and caps one-off spikes; the full method is public.
         </>
       ),
       more: { text: "Visit arenafi.org ↗", href: "https://arenafi.org" },
@@ -133,14 +131,6 @@ const COPY: Record<
         { n: "44+", d: "exchanges · CEX + DEX", m: "" },
         { n: "0–100", d: "one Arena Score, open methodology", m: "" },
       ],
-      value: {
-        h: "Why it’s different",
-        items: [
-          { h: "Cross-platform visibility", d: "Each exchange only shows its own traders: Binance won’t show you Bybit’s. Arena puts traders from 44+ exchanges on one board." },
-          { h: "A score you can check", d: "One 0–100 Arena Score that weighs profit, return, drawdown, Sharpe ratio and consistency, with the last 90 days counting most. Thin track records are discounted and one-off extreme returns capped, and the full methodology is public." },
-          { h: "Built for competition", d: "Traders can claim and verify their profiles today; head-to-head battles and seasons come next." },
-        ],
-      },
       roadmap: {
         h: "Roadmap",
         steps: [
@@ -272,7 +262,7 @@ const COPY: Record<
       ),
       lead: (
         <>
-          网球有 ATP 排名，国际象棋有 Elo。加密交易每天成交数千亿美元，却一直没有统一的办法判断谁交易得最好。Arena（<a className="tlink" href="https://arenafi.org" target="_blank" rel="noopener noreferrer">arenafi.org</a>）把 44+ 家中心化和去中心化交易所的 68,000+ 名交易者放在同一个 Arena 评分下排名，评分方法公开。
+          网球有 ATP 排名，国际象棋有 Elo。加密交易每天成交数千亿美元，却一直没有统一的办法判断谁交易得最好。Arena（<a className="tlink" href="https://arenafi.org" target="_blank" rel="noopener noreferrer">arenafi.org</a>）把 44+ 家中心化和去中心化交易所的 68,000+ 名交易者放上同一张榜，而各家交易所原本只展示自己的交易者。Arena 评分 0–100，综合收益率、盈亏、回撤和稳定性，近 90 天权重最高，数据太少的账户打折、一次性的极端收益封顶，方法完全公开。
         </>
       ),
       more: { text: "访问 arenafi.org ↗", href: "https://arenafi.org" },
@@ -281,14 +271,6 @@ const COPY: Record<
         { n: "44+", d: "交易所 · CEX + DEX", m: "" },
         { n: "0–100", d: "一个 Arena 评分，方法公开", m: "" },
       ],
-      value: {
-        h: "为什么不一样",
-        items: [
-          { h: "跨平台可见", d: "每家交易所只展示自己的交易者，币安不会给你看 Bybit 的。Arena 把 44+ 家交易所的交易者放在同一张榜上。" },
-          { h: "可以核查的分数", d: "Arena 评分 0–100，综合盈亏、收益率、回撤、夏普比率和稳定性，近 90 天的表现权重最高。数据太少的账户会被打折，一次性的极端收益会被封顶，完整的评分方法公开可查。" },
-          { h: "为比赛设计", d: "交易者现在就能认领并验证自己的主页；接下来是 1v1 对战和赛季。" },
-        ],
-      },
       roadmap: {
         h: "路线图",
         steps: [
@@ -726,19 +708,6 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
               </li>
             ))}
           </ul>
-
-
-
-          <div className="ablock">
-            <h3>{t.arena.value.h}</h3>
-            <ul className="alist abody">
-              {t.arena.value.items.map((v) => (
-                <li key={v.h}>
-                  <b>{v.h}</b>{lang === "zh" ? "：" : ": "}{v.d}
-                </li>
-              ))}
-            </ul>
-          </div>
 
           <div className="ablock">
             <h3>{t.arena.roadmap.h}</h3>

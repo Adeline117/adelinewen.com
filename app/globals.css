@@ -153,7 +153,7 @@ h1, h2, .tl li .h { text-wrap: balance; }
 /* CJK display micro-typography: let trailing 。／，hang past the edge (Safari),
    and use proportional widths so full-width punctuation stops carrying a full em */
 h1, h2 { hanging-punctuation: allow-end; font-variant-east-asian: proportional-width; }
-.hero .sub, .sec .lead, .tl li .dsc, .honors .hd, .alist li, .aroad p, .arena-vision, .cr-work, .smap figcaption, .board figcaption { text-wrap: pretty; }
+.hero .sub, .sec .lead, .tl li .dsc, .honors .hd, .aroad p, .arena-vision, .cr-work, .smap figcaption, .board figcaption { text-wrap: pretty; }
 
 /* skip-to-content for keyboard users */
 .skip { position: fixed; top: -60px; left: 16px; z-index: 20; background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: var(--r); font-family: var(--font-mono), monospace; font-size: var(--fs-label); text-decoration: none; transition: top var(--dur-fast) var(--ease); }
@@ -289,7 +289,7 @@ nav .links button.active::after { transform: scaleX(1); }
 /* hanzi set tight: Latin display tracking crushes them, wide caps tracking spaces them into "关 于" */
 :lang(zh) .sec h2 { letter-spacing: 0; line-height: 1.12; }
 /* no lone character on a paragraph's last line, and no line opening on closing punctuation */
-:lang(zh) .sec .lead, :lang(zh) .tl li .dsc, :lang(zh) .honors .hd, :lang(zh) .alist li, :lang(zh) .aroad p, :lang(zh) .arena-vision, :lang(zh) .cr-work { line-break: strict; }
+:lang(zh) .sec .lead, :lang(zh) .tl li .dsc, :lang(zh) .honors .hd, :lang(zh) .aroad p, :lang(zh) .arena-vision, :lang(zh) .cr-work { line-break: strict; }
 :lang(zh) .label, :lang(zh) .cform label, :lang(zh) .ablock h3, :lang(zh) .cover-foot .hint, :lang(zh) .strip-cap { letter-spacing: 0.08em; }
 /* break Chinese only at spaces and marked phrase boundaries (zero-width spaces in the copy), never inside a word like 支持 */
 :lang(zh) .hero .sub, :lang(zh) .tl .h { word-break: keep-all; overflow-wrap: anywhere; }
@@ -665,10 +665,6 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
 .ablock p { font-size: var(--fs-body); line-height: 1.65; color: var(--text); max-width: 560px; }
 .abody > *:first-child { margin-top: 0; }
 .abody p + ul { margin-top: 16px; }
-.alist { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-top: 0; max-width: 34em; }
-.alist li { font-size: var(--fs-body); line-height: 1.6; color: var(--text); padding-left: 18px; position: relative; }
-.alist li::before { content: "·"; position: absolute; left: 2px; top: -1px; font-size: 20px; line-height: 1.4; color: var(--mute); }
-.alist li b { color: var(--ink); font-weight: 500; }
 .aroad { list-style: none; margin-top: 0; }
 .aroad li { display: grid; grid-template-columns: 150px 86px 1fr; gap: 20px; padding: 16px 0; border-top: 1px solid var(--line); align-items: baseline; }
 /* the block above already draws the opening rule */
