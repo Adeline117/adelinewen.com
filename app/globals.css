@@ -65,7 +65,7 @@ body.dark {
   --bg-grad: radial-gradient(ellipse 80% 68% at 50% 44%, #1a1815, #141210 62%, #100e0b);
   --nav-bg: rgba(20, 18, 14, 0.98);
   --bg: #141210;
-  --news: #1c1a16;
+  --news: #201d18;
   --news-ink: #ebe5d8;
   --news-mute: #9d968a;
   --news-line: rgba(240, 230, 210, 0.15);
@@ -579,8 +579,9 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
 }
 .arena-sec::before {
   content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
-  background: var(--news-crease) 0 0 / 1100px auto, var(--grain), var(--news-fiber), var(--news);
-  background-blend-mode: var(--news-blend), normal, normal, normal;
+  /* a veil of the sheet's own colour over the crease keeps the facets under the type, not across it */
+  background: linear-gradient(color-mix(in srgb, var(--news) 55%, transparent), color-mix(in srgb, var(--news) 55%, transparent)), var(--news-crease) 0 0 / 1600px auto, var(--grain), var(--news-fiber), var(--news);
+  background-blend-mode: normal, var(--news-blend), normal, normal, normal;
   -webkit-mask-image: linear-gradient(transparent, #000 clamp(96px, 14vh, 160px), #000 calc(100% - clamp(96px, 14vh, 160px)), transparent);
   mask-image: linear-gradient(transparent, #000 clamp(96px, 14vh, 160px), #000 calc(100% - clamp(96px, 14vh, 160px)), transparent);
 }
