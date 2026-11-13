@@ -437,7 +437,9 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
   }, []);
 
   useEffect(() => {
-    // light unless the visitor picked dark with the toggle (matches the noFlash script)
+    // light unless the visitor picked dark with the toggle (matches the noFlash script).
+    // Read after mount on purpose: localStorage does not exist during the server render.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setDark(localStorage.getItem("theme-pick") === "dark");
   }, []);
   useEffect(() => {
@@ -501,9 +503,6 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
     const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     el.scrollIntoView({ behavior: still ? "auto" : "smooth", block: "start" });
   };
-  const setRef = (i: number) => (el: HTMLElement | null) => {
-    secRefs.current[i] = el;
-  };
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -537,7 +536,9 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
   const ids = ["about", "honors", "research", "arena", "stage", "contact"];
 
   const renderSection = (i: number, sec: Section, right: ReactNode, leftExtra: ReactNode = null, leftTail: ReactNode = null) => (
-    <section className="sec" id={ids[i]} data-i={i} ref={setRef(i)}>
+    <section className="sec" id={ids[i]} data-i={i} ref={(el) => {
+        secRefs.current[i] = el;
+      }}>
       <div className="inner">
         <div className="left">
           <div className="label">{sec.label}</div>
@@ -664,7 +665,9 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
       )}
 
       {/* 02, Talks & Honors — full width, one photo reel per event */}
-      <section className="sec honors-sec" id="honors" data-i={1} ref={setRef(1)}>
+      <section className="sec honors-sec" id="honors" data-i={1} ref={(el) => {
+        secRefs.current[1] = el;
+      }}>
         <div className="honors-inner">
           <div className="label">{t.honors.label}</div>
           <h2>{t.honors.title}</h2>
@@ -701,7 +704,9 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
       )}
 
       {/* 04, Arena (full project page) */}
-      <section className="sec arena-sec" id="arena" data-i={3} ref={setRef(3)}>
+      <section className="sec arena-sec" id="arena" data-i={3} ref={(el) => {
+        secRefs.current[3] = el;
+      }}>
         <div className="arena-wrap">
           <div className="label">{t.arena.label}</div>
           <h2>{t.arena.title}</h2>
@@ -770,7 +775,9 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
 
       {/* 05, Contact (with working form) */}
       {/* 05, Earlier — childhood stage and screen work, the roots of the talks above */}
-      <section className="sec stage-sec" id="stage" data-i={4} ref={setRef(4)}>
+      <section className="sec stage-sec" id="stage" data-i={4} ref={(el) => {
+        secRefs.current[4] = el;
+      }}>
         <div className="inner">
           <div className="left">
             <div className="label">{t.stage.label}</div>
@@ -804,7 +811,9 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
         <PhotoWall label={lang === "zh" ? "更多舞台照片" : "More from the stage"} />
       </section>
 
-      <section className="sec" id="contact" data-i={5} ref={setRef(5)}>
+      <section className="sec" id="contact" data-i={5} ref={(el) => {
+        secRefs.current[5] = el;
+      }}>
         <div className="inner">
           <div className="left">
             <div className="label">{t.contact.label}</div>
