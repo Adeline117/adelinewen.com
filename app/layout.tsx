@@ -68,15 +68,13 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  colorScheme: "light dark",
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f7f5f1" },
-    { media: "(prefers-color-scheme: dark)", color: "#141210" },
-  ],
+  colorScheme: "light",
+  themeColor: "#f7f5f1",
 };
 
-// Default to light (Swiss paper is the primary face); a saved choice still wins.
-const noFlash = `try{var t=localStorage.getItem('theme');var d=t?t==='dark':matchMedia('(prefers-color-scheme: dark)').matches;if(d)document.body.classList.add('dark');if(location.pathname.indexOf('/zh')===0)document.documentElement.lang='zh';}catch(e){}`;
+// Always opens on light paper; dark only when the visitor has chosen it with the toggle
+// (the OS scheme is not followed, so the page never changes on its own).
+const noFlash = `try{localStorage.removeItem('theme');if(localStorage.getItem('theme-pick')==='dark')document.body.classList.add('dark');if(location.pathname.indexOf('/zh')===0)document.documentElement.lang='zh';}catch(e){}`;
 
 const personLd = {
   "@context": "https://schema.org",

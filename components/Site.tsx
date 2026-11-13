@@ -437,14 +437,12 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
   }, []);
 
   useEffect(() => {
-    const stored = localStorage.getItem("theme");
-    // stored choice wins; otherwise follow the OS scheme (matches the noFlash script)
-    setDark(stored ? stored === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches);
+    // light unless the visitor picked dark with the toggle (matches the noFlash script)
+    setDark(localStorage.getItem("theme-pick") === "dark");
   }, []);
   useEffect(() => {
     if (dark === null) return;
     document.body.classList.toggle("dark", dark);
-    localStorage.setItem("theme", dark ? "dark" : "light");
   }, [dark]);
 
   useEffect(() => {
@@ -455,6 +453,9 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
   // Falls back to the plain toggle where unsupported or reduced-motion.
   const flipTheme = (e: React.MouseEvent) => {
     const next = !dark;
+    try {
+      localStorage.setItem("theme-pick", next ? "dark" : "light");
+    } catch {}
     const doc = document as Document & { startViewTransition?: (cb: () => void) => { finished: Promise<void> } };
     if (!doc.startViewTransition || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       setDark(next);
