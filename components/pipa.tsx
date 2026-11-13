@@ -25,14 +25,48 @@ const PIN = FRETS.slice(4)
     return `M${x.toFixed(1)} ${(a - 5).toFixed(1)}V${(b + 5).toFixed(1)}`;
   })
   .join("");
-// the body: a narrow neck that swells, without a step, into the pear
-const BODY =
-  "M74 89 C120 88.5 160 87.5 182 85.5 C232 81 286 46 362 24 C424 8 486 6 532 13 C574 20 598 56 598 100 " +
-  "C598 144 574 180 532 187 C486 194 424 192 362 176 C286 154 232 119 182 114.5 C160 112.5 120 111.5 74 111";
-// the inner rim, a few units in from the edge of the bulb: the binding round the soundboard
-const RIM =
-  "M200 85 C244 79 292 50 364 29.5 C425 13.5 486 11.5 531 18 C569 24.5 593 58 593 100 " +
-  "C593 142 569 175.5 531 182 C486 188.5 425 186.5 364 170.5 C292 150 244 121 200 115";
+// The body outline is computed, not hand-drawn, so it reads as one continuous teardrop:
+// the tail is an elliptical arc (full and round, no flat sides), and from the neck to that
+// arc the half-width swells along a power curve whose slope meets the arc's exactly, so
+// there is no corner and no straight run anywhere. The inner binding is the same curve
+// drawn a few units in.
+const CX = 478; // centre of the tail's arc; the body is widest here, three quarters down
+const RX = 120; // so the tail ends at x = 598
+const RY = 90; // half the widest width
+const X0 = 182; // where the neck ends and the swell begins
+const HW0 = 14.5; // half-width of the neck there
+const COS_T = -0.55; // where the swell hands over to the arc
+const outline = (inset: number, steps = 90) => {
+  const rx = RX - inset;
+  const ry = RY - inset;
+  const th = Math.acos(COS_T);
+  const xt = CX + rx * COS_T;
+  const ht = ry * Math.sin(th);
+  const mt = (ry * -COS_T) / (rx * Math.sin(th)); // the arc's slope at the hand-over
+  const x0 = X0 + inset * 3;
+  const h0 = Math.max(4, HW0 - inset * 0.3);
+  const n = (mt * (xt - x0)) / (ht - h0); // the power that makes the slopes meet
+  const top: [number, number][] = [];
+  for (let k = 0; k <= steps; k++) {
+    const t = k / steps;
+    top.push([x0 + (xt - x0) * t, h0 + (ht - h0) * t ** n]);
+  }
+  for (let k = 1; k <= steps; k++) {
+    const a = th - (th * k) / steps; // round the arc to its tip at angle 0
+    top.push([CX + rx * Math.cos(a), ry * Math.sin(a)]);
+  }
+  const f = (v: number) => v.toFixed(2);
+  const upper = top.map(([x, h]) => `${f(x)} ${f(100 - h)}`);
+  const lower = [...top].reverse().slice(1).map(([x, h]) => `${f(x)} ${f(100 + h)}`);
+  return { upper, lower, start: top[0] };
+};
+const B = outline(0);
+// the neck runs from the nut and joins the swell
+const BODY = `M74 89 C120 88.5 160 87.5 ${X0} ${100 - HW0} L${B.upper.join(" L")} L${B.lower.join(" L")} C160 112.5 120 111.5 74 111`;
+const R = outline(4.5);
+// the inner rim, round the bulb: the binding at the edge of the soundboard
+const RIM = `M${R.upper.join(" L")} L${R.lower.join(" L")}`;
+const [RX0, RH0] = R.start;
 // paulownia grain on the soundboard: the board is two halves glued down the middle, so the
 // grain runs lengthwise and mirrors either side, opening a little toward the tail and
 // wandering slightly, as straight-grained wood does
@@ -48,7 +82,7 @@ const GRAIN = Array.from({ length: 11 }, (_, k) => k)
   .join("");
 // the hardwood frame seen from the front: the neck, and the sides showing round the
 // soundboard, whose upper end comes to a rounded point at the neck
-const SOUNDBOARD = `${RIM} C192 112 190 88 200 85 Z`;
+const SOUNDBOARD = `${RIM} C${RX0 - 8} ${100 + RH0 - 2} ${RX0 - 10} ${100 - RH0 + 2} ${RX0} ${100 - RH0} Z`;
 // the head: a pegbox, then a ruyi cloud-head finial (three lobes, an incised line inside)
 const HEAD = "M74 89 L31 92 C27 86 19 84.5 15.5 88 C13 90.5 14.5 93.5 11.5 94.5 C5.5 96 5.5 104 11.5 105.5 C14.5 106.5 13 109.5 15.5 112 C19 115.5 27 114 31 108 L74 111 Z";
 const HEAD_LINE = "M28.5 94.5 C25.5 90.5 20.5 90 18.5 92.5 C17 94.5 18 97 15 98 C12.5 99 12.5 101 15 102 C18 103 17 105.5 18.5 107.5 C20.5 110 25.5 109.5 28.5 105.5";
