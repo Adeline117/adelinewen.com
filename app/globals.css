@@ -459,6 +459,9 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
 .strings svg { display: block; width: 100%; height: auto; overflow: visible; cursor: crosshair; touch-action: pan-y; }
 .pipa-body path { fill: none; stroke: var(--ink); stroke-width: 1.1; stroke-linecap: round; stroke-linejoin: round; }
 .pipa-body .frets { stroke-width: 0.8; opacity: 0.55; }
+.pipa-body .xiang { stroke-width: 4; stroke-linecap: butt; opacity: 0.8; }
+.pipa-fill { fill: color-mix(in srgb, var(--ink) 5%, transparent); stroke: none; opacity: 0; transition: opacity var(--dur) var(--ease) 0.8s; }
+.sec.on .pipa-fill { opacity: 1; }
 .str { fill: none; stroke: var(--ink); stroke-linecap: round; }
 /* drawn once when About first comes into view: the instrument, then its strings */
 .sec .pipa-body path { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset var(--dur-draw) var(--ease) 0.2s; }
@@ -507,7 +510,7 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
 .str-sound.on { color: var(--ink); border-color: var(--ink); }
 @media (hover: hover) and (pointer: fine) { .str-sound:hover { color: var(--ink); border-color: var(--ink); } }
 @media (pointer: coarse) { .str-sound { min-height: 44px; } .strings svg { cursor: default; } }
-@media (prefers-reduced-motion: reduce) { .sec .str, .sec .pipa-body path, .sec .oc-glyph .g-ink { stroke-dashoffset: 0; transition: none; } .oc-item *, .oc-item.on * { animation: none !important; } }
+@media (prefers-reduced-motion: reduce) { .sec .str, .sec .pipa-body path, .sec .oc-glyph .g-ink { stroke-dashoffset: 0; transition: none; } .pipa-fill { opacity: 1; transition: none; } .oc-item *, .oc-item.on * { animation: none !important; } }
 @media (prefers-reduced-motion: reduce) { .wall-track { animation: none !important; } .wall-row { overflow-x: auto; } .wall { mask-image: none; } }
 @media (max-width: 600px) { .credits li { grid-template-columns: 1fr; gap: 4px; } }
 
