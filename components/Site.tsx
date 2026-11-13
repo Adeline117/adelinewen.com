@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import PhotoStrip from "./PhotoStrip";
 import PhotoWall from "./PhotoWall";
+import SybilMap from "./SybilMap";
 import Leaderboard from "./Leaderboard";
 import type { Board } from "@/lib/arena";
 import { GALLERY, type Shot } from "./gallery";
@@ -670,15 +671,18 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
       {renderSection(
         2,
         t.research,
-        <ul className="tl">
-          {t.research.tl.map((item) => (
-            <li key={item.h}>
-              <div className="y">{item.y}</div>
-              <div className="h">{item.h}</div>
-              <div className="dsc">{item.d}</div>
-            </li>
-          ))}
-        </ul>,
+        <>
+          <ul className="tl">
+            {t.research.tl.map((item) => (
+              <li key={item.h}>
+                <div className="y">{item.y}</div>
+                <div className="h">{item.h}</div>
+                <div className="dsc">{item.d}</div>
+              </li>
+            ))}
+          </ul>
+          <SybilMap lang={lang} />
+        </>,
       )}
 
       {/* 04, Arena (full project page) */}
