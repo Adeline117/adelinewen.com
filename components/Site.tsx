@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import PhotoStrip from "./PhotoStrip";
 import PhotoWall from "./PhotoWall";
 import SybilMap from "./SybilMap";
-import Hobbies from "./Hobbies";
+import OffClock from "./OffClock";
 import Leaderboard from "./Leaderboard";
 import type { Board } from "@/lib/arena";
 import { GALLERY, type Shot } from "./gallery";
@@ -535,7 +535,7 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
   const t = COPY[lang];
   const ids = ["about", "honors", "research", "arena", "stage", "contact"];
 
-  const renderSection = (i: number, sec: Section, right: ReactNode, leftExtra: ReactNode = null) => (
+  const renderSection = (i: number, sec: Section, right: ReactNode, leftExtra: ReactNode = null, leftTail: ReactNode = null) => (
     <section className="sec" id={ids[i]} data-i={i} ref={setRef(i)}>
       <div className="inner">
         <div className="left">
@@ -546,6 +546,7 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
           <a className="more" href={sec.more.href} target="_blank" rel="noopener noreferrer">
             {sec.more.text}
           </a>
+          {leftTail}
         </div>
         <div className="right">{right}</div>
       </div>
@@ -656,6 +657,8 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
             {lang === "zh" ? "下载完整简历 ↓" : "Download full CV ↓"}
           </a>
         </>,
+        null,
+        <OffClock lang={lang} />,
       )}
 
       {/* 02, Talks & Honors — full width, one photo reel per event */}
@@ -796,7 +799,6 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
           <PhotoStrip shots={GALLERY.stage} label={lang === "zh" ? "舞台与银幕" : "Stage and screen"} lang={lang} even />
         </div>
         <PhotoWall label={lang === "zh" ? "更多舞台照片" : "More from the stage"} />
-        <Hobbies lang={lang} />
       </section>
 
       <section className="sec" id="contact" data-i={5} ref={setRef(5)}>
