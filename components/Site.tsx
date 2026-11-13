@@ -162,7 +162,7 @@ const COPY: Record<
           Earlier, on <em>stage</em>.
         </>
       ),
-      lead: "Before research, there was a microphone. I grew up hosting, reciting and acting: CCTV-14, four consecutive years hosting the Hubei Children's Spring Festival Gala, and on the big screen, in cinemas across China.",
+      lead: "Before research, there was a microphone. I grew up hosting, reciting, acting and playing the pipa: CCTV-14, four consecutive years hosting the Hubei Children's Spring Festival Gala, and on the big screen, in cinemas across China.",
       stats: [
         { n: "40", d: "awards in recitation, speech and hosting" },
         { n: "12", d: "at national or international level" },
@@ -310,7 +310,7 @@ const COPY: Record<
           更早以前，在<em>舞台</em>上
         </>
       ),
-      lead: "做研究之前，我是拿着话筒长大的。主持、朗诵、表演：央视 CCTV-14，连续四年主持湖北少儿春晚，还有全国院线上映的电影。",
+      lead: "做研究之前，我是拿着话筒长大的。主持、朗诵、表演、弹琵琶：央视 CCTV-14，连续四年主持湖北少儿春晚，还有全国院线上映的电影。",
       stats: [
         { n: "40", d: "朗诵、演讲与主持奖项" },
         { n: "12", d: "国家级与国际级" },
