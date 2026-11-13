@@ -14,6 +14,7 @@ const L = {
     h: "Off the clock",
     pipa: "Pipa (Level 10)",
     rest: ["chess", "poker", "skydiving", "documentary film"],
+    note: " (one passed a million views on Douyin)",
     cap: "Four strings, tuned A D E A. Sweep across them to pluck.",
     on: "Sound on",
     off: "Sound off",
@@ -23,6 +24,7 @@ const L = {
     h: "工作之外",
     pipa: "琵琶十级",
     rest: ["国际象棋", "德州扑克", "跳伞", "纪录片拍摄"],
+    note: "（有一条在抖音播放破百万）",
     cap: "四根弦，定弦 A D E A。划过琴弦即可拨响。",
     on: "声音：开",
     off: "声音：关",
@@ -261,6 +263,7 @@ export default function OffClock({ lang }: { lang: "en" | "zh" }) {
             </span>
           </span>
         ))}
+        {t.note}
         {lang === "zh" ? "。" : "."}
       </p>
       <figure className="strings">

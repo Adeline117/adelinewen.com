@@ -633,6 +633,7 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
                 traces the page's progress and Arena's signature */}
             <svg className="cover-mark" viewBox="0 0 84 44" aria-hidden="true" focusable="false">
               <path d="M42 22 C 35 12 28 8 22 8 A 14 14 0 1 0 22 36 C 28 36 35 32 42 22 C 49 12 56 8 62 8 A 14 14 0 1 1 62 36 C 56 36 49 32 42 22 Z" pathLength={1} />
+              <path className="inf-glint" d="M42 22 C 35 12 28 8 22 8 A 14 14 0 1 0 22 36 C 28 36 35 32 42 22 C 49 12 56 8 62 8 A 14 14 0 1 1 62 36 C 56 36 49 32 42 22 Z" pathLength={1} />
             </svg>
             {t.heroHint}
           </div>
@@ -737,7 +738,7 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
             <h3>{t.arena.roadmap.h}</h3>
             <ul className="aroad abody">
               {t.arena.roadmap.steps.map((s) => (
-                <li key={s.phase}>
+                <li key={s.phase} className={s.when === "now" || s.when === "现在" ? "now" : undefined}>
                   <div className="rp">{s.phase}</div>
                   <div className="rw">{s.when}</div>
                   <div className="rwhat">{s.what}</div>
@@ -756,6 +757,7 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
                 d="M42 22 C 35 12 28 8 22 8 A 14 14 0 1 0 22 36 C 28 36 35 32 42 22 C 49 12 56 8 62 8 A 14 14 0 1 1 62 36 C 56 36 49 32 42 22 Z"
                 fill="none" stroke="currentColor" strokeWidth="9" strokeLinecap="round" strokeLinejoin="round"
               />
+              <path className="inf-glint" d="M42 22 C 35 12 28 8 22 8 A 14 14 0 1 0 22 36 C 28 36 35 32 42 22 C 49 12 56 8 62 8 A 14 14 0 1 1 62 36 C 56 36 49 32 42 22 Z" pathLength={1} />
             </svg>
             <span className="wm">arena</span>
             <a className="more" href={t.arena.more.href} target="_blank" rel="noopener noreferrer">
