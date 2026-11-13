@@ -646,7 +646,7 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
         <>
           <ul className="tl">
             {t.about.resume.map((item) => (
-              <li key={item.h}>
+              <li key={item.h} className={/Present|至今/.test(item.y) ? "now" : undefined}>
                 <div className="y">{item.y}</div>
                 <div className="h">{linked(item.h, item.href)}</div>
                 <div className="dsc">{item.d}</div>

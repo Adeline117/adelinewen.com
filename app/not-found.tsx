@@ -1,9 +1,10 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import BrokenPipa from "@/components/BrokenPipa";
 
 export const metadata: Metadata = { title: "Page not found · Adeline Wen" };
 
-// In-system 404: same paper, same type, the ∞ as the quiet mark.
+// In-system 404: same paper, same type; the pipa from About, one string snapped.
 export default function NotFound() {
   return (
     <main
@@ -18,15 +19,7 @@ export default function NotFound() {
         zIndex: 2,
       }}
     >
-      <svg width="70" height="44" viewBox="7 0 70 44" aria-hidden="true" style={{ marginBottom: 28, opacity: 0.35 }}>
-        <path
-          d="M42 22 C 35 12 28 8 22 8 A 14 14 0 1 0 22 36 C 28 36 35 32 42 22 C 49 12 56 8 62 8 A 14 14 0 1 1 62 36 C 56 36 49 32 42 22 Z"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.6"
-          strokeLinecap="round"
-        />
-      </svg>
+      <BrokenPipa />
       <h1 style={{ fontWeight: 330, fontSize: "clamp(72px, 14vw, 200px)", lineHeight: 0.9, letterSpacing: "-0.03em", margin: 0 }}>
         4<em style={{ fontStyle: "italic" }}>0</em>4
       </h1>
