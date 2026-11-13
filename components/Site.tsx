@@ -395,10 +395,15 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
       if (e.isIntersecting) setActive(-1);
     }, spyOpts);
     if (heroRef.current) cover.observe(heroRef.current);
+    // the progress ∞ steps aside while the moving photo wall is under it
+    const wallEl = document.querySelector(".wall");
+    const wall = new IntersectionObserver(([e]) => document.querySelector(".prog")?.classList.toggle("hide", e.isIntersecting));
+    if (wallEl) wall.observe(wallEl);
     return () => {
       obs.disconnect();
       spy.disconnect();
       cover.disconnect();
+      wall.disconnect();
     };
   }, []);
 
