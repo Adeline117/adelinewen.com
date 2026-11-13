@@ -529,7 +529,7 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
 @keyframes gBack { 0%, 25% { opacity: 1; } 26%, 74% { opacity: 0; } 75%, 100% { opacity: 1; } }
 /* skydiving: the canopy opens from nothing and the jumper sinks a little */
 @keyframes gCanopy { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
-@keyframes gSink { 0% { transform: translateY(-5px); } 100% { transform: none; } }
+@keyframes gSink { 0% { transform: translateY(-5px) rotate(0deg); } 30% { transform: translateY(-3px) rotate(-7deg); } 60% { transform: translateY(-1px) rotate(5deg); } 85% { transform: rotate(-2deg); } 100% { transform: none; } }
 /* documentary: the REC light blinks */
 .oc-doc .g-rec { fill: none; stroke: currentColor; stroke-width: 1; }
 @keyframes gRec { 0%, 100% { fill: currentColor; } 50% { fill: transparent; } }
@@ -538,7 +538,8 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
 .oc-poker.on .g-face { animation: gFace calc(var(--dur-draw) * 1.4) linear; }
 .oc-poker.on .g-back { animation: gBack calc(var(--dur-draw) * 1.4) linear; }
 .oc-sky.on .g-canopy { animation: gCanopy var(--dur-draw) var(--ease); }
-.oc-sky.on .g-jumper { animation: gSink var(--dur-draw) var(--ease); }
+.oc-sky.on .g-jumper { animation: gSink calc(var(--dur-draw) * 1.6) var(--ease); }
+.oc-sky .g-jumper { transform-origin: 50% 10%; }
 .oc-doc.on .g-rec { animation: gRec 0.5s steps(1) 3; }
 @media (hover: hover) and (pointer: fine) {
   .oc-chess:hover .g-knight { animation: gKnight calc(var(--dur-draw) * 1.2) var(--ease); }
@@ -546,7 +547,7 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
   .oc-poker:hover .g-face { animation: gFace calc(var(--dur-draw) * 1.4) linear; }
   .oc-poker:hover .g-back { animation: gBack calc(var(--dur-draw) * 1.4) linear; }
   .oc-sky:hover .g-canopy { animation: gCanopy var(--dur-draw) var(--ease); }
-  .oc-sky:hover .g-jumper { animation: gSink var(--dur-draw) var(--ease); }
+  .oc-sky:hover .g-jumper { animation: gSink calc(var(--dur-draw) * 1.6) var(--ease); }
   .oc-doc:hover .g-rec { animation: gRec 0.5s steps(1) 3; }
 }
 /* 404: the same pipa, its top string snapped; the loose ends sway once on arrival and

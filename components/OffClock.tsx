@@ -71,12 +71,18 @@ const GLYPHS: ReactNode[] = [
       </g>
     </g>
   </g>,
-  // skydiving: the canopy opens and the jumper drifts down
+  // skydiving: a canopy alone (no figure): the dome opens, then it sways down on its lines
   <g key="sky">
     <g className="g-jumper">
-      <path className="g-ink g-canopy" pathLength={1} d="M3 9 Q12 0 21 9 Q16.5 7 12 9 Q7.5 7 3 9 M3 9 L11 16 M21 9 L13 16 M12 9 V16" />
-      <circle className="g-ink" pathLength={1} cx="12" cy="17.5" r="1.6" />
-      <path className="g-ink" pathLength={1} d="M12 19 V22 M12 20 L9.5 18.5 M12 20 L14.5 18.5" />
+      {/* dome, scalloped hem, and the two seams between its panels */}
+      <path
+        className="g-ink g-canopy"
+        pathLength={1}
+        d="M2.5 10 C2.5 5.2 6.8 2 12 2 C17.2 2 21.5 5.2 21.5 10 Q19.9 8.7 18.3 10 Q16.7 8.7 15.1 10 Q13.5 8.7 12 10 Q10.5 8.7 8.9 10 Q7.3 8.7 5.7 10 Q4.1 8.7 2.5 10 Z M8.9 10 C8.4 6.4 9.6 3.4 12 2 M15.1 10 C15.6 6.4 14.4 3.4 12 2"
+      />
+      {/* suspension lines gathering to a ring */}
+      <path className="g-ink g-lines" pathLength={1} d="M2.5 10 L11.2 19.4 M8.9 10 L11.6 19.2 M15.1 10 L12.4 19.2 M21.5 10 L12.8 19.4" />
+      <circle className="g-ink" pathLength={1} cx="12" cy="20.4" r="1.1" />
     </g>
   </g>,
   // documentary: a frame, the REC light comes on
