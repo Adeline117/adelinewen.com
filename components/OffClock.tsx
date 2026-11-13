@@ -14,7 +14,7 @@ const L = {
     h: "Off the clock",
     pipa: "Pipa (Level 10)",
     rest: ["chess", "poker", "skydiving", "documentary film"],
-    note: " (one passed a million views on Douyin)",
+    note: " (one passed a million views on Douyin, China’s TikTok)",
     cap: "Four strings, tuned A D E A. Sweep across them to pluck.",
     on: "Sound on",
     off: "Sound off",
