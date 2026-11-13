@@ -65,7 +65,6 @@ export const GALLERY = {
     { src: "/photos/stage/17.jpg", w: 540, h: 720, alt: ["Beside her own poster at the 2020 Future Dream Children's Spring Festival Gala", "2020「未来梦」少儿春晚，站在自己的海报旁"] },
     { src: "/photos/stage/18.jpg", w: 942, h: 720, alt: ["Mid-laugh on Hubei TV's Voice of Kids", "湖北卫视《童声朗朗》节目中"] },
     { src: "/photos/stage/01.jpg", w: 960, h: 720, alt: ["Hosting on Hubei TV", "在湖北卫视主持"] },
-    { src: "/photos/stage/19.jpg", w: 1208, h: 720, alt: ["In costume for a classical recitation", "古装朗诵"] },
     { src: "/photos/stage/20.jpg", w: 1079, h: 720, alt: ["On stage under “The road ahead is long”", "「路漫漫其修远兮」舞台上"] },
     { src: "/photos/stage/14.jpg", w: 540, h: 720, alt: ["Two pipas, after the show", "演出后，两把琵琶"] },
   ],
