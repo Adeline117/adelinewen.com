@@ -20,8 +20,9 @@ const srcSet = (s: Shot, ext: "avif" | "webp") =>
   HEIGHTS.map((h) => `${stem(s)}-${h}.${ext} ${Math.round((s.w * h) / s.h)}w`).join(", ");
 // the lead photo is 220px tall on phones and at most 340px elsewhere; the rest
 // are 70% of that (globals.css .strip ul / li)
-const reelSizes = (s: Shot, lead: boolean) => {
-  const [phone, wide] = lead ? [220, 340] : [154, 238];
+// rendered plate height: phone / wide (every plate in a reel shares one height)
+const reelSizes = (s: Shot, even: boolean) => {
+  const [phone, wide] = even ? [154, 238] : [220, 280];
   return `(max-width: 480px) ${Math.round((s.w * phone) / s.h)}px, ${Math.round((s.w * wide) / s.h)}px`;
 };
 
@@ -133,7 +134,7 @@ export default function PhotoStrip({ shots, label, lang, even = false }: { shots
                 {s.live ? (
                   <video src={s.live} poster={`${stem(s)}-480.webp`} muted loop playsInline preload="none" width={s.w} height={s.h} aria-hidden="true" />
                 ) : (
-                  <Pic s={s} alt={alt(i)} sizes={reelSizes(s, i === 0 && !even)} />
+                  <Pic s={s} alt={alt(i)} sizes={reelSizes(s, even)} />
                 )}
               </button>
             </li>

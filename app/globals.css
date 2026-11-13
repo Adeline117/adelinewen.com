@@ -343,11 +343,9 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
 .at-start .strip { -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - var(--fade)), transparent); mask-image: linear-gradient(90deg, #000 calc(100% - var(--fade)), transparent); }
 .at-end .strip { -webkit-mask-image: linear-gradient(90deg, transparent, #000 var(--fade)); mask-image: linear-gradient(90deg, transparent, #000 var(--fade)); }
 .at-start.at-end .strip { -webkit-mask-image: none; mask-image: none; }
-/* the first photo leads at full height; the rest sit at 70%, bottom-aligned,
-   so each event opens on one picture instead of a uniform row */
-.strip ul { display: flex; align-items: flex-end; gap: 8px; list-style: none; height: clamp(220px, 60cqi, 340px); }
-.strip li { flex: none; height: 70%; scroll-snap-align: start; }
-.strip li:first-child { height: 100%; }
+/* one plate height for every photo; portraits and landscapes differ only by width */
+.strip ul { display: flex; align-items: flex-end; gap: 8px; list-style: none; height: clamp(200px, 24cqi, 280px); }
+.strip li { flex: none; height: 100%; scroll-snap-align: start; }
 /* even reels: no enlarged lead — every photo at the reel's standard (70%) height */
 .even .strip ul { height: clamp(154px, 42cqi, 238px); }
 .even .strip li, .even .strip li:first-child { height: 100%; }
@@ -674,7 +672,9 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
   .sec .label::before { transform: none !important; }
   .sec .right { display: block; justify-self: stretch; max-width: 100%; }
   /* phones/tablets: the reel bleeds to the screen edge so the peek reads */
-  .strip { --bleed: var(--gutter); margin-inline: calc(-1 * var(--bleed)); padding-inline: max(var(--bleed), env(safe-area-inset-left)) max(var(--bleed), env(safe-area-inset-right)); scroll-padding-inline: var(--bleed); border-radius: 0; }
+  .strip { --bleed: var(--gutter); margin-inline: calc(-1 * var(--bleed)); padding-inline: max(var(--bleed), env(safe-area-inset-left)) max(var(--bleed), env(safe-area-inset-right)); scroll-padding-inline: var(--bleed); border-radius: 0; --fade: var(--bleed); }
+  .strip ul { height: clamp(220px, 60cqi, 340px); }
+  .honors > li:last-child { padding-bottom: 0; border-bottom: 0; }
   .colophon { position: static; margin-top: 40px; }
   .prog { display: none; }
   nav { padding: 10px var(--gutter); }
@@ -769,4 +769,5 @@ main:focus { outline: none; } /* skip-link target — focused programmatically, 
   .l1, .l2 { font-size: clamp(56px, 19vh, 120px); }
   .prog { display: none; }
   .toggle, nav .links button { min-height: 44px; }
+  .strip ul { height: min(56vh, 220px); }
 }
