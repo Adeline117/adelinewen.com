@@ -439,6 +439,82 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
 @keyframes smapIn { from { opacity: 0; transform: scale(0.4); } }
 @keyframes smapDraw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
 @media (max-width: 820px) { .smap-node:not(.major) text { display: none; } .smap-node text, .smap-read { font-size: 19px; stroke-width: 5px; } }
+/* Earlier: off the clock. Five ink drawings, one small move each */
+.hobbies { width: 100%; max-width: var(--measure); margin: clamp(64px, 9vh, 112px) auto 0; }
+.hob-h { font-family: var(--font-mono), monospace; font-size: var(--fs-cap); letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--mute); font-weight: 400; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+.hob-grid { list-style: none; display: grid; grid-template-columns: repeat(5, 1fr); }
+.hob { border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.hob:last-child { border-right: 0; }
+.hob-art { display: block; width: 100%; padding: 18px 18px 6px; background: none; border: 0; color: inherit; font: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.hob-art:focus-visible { outline: 1px solid var(--ink); outline-offset: -6px; }
+.hob-art svg { display: block; width: 100%; max-width: 160px; margin: 0 auto; overflow: visible; }
+.hob-label { padding: 6px 18px 18px; font-family: var(--font-mono), monospace; font-size: var(--fs-cap); letter-spacing: var(--track-meta); text-transform: uppercase; color: var(--ink); }
+.hob-hint { display: block; margin-top: 4px; color: var(--mute); }
+.hob svg .ink { fill: none; stroke: var(--ink); stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+.hob svg .thin { stroke-width: 1; }
+.hob svg .hair { stroke-width: 0.6; opacity: 0.45; }
+.hob svg text { fill: var(--ink); font-family: var(--font-fraunces), serif; }
+/* draw-in, once */
+.hobbies.pre .hob svg .ink { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.hobbies.pre .hob svg text, .hobbies.pre .hob svg .fade { opacity: 0; }
+.hobbies.play .hob svg .ink { stroke-dasharray: 1; animation: hobDraw 1.4s var(--ease) calc(var(--n, 0) * 0.12s) backwards; }
+.hobbies.play .hob svg text, .hobbies.play .hob svg .fade { animation: hobFade var(--dur) var(--ease) calc(0.9s + var(--n, 0) * 0.12s) backwards; }
+.hob:nth-child(2) { --n: 1; } .hob:nth-child(3) { --n: 2; } .hob:nth-child(4) { --n: 3; } .hob:nth-child(5) { --n: 4; }
+@keyframes hobDraw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes hobFade { from { opacity: 0; } }
+/* pipa: strings shiver from script; the body tips toward you on hover */
+.hob-pipa .str { transform-box: fill-box; stroke-width: 0.7; }
+.hob-pipa svg { transition: transform var(--dur) var(--ease); transform-origin: 50% 80%; }
+.hob-pipa.on svg { transform: rotate(-4deg); }
+/* chess: the knight makes two L-moves, the trail inks behind it */
+.hob-chess .knight text { font-size: 18px; font-family: serif; }
+.hob-chess .knight { transition: transform 0s; }
+.hob-chess .trail { fill: none; stroke: var(--ink); stroke-width: 0.8; stroke-dasharray: 1.5 2.5; opacity: 0; transition: opacity var(--dur-fast) var(--ease); }
+.hob-chess.on .trail { opacity: 0.6; }
+.hob-chess.on .knight { animation: knight 1.8s var(--ease) forwards; }
+@keyframes knight {
+  0% { transform: none; }
+  25%, 38% { transform: translate(22px, -11px); }
+  63%, 76% { transform: translate(33px, -33px); }
+  100% { transform: translate(55px, -44px); }
+}
+/* poker: two cards turn over, one after the other */
+.hob-poker .pcard { transform-box: fill-box; transform-origin: center; }
+.hob-poker .back, .hob-poker .front { transform-box: fill-box; transform-origin: center; transition: transform 0.16s ease-in calc(var(--i) * 0.12s + 0.16s); }
+.hob-poker .front { transform: scaleX(0); transition-delay: calc(var(--i) * 0.12s); transition-timing-function: ease-in; }
+.hob-poker.on .back { transform: scaleX(0); transition-delay: calc(var(--i) * 0.12s); }
+.hob-poker.on .front { transform: none; transition-delay: calc(var(--i) * 0.12s + 0.16s); transition-timing-function: ease-out; }
+.hob-poker .hatch { stroke: var(--ink); stroke-width: 0.6; opacity: 0.5; }
+.hob-poker .face { fill: var(--bg); stroke: var(--ink); stroke-width: 1.4; }
+.hob-poker .rank { font-size: 11px; }
+.hob-poker .suit { font-size: 22px; font-family: serif; }
+/* skydiving: the canopy opens and the jumper slows and sways */
+.hob-sky .canopy { fill: none; stroke: var(--ink); stroke-width: 1.2; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; opacity: 0; transition: stroke-dashoffset 0.9s var(--ease), opacity 0.2s; }
+.hob-sky.on .canopy { stroke-dashoffset: 0; opacity: 1; }
+.hob-sky .jumper { transform-box: fill-box; transform-origin: 50% 0; transition: transform 1.2s var(--ease); }
+.hob-sky.on .jumper { transform: translateY(8px); animation: sway 3.2s var(--ease-loop) 0.9s 2; }
+.hob-sky .wind { transition: opacity var(--dur) var(--ease); }
+.hob-sky.on .wind { opacity: 0; }
+@keyframes sway { 0%, 100% { transform: translateY(8px) rotate(0); } 25% { transform: translateY(8px) rotate(3deg); } 75% { transform: translateY(8px) rotate(-3deg); } }
+/* documentary: clapper snaps shut, REC lights, timecode rolls */
+.hob-doc .clap { transform-box: view-box; transform-origin: 22px 49px; transform: rotate(-16deg); transition: transform 0.5s var(--ease); }
+.hob-doc.on .clap { transform: none; transition: transform 0.12s cubic-bezier(0.5, 0, 1, 1); }
+.hob-doc .rec { fill: none; stroke: var(--ink); stroke-width: 1; }
+.hob-doc.on .rec { fill: var(--ink); animation: rec 1s steps(2, jump-none) 0.12s infinite; }
+.hob-doc .tc { font-family: var(--font-mono), monospace; font-size: 9px; letter-spacing: 0.06em; fill: var(--mute); font-variant-numeric: tabular-nums; }
+.hob-doc.on .tc { fill: var(--ink); }
+@keyframes rec { 50% { opacity: 0.15; } }
+@media (max-width: 820px) {
+  .hob-grid { grid-template-columns: repeat(2, 1fr); }
+  .hob:nth-child(2n) { border-right: 0; }
+  .hob:last-child { grid-column: 1 / -1; }
+  .hob:last-child svg { max-width: 130px; }
+  .hob-art { padding: 14px 10px 4px; }
+  .hob-label { padding: 4px 12px 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hob svg *, .hob svg { animation: none !important; transition: none !important; }
+}
 @media (prefers-reduced-motion: reduce) { .wall-track { animation: none !important; } .wall-row { overflow-x: auto; } .wall { mask-image: none; } }
 @media (max-width: 600px) { .credits li { grid-template-columns: 1fr; gap: 4px; } }
 
