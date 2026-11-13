@@ -459,30 +459,31 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
 /* ===== Arena: full project section (long-form, scrolls freely) =====
    Same paper as the rest of the site — differentiation comes from the
    editorial layout, not a color block. */
-/* Arena printed on newsprint: its own yellowed stock, edge to edge, framed by a
-   thick-and-thin rule like a broadsheet section front */
+/* Arena printed on newsprint: its own yellowed stock, slipped into the page rather
+   than butted against it. The sheet sits on a ::before whose top and bottom feather
+   into the site paper, and (where scroll timelines exist) it surfaces as the section
+   scrolls in and sinks back as it leaves, so the neighbours hand over to it. */
 .arena-sec {
-  position: relative; z-index: 1;
+  position: relative; z-index: 1; isolation: isolate;
   --ink: var(--news-ink); --text: var(--news-ink); --mute: var(--news-mute); --line: var(--news-line);
   color: var(--ink);
-  /* thick-and-thin rules top and bottom, a sheet barely crumpled, the site's own grain */
-  background:
-    linear-gradient(var(--news-ink), var(--news-ink)) 0 0 / 100% 2px no-repeat,
-    linear-gradient(var(--line), var(--line)) 0 5px / 100% 1px no-repeat,
-    linear-gradient(var(--line), var(--line)) 0 calc(100% - 5px) / 100% 1px no-repeat,
-    linear-gradient(var(--news-ink), var(--news-ink)) 0 100% / 100% 2px no-repeat,
-    var(--news-crease) 0 0 / 1100px auto,
-    var(--grain), var(--news-fiber), var(--news);
-  background-blend-mode: normal, normal, normal, normal, var(--news-blend), normal, normal, normal;
 }
+.arena-sec::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: var(--news-crease) 0 0 / 1100px auto, var(--grain), var(--news-fiber), var(--news);
+  background-blend-mode: var(--news-blend), normal, normal, normal;
+  -webkit-mask-image: linear-gradient(transparent, #000 clamp(96px, 14vh, 160px), #000 calc(100% - clamp(96px, 14vh, 160px)), transparent);
+  mask-image: linear-gradient(transparent, #000 clamp(96px, 14vh, 160px), #000 calc(100% - clamp(96px, 14vh, 160px)), transparent);
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .arena-sec::before { animation: newsSurface linear both; animation-timeline: view(); animation-range: cover 0% cover 100%; }
+  }
+}
+@keyframes newsSurface { 0% { opacity: 0; } 12% { opacity: 1; } 88% { opacity: 1; } 100% { opacity: 0; } }
 .arena-sec { display: block; padding: clamp(96px, 14vh, 160px) clamp(24px, 5vw, 72px); }
 /* match the other sections' container so headings left-align across the site */
 .arena-wrap { max-width: var(--measure); margin: 0 auto; }
-/* this section is a long read — show everything immediately, no reveal */
-.arena-sec .label, .arena-sec h2, .arena-sec .lead, .arena-sec .more {
-  opacity: 1 !important; transform: none !important; transition: none !important; clip-path: none !important;
-}
-.arena-sec .label::before { transform: none !important; }
 .arena-wrap > .lead { max-width: 760px; margin-top: 24px; }
 /* Arena's leaderboard, typeset: hairline rows on the site's grid, no product colour */
 .board { margin: 48px 0 0; }
