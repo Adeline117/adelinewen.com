@@ -123,17 +123,21 @@ export default function SybilMap({ lang }: { lang: "en" | "zh" }) {
       });
       if (visible) raf = requestAnimationFrame(flow);
     };
+    // dots wait until their lines are inked (when the map will draw itself in)
+    const willReveal = !calm && el.getBoundingClientRect().top >= window.innerHeight;
+    let inked = !willReveal;
     const io = new IntersectionObserver(([e]) => {
       visible = e.isIntersecting;
       cancelAnimationFrame(raf);
       last = 0;
-      if (visible && !calm) raf = requestAnimationFrame(flow);
+      if (visible && !calm && inked) raf = requestAnimationFrame(flow);
     });
     io.observe(el);
 
     // the first time it scrolls into view, ink it in
     let reveal: IntersectionObserver | null = null;
-    if (!calm && el.getBoundingClientRect().top >= window.innerHeight) {
+    let later = 0;
+    if (willReveal) {
       el.classList.add("pre");
       reveal = new IntersectionObserver(
         ([e]) => {
@@ -141,6 +145,14 @@ export default function SybilMap({ lang }: { lang: "en" | "zh" }) {
           reveal?.disconnect();
           el.classList.replace("pre", "play");
           s.alpha(0.5).restart();
+          later = window.setTimeout(() => {
+            inked = true;
+            if (visible) {
+              cancelAnimationFrame(raf);
+              last = 0;
+              raf = requestAnimationFrame(flow);
+            }
+          }, 1800);
         },
         { threshold: 0.4 },
       );
@@ -151,6 +163,7 @@ export default function SybilMap({ lang }: { lang: "en" | "zh" }) {
       s.stop();
       io.disconnect();
       reveal?.disconnect();
+      clearTimeout(later);
       cancelAnimationFrame(raf);
     };
   }, []);
@@ -190,9 +203,11 @@ export default function SybilMap({ lang }: { lang: "en" | "zh" }) {
     n.fx = Math.max(n.r, Math.min(W - n.r, p.x));
     n.fy = Math.max(n.r + 24, Math.min(H - n.r, p.y));
   };
-  const drop = () => {
+  const drop = (e: React.PointerEvent) => {
     const i = dragging.current;
     if (i === null) return;
+    // touch has no hover-out: let the trace fade on its own
+    if (e.pointerType !== "mouse") window.setTimeout(() => dragging.current === null && setOn(null), 1200);
     const n = nodes.current[i];
     n.fx = null;
     n.fy = null;
@@ -214,7 +229,7 @@ export default function SybilMap({ lang }: { lang: "en" | "zh" }) {
                 d={`M${NODES[a].x} ${NODES[a].y}L${NODES[b].x} ${NODES[b].y}`}
                 pathLength={1}
                 className={lit(a, b) ? "lit" : undefined}
-                style={{ strokeWidth: 0.5 + k * 3.5, ["--o" as string]: 0.14 + k * 0.6, ["--d" as string]: `${0.5 + i * 0.022}s` }}
+                style={{ strokeWidth: 0.5 + k * 3.5, ["--o" as string]: 0.14 + k * 0.6, ["--d" as string]: `${0.5 + i * Math.min(0.022, 0.8 / LINKS.length)}s` }}
               />
             );
           })}
@@ -235,6 +250,7 @@ export default function SybilMap({ lang }: { lang: "en" | "zh" }) {
                 className={`smap-node${i < 8 ? " major" : ""}${on === i ? " on" : ""}`}
                 style={{ ["--d" as string]: `${i * 0.03}s` }}
                 onMouseEnter={() => dragging.current === null && setOn(i)}
+                onMouseLeave={() => dragging.current === null && setOn(null)}
                 onPointerDown={grab(i)}
                 onPointerMove={move}
                 onPointerUp={drop}
