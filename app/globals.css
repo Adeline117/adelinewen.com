@@ -455,21 +455,59 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
 .oc-h { font-family: var(--font-mono), monospace; font-size: var(--fs-cap); letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--mute); font-weight: 400; }
 .oc-list { margin-top: 12px; font-size: var(--fs-body); line-height: 1.6; color: var(--text); }
 .strings { margin: 24px 0 0; }
-.str-board { position: relative; padding-left: 20px; }
-.str-notes { list-style: none; position: absolute; inset: 0 auto 0 0; width: 12px; }
-.str-notes li { position: absolute; left: 0; transform: translateY(-50%); font-family: var(--font-mono), monospace; font-size: var(--fs-cap); color: var(--mute); line-height: 1; }
-.strings svg { display: block; width: 100%; height: 112px; overflow: visible; cursor: crosshair; touch-action: pan-y; }
-.str { fill: none; stroke: var(--ink); stroke-linecap: round; vector-effect: non-scaling-stroke; }
-.str-nut { fill: none; stroke: var(--line); stroke-width: 1; vector-effect: non-scaling-stroke; }
-/* the strings are strung once, left to right, when About first comes into view */
-.sec .str { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset var(--dur-draw) var(--ease) calc(0.3s + var(--i) * var(--stagger)); }
-.sec.on .str { stroke-dashoffset: 0; }
+.strings svg { max-width: 460px; }
+.strings svg { display: block; width: 100%; height: auto; overflow: visible; cursor: crosshair; touch-action: pan-y; }
+.pipa-body path { fill: none; stroke: var(--ink); stroke-width: 1.1; stroke-linecap: round; stroke-linejoin: round; }
+.pipa-body .frets { stroke-width: 0.8; opacity: 0.55; }
+.str { fill: none; stroke: var(--ink); stroke-linecap: round; }
+/* drawn once when About first comes into view: the instrument, then its strings */
+.sec .pipa-body path { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset var(--dur-draw) var(--ease) 0.2s; }
+.sec .str { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset var(--dur-draw) var(--ease) calc(0.9s + var(--i) * var(--stagger)); }
+.sec.on .pipa-body path, .sec.on .str { stroke-dashoffset: 0; }
+/* the interests' small ink marks: drawn in with the section, one move on hover or tap */
+.oc-item { white-space: nowrap; cursor: default; }
+.oc-glyph { display: inline-block; width: 1.35em; height: 1.35em; margin-left: 0.15em; vertical-align: -0.28em; overflow: visible; color: var(--ink); }
+.oc-glyph .g-ink { fill: none; stroke: currentColor; stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; }
+.oc-glyph .g-fill { fill: currentColor; }
+.sec .oc-glyph .g-ink { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset var(--dur-draw) var(--ease) 0.6s; }
+.sec.on .oc-glyph .g-ink { stroke-dashoffset: 0; }
+.oc-glyph g { transform-box: fill-box; transform-origin: 50% 100%; }
+/* chess: the knight hops an L and lands */
+@keyframes gKnight { 0% { transform: none; } 35% { transform: translate(3px, -7px); } 60% { transform: translate(6px, -3px); } 80% { transform: translate(6px, 0); } 100% { transform: none; } }
+/* poker: the card turns over, shows the ace, turns back */
+.oc-poker .g-card { transform-origin: 50% 50%; }
+.oc-poker .g-face { opacity: 0; }
+@keyframes gFlip { 0%, 100% { transform: none; } 25%, 75% { transform: scaleX(0.02); } 26%, 74% { transform: scaleX(0.02); } 50% { transform: none; } }
+@keyframes gFace { 0%, 25% { opacity: 0; } 26%, 74% { opacity: 1; } 75%, 100% { opacity: 0; } }
+@keyframes gBack { 0%, 25% { opacity: 1; } 26%, 74% { opacity: 0; } 75%, 100% { opacity: 1; } }
+/* skydiving: the canopy opens from nothing and the jumper sinks a little */
+@keyframes gCanopy { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes gSink { 0% { transform: translateY(-3px); } 100% { transform: none; } }
+/* documentary: the REC light blinks */
+.oc-doc .g-rec { fill: none; stroke: currentColor; stroke-width: 1; }
+@keyframes gRec { 0%, 100% { fill: currentColor; } 50% { fill: transparent; } }
+.oc-chess.on .g-knight { animation: gKnight calc(var(--dur-draw) * 1.2) var(--ease); }
+.oc-poker.on .g-card { animation: gFlip calc(var(--dur-draw) * 1.4) var(--ease); }
+.oc-poker.on .g-face { animation: gFace calc(var(--dur-draw) * 1.4) linear; }
+.oc-poker.on .g-back { animation: gBack calc(var(--dur-draw) * 1.4) linear; }
+.oc-sky.on .g-canopy { animation: gCanopy var(--dur-draw) var(--ease); }
+.oc-sky.on .g-jumper { animation: gSink var(--dur-draw) var(--ease); }
+.oc-doc.on .g-rec { animation: gRec 0.5s steps(1) 3; }
+@media (hover: hover) and (pointer: fine) {
+  .oc-chess:hover .g-knight { animation: gKnight calc(var(--dur-draw) * 1.2) var(--ease); }
+  .oc-poker:hover .g-card { animation: gFlip calc(var(--dur-draw) * 1.4) var(--ease); }
+  .oc-poker:hover .g-face { animation: gFace calc(var(--dur-draw) * 1.4) linear; }
+  .oc-poker:hover .g-back { animation: gBack calc(var(--dur-draw) * 1.4) linear; }
+  .oc-sky:hover .g-canopy { animation: gCanopy var(--dur-draw) var(--ease); }
+  .oc-sky:hover .g-jumper { animation: gSink var(--dur-draw) var(--ease); }
+  .oc-doc:hover .g-rec { animation: gRec 0.5s steps(1) 3; }
+}
 .strings figcaption { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-top: 12px; font-size: var(--fs-sm); line-height: 1.5; color: var(--mute); }
 .str-sound { flex: none; font-family: var(--font-mono), monospace; font-size: var(--fs-cap); letter-spacing: var(--track-meta); text-transform: uppercase; color: var(--mute); background: none; border: 1px solid var(--line); border-radius: var(--pill); padding: 8px 14px; cursor: pointer; transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease); }
 .str-sound.on { color: var(--ink); border-color: var(--ink); }
 @media (hover: hover) and (pointer: fine) { .str-sound:hover { color: var(--ink); border-color: var(--ink); } }
 @media (pointer: coarse) { .str-sound { min-height: 44px; } .strings svg { cursor: default; } }
-@media (prefers-reduced-motion: reduce) { .sec .str { stroke-dashoffset: 0; transition: none; } }
+@media (prefers-reduced-motion: reduce) { .sec .str, .sec .pipa-body path, .sec .oc-glyph .g-ink { stroke-dashoffset: 0; transition: none; } .oc-item *, .oc-item.on * { animation: none !important; } }
 @media (prefers-reduced-motion: reduce) { .wall-track { animation: none !important; } .wall-row { overflow-x: auto; } .wall { mask-image: none; } }
 @media (max-width: 600px) { .credits li { grid-template-columns: 1fr; gap: 4px; } }
 

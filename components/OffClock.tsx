@@ -1,47 +1,51 @@
 "use client";
 
-import { useEffect, useRef, useState, type PointerEvent } from "react";
+import { useEffect, useRef, useState, type PointerEvent, type ReactNode } from "react";
 
-// About › Off the clock. The interests from the CV in one line of type, and one thing to
-// play with: the four strings of a pipa, drawn as hairlines. Sweep across them and each
-// string you cross is plucked: it bends where you crossed it and rings down as a damped
-// oscillation (a small physics model, run only while something is still moving). Sound
-// is off until the visitor turns it on; then each pluck is a synthesised string at the
-// pipa's open tuning, A D E A. On touch screens a tap plucks the nearest string.
+// About › Off the clock. The interests in one line of type, each (but the pipa) with a
+// small ink mark that moves once when hovered or tapped; then the pipa itself, drawn
+// lying on its side, with four strings you can pluck. Sweep across them and each string
+// you cross bends where you crossed it and rings down as a damped oscillation (run only
+// while something still moves). Sound is off until the visitor turns it on; then each
+// pluck is a synthesised string at the pipa's open tuning, A D E A.
 const L = {
   en: {
     h: "Off the clock",
-    list: ["Pipa (Level 10, the highest grade)", "chess", "poker", "skydiving", "documentary film"],
-    cap: "A pipa’s four strings, tuned A D E A. Sweep across them to pluck.",
+    pipa: "Pipa (Level 10)",
+    rest: ["chess", "poker", "skydiving", "documentary film"],
+    cap: "Four strings, tuned A D E A. Sweep across them to pluck.",
     on: "Sound on",
     off: "Sound off",
-    aria: "Four pipa strings; pluck them with the pointer",
+    aria: "A pipa; pluck its four strings with the pointer",
   },
   zh: {
     h: "工作之外",
-    list: ["琵琶（十级，最高级）", "国际象棋", "德州扑克", "跳伞", "纪录片拍摄"],
-    cap: "琵琶的四根弦，定弦 A D E A。划过琴弦即可拨响。",
+    pipa: "琵琶十级",
+    rest: ["国际象棋", "德州扑克", "跳伞", "纪录片拍摄"],
+    cap: "四根弦，定弦 A D E A。划过琴弦即可拨响。",
     on: "声音：开",
     off: "声音：关",
-    aria: "四根琵琶弦，可以用鼠标或手指拨动",
+    aria: "一把琵琶，可以用鼠标或手指拨动四根弦",
   },
 };
 
-const W = 600; // viewBox width; the svg stretches to its column
-const H = 112;
-// top to bottom: the thinnest, highest string first
+const W = 600;
+const H = 200;
+const NUT = 46;
+const BRIDGE = 520;
+// top to bottom: the thinnest, highest string first; they fan out from nut to bridge
 const STRINGS = [
-  { y: 22, f: 220.0, note: "A", w: 0.8 },
-  { y: 44, f: 164.81, note: "E", w: 1.0 },
-  { y: 66, f: 146.83, note: "D", w: 1.2 },
-  { y: 88, f: 110.0, note: "A", w: 1.5 },
+  { y0: 92, y1: 73, f: 220.0, w: 0.8 },
+  { y0: 97.5, y1: 91, f: 164.81, w: 1.0 },
+  { y0: 102.5, y1: 109, f: 146.83, w: 1.2 },
+  { y0: 108, y1: 127, f: 110.0, w: 1.5 },
 ];
-const OMEGA = 2 * Math.PI * 6.5; // the drawn string swings ~6.5 times a second
-const DAMP = 2 * 0.05 * OMEGA; // and rings down over about two seconds
+const base = (s: (typeof STRINGS)[number], x: number) => s.y0 + ((s.y1 - s.y0) * (x - NUT)) / (BRIDGE - NUT);
+const OMEGA = 2 * Math.PI * 6.5;
+const DAMP = 2 * 0.05 * OMEGA;
 
 function pluckSound(ctx: AudioContext, f: number, gain: number) {
-  // Karplus-Strong: noise round a delay line that averages itself, like a string
-  // losing its brightness after the pick leaves it
+  // Karplus-Strong: noise round a delay line that averages itself down
   const sr = ctx.sampleRate;
   const len = Math.floor(sr * 1.8);
   const buf = ctx.createBuffer(1, len, sr);
@@ -57,30 +61,67 @@ function pluckSound(ctx: AudioContext, f: number, gain: number) {
   src.start();
 }
 
+// small ink marks, 24 x 24, drawn in currentColor
+const GLYPHS: ReactNode[] = [
+  // chess: a knight that hops an L
+  <g key="chess">
+    <path className="g-ink" pathLength={1} d="M5 22H19" />
+    <g className="g-knight">
+      <path className="g-ink" pathLength={1} d="M8 20 C8 16 10 14 11.5 12 C9.5 12.5 7 11.5 5.5 9.5 L10 4.5 L11 2 L12.5 4 C16.5 5 18.5 9.5 17 14 L17 20 Z" />
+      <circle className="g-fill" cx="10.6" cy="6.8" r="0.8" />
+    </g>
+  </g>,
+  // poker: a card that turns over to the ace of spades
+  <g key="poker">
+    <g className="g-card">
+      <rect className="g-ink g-back" pathLength={1} x="6" y="3" width="12" height="18" rx="2" />
+      <rect className="g-ink g-back" pathLength={1} x="8.75" y="5.75" width="6.5" height="12.5" rx="1" />
+      <g className="g-face">
+        <rect className="g-ink" pathLength={1} x="6" y="3" width="12" height="18" rx="2" />
+        <path className="g-fill" d="M12 8 C14 10.5 16 11.5 16 13.5 C16 15 14.6 15.8 13.2 15.2 L14 17.5 H10 L10.8 15.2 C9.4 15.8 8 15 8 13.5 C8 11.5 10 10.5 12 8 Z" />
+      </g>
+    </g>
+  </g>,
+  // skydiving: the canopy opens and the jumper drifts down
+  <g key="sky">
+    <g className="g-jumper">
+      <path className="g-ink g-canopy" pathLength={1} d="M3 9 Q12 0 21 9 Q16.5 7 12 9 Q7.5 7 3 9 M3 9 L11 16 M21 9 L13 16 M12 9 V16" />
+      <circle className="g-ink" pathLength={1} cx="12" cy="17.5" r="1.6" />
+      <path className="g-ink" pathLength={1} d="M12 19 V22 M12 20 L9.5 18.5 M12 20 L14.5 18.5" />
+    </g>
+  </g>,
+  // documentary: a frame, the REC light comes on
+  <g key="doc">
+    <rect className="g-ink" pathLength={1} x="2.5" y="6" width="14" height="12" rx="1.5" />
+    <path className="g-ink" pathLength={1} d="M16.5 10 L21.5 7 V17 L16.5 14" />
+    <circle className="g-rec" cx="6.5" cy="9.8" r="1.6" />
+  </g>,
+];
+
 export default function OffClock({ lang }: { lang: "en" | "zh" }) {
   const t = L[lang];
   const svg = useRef<SVGSVGElement>(null);
   const paths = useRef<(SVGPathElement | null)[]>([]);
   const state = useRef(STRINGS.map(() => ({ a: 0, v: 0, x: W / 2 })));
   const raf = useRef(0);
-  const last = useRef<{ y: number } | null>(null);
+  const last = useRef<{ x: number; y: number } | null>(null);
   const audio = useRef<AudioContext | null>(null);
   const [sound, setSound] = useState(false);
   const soundRef = useRef(false);
   const calm = useRef(false);
+  const [tapped, setTapped] = useState<number | null>(null);
 
   useEffect(() => {
     calm.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     return () => cancelAnimationFrame(raf.current);
   }, []);
 
-  const draw = () => {
-    STRINGS.forEach((s, i) => {
-      const { a, x } = state.current[i];
-      // a quadratic through the pluck point: the string bends at the finger, not the middle
-      paths.current[i]?.setAttribute("d", `M0 ${s.y}Q${x.toFixed(1)} ${(s.y + 2 * a).toFixed(2)} ${W} ${s.y}`);
-    });
+  const d = (i: number) => {
+    const s = STRINGS[i];
+    const { a, x } = state.current[i];
+    return `M${NUT} ${s.y0}Q${x.toFixed(1)} ${(base(s, x) + 2 * a).toFixed(2)} ${BRIDGE} ${s.y1}`;
   };
+  const draw = () => STRINGS.forEach((_, i) => paths.current[i]?.setAttribute("d", d(i)));
 
   const run = () => {
     let prev = 0;
@@ -89,14 +130,10 @@ export default function OffClock({ lang }: { lang: "en" | "zh" }) {
       prev = now;
       let moving = false;
       for (const st of state.current) {
-        // damped spring, semi-implicit Euler
         st.v += (-OMEGA * OMEGA * st.a - DAMP * st.v) * dt;
         st.a += st.v * dt;
         if (Math.abs(st.a) > 0.03 || Math.abs(st.v) > 0.3) moving = true;
-        else {
-          st.a = 0;
-          st.v = 0;
-        }
+        else st.a = st.v = 0;
       }
       draw();
       raf.current = moving ? requestAnimationFrame(step) : 0;
@@ -107,100 +144,121 @@ export default function OffClock({ lang }: { lang: "en" | "zh" }) {
   const pluck = (i: number, x: number, dir: number, force: number) => {
     const st = state.current[i];
     if (!calm.current) {
-      st.a = dir * Math.min(10, 4.5 + force);
+      st.a = dir * Math.min(8, 3.5 + force);
       st.v = 0;
-      st.x = Math.max(60, Math.min(W - 60, x));
+      st.x = Math.max(NUT + 60, Math.min(BRIDGE - 40, x));
       run();
     }
     if (soundRef.current && audio.current) pluckSound(audio.current, STRINGS[i].f, 0.12 + Math.min(0.12, force * 0.02));
   };
 
-  // pointer position in viewBox units (the svg is stretched horizontally)
+  // pointer in viewBox units (the drawing keeps its aspect ratio)
   const at = (e: PointerEvent) => {
-    const r = svg.current!.getBoundingClientRect();
-    return { x: ((e.clientX - r.left) / r.width) * W, y: ((e.clientY - r.top) / r.height) * H };
+    const m = svg.current?.getScreenCTM();
+    if (!m) return { x: 0, y: 0 };
+    const p = new DOMPoint(e.clientX, e.clientY).matrixTransform(m.inverse());
+    return { x: p.x, y: p.y };
   };
 
   const onMove = (e: PointerEvent) => {
     if (e.pointerType !== "mouse") return;
     const p = at(e);
     const prev = last.current;
-    last.current = { y: p.y };
-    if (!prev) return;
+    last.current = p;
+    if (!prev || p.x < NUT || p.x > BRIDGE) return;
     STRINGS.forEach((s, i) => {
-      if ((prev.y - s.y) * (p.y - s.y) < 0) pluck(i, p.x, Math.sign(p.y - prev.y), Math.abs(p.y - prev.y) * 0.4);
+      if ((prev.y - base(s, prev.x)) * (p.y - base(s, p.x)) < 0) pluck(i, p.x, Math.sign(p.y - prev.y), Math.abs(p.y - prev.y) * 0.4);
     });
   };
 
   const onDown = (e: PointerEvent) => {
     const p = at(e);
+    if (p.x < NUT || p.x > BRIDGE) return;
     let best = 0;
     STRINGS.forEach((s, i) => {
-      if (Math.abs(s.y - p.y) < Math.abs(STRINGS[best].y - p.y)) best = i;
+      if (Math.abs(base(s, p.x) - p.y) < Math.abs(base(STRINGS[best], p.x) - p.y)) best = i;
     });
-    if (Math.abs(STRINGS[best].y - p.y) < 16) pluck(best, p.x, 1, 4);
+    if (Math.abs(base(STRINGS[best], p.x) - p.y) < 18) pluck(best, p.x, 1, 4);
   };
 
   const toggle = () => {
     const next = !soundRef.current;
     soundRef.current = next;
     setSound(next);
-    if (next) {
-      const AC = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-      if (!AC) return;
-      audio.current ??= new AC();
-      if (audio.current.state === "suspended") audio.current.resume();
-      // a soft strum, low to high, so turning sound on is its own confirmation
-      [3, 2, 1, 0].forEach((i, k) => window.setTimeout(() => pluck(i, W * 0.62, 1, 2), k * 70));
-    }
+    if (!next) return;
+    const AC = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+    if (!AC) return;
+    audio.current ??= new AC();
+    if (audio.current.state === "suspended") audio.current.resume();
+    // a soft strum, low to high, so turning sound on confirms itself
+    [3, 2, 1, 0].forEach((i, k) => window.setTimeout(() => pluck(i, W * 0.6, 1, 2), k * 70));
   };
 
+  // touch has no hover: a tap plays the mark's move once
+  const tap = (i: number) => {
+    setTapped(null);
+    requestAnimationFrame(() => setTapped(i));
+    window.setTimeout(() => setTapped((v) => (v === i ? null : v)), 1800);
+  };
+
+  const sep = lang === "zh" ? "、" : ", ";
   return (
     <div className="offclock">
       <h3 className="oc-h">{t.h}</h3>
       <p className="oc-list">
-        {t.list.map((x, i) => (
+        {t.pipa}
+        {t.rest.map((x, i) => (
           <span key={x}>
-            {x}
-            {i < t.list.length - 1 && <span className="oc-sep" aria-hidden="true">{lang === "zh" ? "、" : ", "}</span>}
+            {sep}
+            <span
+              className={`oc-item oc-${["chess", "poker", "sky", "doc"][i]}${tapped === i ? " on" : ""}`}
+              onClick={() => tap(i)}
+            >
+              {x}
+              <svg className="oc-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                {GLYPHS[i]}
+              </svg>
+            </span>
           </span>
         ))}
         {lang === "zh" ? "。" : "."}
       </p>
       <figure className="strings">
-        <div className="str-board">
-          <ol className="str-notes" aria-hidden="true">
-            {STRINGS.map((s, i) => (
-              <li key={i} style={{ top: `${(s.y / H) * 100}%` }}>
-                {s.note}
-              </li>
-            ))}
-          </ol>
-          <svg
-            ref={svg}
-            viewBox={`0 0 ${W} ${H}`}
-            preserveAspectRatio="none"
-            role="img"
-            aria-label={t.aria}
-            onPointerMove={onMove}
-            onPointerLeave={() => (last.current = null)}
-            onPointerDown={onDown}
-          >
-            <path className="str-nut" d={`M1 10V${H - 10}M${W - 1} 10V${H - 10}`} />
-            {STRINGS.map((s, i) => (
-              <path
-                key={i}
-                ref={(el) => {
-                  paths.current[i] = el;
-                }}
-                className="str"
-                pathLength={1}
-                style={{ strokeWidth: s.w, ["--i" as string]: i }}
-                d={`M0 ${s.y}Q${W / 2} ${s.y} ${W} ${s.y}`}
-              />
-            ))}
-          </svg>
-        </div>
+        <svg
+          ref={svg}
+          viewBox={`0 0 ${W} ${H}`}
+          role="img"
+          aria-label={t.aria}
+          onPointerMove={onMove}
+          onPointerLeave={() => (last.current = null)}
+          onPointerDown={onDown}
+        >
+          <g className="pipa-body">
+            {/* head bent back, with four pegs */}
+            <path pathLength={1} d="M46 90 C30 87 14 82 6 90 L6 110 C14 118 30 113 46 110" />
+            <path pathLength={1} d="M14 85V76M26 87V78M14 115V124M26 113V122" />
+            {/* a short neck */}
+            <path pathLength={1} d="M46 90 L190 84 M46 110 L190 116" />
+            {/* the wide pear body */}
+            <path pathLength={1} d="M190 84 C250 30 380 6 490 14 C568 22 596 60 596 100 C596 140 568 178 490 186 C380 194 250 170 190 116" />
+            {/* frets (xiang) on the neck, pin frets running onto the body */}
+            <path pathLength={1} className="frets" d="M80 88V112M112 87V113M144 86V114M174 85V115M214 72V128M244 58V142M276 48V152" />
+            {/* the bridge the strings tie to */}
+            <path pathLength={1} d="M520 66V134" />
+          </g>
+          {STRINGS.map((s, i) => (
+            <path
+              key={i}
+              ref={(el) => {
+                paths.current[i] = el;
+              }}
+              className="str"
+              pathLength={1}
+              style={{ strokeWidth: s.w, ["--i" as string]: i }}
+              d={`M${NUT} ${s.y0}Q${W / 2} ${base(s, W / 2)} ${BRIDGE} ${s.y1}`}
+            />
+          ))}
+        </svg>
         <figcaption>
           <span>{t.cap}</span>
           <button type="button" className={`str-sound${sound ? " on" : ""}`} aria-pressed={sound} onClick={toggle}>
