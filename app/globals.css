@@ -742,8 +742,8 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
   /* one stat per row, number and label on a shared baseline */
   .arena-stats { grid-template-columns: 1fr; margin-bottom: 0; }
   .arena-stats li { padding: 16px 0; }
-  .arena-stats .rinfo { display: grid; grid-template-columns: 6.5rem 1fr; align-items: baseline; gap: 12px; }
-  .arena-stats .n { font-size: 36px; margin-bottom: 0; }
+  .arena-stats .rinfo { display: grid; grid-template-columns: 9rem 1fr; align-items: baseline; gap: 12px; }
+  .arena-stats .n { font-size: 32px; margin-bottom: 0; }
   /* five section links can't fit legibly beside the toggles on a phone —
      free scroll makes them non-essential, so the bar keeps name + controls */
   nav .links { display: none; }
