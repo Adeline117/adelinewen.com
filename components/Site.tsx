@@ -57,7 +57,7 @@ const COPY: Record<
     colophon: "© 2026 Adeline Wen",
     heroSub: (
       <>
-        Research assistant at the University of Washington CAIS Lab, and independent developer of <a className="tlink" href="https://arenafi.org" target="_blank" rel="noopener noreferrer"><b>arenafi.org</b></a>.
+        Research assistant at the University of Washington <a className="tlink" href="https://sites.uw.edu/weicaics/" target="_blank" rel="noopener noreferrer"><b>CAIS Lab</b></a>, and independent developer of <a className="tlink" href="https://arenafi.org" target="_blank" rel="noopener noreferrer"><b>arenafi.org</b></a>.
       </>
     ),
     heroHint: "Scroll ↓",
@@ -205,7 +205,7 @@ const COPY: Record<
     colophon: "© 2026 Adeline Wen",
     heroSub: (
       <>
-        华盛顿大学 CAIS 实验室研究助理，<a className="tlink" href="https://arenafi.org" target="_blank" rel="noopener noreferrer"><b>arenafi.org</b></a> 独立开发者。
+        华盛顿大学 <a className="tlink" href="https://sites.uw.edu/weicaics/" target="_blank" rel="noopener noreferrer"><b>CAIS 实验室</b></a>研究助理，<a className="tlink" href="https://arenafi.org" target="_blank" rel="noopener noreferrer"><b>arenafi.org</b></a> 独立开发者。
       </>
     ),
     heroHint: "滚动 ↓",
