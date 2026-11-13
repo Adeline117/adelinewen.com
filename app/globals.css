@@ -142,10 +142,10 @@ nav .logo > span { grid-area: 1 / 1; transition: opacity var(--dur-fast) var(--e
 nav .logo-sec { display: none; }
 nav .links { display: flex; gap: 36px; font-family: var(--font-mono), monospace; font-size: var(--fs-label); letter-spacing: var(--track-caps); color: var(--mute); text-transform: uppercase; }
 nav .links button { position: relative; background: none; border: 0; color: inherit; cursor: pointer; transition: color var(--dur-fast) var(--ease); font: inherit; letter-spacing: inherit; text-transform: inherit; padding: 8px 4px; }
-nav .links button:hover, nav .links button.active { color: var(--ink); }
+nav .links button.active { color: var(--ink); }
 /* hairline draws in under the link — same voice as .more */
 nav .links button::after { content: ""; position: absolute; left: 4px; right: 4px; bottom: 3px; height: 1px; background: var(--ink); transform: scaleX(0); transform-origin: left; transition: transform var(--dur-fast) var(--ease); }
-nav .links button:hover::after, nav .links button.active::after { transform: scaleX(1); }
+nav .links button.active::after { transform: scaleX(1); }
 
 /* raised clear of the cover-foot row so the scroll cue / CTA never collide */
 /* the loop counter lives in the right gutter, so it only shows where the
@@ -159,7 +159,6 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 
 .controls { display: flex; gap: 10px; }
 .toggle { font-family: var(--font-mono), monospace; font-size: var(--fs-cap); letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--mute); background: none; border: 1px solid var(--line); border-radius: var(--pill); padding: 8px 14px; cursor: pointer; transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease); }
-.toggle:hover { color: var(--ink); border-color: var(--ink); }
 .toggle:active { transform: scale(0.95); }
 
 /* ===== Hero: the cover =====
@@ -204,7 +203,6 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 @keyframes hintFloat { 0%, 100% { transform: translateY(-2px); } 50% { transform: translateY(3px); } }
 .cover-foot .hint, .cover-foot .cta { white-space: nowrap; }
 .cover-foot .cta { font-family: var(--font-mono), monospace; font-size: var(--fs-label); letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--ink); background: none; border: 1px solid var(--line); border-radius: var(--pill); padding: 12px 24px; cursor: pointer; transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease); }
-.cover-foot .cta:hover { border-color: var(--ink); background: var(--field-bg); }
 @keyframes heroIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
 
 /* content-height chapters: no forced 100vh (that only existed for one-
@@ -234,12 +232,12 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 .sec.on .lead { transition-delay: calc(2 * var(--stagger)); }
 .sec.on .honors-wrap { transition-delay: calc(3 * var(--stagger)); }
 .sec.on .more { transition-delay: calc(4 * var(--stagger)); }
-.sec.on .tl li:nth-child(1), .sec.on .clinks a:nth-child(1) { transition-delay: calc(2 * var(--stagger)); }
-.sec.on .tl li:nth-child(2), .sec.on .clinks a:nth-child(2) { transition-delay: calc(3 * var(--stagger)); }
-.sec.on .tl li:nth-child(3), .sec.on .clinks a:nth-child(3) { transition-delay: calc(4 * var(--stagger)); }
-.sec.on .tl li:nth-child(4), .sec.on .clinks a:nth-child(4) { transition-delay: calc(5 * var(--stagger)); }
-.sec.on .clinks a:nth-child(5) { transition-delay: calc(6 * var(--stagger)); }
-.sec.on .clinks a:nth-child(6) { transition-delay: calc(7 * var(--stagger)); }
+.sec.on:not(.settled) .tl li:nth-child(1), .sec.on:not(.settled) .clinks a:nth-child(1) { transition-delay: calc(2 * var(--stagger)); }
+.sec.on:not(.settled) .tl li:nth-child(2), .sec.on:not(.settled) .clinks a:nth-child(2) { transition-delay: calc(3 * var(--stagger)); }
+.sec.on:not(.settled) .tl li:nth-child(3), .sec.on:not(.settled) .clinks a:nth-child(3) { transition-delay: calc(4 * var(--stagger)); }
+.sec.on:not(.settled) .tl li:nth-child(4), .sec.on:not(.settled) .clinks a:nth-child(4) { transition-delay: calc(5 * var(--stagger)); }
+.sec.on:not(.settled) .clinks a:nth-child(5) { transition-delay: calc(6 * var(--stagger)); }
+.sec.on:not(.settled) .clinks a:nth-child(6) { transition-delay: calc(7 * var(--stagger)); }
 .sec.on .cv-link { transition-delay: calc(6 * var(--stagger)); }
 
 /* kicker: a short thick bar over the mono label — thick-vs-hairline contrast */
@@ -261,21 +259,19 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 .sec .more { position: relative; margin-top: 40px; display: inline-flex; gap: 10px; font-family: var(--font-mono), monospace; font-size: var(--fs-label); letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--ulink); padding-bottom: 8px; }
 /* hover: an ink line grows left-to-right over the resting hairline */
 .sec .more::after { content: ""; position: absolute; left: 0; bottom: -1px; width: 100%; height: 1px; background: var(--ink); transform: scaleX(0); transform-origin: left; transition: transform var(--dur-fast) var(--ease); }
-.sec .more:hover::after { transform: scaleX(1); }
 .sec .right { max-width: none; justify-self: end; width: 100%; }
 /* the CV link sits below the About timeline — indent it to the timeline's text
    (rail margin 4 + dot padding 26) so its left edge aligns with the entries above */
 .cv-link { margin-left: 30px; }
 
 .rows { list-style: none; }
-.rows li { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; padding: 16px 6px; border-top: 1px solid var(--line); transition: var(--dur-fast) var(--ease); }
+.rows li { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; padding: 16px 0; border-top: 1px solid var(--line); transition: background-color var(--dur-fast) var(--ease); }
 .rows li:last-child { border-bottom: 1px solid var(--line); }
 .rinfo { display: flex; flex-direction: column; gap: 5px; }
 .rows .n { font-family: var(--font-fraunces), var(--font-cjk), serif; font-size: var(--fs-lg); font-weight: 330; letter-spacing: -0.01em; color: var(--ink); font-variant-numeric: lining-nums tabular-nums; }
 .rows .rd { font-size: var(--fs-body); line-height: 1.5; color: var(--text); max-width: 34ch; }
 .rows .rm { font-family: var(--font-mono), monospace; font-size: var(--fs-cap); letter-spacing: var(--track-meta); color: var(--mute); text-transform: uppercase; white-space: nowrap; }
-.rows li:hover { padding-left: 16px; }
-.rows li:hover .n { font-style: italic; }
+.rows li > :first-child { transition: transform var(--dur-fast) var(--ease); }
 
 .tl { list-style: none; }
 .tl li { padding: 20px 0 20px 24px; border-left: 1px solid var(--line); position: relative; margin-left: 4px; }
@@ -287,14 +283,13 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 /* inline link on an entry heading/title — inherits type, gains a hairline that
    grows to a full underline on hover (same voice as .more / nav) */
 .ilink { color: inherit; text-decoration: none; background-image: linear-gradient(var(--ink), var(--ink)); background-repeat: no-repeat; background-position: 0 100%; background-size: 0% 1px; transition: background-size 0.35s var(--ease); padding-bottom: 1px; }
-.ilink:hover, .ilink:focus-visible { background-size: 100% 1px; }
+.ilink:focus-visible { background-size: 100% 1px; }
 /* clickable ⇒ marked: entry-title links carry the site's external-link arrow */
 .ilink::after { content: "↗"; font-family: var(--font-mono), monospace; font-size: 0.55em; color: var(--mute); margin-left: 0.5em; vertical-align: 0.18em; transition: color var(--dur-fast) var(--ease); }
-.ilink:hover::after { color: var(--ink); }
 /* body-copy variant: needs a RESTING affordance or it reads as plain text —
    a visible (not hairline-faint) underline; the ink line still grows on hover */
 .tlink { color: inherit; text-decoration: none; border-bottom: 1px solid var(--ulink); background-image: linear-gradient(var(--ink), var(--ink)); background-repeat: no-repeat; background-position: 0 100%; background-size: 0% 1px; transition: background-size 0.35s var(--ease); }
-.tlink:hover, .tlink:focus-visible { background-size: 100% 1px; }
+.tlink:focus-visible { background-size: 100% 1px; }
 
 /* ===== Talks & Honors — its own full-width chapter =====
    Each event: title + place/date on one line, the description under it,
@@ -552,20 +547,16 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
   font-family: var(--font-mono), monospace; font-size: var(--fs-label); letter-spacing: 0.08em; text-transform: uppercase;
   transition: transform var(--dur-fast) var(--ease), opacity var(--dur-fast) var(--ease);
 }
-/* flat like the rest of the system — a small lift on hover, no drop shadow */
-.cform button:hover:not(:disabled) { transform: translateY(-2px); }
-.cform button:active:not(:disabled) { transform: translateY(0); }
 .cform button:disabled { opacity: 0.6; cursor: default; }
 .cform .status { font-family: var(--font-mono), monospace; font-size: var(--fs-label); line-height: 1.6; margin-top: 4px; }
 .cform .status.ok { color: var(--ink); }
 .cform .status.err { color: var(--err); }
 
 .clinks { display: flex; flex-direction: column; }
-.clinks a { display: flex; justify-content: space-between; align-items: baseline; padding: 16px 6px; border-top: 1px solid var(--line); text-decoration: none; font-family: var(--font-fraunces), var(--font-cjk), serif; font-size: var(--fs-xl); font-weight: 330; color: var(--ink); transition: var(--dur-fast) var(--ease); }
+.clinks a { display: flex; justify-content: space-between; align-items: baseline; padding: 16px 0; border-top: 1px solid var(--line); text-decoration: none; font-family: var(--font-fraunces), var(--font-cjk), serif; font-size: var(--fs-xl); font-weight: 330; color: var(--ink); transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease); }
 .clinks a:last-child { border-bottom: 1px solid var(--line); }
-.clinks a .ar { font-family: var(--font-mono), monospace; font-size: var(--fs-sm); color: var(--mute); transition: var(--dur-fast) var(--ease); }
-.clinks a:hover { padding-left: 16px; font-style: italic; }
-.clinks a:hover .ar { color: var(--ink); transform: translate(3px, -3px); }
+.clinks a .ar { font-family: var(--font-mono), monospace; font-size: var(--fs-sm); color: var(--mute); transition: color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease); }
+.clinks a .lbl { display: inline-block; transition: transform var(--dur-fast) var(--ease); }
 
 /* colophon: the print-credits line at the very foot of the site */
 .colophon { position: absolute; left: var(--gutter); right: var(--gutter); bottom: 20px; z-index: 1; border-top: 1px solid var(--line); padding-top: 13px; font-family: var(--font-mono), monospace; font-size: var(--fs-cap); letter-spacing: var(--track-meta); text-transform: uppercase; color: var(--mute); }
@@ -733,6 +724,26 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
 @media (min-width: 601px) and (max-width: 1199px) and (orientation: portrait) {
   .l1, .l2 { font-size: min(21vw, 15.5vh); }
   .hero .sub { font-size: clamp(17px, 2.4vw, 22px); max-width: 34ch; }
+}
+
+
+/* hover only where there is a real hover (mouse / trackpad); touch gets :active instead */
+@media (hover: hover) and (pointer: fine) {
+  nav .links button:hover { color: var(--ink); }
+  nav .links button:hover::after { transform: scaleX(1); }
+  .toggle:hover { color: var(--ink); border-color: var(--ink); }
+  .cover-foot .cta:hover { border-color: var(--ink); background: var(--field-bg); }
+  .sec .more:hover::after { transform: scaleX(1); }
+  .ilink:hover, .tlink:hover { background-size: 100% 1px; }
+  .ilink:hover::after { color: var(--ink); }
+  .cform button:hover:not(:disabled) { transform: translateY(-2px); }
+  .rows li:hover > :first-child, .clinks a:hover .lbl { transform: translateX(16px); }
+  .clinks a:hover .ar { color: var(--ink); transform: translate(3px, -3px); }
+}
+.cover-foot .cta:active, .cform button:active:not(:disabled), .toggle:active { transform: scale(0.97); }
+@media (pointer: coarse) {
+  .cform button { min-height: 44px; }
+  .sec .more { padding-top: 12px; }
 }
 
 /* keyboard focus */

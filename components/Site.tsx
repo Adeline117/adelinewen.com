@@ -369,7 +369,11 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
     const obs = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
-          if (e.isIntersecting) e.target.classList.add("on");
+          if (!e.isIntersecting || e.target.classList.contains("on")) return;
+          e.target.classList.add("on");
+          // once the reveal cascade has played, drop its per-row delays so hovers answer at once
+          const t = e.target;
+          window.setTimeout(() => t.classList.add("settled"), 1400);
         });
       },
       { threshold: 0, rootMargin: "0px 0px -15% 0px" }
@@ -858,7 +862,7 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
                   target={l.href.startsWith("mailto") || l.download ? undefined : "_blank"}
                   rel={l.href.startsWith("mailto") || l.download ? undefined : "noopener noreferrer"}
                 >
-                  {l.label}
+                  <span className="lbl">{l.label}</span>
                   <span className="ar">{l.val}</span>
                 </a>
               ))}
