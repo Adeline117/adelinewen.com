@@ -426,6 +426,9 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
 .smap-node.on circle:not(.hit) { fill: var(--ink); }
 .smap-node text, .smap-read { font-family: var(--font-mono), monospace; font-size: 13px; paint-order: stroke; stroke: var(--bg); stroke-width: 4px; stroke-linejoin: round; letter-spacing: var(--track-meta); fill: var(--mute); transition: fill var(--dur-fast) var(--ease); }
 .smap-node.on text, .smap-read { fill: var(--ink); }
+.smap-flow circle { fill: var(--ink); pointer-events: none; }
+.smap-ring { fill: none; stroke: var(--ink); stroke-width: 1; opacity: 0; pointer-events: none; }
+.smap-node:active circle:not(.hit) { fill: var(--ink); }
 .smap figcaption { margin-top: 14px; font-size: var(--fs-sm); line-height: 1.6; color: var(--mute); }
 /* the one-time draw: circles settle in by size, then lines ink in, heaviest first */
 .smap-node { transform-box: fill-box; transform-origin: center; }
