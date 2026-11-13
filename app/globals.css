@@ -384,7 +384,7 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
 .at-end .strip { -webkit-mask-image: linear-gradient(90deg, transparent, #000 var(--fade)); mask-image: linear-gradient(90deg, transparent, #000 var(--fade)); }
 .at-start.at-end .strip { -webkit-mask-image: none; mask-image: none; }
 /* one plate height for every photo; portraits and landscapes differ only by width */
-.strip ul { display: flex; align-items: flex-end; gap: 8px; list-style: none; height: clamp(200px, 24cqi, 280px); }
+.strip ul { display: flex; align-items: flex-end; gap: 8px; list-style: none; height: clamp(172px, 20cqi, 236px); }
 .strip li { flex: none; height: 100%; scroll-snap-align: start; }
 /* even reels: no enlarged lead — every photo at the reel's standard (70%) height */
 .even .strip ul { height: clamp(154px, 42cqi, 238px); }
