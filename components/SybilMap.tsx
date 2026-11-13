@@ -192,7 +192,7 @@ export default function SybilMap({ lang }: { lang: "en" | "zh" }) {
     if (ring && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       ring.setAttribute("cx", String(n.x));
       ring.setAttribute("cy", String(n.y));
-      ring.animate([{ r: `${n.r}px`, opacity: 0.5 }, { r: `${n.r + 26}px`, opacity: 0 }] as Keyframe[], { duration: 700, easing: "cubic-bezier(0.2, 0.7, 0.2, 1)" });
+      ring.animate([{ r: `${n.r}px`, opacity: 0.5 }, { r: `${n.r + 26}px`, opacity: 0 }] as Keyframe[], { duration: 700, easing: getComputedStyle(document.documentElement).getPropertyValue("--ease").trim() });
     }
   };
   const move = (e: React.PointerEvent) => {

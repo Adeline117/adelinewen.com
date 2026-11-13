@@ -142,7 +142,7 @@ export default function Hobbies({ lang }: { lang: "en" | "zh" }) {
       root.current?.querySelectorAll(".hob-pipa .str").forEach((el, i) =>
         el.animate(
           [{ transform: "none" }, { transform: "translateX(1.4px)" }, { transform: "translateX(-1.1px)" }, { transform: "translateX(0.7px)" }, { transform: "translateX(-0.4px)" }, { transform: "none" }],
-          { duration: 520, delay: i * 70, easing: "ease-out" },
+          { duration: 520, delay: i * 70, easing: getComputedStyle(document.documentElement).getPropertyValue("--ease").trim() }, // delay matches the strum
         ),
       );
   };

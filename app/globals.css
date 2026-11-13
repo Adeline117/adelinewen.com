@@ -36,6 +36,7 @@
   --dur: 0.7s;       /* reveals · weight breathe */
   --dur-fast: 0.25s; /* hover · micro-interactions */
   --stagger: 0.08s;  /* one step of a staggered reveal */
+  --dur-draw: 1.2s;  /* pen strokes and ink-ins: the cover ∞, the map, the hobby drawings */
   /* corners: one small radius + one pill. Nothing in between. */
   --r: 10px;
   --pill: 100px;
@@ -95,14 +96,14 @@ body {
   background: var(--bg); /* solid under everything; the lit sheet is body::before */
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  transition: background 0.6s, color 0.6s;
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
   overflow-x: hidden;
 }
 /* the sheet: gradient + grain pinned to the viewport, so the light falls on the
    screen you're reading (a body background stretches over the whole 8,000px page
    and lit mid-document instead). A fixed pseudo-element, not background-attachment:
    fixed, which iOS ignores. Painted once, no per-frame work. */
-body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; background: var(--grain), var(--bg-grad); transition: background 0.6s; }
+body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; background: var(--grain), var(--bg-grad); transition: background var(--dur) var(--ease); }
 .mono { font-family: var(--font-mono), monospace; }
 
 /* inverted selection — ink paper swap */
@@ -170,7 +171,7 @@ nav .links button.active::after { transform: scaleX(1); }
 .cover h1 { display: flex; flex-direction: column; font-weight: 330; line-height: 0.86; letter-spacing: -0.035em; }
 /* line-mask reveal: each giant line rises out of an overflow-hidden slot */
 .mline { display: block; overflow: hidden; padding-bottom: 0.06em; }
-.minner { display: inline-block; transform: translateY(115%); animation: lineUp 0.95s var(--ease) 0.12s forwards; }
+.minner { display: inline-block; transform: translateY(115%); animation: lineUp var(--dur-draw) var(--ease) 0.12s forwards; }
 @keyframes lineUp { to { transform: translateY(0); } }
 .l1 { font-size: clamp(76px, 15.5vw, 236px); }
 .l2w { align-self: flex-end; margin-right: 0; }
@@ -178,9 +179,9 @@ nav .links button.active::after { transform: scaleX(1); }
 .l2 em { font-style: italic; }
 .namewrap { position: relative; }
 /* standfirst: a narrow measure hanging under the offset second line */
-.hero .sub { align-self: flex-end; max-width: 36ch; margin: clamp(18px, 3.6vh, 40px) 0 0 0; font-size: clamp(15px, 1.5vw, 18px); line-height: 1.65; color: var(--text); opacity: 0; animation: heroIn 0.8s var(--ease) 0.52s forwards; }
+.hero .sub { align-self: flex-end; max-width: 36ch; margin: clamp(18px, 3.6vh, 40px) 0 0 0; font-size: clamp(15px, 1.5vw, 18px); line-height: 1.65; color: var(--text); opacity: 0; animation: heroIn var(--dur) var(--ease) 0.52s forwards; }
 .hero .sub b { color: var(--ink); font-weight: 500; }
-.cover-foot { display: flex; justify-content: space-between; align-items: center; gap: 20px; border-top: 1px solid var(--line); padding-top: 16px; opacity: 0; animation: heroIn 0.8s var(--ease) 0.72s forwards; }
+.cover-foot { display: flex; justify-content: space-between; align-items: center; gap: 20px; border-top: 1px solid var(--line); padding-top: 16px; opacity: 0; animation: heroIn var(--dur) var(--ease) 0.72s forwards; }
 .cover-foot .hint { font-family: var(--font-mono), monospace; font-size: var(--fs-cap); letter-spacing: var(--track-caps); color: var(--mute); text-transform: uppercase; animation: hintFloat 3.4s var(--ease-loop) 1.8s 2; } /* two nudges, then still */
 /* printer's crop marks just outside the cover's trim — the page as a printed sheet */
 @media (min-width: 821px) {
@@ -198,7 +199,7 @@ nav .links button.active::after { transform: scaleX(1); }
 /* the cover ∞: one pen stroke, inked through the same bleed filter as Arena's mark */
 .cover-foot .hint { display: inline-flex; align-items: center; gap: 14px; }
 .cover-mark { width: 34px; height: 18px; flex: none; filter: url(#ink); overflow: visible; }
-.cover-mark path { fill: none; stroke: var(--ink); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; animation: penStroke 1.6s var(--ease) 1.1s forwards; }
+.cover-mark path { fill: none; stroke: var(--ink); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; animation: penStroke var(--dur-draw) var(--ease) 1.1s forwards; }
 @keyframes penStroke { to { stroke-dashoffset: 0; } }
 @keyframes hintFloat { 0%, 100% { transform: translateY(-2px); } 50% { transform: translateY(3px); } }
 .cover-foot .hint, .cover-foot .cta { white-space: nowrap; }
@@ -220,7 +221,7 @@ nav .links button.active::after { transform: scaleX(1); }
 /* the big heading wipes up out of a mask (matches the cover's line reveal) */
 .sec h2 {
   opacity: 0; clip-path: inset(0 0 100% 0); transform: translateY(0.24em);
-  transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease), clip-path var(--dur) var(--ease), font-weight 0.5s var(--ease);
+  transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease), clip-path var(--dur) var(--ease);
 }
 .sec.on h2 { opacity: 1; clip-path: inset(0 0 -0.14em 0); transform: none; }
 /* the kicker bar draws itself in */
@@ -282,13 +283,13 @@ nav .links button.active::after { transform: scaleX(1); }
 
 /* inline link on an entry heading/title — inherits type, gains a hairline that
    grows to a full underline on hover (same voice as .more / nav) */
-.ilink { color: inherit; text-decoration: none; background-image: linear-gradient(var(--ink), var(--ink)); background-repeat: no-repeat; background-position: 0 100%; background-size: 0% 1px; transition: background-size 0.35s var(--ease); padding-bottom: 1px; }
+.ilink { color: inherit; text-decoration: none; background-image: linear-gradient(var(--ink), var(--ink)); background-repeat: no-repeat; background-position: 0 100%; background-size: 0% 1px; transition: background-size calc(var(--dur-fast) * 1.4) var(--ease); padding-bottom: 1px; }
 .ilink:focus-visible { background-size: 100% 1px; }
 /* clickable ⇒ marked: entry-title links carry the site's external-link arrow */
 .ilink::after { content: "↗"; font-family: var(--font-mono), monospace; font-size: 0.55em; color: var(--mute); margin-left: 0.5em; vertical-align: 0.18em; transition: color var(--dur-fast) var(--ease); }
 /* body-copy variant: needs a RESTING affordance or it reads as plain text —
    a visible (not hairline-faint) underline; the ink line still grows on hover */
-.tlink { color: inherit; text-decoration: none; border-bottom: 1px solid var(--ulink); background-image: linear-gradient(var(--ink), var(--ink)); background-repeat: no-repeat; background-position: 0 100%; background-size: 0% 1px; transition: background-size 0.35s var(--ease); }
+.tlink { color: inherit; text-decoration: none; border-bottom: 1px solid var(--ulink); background-image: linear-gradient(var(--ink), var(--ink)); background-repeat: no-repeat; background-position: 0 100%; background-size: 0% 1px; transition: background-size calc(var(--dur-fast) * 1.4) var(--ease); }
 .tlink:focus-visible { background-size: 100% 1px; }
 
 /* ===== Talks & Honors — its own full-width chapter =====
@@ -439,7 +440,7 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
 .smap.pre .smap-node { opacity: 0; transform: scale(0.4); }
 .smap.pre .smap-links path { stroke-dasharray: 1; stroke-dashoffset: 1; }
 .smap.play .smap-node { animation: smapIn var(--dur) var(--ease) var(--d) backwards; }
-.smap.play .smap-links path { stroke-dasharray: 1; animation: smapDraw 1.1s var(--ease) var(--d) backwards; }
+.smap.play .smap-links path { stroke-dasharray: 1; animation: smapDraw var(--dur-draw) var(--ease) var(--d) backwards; }
 @keyframes smapIn { from { opacity: 0; transform: scale(0.4); } }
 @keyframes smapDraw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
 @media (max-width: 820px) { .smap-node:not(.major) text { display: none; } .smap-node text, .smap-read { font-size: 19px; stroke-width: 5px; } }
@@ -461,8 +462,8 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
 /* draw-in, once */
 .hobbies.pre .hob svg .ink { stroke-dasharray: 1; stroke-dashoffset: 1; opacity: 0; } /* no round-cap dots before the pen arrives */
 .hobbies.pre .hob svg text, .hobbies.pre .hob svg .fade { opacity: 0; }
-.hobbies.play .hob svg .ink { stroke-dasharray: 1; animation: hobDraw 1.4s var(--ease) calc(var(--n, 0) * 0.12s) backwards; }
-.hobbies.play .hob svg text, .hobbies.play .hob svg .fade { animation: hobFade var(--dur) var(--ease) calc(0.9s + var(--n, 0) * 0.12s) backwards; }
+.hobbies.play .hob svg .ink { stroke-dasharray: 1; animation: hobDraw var(--dur-draw) var(--ease) calc(var(--n, 0) * var(--stagger)) backwards; }
+.hobbies.play .hob svg text, .hobbies.play .hob svg .fade { animation: hobFade var(--dur) var(--ease) calc(var(--dur-draw) * 0.75 + var(--n, 0) * var(--stagger)) backwards; }
 .hob:nth-child(2) { --n: 1; } .hob:nth-child(3) { --n: 2; } .hob:nth-child(4) { --n: 3; } .hob:nth-child(5) { --n: 4; }
 @keyframes hobDraw { from { stroke-dashoffset: 1; opacity: 0; } 1% { opacity: 1; } to { stroke-dashoffset: 0; } }
 @keyframes hobFade { from { opacity: 0; } }
@@ -472,10 +473,10 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
 .hob-pipa.on svg { transform: rotate(-4deg); }
 /* chess: the knight makes two L-moves, the trail inks behind it */
 .hob-chess .knight text { font-size: 18px; font-family: serif; }
-.hob-chess .knight { transition: transform 0s; }
+.hob-chess:not(.on) .knight { animation: hobFade var(--dur) var(--ease); } /* back at its start square, faded in rather than jumped */
 .hob-chess .trail { fill: none; stroke: var(--ink); stroke-width: 0.8; stroke-dasharray: 1.5 2.5; opacity: 0; transition: opacity var(--dur-fast) var(--ease); }
 .hob-chess.on .trail { opacity: 0.6; }
-.hob-chess.on .knight { animation: knight 1.8s var(--ease) forwards; }
+.hob-chess.on .knight { animation: knight calc(var(--dur-draw) * 1.5) var(--ease) forwards; }
 @keyframes knight {
   0% { transform: none; }
   25%, 38% { transform: translate(22px, -11px); }
@@ -484,25 +485,25 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
 }
 /* poker: two cards turn over, one after the other */
 .hob-poker .pcard { transform-box: fill-box; transform-origin: center; }
-.hob-poker .back, .hob-poker .front { transform-box: fill-box; transform-origin: center; transition: transform 0.16s ease-in calc(var(--i) * 0.12s + 0.16s); }
-.hob-poker .front { transform: scaleX(0); transition-delay: calc(var(--i) * 0.12s); transition-timing-function: ease-in; }
-.hob-poker.on .back { transform: scaleX(0); transition-delay: calc(var(--i) * 0.12s); }
-.hob-poker.on .front { transform: none; transition-delay: calc(var(--i) * 0.12s + 0.16s); transition-timing-function: ease-out; }
+.hob-poker .back, .hob-poker .front { transform-box: fill-box; transform-origin: center; --flip: calc(var(--dur-fast) * 0.6); transition: transform var(--flip) ease-in calc(var(--i) * var(--stagger) + var(--flip)); }
+.hob-poker .front { transform: scaleX(0); transition-delay: calc(var(--i) * var(--stagger)); transition-timing-function: ease-in; }
+.hob-poker.on .back { transform: scaleX(0); transition-delay: calc(var(--i) * var(--stagger)); }
+.hob-poker.on .front { transform: none; transition-delay: calc(var(--i) * var(--stagger) + var(--flip)); transition-timing-function: ease-out; }
 .hob-poker .hatch { stroke: var(--ink); stroke-width: 0.6; opacity: 0.5; }
 .hob-poker .face { fill: var(--bg); stroke: var(--ink); stroke-width: 1.4; }
 .hob-poker .rank { font-size: 11px; }
 .hob-poker .suit { font-size: 22px; font-family: serif; }
 /* skydiving: the canopy opens and the jumper slows and sways */
-.hob-sky .canopy { fill: none; stroke: var(--ink); stroke-width: 1.2; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; opacity: 0; transition: stroke-dashoffset 0.9s var(--ease), opacity 0.2s; }
+.hob-sky .canopy { fill: none; stroke: var(--ink); stroke-width: 1.2; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; opacity: 0; transition: stroke-dashoffset var(--dur-draw) var(--ease), opacity var(--dur-fast) var(--ease); }
 .hob-sky.on .canopy { stroke-dashoffset: 0; opacity: 1; }
-.hob-sky .jumper { transform-box: fill-box; transform-origin: 50% 0; transition: transform 1.2s var(--ease); }
+.hob-sky .jumper { transform-box: fill-box; transform-origin: 50% 0; transition: transform var(--dur-draw) var(--ease); }
 .hob-sky.on .jumper { transform: translateY(8px); animation: sway 3.2s var(--ease-loop) 0.9s 2; }
 .hob-sky .wind { transition: opacity var(--dur) var(--ease); }
 .hob-sky.on .wind { opacity: 0; }
 @keyframes sway { 0%, 100% { transform: translateY(8px) rotate(0); } 25% { transform: translateY(8px) rotate(3deg); } 75% { transform: translateY(8px) rotate(-3deg); } }
 /* documentary: clapper snaps shut, REC lights, timecode rolls */
-.hob-doc .clap { transform-box: view-box; transform-origin: 22px 49px; transform: rotate(-16deg); transition: transform 0.5s var(--ease); }
-.hob-doc.on .clap { transform: none; transition: transform 0.12s cubic-bezier(0.5, 0, 1, 1); }
+.hob-doc .clap { transform-box: view-box; transform-origin: 22px 49px; transform: rotate(-16deg); transition: transform calc(var(--dur-fast) * 2) var(--ease); }
+.hob-doc.on .clap { transform: none; transition: transform calc(var(--dur-fast) * 0.5) cubic-bezier(0.5, 0, 1, 1); } /* a snap accelerates into the slate */
 .hob-doc .rec { fill: none; stroke: var(--ink); stroke-width: 1; }
 .hob-doc.on .rec { fill: var(--ink); animation: rec 1s steps(2, jump-none) 0.12s infinite; }
 .hob-doc .tc { font-family: var(--font-mono), monospace; font-size: 9.5px; letter-spacing: 0.06em; fill: var(--mute); font-variant-numeric: tabular-nums; }
@@ -765,7 +766,7 @@ main:focus { outline: none; } /* skip-link target — focused programmatically, 
 .theme-wiping body { transition: none; }
 ::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
 /* theme flip: circular ink wipe (scoped — other view transitions get the fade) */
-:root.theme-wiping::view-transition-new(root) { animation: themeWipe 0.6s var(--ease); }
+:root.theme-wiping::view-transition-new(root) { animation: themeWipe var(--dur) var(--ease); }
 /* language switch: a soft crossfade instead of a hard swap */
 :root:not(.theme-wiping)::view-transition-old(root) { animation: vtFadeOut 0.22s var(--ease) both; }
 :root:not(.theme-wiping)::view-transition-new(root) { animation: vtFadeIn 0.34s var(--ease) both; }
