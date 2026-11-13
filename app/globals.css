@@ -497,7 +497,12 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
 .pipa-body path { fill: none; stroke: var(--ink); stroke-width: 1.1; stroke-linecap: round; stroke-linejoin: round; }
 .pipa-body .frets { stroke-width: 0.8; opacity: 0.55; }
 .pipa-body .xiang { stroke-width: 4; stroke-linecap: butt; opacity: 0.8; }
-.pipa-fill { fill: color-mix(in srgb, var(--ink) 5%, transparent); stroke: none; opacity: 0; transition: opacity var(--dur) var(--ease) 0.8s; }
+.pipa-fill { stroke: none; opacity: 0; transition: opacity var(--dur) var(--ease) 0.8s; }
+.ps0 { stop-color: var(--ink); stop-opacity: 0.025; }
+.ps1 { stop-color: var(--ink); stop-opacity: 0.1; }
+.pipa-body .rim { stroke-width: 0.6; opacity: 0.45; }
+.pipa-body .grain { stroke-width: 0.5; opacity: 0.16; }
+.pipa-body .fine { stroke-width: 0.6; opacity: 0.6; }
 .sec.on .pipa-fill { opacity: 1; }
 .str { fill: none; stroke: var(--ink); stroke-linecap: round; }
 /* drawn once when About first comes into view: the instrument, then its strings */
