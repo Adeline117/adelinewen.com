@@ -77,7 +77,7 @@ const COPY: Record<
       resume: [
         { y: "Feb 2026 – Present", h: "Undergraduate Research Assistant · UW CAIS Lab", d: "Research under Prof. Wei Cai; built hascidb.org (open-source Sybil database, 2.5M+ wallets) and published on blockchain, crypto, and decentralized AI.", href: "https://sites.uw.edu/weicaics/members/" },
         { y: "Dec 2025 – Present", h: "Independent Developer · Arena", d: "Solo-built arenafi.org, ranking 68,000+ traders.", href: "https://arenafi.org" },
-        { y: "Apr – Aug 2026", h: "Analyst Intern · Stably", d: "Research & growth at a stablecoin infrastructure company.", href: "https://www.stably.io/" },
+        { y: "Apr – Aug 2026", h: "Analyst Intern\u00a0· Stably", d: "Research & growth at a stablecoin infrastructure company.", href: "https://www.stably.io/" },
         { y: "2025 – 2029", h: "Bachelor of Economics · University of Washington", d: "Informatics minor · Dean’s List.", href: "https://www.washington.edu/" },
       ],
     },
