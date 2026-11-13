@@ -174,12 +174,12 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 .minner { display: inline-block; transform: translateY(115%); animation: lineUp 0.95s var(--ease) 0.12s forwards; }
 @keyframes lineUp { to { transform: translateY(0); } }
 .l1 { font-size: clamp(76px, 15.5vw, 236px); }
-.l2w { align-self: flex-end; margin-right: clamp(4px, 5vw, 120px); }
+.l2w { align-self: flex-end; margin-right: 0; }
 .l2 { font-size: clamp(76px, 15.5vw, 236px); animation-delay: 0.26s; }
 .l2 em { font-style: italic; }
 .namewrap { position: relative; }
 /* standfirst: a narrow measure hanging under the offset second line */
-.hero .sub { align-self: flex-end; max-width: 36ch; margin: clamp(18px, 3.6vh, 40px) clamp(4px, 5vw, 120px) 0 0; font-size: clamp(15px, 1.5vw, 18px); line-height: 1.65; color: var(--text); opacity: 0; animation: heroIn 0.8s var(--ease) 0.52s forwards; }
+.hero .sub { align-self: flex-end; max-width: 36ch; margin: clamp(18px, 3.6vh, 40px) 0 0 0; font-size: clamp(15px, 1.5vw, 18px); line-height: 1.65; color: var(--text); opacity: 0; animation: heroIn 0.8s var(--ease) 0.52s forwards; }
 .hero .sub b { color: var(--ink); font-weight: 500; }
 .cover-foot { display: flex; justify-content: space-between; align-items: center; gap: 20px; border-top: 1px solid var(--line); padding-top: 16px; opacity: 0; animation: heroIn 0.8s var(--ease) 0.72s forwards; }
 .cover-foot .hint { font-family: var(--font-mono), monospace; font-size: var(--fs-cap); letter-spacing: var(--track-caps); color: var(--mute); text-transform: uppercase; animation: hintFloat 3.4s var(--ease-loop) 1.8s 2; } /* two nudges, then still */
@@ -254,12 +254,12 @@ nav .links button:hover::after, nav .links button.active::after { transform: sca
 :lang(zh) .label, :lang(zh) .cform label, :lang(zh) .ablock h3, :lang(zh) .cover-foot .hint, :lang(zh) .strip-cap { letter-spacing: 0.08em; }
 /* break Chinese only at spaces and marked phrase boundaries (zero-width spaces in the copy), never inside a word like 支持 */
 :lang(zh) .hero .sub, :lang(zh) .tl .h { word-break: keep-all; overflow-wrap: anywhere; }
-.sec .lead { margin-top: 32px; max-width: 460px; font-size: clamp(16px, 1.5vw, 17px); line-height: 1.72; color: var(--text); }
+.sec .lead { margin-top: 32px; max-width: 32em; font-size: clamp(16px, 1.5vw, 17px); line-height: 1.72; color: var(--text); }
 .sec .more { position: relative; margin-top: 40px; display: inline-flex; gap: 10px; font-family: var(--font-mono), monospace; font-size: var(--fs-label); letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--ulink); padding-bottom: 8px; }
 /* hover: an ink line grows left-to-right over the resting hairline */
 .sec .more::after { content: ""; position: absolute; left: 0; bottom: -1px; width: 100%; height: 1px; background: var(--ink); transform: scaleX(0); transform-origin: left; transition: transform var(--dur-fast) var(--ease); }
 .sec .more:hover::after { transform: scaleX(1); }
-.sec .right { max-width: 460px; justify-self: end; width: 100%; }
+.sec .right { max-width: none; justify-self: end; width: 100%; }
 /* the CV link sits below the About timeline — indent it to the timeline's text
    (rail margin 4 + dot padding 26) so its left edge aligns with the entries above */
 .cv-link { margin-left: 30px; }
@@ -418,6 +418,7 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
 @media (max-width: 820px) { .wall { margin-inline: calc(-1 * var(--gutter)); gap: 6px; } .wall-track { gap: 6px; } .wall .plate { height: 84px; } }
 /* Research: HasciDB's overlap map, drawn once in ink, then still */
 .smap { margin: 40px 0 0; }
+@media (min-width: 821px) { .smap { margin-left: 28px; } }
 .smap svg { display: block; width: 100%; height: auto; overflow: visible; }
 .smap-links path { fill: none; stroke: var(--ink); stroke-linecap: round; opacity: var(--o); transition: opacity var(--dur-fast) var(--ease); }
 .smap.tracing .smap-links path { opacity: 0.05; }
@@ -589,7 +590,7 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
 .arena-sec { display: block; padding: clamp(96px, 14vh, 160px) clamp(24px, 5vw, 72px); }
 /* match the other sections' container so headings left-align across the site */
 .arena-wrap { max-width: var(--measure); margin: 0 auto; }
-.arena-wrap > .lead { max-width: 760px; margin-top: 24px; }
+.arena-wrap > .lead { max-width: 34em; margin-top: 24px; }
 /* Arena's leaderboard, typeset: hairline rows on the site's grid, no product colour */
 .board { margin: 48px 0 0; }
 .board-row { display: grid; grid-template-columns: 2.5rem minmax(0, 1fr) 5rem 7rem 6.5rem 6rem; gap: 0 clamp(12px, 2vw, 28px); align-items: baseline; padding: 18px 0; border-bottom: 1px solid var(--line); }
@@ -614,12 +615,12 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
 .arena-stats li:last-child { border-bottom: 0; }
 .arena-stats .rm { white-space: normal; }
 /* two-column editorial blocks: mono label left, content right (matches the site) */
-.ablock { display: grid; grid-template-columns: 170px 1fr; gap: clamp(24px, 4vw, 56px); align-items: start; margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--line); }
+.ablock { display: grid; grid-template-columns: calc((100% - 2 * 28px) / 3) 1fr; gap: 0 28px; align-items: start; margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--line); }
 .ablock h3 { font-family: var(--font-mono), monospace; font-size: var(--fs-label); letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--mute); padding-top: 3px; }
 .ablock p { font-size: var(--fs-body); line-height: 1.65; color: var(--text); max-width: 560px; }
 .abody > *:first-child { margin-top: 0; }
 .abody p + ul { margin-top: 16px; }
-.alist { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-top: 0; max-width: 560px; }
+.alist { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-top: 0; max-width: 34em; }
 .alist li { font-size: var(--fs-body); line-height: 1.6; color: var(--text); padding-left: 18px; position: relative; }
 .alist li::before { content: "·"; position: absolute; left: 2px; top: -1px; font-size: 20px; line-height: 1.4; color: var(--mute); }
 .alist li b { color: var(--ink); font-weight: 500; }
@@ -631,7 +632,7 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
 .aroad .rw { font-family: var(--font-mono), monospace; font-size: var(--fs-cap); text-transform: uppercase; letter-spacing: var(--track-meta); color: var(--mute); }
 .aroad .rwhat { font-size: var(--fs-body); line-height: 1.55; color: var(--text); }
 /* the dream — the section's landing: full-width, no label, builds to an ink italic payoff */
-.arena-vision { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--line); padding-right: max(0px, calc(100% - 820px)); font-size: var(--fs-md); line-height: 1.5; color: var(--text); }
+.arena-vision { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--line); padding-right: max(0px, calc(100% - 34em)); font-size: var(--fs-md); line-height: 1.5; color: var(--text); }
 .arena-vision em { font-style: italic; color: var(--ink); }
 /* product signature lockup at the section exit — Arena's ∞ mark + wordmark, in ink */
 .arena-sign { display: flex; align-items: center; gap: 14px; margin-top: 48px; flex-wrap: wrap; }
