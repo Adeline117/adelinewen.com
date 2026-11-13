@@ -43,17 +43,31 @@ export default function Leaderboard({ board, lang }: { board: Board; lang: "en" 
     const rows = [...el.children] as HTMLElement[];
     const tops = rows.map((r) => r.offsetTop);
     const from = rows.map((_, i) => `translateY(${tops[SHUFFLE[i] % rows.length] - tops[i]}px)`);
-    rows.forEach((r, i) => (r.style.transform = from[i]));
+    // rows wait out of sight in their shuffled slots, so nothing overprints before the move
+    rows.forEach((r, i) => {
+      r.style.transform = from[i];
+      r.style.opacity = "0";
+    });
+    const cs = getComputedStyle(document.documentElement);
+    const ease = cs.getPropertyValue("--ease").trim();
+    // token durations in ms (browsers normalise them to either "0.7s" or "80ms")
+    const sec = (v: string) => {
+      const t = cs.getPropertyValue(v).trim();
+      return t.endsWith("ms") ? parseFloat(t) : parseFloat(t) * 1000;
+    };
     const io = new IntersectionObserver(
       ([e]) => {
         if (!e.isIntersecting) return;
         io.disconnect();
         rows.forEach((r, i) => {
+          // each row stays invisible while it crosses the others and only shows where it lands
           r.animate(
-            [{ transform: from[i], opacity: 0.35 }, { transform: "none", opacity: 1 }],
-            { duration: 900, delay: 120 + i * 70, easing: "cubic-bezier(0.2, 0.7, 0.2, 1)", fill: "backwards" },
+            // easing sits on the keyframe so the fade-in point is a point in time, not in eased progress
+            [{ transform: from[i], opacity: 0, easing: ease }, { opacity: 0, offset: 0.6 }, { transform: "none", opacity: 1 }],
+            { duration: sec("--dur") * 1.3, delay: 120 + i * sec("--stagger") * 1.5, fill: "backwards" },
           );
           r.style.transform = "";
+          r.style.opacity = "";
         });
       },
       { threshold: 0.35 },
@@ -61,7 +75,10 @@ export default function Leaderboard({ board, lang }: { board: Board; lang: "en" 
     io.observe(el);
     return () => {
       io.disconnect();
-      rows.forEach((r) => (r.style.transform = ""));
+      rows.forEach((r) => {
+        r.style.transform = "";
+        r.style.opacity = "";
+      });
     };
   }, []);
 
