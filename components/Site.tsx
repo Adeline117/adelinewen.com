@@ -166,8 +166,8 @@ const COPY: Record<
       ),
       lead: "I grew up holding a microphone, hosting, reciting, acting and playing the pipa: CCTV-14, four consecutive years hosting the Hubei Children's Spring Festival Gala, and on the big screen, in cinemas across China.",
       stats: [
-        { n: "40", d: "awards in recitation, speech and hosting" },
-        { n: "12", d: "at national or international level" },
+        { n: "60+", d: "awards in recitation, speech and hosting" },
+        { n: "30+", d: "at national or international level" },
       ],
       credits: [
         { role: "Feature film", work: <><a className="tlink" href="https://baike.baidu.com/item/%E6%AC%A7%E7%88%B8%E7%9A%84%E6%83%85%E4%BA%BA/20287640" target="_blank" rel="noopener noreferrer"><i>Superposition of Love</i></a> (2017), released in cinemas across China</> },
@@ -314,8 +314,8 @@ const COPY: Record<
       ),
       lead: "做研究之前，我是拿着话筒长大的。主持、朗诵、表演、弹琵琶：央视 CCTV-14，连续四年主持湖北少儿春晚，还有全国院线上映的电影。",
       stats: [
-        { n: "40", d: "朗诵、演讲与主持奖项" },
-        { n: "12", d: "国家级与国际级" },
+        { n: "60+", d: "朗诵、演讲与主持奖项" },
+        { n: "30+", d: "国家级与国际级" },
       ],
       credits: [
         { role: "电影", work: <><a className="tlink" href="https://baike.baidu.com/item/%E6%AC%A7%E7%88%B8%E7%9A%84%E6%83%85%E4%BA%BA/20287640" target="_blank" rel="noopener noreferrer">《欧爸的情人》</a>（2017），全国院线上映</> },
