@@ -119,7 +119,7 @@ export default function PhotoStrip({ shots, label, lang, even = false }: { shots
 
   return (
     <div className={`strip-wrap${even ? " even" : ""}${edge.start ? " at-start" : ""}${edge.end ? " at-end" : ""}`}>
-      <div className="strip" role="region" aria-label={zh ? `${label} 照片` : `Photos — ${label}`} tabIndex={0}>
+      <div className="strip" role="region" aria-label={zh ? `${label} 照片` : `Photos: ${label}`} tabIndex={0}>
         <ul ref={reel} role="list">
           {shots.map((s, i) => (
             <li key={s.src}>
