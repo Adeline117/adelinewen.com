@@ -444,10 +444,10 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
 .wall { align-self: stretch; margin: clamp(48px, 7vh, 80px) calc(-1 * clamp(24px, 5vw, 72px)) 0; display: grid; gap: 10px; overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
 .wall-track { display: flex; gap: 10px; width: max-content; list-style: none; animation: wallDrift var(--wall-t, 150s) linear infinite; }
 /* two speeds, alternating: rows read as one drifting wall, not four belts */
-.wall-row:nth-child(1) { --wall-t: 170s; --i: 0; }
-.wall-row:nth-child(2) { --wall-t: 150s; --i: 1; }
-.wall-row:nth-child(3) { --wall-t: 170s; --i: 2; }
-.wall-row:nth-child(4) { --wall-t: 150s; --i: 3; }
+/* three rows, each ~1.4x longer than when there were four: durations scaled to keep the drift speed */
+.wall-row:nth-child(1) { --wall-t: 235s; --i: 0; }
+.wall-row:nth-child(2) { --wall-t: 205s; --i: 1; }
+.wall-row:nth-child(3) { --wall-t: 235s; --i: 2; }
 .wall-row.rev .wall-track { animation-direction: reverse; }
 .wall-row:hover .wall-track { animation-play-state: paused; }
 .wall .plate { display: block; height: clamp(84px, 9.5vw, 176px); transition: border-color var(--dur-fast) var(--ease); }
