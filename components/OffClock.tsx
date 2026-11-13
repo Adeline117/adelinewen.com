@@ -14,7 +14,7 @@ const L = {
     h: "Off the clock",
     // the two with something to show say it in the sentence; the rest are named lightly.
     // A number is the index of a mark in GLYPHS: chess, poker, skydiving, film
-    line: ["Pipa, to Level 10. ", [3, "Documentaries"], ", one of them past a million views on Douyin, China’s TikTok. Also ", [0, "chess"], ", ", [1, "poker"], " and ", [2, "skydiving"], "."],
+    line: ["Pipa, to Level 10. ", [3, "Documentaries"], ", one of them past a million organic views on Douyin, China’s TikTok. Also ", [0, "chess"], ", ", [1, "poker"], " and ", [2, "skydiving"], "."],
     cap: "Four strings, tuned A D E A. Sweep across them to pluck.",
     on: "Sound on",
     off: "Sound off",
@@ -22,7 +22,7 @@ const L = {
   },
   zh: {
     h: "工作之外",
-    line: ["琵琶考到十级。拍", [3, "纪录片"], "，有一条在抖音播放破百万。闲时下", [0, "国际象棋"], "、打", [1, "德州扑克"], "，也", [2, "跳伞"], "。"],
+    line: ["琵琶考到十级。拍", [3, "纪录片"], "，有一条在抖音自然播放破百万。闲时下", [0, "国际象棋"], "、打", [1, "德州扑克"], "，也", [2, "跳伞"], "。"],
     cap: "四根弦，定弦 A D E A。划过琴弦即可拨响。",
     on: "声音：开",
     off: "声音：关",
