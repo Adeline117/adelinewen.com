@@ -33,13 +33,25 @@ const BODY =
 const RIM =
   "M200 85 C244 79 292 50 364 29.5 C425 13.5 486 11.5 531 18 C569 24.5 593 58 593 100 " +
   "C593 142 569 175.5 531 182 C486 188.5 425 186.5 364 170.5 C292 150 244 121 200 115";
-// paulownia grain on the soundboard: long, faint, following the swell of the body
-const GRAIN = [44, 62, 80, 120, 138, 156]
-  .map((y) => {
-    const d = (y - 100) * 0.62;
-    return `M210 ${(100 + d * 0.35).toFixed(1)} C300 ${(100 + d * 0.8).toFixed(1)} 430 ${y} 590 ${(100 + d * 0.9).toFixed(1)}`;
+// paulownia grain on the soundboard: the board is two halves glued down the middle, so the
+// grain runs lengthwise and mirrors either side, opening a little toward the tail and
+// wandering slightly, as straight-grained wood does
+const GRAIN = Array.from({ length: 11 }, (_, k) => k)
+  .flatMap((k) => {
+    const o = 7 + k * 8.2 + ((k * 37) % 7) * 0.6;
+    const j = (((k * 53) % 9) - 4) * 0.5;
+    return [1, -1].map(
+      (sgn) =>
+        `M205 ${(100 + sgn * o * 0.42).toFixed(1)} C330 ${(100 + sgn * (o * 0.66 + j)).toFixed(1)} 470 ${(100 + sgn * (o * 0.86 - j)).toFixed(1)} 600 ${(100 + sgn * o * 0.98).toFixed(1)}`,
+    );
   })
   .join("");
+// the hardwood frame seen from the front: the neck, and the sides showing round the
+// soundboard, whose upper end comes to a rounded point at the neck
+const SOUNDBOARD = `${RIM} C192 112 190 88 200 85 Z`;
+// the head: a pegbox, then a ruyi cloud-head finial (three lobes, an incised line inside)
+const HEAD = "M74 89 L31 92 C27 86 19 84.5 15.5 88 C13 90.5 14.5 93.5 11.5 94.5 C5.5 96 5.5 104 11.5 105.5 C14.5 106.5 13 109.5 15.5 112 C19 115.5 27 114 31 108 L74 111 Z";
+const HEAD_LINE = "M28.5 94.5 C25.5 90.5 20.5 90 18.5 92.5 C17 94.5 18 97 15 98 C12.5 99 12.5 101 15 102 C18 103 17 105.5 18.5 107.5 C20.5 110 25.5 109.5 28.5 105.5";
 // a turned peg, pointing up from its socket: tapered shaft, a collar, an oval knob
 const PEG = "M-1.8 0 L-1.1 -16 M1.8 0 L1.1 -16 M-2.5 -16.6 H2.5 M-1.5 -17.6 C-3.5 -20 -3.3 -25.5 0 -27 C3.3 -25.5 3.5 -20 1.5 -17.6 Z";
 const PEGS = [
@@ -59,14 +71,16 @@ export function PipaBody() {
           <stop offset="0" className="ps0" />
           <stop offset="1" className="ps1" />
         </radialGradient>
-        <clipPath id="pipa-clip">
-          <path d={`${BODY} Z`} />
+        <clipPath id="pipa-board">
+          <path d={SOUNDBOARD} />
         </clipPath>
       </defs>
-      <path className="pipa-fill" d={`${BODY} Z`} fill="url(#pipa-shade)" />
+      <path className="pipa-fill" d={SOUNDBOARD} fill="url(#pipa-shade)" />
+      <path className="pipa-fill wood" d={`${BODY} Z ${SOUNDBOARD} ${HEAD}`} fillRule="evenodd" />
       <g className="pipa-body">
-        {/* the head, bent back, a pegbox ending in a curled finial */}
-        <path pathLength={1} d="M74 89 L32 92 C22 92 14 90 10 95 C6 100 10 106 16 105 C20 104.5 21 100 17 99.5 M74 111 L32 108 C24 108 18 107 16 105" />
+        {/* the head: pegbox and ruyi cloud-head, a bone band where they meet */}
+        <path pathLength={1} d={HEAD} />
+        <path pathLength={1} className="fine" d={`${HEAD_LINE}M33.5 91.9V108.1M36 91.8V108.2`} />
         {/* the string slot cut through the pegbox */}
         <path pathLength={1} className="fine" d="M70 96 L38 97.6 C34 98 34 102 38 102.4 L70 104" />
         {/* four turned pegs, two each side, swept back toward the head */}
@@ -82,8 +96,8 @@ export function PipaBody() {
         {/* the nut */}
         <path pathLength={1} d="M74 88.5V111.5" />
         <path pathLength={1} d={BODY} />
-        <path pathLength={1} className="rim" d={RIM} />
-        <g clipPath="url(#pipa-clip)">
+        <path pathLength={1} className="rim" d={SOUNDBOARD} />
+        <g clipPath="url(#pipa-board)">
           <path pathLength={1} className="grain" d={GRAIN} />
         </g>
         <path pathLength={1} className="xiang" d={XIANG} />

@@ -501,7 +501,8 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
 .ps0 { stop-color: var(--ink); stop-opacity: 0.025; }
 .ps1 { stop-color: var(--ink); stop-opacity: 0.1; }
 .pipa-body .rim { stroke-width: 0.6; opacity: 0.45; }
-.pipa-body .grain { stroke-width: 0.5; opacity: 0.16; }
+.pipa-body .grain { stroke-width: 0.4; opacity: 0.13; }
+.pipa-fill.wood { fill: color-mix(in srgb, var(--ink) 16%, transparent); }
 .pipa-body .fine { stroke-width: 0.6; opacity: 0.6; }
 .sec.on .pipa-fill { opacity: 1; }
 .str { fill: none; stroke: var(--ink); stroke-linecap: round; }
