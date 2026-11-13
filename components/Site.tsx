@@ -5,6 +5,7 @@ import PhotoStrip from "./PhotoStrip";
 import PhotoWall from "./PhotoWall";
 import SybilMap from "./SybilMap";
 import OffClock from "./OffClock";
+import InkStrings from "./InkStrings";
 import Leaderboard from "./Leaderboard";
 import type { Board } from "@/lib/arena";
 import { GALLERY, type Shot } from "./gallery";
@@ -539,6 +540,7 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
 
   return (
     <>
+      <InkStrings />
       <a href="#main" className="skip">
         {lang === "zh" ? "跳到内容" : "Skip to content"}
       </a>
