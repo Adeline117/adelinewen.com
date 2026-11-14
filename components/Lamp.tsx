@@ -2,13 +2,13 @@
 
 import { useEffect, useRef } from "react";
 
-// A reading lamp over the sheet: the pool of light drifts, slowly and a little behind,
-// toward where the pointer is, never quite reaching the edges. Without a pointer (phones)
+// A reading lamp over the sheet: a pool of light that follows the pointer, smoothly and
+// close behind (it settles in about a fifth of a second). Without a pointer (phones)
 // it wanders gently as the page scrolls. Moved by transform only, so nothing repaints;
 // the loop runs only while the light is still travelling; fixed at centre under reduced
 // motion.
-const FOLLOW = 0.85; // how far toward the pointer the light goes (0 = stays, 1 = all the way)
-const EASE = 0.05; // per-frame catch-up
+const FOLLOW = 1; // how far toward the pointer the light goes (0 = stays, 1 = all the way)
+const EASE = 0.18; // per-frame catch-up
 
 export default function Lamp() {
   const ref = useRef<HTMLDivElement>(null);
