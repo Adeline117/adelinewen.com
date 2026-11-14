@@ -12,11 +12,13 @@
   --mute: #6b675f;
   --line: rgba(24, 20, 12, 0.12);
   /* the sheet: three paper tones (centre, body, edge); the bright spot is the lamp (.lamp) */
-  --p0: #f3f0ea;
-  --p1: #efebe4;
-  --p2: #e2ddd3;
-  --lamp: rgba(255, 254, 251, 0.92);
-  --lamp-half: rgba(255, 254, 251, 0.45);
+  --p0: #f6f3ed;
+  --p1: #f3f0ea;
+  --p2: #e8e4dc;
+  /* the lamp: a warm pool where the pointer is, and the room's dimness beyond it */
+  --lamp: rgba(255, 246, 222, 0.85);
+  --lamp-half: rgba(255, 246, 222, 0.38);
+  --shade: rgba(70, 54, 30, 0.11);
   /* frosted nav bar so content scrolls cleanly underneath (esp. on mobile) */
   /* near-opaque: at lower alpha, scrolled text collides legibly with nav links */
   --nav-bg: rgba(247, 245, 241, 0.985);
@@ -73,8 +75,9 @@ body.dark {
   --p0: #141210;
   --p1: #110f0d;
   --p2: #0b0a08;
-  --lamp: rgba(255, 234, 204, 0.085);
-  --lamp-half: rgba(255, 234, 204, 0.035);
+  --lamp: rgba(255, 228, 190, 0.11);
+  --lamp-half: rgba(255, 228, 190, 0.045);
+  --shade: rgba(0, 0, 0, 0.32);
   --nav-bg: rgba(20, 18, 14, 0.98);
   --bg: var(--p1);
   --news: #201d18;
@@ -117,16 +120,16 @@ body {
 body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; background: var(--grain), radial-gradient(ellipse 80% 68% at 50% 44%, var(--p0), var(--p1) 58%, var(--p2)); }
 /* the paper tone follows the chapter: cooler for the research, warmer for the childhood
    stage; registered as colours so the sheet eases from one to the next */
-@property --p0 { syntax: "<color>"; inherits: true; initial-value: #f3f0ea; }
-@property --p1 { syntax: "<color>"; inherits: true; initial-value: #efebe4; }
-@property --p2 { syntax: "<color>"; inherits: true; initial-value: #e2ddd3; }
+@property --p0 { syntax: "<color>"; inherits: true; initial-value: #f6f3ed; }
+@property --p1 { syntax: "<color>"; inherits: true; initial-value: #f3f0ea; }
+@property --p2 { syntax: "<color>"; inherits: true; initial-value: #e8e4dc; }
 :root { transition: --p0 1.4s var(--ease), --p1 1.4s var(--ease), --p2 1.4s var(--ease); }
-:root[data-paper="research"] { --p0: #eceff0; --p1: #e7eaec; --p2: #d8dde0; }
-:root[data-paper="stage"] { --p0: #f5ecdc; --p1: #f1e5d1; --p2: #e3d2b4; }
+:root[data-paper="research"] { --p0: #eff2f3; --p1: #ebeef0; --p2: #dde2e5; }
+:root[data-paper="stage"] { --p0: #f8efdf; --p1: #f4e9d6; --p2: #e7d7bb; }
 :root[data-paper="research"] body.dark { --p0: #111518; --p1: #0e1215; --p2: #090c0f; }
 :root[data-paper="stage"] body.dark { --p0: #1c160e; --p1: #18120b; --p2: #100c06; }
 /* the lamp: a soft pool of light on the sheet that drifts after the pointer (Lamp.tsx) */
-.lamp { position: fixed; left: 0; top: 0; width: 100vmax; height: 100vmax; margin: -50vmax 0 0 -50vmax; z-index: -1; pointer-events: none; background: radial-gradient(closest-side, var(--lamp), var(--lamp-half) 45%, transparent); will-change: transform; transition: background var(--dur) var(--ease); }
+.lamp { position: fixed; left: 0; top: 0; width: 300vmax; height: 300vmax; margin: -150vmax 0 0 -150vmax; z-index: -1; pointer-events: none; background: radial-gradient(closest-side, var(--lamp), var(--lamp-half) 9%, transparent 19%, var(--shade) 38%); will-change: transform; transition: background var(--dur) var(--ease); }
 /* ink wash: three faint blooms of the page's own ink drifting over the sheet, slowly
    enough to read as weather, not motion; the scroll nudges them too. One composited
    layer moved by transform (no repaint per frame); still under reduced motion. */
