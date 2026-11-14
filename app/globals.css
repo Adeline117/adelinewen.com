@@ -12,15 +12,15 @@
   --mute: #6b675f;
   --line: rgba(24, 20, 12, 0.12);
   /* the sheet: three paper tones (centre, body, edge); the bright spot is the lamp (.lamp) */
-  --p0: #f8f6f1;
-  --p1: #f6f4ef;
-  --p2: #edeae3;
-  --lamp: rgba(255, 254, 250, 0.78);
-  --lamp-half: rgba(255, 254, 250, 0.32);
+  --p0: #f3f0ea;
+  --p1: #efebe4;
+  --p2: #e2ddd3;
+  --lamp: rgba(255, 254, 251, 0.92);
+  --lamp-half: rgba(255, 254, 251, 0.45);
   /* frosted nav bar so content scrolls cleanly underneath (esp. on mobile) */
   /* near-opaque: at lower alpha, scrolled text collides legibly with nav links */
   --nav-bg: rgba(247, 245, 241, 0.985);
-  --bg: #f7f5f1; /* solid bg color (timeline dot ring, inverted-button text) */
+  --bg: var(--p1); /* the paper itself, following its tone (timeline dot ring, inverted-button text) */
   /* Arena on newsprint: yellowed stock, ink specks, browned edges */
   --news: #f2ecdf;
   --news-ink: #17140f;
@@ -70,13 +70,13 @@ body.dark {
   --mute: #9a958c;
   --line: rgba(252, 248, 240, 0.14);
   /* warm charcoal, not pure black — gallery dark */
-  --p0: #161412;
-  --p1: #141210;
-  --p2: #100e0b;
-  --lamp: rgba(255, 236, 208, 0.05);
-  --lamp-half: rgba(255, 236, 208, 0.02);
+  --p0: #141210;
+  --p1: #110f0d;
+  --p2: #0b0a08;
+  --lamp: rgba(255, 234, 204, 0.085);
+  --lamp-half: rgba(255, 234, 204, 0.035);
   --nav-bg: rgba(20, 18, 14, 0.98);
-  --bg: #141210;
+  --bg: var(--p1);
   --news: #201d18;
   --news-ink: #ebe5d8;
   --news-mute: #9d968a;
@@ -117,16 +117,16 @@ body {
 body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; background: var(--grain), radial-gradient(ellipse 80% 68% at 50% 44%, var(--p0), var(--p1) 58%, var(--p2)); }
 /* the paper tone follows the chapter: cooler for the research, warmer for the childhood
    stage; registered as colours so the sheet eases from one to the next */
-@property --p0 { syntax: "<color>"; inherits: true; initial-value: #f8f6f1; }
-@property --p1 { syntax: "<color>"; inherits: true; initial-value: #f6f4ef; }
-@property --p2 { syntax: "<color>"; inherits: true; initial-value: #edeae3; }
+@property --p0 { syntax: "<color>"; inherits: true; initial-value: #f3f0ea; }
+@property --p1 { syntax: "<color>"; inherits: true; initial-value: #efebe4; }
+@property --p2 { syntax: "<color>"; inherits: true; initial-value: #e2ddd3; }
 :root { transition: --p0 1.4s var(--ease), --p1 1.4s var(--ease), --p2 1.4s var(--ease); }
-:root[data-paper="research"] { --p0: #f5f6f4; --p1: #f1f2f0; --p2: #e5e7e4; }
-:root[data-paper="stage"] { --p0: #faf5ec; --p1: #f6eee1; --p2: #ebe0cc; }
-:root[data-paper="research"] body.dark { --p0: #131516; --p1: #111314; --p2: #0d0f10; }
-:root[data-paper="stage"] body.dark { --p0: #1a1611; --p1: #17130d; --p2: #110d08; }
+:root[data-paper="research"] { --p0: #eceff0; --p1: #e7eaec; --p2: #d8dde0; }
+:root[data-paper="stage"] { --p0: #f5ecdc; --p1: #f1e5d1; --p2: #e3d2b4; }
+:root[data-paper="research"] body.dark { --p0: #111518; --p1: #0e1215; --p2: #090c0f; }
+:root[data-paper="stage"] body.dark { --p0: #1c160e; --p1: #18120b; --p2: #100c06; }
 /* the lamp: a soft pool of light on the sheet that drifts after the pointer (Lamp.tsx) */
-.lamp { position: fixed; left: 0; top: 0; width: 130vmax; height: 130vmax; margin: -65vmax 0 0 -65vmax; z-index: -1; pointer-events: none; background: radial-gradient(closest-side, var(--lamp), var(--lamp-half) 45%, transparent); will-change: transform; transition: background var(--dur) var(--ease); }
+.lamp { position: fixed; left: 0; top: 0; width: 100vmax; height: 100vmax; margin: -50vmax 0 0 -50vmax; z-index: -1; pointer-events: none; background: radial-gradient(closest-side, var(--lamp), var(--lamp-half) 45%, transparent); will-change: transform; transition: background var(--dur) var(--ease); }
 /* ink wash: three faint blooms of the page's own ink drifting over the sheet, slowly
    enough to read as weather, not motion; the scroll nudges them too. One composited
    layer moved by transform (no repaint per frame); still under reduced motion. */
@@ -185,7 +185,7 @@ nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 3;
   display: flex; justify-content: space-between; align-items: center;
   padding: 16px var(--gutter); border-bottom: 1px solid var(--line);
-  background: var(--nav-bg); backdrop-filter: blur(16px) saturate(1.1); -webkit-backdrop-filter: blur(16px) saturate(1.1);
+  background: color-mix(in srgb, var(--p1) 97%, transparent); backdrop-filter: blur(16px) saturate(1.1); -webkit-backdrop-filter: blur(16px) saturate(1.1);
 }
 nav .navright { display: flex; align-items: center; gap: clamp(18px, 3vw, 36px); }
 nav .logo { display: grid; align-items: center; min-height: 44px; padding: 0; border: 0; background: none; color: var(--ink); font-family: inherit; text-align: left; cursor: pointer; font-size: var(--fs-md); font-weight: 500; letter-spacing: -0.01em; }

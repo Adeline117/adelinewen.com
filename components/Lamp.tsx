@@ -7,8 +7,8 @@ import { useEffect, useRef } from "react";
 // it wanders gently as the page scrolls. Moved by transform only, so nothing repaints;
 // the loop runs only while the light is still travelling; fixed at centre under reduced
 // motion.
-const FOLLOW = 0.6; // how far toward the pointer the light goes (0 = stays, 1 = all the way)
-const EASE = 0.045; // per-frame catch-up
+const FOLLOW = 0.85; // how far toward the pointer the light goes (0 = stays, 1 = all the way)
+const EASE = 0.05; // per-frame catch-up
 
 export default function Lamp() {
   const ref = useRef<HTMLDivElement>(null);
