@@ -133,8 +133,6 @@ body.dark::after { --wash: 7%; }
   @keyframes inkScroll { from { translate: 0 0; } to { translate: -4vw -10vh; } }
 }
 @media (prefers-reduced-motion: reduce) { body::after { animation: none; } }
-/* the background strings (components/InkStrings): one canvas over the sheet, under everything */
-.ink-strings { position: fixed; inset: 0; z-index: -1; width: 100%; height: 100%; pointer-events: none; }
 .mono { font-family: var(--font-mono), monospace; }
 
 /* inverted selection — ink paper swap */
