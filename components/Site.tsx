@@ -433,6 +433,11 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
     document.documentElement.lang = lang === "zh" ? "zh" : "en";
   }, [lang]);
 
+  // the paper tone follows the chapter being read (see :root[data-paper] in globals.css)
+  useEffect(() => {
+    document.documentElement.dataset.paper = active >= 0 ? ["about", "honors", "research", "arena", "stage", "contact"][active] : "cover";
+  }, [active]);
+
   // Theme flip as a circular ink wipe from the click point (View Transitions API).
   // Falls back to the plain toggle where unsupported or reduced-motion.
   const flipTheme = (e: React.MouseEvent) => {

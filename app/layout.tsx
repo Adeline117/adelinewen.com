@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
+import Lamp from "@/components/Lamp";
 
 const fraunces = Fraunces({
   variable: "--font-fraunces",
@@ -98,6 +99,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className={`${fraunces.variable} ${cjk.variable} ${mono.variable}`}>
       <body suppressHydrationWarning>
+        <Lamp />
         <script dangerouslySetInnerHTML={{ __html: noFlash }} />
         <script
           type="application/ld+json"
