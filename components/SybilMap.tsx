@@ -9,7 +9,7 @@ import { NODES, LINKS } from "./sybil";
 // circles pushing each other apart and colliding), so dragging one project tugs its
 // neighbours and the map settles again when you let go. Ink dots run along the heaviest
 // lines, wallets moving between airdrops; they pause when the map is off screen.
-// Reduced motion or Save-Data: a still map, nothing runs.
+// Save-Data: a still map, nothing runs.
 const L = {
   en: {
     cap: "Sybil wallets shared across 15 Ethereum airdrops, from HasciDB. Circle area: Sybils caught in that airdrop; line weight: wallets caught in both (pairs sharing 2,000+). Drag a circle to pull the network.",
@@ -53,7 +53,6 @@ export default function SybilMap({ lang }: { lang: "en" | "zh" }) {
     const root = svg.current;
     if (!el || !root) return;
     const calm =
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
       !!(navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
 
     const ns = nodes.current;
@@ -205,7 +204,7 @@ export default function SybilMap({ lang }: { lang: "en" | "zh" }) {
     sim.current?.alphaTarget(0.3).restart();
     // a ring goes out from the circle you picked up
     const ring = svg.current?.querySelector<SVGCircleElement>(".smap-ring");
-    if (ring && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (ring) {
       ring.setAttribute("cx", String(n.x));
       ring.setAttribute("cy", String(n.y));
       ring.animate([{ r: `${n.r}px`, opacity: 0.5 }, { r: `${n.r + 26}px`, opacity: 0 }] as Keyframe[], { duration: 700, easing: getComputedStyle(document.documentElement).getPropertyValue("--ease").trim() });

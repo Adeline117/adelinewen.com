@@ -258,7 +258,6 @@ nav .links button.active::after { transform: scaleX(1); }
 .arena-sign .inf-mark .inf-glint { stroke: var(--news); stroke-width: 2.6; animation-delay: 0s, 0s; }
 @keyframes glint { to { stroke-dashoffset: -1; } }
 @keyframes glintIn { to { opacity: 0.75; } }
-@media (prefers-reduced-motion: reduce) { .inf-glint { display: none; } }
 @keyframes hintFloat { 0%, 100% { transform: none; } 50% { transform: translateY(4px); } } /* starts and ends at rest: no jump */
 .cover-foot .hint, .cover-foot .cta { white-space: nowrap; }
 .cover-foot .cta { font-family: var(--font-mono), monospace; font-size: var(--fs-label); letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--ink); background: none; border: 1px solid var(--line); border-radius: var(--pill); padding: 12px 24px; cursor: pointer; transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease); }
@@ -338,7 +337,6 @@ nav .links button.active::after { transform: scaleX(1); }
 /* the roles still going on: their dot breathes, slowly; every other dot stays still */
 .tl li.now::before { animation: breathe 4.8s ease-in-out infinite alternate; }
 @keyframes breathe { to { background: color-mix(in srgb, var(--ink) 25%, var(--bg)); } }
-@media (prefers-reduced-motion: reduce) { .tl li.now::before { animation: none; } }
 .tl li .y { font-family: var(--font-mono), monospace; font-size: var(--fs-cap); letter-spacing: var(--track-meta); color: var(--mute); text-transform: uppercase; }
 .tl li .h { font-family: var(--font-fraunces), var(--font-cjk), serif; font-size: var(--fs-lg); font-weight: 330; line-height: 1.22; margin-top: 4px; }
 .tl li .dsc { font-size: var(--fs-body); color: var(--text); margin-top: 5px; line-height: 1.6; }
@@ -582,13 +580,11 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
 @media (hover: hover) and (pointer: fine) { .broken:hover .snap { animation-name: sway2; animation-delay: 0s; } }
 @keyframes sway2 { 0%, 100% { transform: none; } 20% { transform: rotate(5deg); } 45% { transform: rotate(-3.5deg); } 70% { transform: rotate(1.5deg); } }
 .broken:active .snap { animation-name: sway2; animation-delay: 0s; }
-@media (prefers-reduced-motion: reduce) { .broken .snap { animation: none; } }
 .strings figcaption { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-top: 12px; font-size: var(--fs-sm); line-height: 1.5; color: var(--mute); }
 .str-sound { flex: none; font-family: var(--font-mono), monospace; font-size: var(--fs-cap); letter-spacing: var(--track-meta); text-transform: uppercase; color: var(--mute); background: none; border: 1px solid var(--line); border-radius: var(--pill); padding: 8px 14px; cursor: pointer; transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease); }
 .str-sound.on { color: var(--ink); border-color: var(--ink); }
 @media (hover: hover) and (pointer: fine) { .str-sound:hover { color: var(--ink); border-color: var(--ink); } }
 @media (pointer: coarse) { .str-sound { min-height: 44px; } .strings svg { cursor: default; } }
-@media (prefers-reduced-motion: reduce) { .sec .str, .sec .pipa-body path, .sec .oc-glyph .g-ink { stroke-dashoffset: 0; transition: none; } .pipa-fill { opacity: 1; transition: none; } .oc-item *, .oc-item.on * { animation: none !important; } }
 @media (prefers-reduced-motion: reduce) { .wall-track { animation: none !important; } .wall-row { overflow-x: auto; } .wall { mask-image: none; } }
 @media (max-width: 600px) { .credits li { grid-template-columns: 1fr; gap: 4px; } }
 
@@ -649,9 +645,7 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
   mask-image: linear-gradient(transparent, #000 clamp(96px, 14vh, 160px), #000 calc(100% - clamp(96px, 14vh, 160px)), transparent);
 }
 @supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    .arena-sec::before { animation: newsSurface linear both; animation-timeline: view(); animation-range: cover 0% cover 100%; }
-  }
+  .arena-sec::before { animation: newsSurface linear both; animation-timeline: view(); animation-range: cover 0% cover 100%; }
 }
 @keyframes newsSurface { 0% { opacity: 0; } 12% { opacity: 1; } 88% { opacity: 1; } 100% { opacity: 0; } }
 .arena-sec { display: block; padding: clamp(96px, 14vh, 160px) clamp(24px, 5vw, 72px); }
@@ -696,7 +690,6 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
 /* the phase under way: a dot that breathes beside "now" */
 .aroad li.now .rw::before { content: ""; display: inline-block; width: 6px; height: 6px; margin-right: 8px; border-radius: 50%; background: var(--ink); vertical-align: 0.1em; animation: breatheDot 4.8s ease-in-out infinite alternate; }
 @keyframes breatheDot { to { opacity: 0.25; } }
-@media (prefers-reduced-motion: reduce) { .aroad li.now .rw::before { animation: none; } }
 .aroad .rwhat { font-size: var(--fs-body); line-height: 1.55; color: var(--text); }
 /* the dream — the section's landing: full-width, no label, builds to an ink italic payoff */
 /* the section lands on this line: set as a statement, one step above the body scale */
@@ -818,11 +811,10 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
 :focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; border-radius: var(--r); }
 main:focus { outline: none; } /* skip-link target — focused programmatically, no ring */
 
-/* respect reduced-motion: reveal content immediately, drop transitions */
+/* reduced motion: the small moves (reveals, draw-ins, marks, strings) play for everyone;
+   only the large ones stop: smooth scrolling, the photo wall's drift, the lamp, the ink
+   wash's drift and the cover's scroll parallax */
 @media (prefers-reduced-motion: reduce) {
-  * { transition-duration: 0.001ms !important; animation-duration: 0.001ms !important; animation-delay: 0s !important; }
-  .sec .label, .sec h2, .sec .lead, .sec .more, .sec .tl li, .sec .clinks a, .sec .honors-wrap, .sec .wall-row { opacity: 1 !important; transform: none !important; clip-path: none !important; }
-  .sec .label::before { transform: none !important; }
   html { scroll-behavior: auto !important; }
 }
 

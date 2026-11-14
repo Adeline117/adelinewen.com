@@ -5,8 +5,8 @@ import type { Board } from "@/lib/arena";
 
 // Arena's top traders set in the site's own type. The one motion on the page that
 // explains the product: when the board first scrolls into view the rows start out
-// of order and settle into rank, once. Already on screen at load, reduced motion
-// or Save-Data: it is simply shown in order.
+// of order and settle into rank, once. Already on screen at load
+// or under Save-Data: it is simply shown in order.
 const L = {
   en: {
     head: ["#", "Trader", "Score", "ROI 90D", "PnL", "Max DD"],
@@ -37,7 +37,6 @@ export default function Leaderboard({ board, lang }: { board: Board; lang: "en" 
     const el = list.current;
     if (!el) return;
     const calm =
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
       !!(navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
     if (calm || el.getBoundingClientRect().top < window.innerHeight) return;
     const rows = [...el.children] as HTMLElement[];

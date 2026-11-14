@@ -439,14 +439,14 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
   }, [active]);
 
   // Theme flip as a circular ink wipe from the click point (View Transitions API).
-  // Falls back to the plain toggle where unsupported or reduced-motion.
+  // Falls back to the plain toggle where unsupported.
   const flipTheme = (e: React.MouseEvent) => {
     const next = !dark;
     try {
       localStorage.setItem("theme-pick", next ? "dark" : "light");
     } catch {}
     const doc = document as Document & { startViewTransition?: (cb: () => void) => { finished: Promise<void> } };
-    if (!doc.startViewTransition || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (!doc.startViewTransition) {
       setDark(next);
       return;
     }
@@ -477,7 +477,7 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
       if (anchor && window.scrollY > 0) window.scrollBy({ top: anchor.getBoundingClientRect().top - before, behavior: "instant" });
     };
     const doc = document as Document & { startViewTransition?: (cb: () => void) => { finished: Promise<void> } };
-    if (!doc.startViewTransition || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (!doc.startViewTransition) {
       swap();
       return;
     }

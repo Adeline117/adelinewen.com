@@ -109,7 +109,7 @@ export default function OffClock({ lang }: { lang: "en" | "zh" }) {
   const playTimers = useRef<number[]>([]);
 
   useEffect(() => {
-    calm.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    calm.current = false; // the strings and marks move for everyone (see globals.css)
     return () => cancelAnimationFrame(raf.current);
   }, []);
 
