@@ -69,13 +69,16 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  colorScheme: "light",
-  themeColor: "#f7f5f1",
+  colorScheme: "light dark",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f3f0ea" },
+    { media: "(prefers-color-scheme: dark)", color: "#110f0d" },
+  ],
 };
 
-// Always opens on light paper; dark only when the visitor has chosen it with the toggle
-// (the OS scheme is not followed, so the page never changes on its own).
-const noFlash = `try{localStorage.removeItem('theme');if(localStorage.getItem('theme-pick')==='dark')document.body.classList.add('dark');if(location.pathname.indexOf('/zh')===0)document.documentElement.lang='zh';}catch(e){}`;
+// Light or dark follows the visitor's own system setting. The toggle overrides it for the
+// rest of the visit only (sessionStorage), so the next visit follows the system again.
+const noFlash = `try{localStorage.removeItem('theme');localStorage.removeItem('theme-pick');var p=sessionStorage.getItem('theme-pick');var d=p?p==='dark':matchMedia('(prefers-color-scheme: dark)').matches;if(d)document.body.classList.add('dark');if(location.pathname.indexOf('/zh')===0)document.documentElement.lang='zh';}catch(e){}`;
 
 const personLd = {
   "@context": "https://schema.org",

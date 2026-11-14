@@ -419,10 +419,18 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
   }, []);
 
   useEffect(() => {
-    // light unless the visitor picked dark with the toggle (matches the noFlash script).
-    // Read after mount on purpose: localStorage does not exist during the server render.
+    // follow the visitor's system, unless they flipped the toggle during this visit
+    // (matches the noFlash script); and keep following it if the system changes.
+    // Read after mount on purpose: storage and media queries don't exist on the server.
+    const mq = window.matchMedia("(prefers-color-scheme: dark)");
+    const pick = sessionStorage.getItem("theme-pick");
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setDark(localStorage.getItem("theme-pick") === "dark");
+    setDark(pick ? pick === "dark" : mq.matches);
+    const onChange = (e: MediaQueryListEvent) => {
+      if (!sessionStorage.getItem("theme-pick")) setDark(e.matches);
+    };
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
   }, []);
   useEffect(() => {
     if (dark === null) return;
@@ -443,7 +451,7 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
   const flipTheme = (e: React.MouseEvent) => {
     const next = !dark;
     try {
-      localStorage.setItem("theme-pick", next ? "dark" : "light");
+      sessionStorage.setItem("theme-pick", next ? "dark" : "light");
     } catch {}
     const doc = document as Document & { startViewTransition?: (cb: () => void) => { finished: Promise<void> } };
     if (!doc.startViewTransition) {
