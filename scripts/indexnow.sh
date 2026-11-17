@@ -6,4 +6,4 @@ set -euo pipefail
 KEY=1b7887285121a257d0e7962ecfab3fe0
 curl -sS -o /dev/null -w "IndexNow: %{http_code}\n" -X POST "https://api.indexnow.org/indexnow" \
   -H "Content-Type: application/json; charset=utf-8" \
-  -d "{\"host\":\"adelinewen.com\",\"key\":\"$KEY\",\"keyLocation\":\"https://adelinewen.com/$KEY.txt\",\"urlList\":[\"https://adelinewen.com/\",\"https://adelinewen.com/zh\",\"https://adelinewen.com/research\",\"https://adelinewen.com/zh/research\",\"https://adelinewen.com/arena\",\"https://adelinewen.com/zh/arena\"]}"
+  -d "{\"host\":\"adelinewen.com\",\"key\":\"$KEY\",\"keyLocation\":\"https://adelinewen.com/$KEY.txt\",\"urlList\":[\"https://adelinewen.com/\",\"https://adelinewen.com/zh\",\"https://adelinewen.com/research\",\"https://adelinewen.com/zh/research\",\"https://adelinewen.com/arena\",\"https://adelinewen.com/zh/arena\",\"https://adelinewen.com/papers/hascidb-nbc26.pdf\"]}"
