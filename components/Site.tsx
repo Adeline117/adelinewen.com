@@ -765,7 +765,7 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
         <div className="stage-reel">
           <PhotoStrip shots={GALLERY.stage} label={lang === "zh" ? "舞台与银幕" : "Stage and screen"} lang={lang} even />
         </div>
-        <PhotoWall label={lang === "zh" ? "更多舞台照片" : "More from the stage"} alt={lang === "zh" ? "Adeline Wen 童年舞台照片" : "Adeline Wen on stage as a child"} />
+        <PhotoWall label={lang === "zh" ? "更多舞台照片" : "More from the stage"} alt={lang === "zh" ? "童年舞台照片" : "On stage as a child"} />
       </section>
 
       <section className="sec" id="contact" data-i={5} ref={(el) => {
