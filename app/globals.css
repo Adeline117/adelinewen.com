@@ -317,9 +317,9 @@ nav .links button.active::after { transform: scaleX(1); }
 /* break Chinese only at spaces and marked phrase boundaries (zero-width spaces in the copy), never inside a word like 支持 */
 :lang(zh) .hero .sub, :lang(zh) .tl .h { word-break: keep-all; overflow-wrap: anywhere; }
 .sec .lead { margin-top: 32px; max-width: 32em; font-size: clamp(16px, 1.5vw, 17px); line-height: 1.72; color: var(--text); }
-.sec .more { position: relative; margin-top: 40px; display: inline-flex; gap: 10px; font-family: var(--font-mono), monospace; font-size: var(--fs-label); letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--ulink); padding-bottom: 8px; }
+.sec .more, .page-foot .more { position: relative; margin-top: 40px; display: inline-flex; gap: 10px; font-family: var(--font-mono), monospace; font-size: var(--fs-label); letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--ulink); padding-bottom: 8px; }
 /* hover: an ink line grows left-to-right over the resting hairline */
-.sec .more::after { content: ""; position: absolute; left: 0; bottom: -1px; width: 100%; height: 1px; background: var(--ink); transform: scaleX(0); transform-origin: left; transition: transform var(--dur-fast) var(--ease); }
+.sec .more::after, .page-foot .more::after { content: ""; position: absolute; left: 0; bottom: -1px; width: 100%; height: 1px; background: var(--ink); transform: scaleX(0); transform-origin: left; transition: transform var(--dur-fast) var(--ease); }
 .sec .right { max-width: none; justify-self: end; width: 100%; }
 /* the CV link sits below the About timeline — indent it to the timeline's text
    (rail margin 4 + dot padding 26) so its left edge aligns with the entries above */
@@ -704,6 +704,26 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
 .arena-sign .wm { font-family: -apple-system, "Segoe UI", system-ui, sans-serif; font-size: 22px; font-weight: 500; letter-spacing: -0.015em; color: var(--ink); line-height: 1; }
 .arena-sign .more { margin-top: 0; margin-left: 8px; }
 
+/* pages of their own (/research, /arena): the same chapter, told at length. The h1
+   wears the chapter heading's dress; block headings are the mono kicker of .ablock */
+nav a.logo { text-decoration: none; }
+a.toggle { display: inline-flex; align-items: center; justify-content: center; text-decoration: none; }
+.page .sec h1 {
+  font-weight: 330; font-size: clamp(46px, 7vw, 118px); line-height: 0.92; letter-spacing: -0.03em;
+  opacity: 0; clip-path: inset(0 0 100% 0); transform: translateY(0.24em);
+  transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease), clip-path var(--dur) var(--ease);
+}
+.page .sec.on h1 { opacity: 1; clip-path: inset(0 0 -0.14em 0); transform: none; transition-delay: var(--stagger); }
+.page .sec h1 em { font-style: italic; }
+.page .ablock h2 { opacity: 1; clip-path: none; transform: none; transition: none; font-family: var(--font-mono), monospace; font-size: var(--fs-label); font-weight: 400; line-height: 1.4; letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--mute); padding-top: 3px; }
+:lang(zh) .page .ablock h2 { letter-spacing: 0.08em; }
+.page .ablock .tl { margin-top: -20px; }
+.page .abody .smap { margin-left: 0; }
+.page-links { display: flex; flex-wrap: wrap; gap: 0 32px; margin-top: 24px; }
+.page-foot { display: flex; flex-wrap: wrap; align-items: baseline; gap: 16px 32px; margin: 0 var(--gutter); padding: 24px 0 48px; border-top: 1px solid var(--line); }
+.page-foot .more { margin-top: 0; }
+.page-colophon { margin-left: auto; font-family: var(--font-mono), monospace; font-size: var(--fs-cap); letter-spacing: var(--track-meta); text-transform: uppercase; color: var(--mute); }
+
 /* desktop: About / Research / Contact keep their heading column in view
    while the longer right column scrolls past it */
 @media (min-width: 821px) {
@@ -731,7 +751,7 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
   .sec .inner { grid-template-columns: 1fr; gap: 32px; }
   /* show content immediately on mobile — the opacity scroll-reveal could
      leave sections invisible (and transitions janked touch scrolling) */
-  .sec .label, .sec h2, .sec .lead, .sec .more, .sec .tl li, .sec .clinks a, .sec .honors-wrap, .sec .wall-row {
+  .page .sec h1, .sec .label, .sec h2, .sec .lead, .sec .more, .sec .tl li, .sec .clinks a, .sec .honors-wrap, .sec .wall-row {
     opacity: 1 !important; transform: none !important; transition: none !important; clip-path: none !important;
   }
   .sec .label::before { transform: none !important; }
@@ -797,7 +817,7 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
   nav .links button:hover::after { transform: scaleX(1); }
   .toggle:hover { color: var(--ink); border-color: var(--ink); }
   .cover-foot .cta:hover { border-color: var(--ink); background: var(--field-bg); }
-  .sec .more:hover::after { transform: scaleX(1); }
+  .sec .more:hover::after, .page-foot .more:hover::after { transform: scaleX(1); }
   .ilink:hover, .tlink:hover { background-size: 100% 1px; }
   .ilink:hover::after { color: var(--ink); }
   .cform button:hover:not(:disabled) { transform: translateY(-2px); }
