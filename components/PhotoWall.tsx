@@ -4,7 +4,9 @@ import { WALL } from "./wall";
 // it, not any one picture. Pure CSS (each row is the list twice, translated by
 // half its width); each photo is a .plate like every other photo on the site.
 // A row stops under the pointer; reduced motion gets plain scrollable rows.
-export default function PhotoWall({ label }: { label: string }) {
+// The first copy of each row carries a description, so the photos can be found in image
+// search; the duplicate copy (there only to make the loop seamless) stays silent.
+export default function PhotoWall({ label, alt }: { label: string; alt: string }) {
   return (
     <div className="wall" role="group" aria-label={label}>
       {WALL.map((row, r) => (
@@ -18,7 +20,7 @@ export default function PhotoWall({ label }: { label: string }) {
                     <span className="plate">
                       <picture>
                         <source type="image/avif" srcSet={`${f}-240.avif 1x, ${f}-480.avif 2x`} />
-                        <img src={`${f}-240.webp`} srcSet={`${f}-240.webp 1x, ${f}-480.webp 2x`} width={w} height={240} alt="" loading="lazy" decoding="async" />
+                        <img src={`${f}-240.webp`} srcSet={`${f}-240.webp 1x, ${f}-480.webp 2x`} width={w} height={240} alt={copy === 0 ? alt : ""} loading="lazy" decoding="async" />
                       </picture>
                     </span>
                   </li>
