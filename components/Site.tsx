@@ -9,6 +9,7 @@ import Leaderboard from "./Leaderboard";
 import type { Board } from "@/lib/arena";
 import { GALLERY, type Shot } from "./gallery";
 import { flushSync } from "react-dom";
+import { useTheme } from "./useTheme";
 
 type Lang = "en" | "zh";
 type Section = { label: string; title: ReactNode; lead: ReactNode; more: { text: string; href: string } };
@@ -338,7 +339,7 @@ const COPY: Record<
 
 export default function Site({ routeLang, board }: { routeLang?: Lang; board: Board }) {
   const [active, setActive] = useState(-1); // -1 = the cover
-  const [dark, setDark] = useState<boolean | null>(null);
+  const { dark, flipTheme } = useTheme();
   const [lang, setLang] = useState<Lang>(routeLang ?? "en");
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [hp, setHp] = useState(""); // honeypot, humans leave it empty, bots fill it
@@ -421,25 +422,6 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
   }, []);
 
   useEffect(() => {
-    // follow the visitor's system, unless they flipped the toggle during this visit
-    // (matches the noFlash script); and keep following it if the system changes.
-    // Read after mount on purpose: storage and media queries don't exist on the server.
-    const mq = window.matchMedia("(prefers-color-scheme: dark)");
-    const pick = sessionStorage.getItem("theme-pick");
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setDark(pick ? pick === "dark" : mq.matches);
-    const onChange = (e: MediaQueryListEvent) => {
-      if (!sessionStorage.getItem("theme-pick")) setDark(e.matches);
-    };
-    mq.addEventListener("change", onChange);
-    return () => mq.removeEventListener("change", onChange);
-  }, []);
-  useEffect(() => {
-    if (dark === null) return;
-    document.body.classList.toggle("dark", dark);
-  }, [dark]);
-
-  useEffect(() => {
     document.documentElement.lang = lang === "zh" ? "zh" : "en";
   }, [lang]);
 
@@ -447,29 +429,6 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
   useEffect(() => {
     document.documentElement.dataset.paper = active >= 0 ? ["about", "honors", "research", "arena", "stage", "contact"][active] : "cover";
   }, [active]);
-
-  // Theme flip as a circular ink wipe from the click point (View Transitions API).
-  // Falls back to the plain toggle where unsupported.
-  const flipTheme = (e: React.MouseEvent) => {
-    const next = !dark;
-    try {
-      sessionStorage.setItem("theme-pick", next ? "dark" : "light");
-    } catch {}
-    const doc = document as Document & { startViewTransition?: (cb: () => void) => { finished: Promise<void> } };
-    if (!doc.startViewTransition) {
-      setDark(next);
-      return;
-    }
-    document.documentElement.style.setProperty("--wx", `${e.clientX}px`);
-    document.documentElement.style.setProperty("--wy", `${e.clientY}px`);
-    // suspend the body's own 0.6s background fade so the wipe reveals a settled page
-    document.documentElement.classList.add("theme-wiping");
-    const vt = doc.startViewTransition(() => {
-      flushSync(() => setDark(next));
-      document.body.classList.toggle("dark", next); // ensure the DOM state is snapshotted
-    });
-    vt.finished.finally(() => document.documentElement.classList.remove("theme-wiping"));
-  };
 
   // Language lives in the URL (/ = English, /zh = 中文), so a shared link
   // always opens in the language it was shared in. Swap in place under the
