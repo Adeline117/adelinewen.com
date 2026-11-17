@@ -178,6 +178,7 @@ const COPY: Record<
         { label: "Email", val: "adelinewen1107@outlook.com ↗", href: "mailto:adelinewen1107@outlook.com" },
         { label: "GitHub", val: "@Adeline117 ↗", href: "https://github.com/Adeline117" },
         { label: "LinkedIn", val: "/in/adeline1107 ↗", href: "https://www.linkedin.com/in/adeline1107" },
+        { label: "X", val: "@adewen7 ↗", href: "https://x.com/adewen7" },
         { label: "CV", val: "PDF ↓", href: "/Adeline-Wen-CV.pdf", download: true },
       ],
       form: {
@@ -318,6 +319,7 @@ const COPY: Record<
         { label: "邮箱", val: "adelinewen1107@outlook.com ↗", href: "mailto:adelinewen1107@outlook.com" },
         { label: "GitHub", val: "@Adeline117 ↗", href: "https://github.com/Adeline117" },
         { label: "LinkedIn", val: "/in/adeline1107 ↗", href: "https://www.linkedin.com/in/adeline1107" },
+        { label: "X", val: "@adewen7 ↗", href: "https://x.com/adewen7" },
         { label: "简历", val: "PDF ↓", href: "/Adeline-Wen-CV.pdf", download: true },
       ],
       form: {
