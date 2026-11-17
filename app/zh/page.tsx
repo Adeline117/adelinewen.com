@@ -19,6 +19,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
+    creator: "@adewen7",
     title: "Adeline Wen | 研究者与构建者",
     description: "华盛顿大学 CAIS 实验室研究助理，arenafi.org 独立创始人。",
   },

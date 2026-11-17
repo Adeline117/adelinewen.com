@@ -63,6 +63,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
+    creator: "@adewen7",
     title: "Adeline Wen | Researcher & Builder",
     description: "UW CAIS Lab · solo founder of arenafi.org · blockchain & decentralized-AI research.",
   },
@@ -90,6 +91,7 @@ const personLd = {
   sameAs: [
     "https://github.com/Adeline117",
     "https://www.linkedin.com/in/adeline1107",
+    "https://x.com/adewen7",
     "https://arenafi.org",
   ],
 };
