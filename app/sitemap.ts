@@ -1,16 +1,11 @@
 import type { MetadataRoute } from "next";
-import { GALLERY } from "@/components/gallery";
 
 const SITE = "https://adelinewen.com";
 
 // Both language versions, each pointing at the other (hreflang), stamped with the build
-// time so crawlers see when the content last changed, and listing every photo on the
-// page so they can be found in image search; the childhood photo wall is left out on
-// purpose (see next.config.ts).
-const images = [
-  ...Object.values(GALLERY).flatMap((shots) => shots.map((s) => `${SITE}${s.src}`)),
-  `${SITE}/opengraph-image`,
-];
+// time so crawlers see when the content last changed. Image search is meant to find only
+// three photos (see next.config.ts), so only those are listed.
+const images = ["01", "03", "18"].map((n) => `${SITE}/photos/stage/${n}.jpg`);
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
