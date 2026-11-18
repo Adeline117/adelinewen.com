@@ -131,7 +131,7 @@ const COPY: Record<
       ),
       lead: (
         <>
-          Tennis has the ATP rankings and chess has Elo. Crypto trading moves hundreds of billions of dollars a day, but there has been no common way to tell who trades best. Arena (<a className="tlink" href="https://arenafi.org" target="_blank" rel="noopener noreferrer">arenafi.org</a>) puts 68,000+ traders from 44+ centralized and decentralized exchanges, which otherwise only show their own, on one board. A single 0–100 Arena Score weighs return, profit, drawdown and consistency, counts the last 90 days most, discounts thin track records and caps one-off spikes; the full method is public.
+          Tennis has the ATP rankings and chess has Elo. Crypto trading moves hundreds of billions of dollars a day, yet no one could say who trades best: each exchange shows only its own traders. Arena (<a className="tlink" href="https://arenafi.org" target="_blank" rel="noopener noreferrer">arenafi.org</a>) puts 68,000+ traders from 44+ exchanges on one board, ranked by one public score.
         </>
       ),
       more: { text: "Visit arenafi.org ↗", href: "https://arenafi.org" },
@@ -274,7 +274,7 @@ const COPY: Record<
       ),
       lead: (
         <>
-          网球有 ATP 排名，国际象棋有 Elo。加密交易每天成交数千亿美元，却一直没有统一的办法判断谁交易得最好。Arena（<a className="tlink" href="https://arenafi.org" target="_blank" rel="noopener noreferrer">arenafi.org</a>）把 44+ 家中心化和去中心化交易所的 68,000+ 名交易者放上同一张榜，而各家交易所原本只展示自己的交易者。Arena 评分 0–100，综合收益率、盈亏、回撤和稳定性，近 90 天权重最高，数据太少的账户打折、一次性的极端收益封顶，方法完全公开。
+          网球有 ATP 排名，国际象棋有 Elo。加密交易每天成交数千亿美元，却一直没有办法判断谁交易得最好：各家交易所只展示自己的交易者。Arena（<a className="tlink" href="https://arenafi.org" target="_blank" rel="noopener noreferrer">arenafi.org</a>）把 44+ 家交易所的 68,000+ 名交易者放上同一张榜，用一个公开的评分排名。
         </>
       ),
       more: { text: "访问 arenafi.org ↗", href: "https://arenafi.org" },
