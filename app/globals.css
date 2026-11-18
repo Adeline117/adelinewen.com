@@ -722,6 +722,14 @@ a.toggle { display: inline-flex; align-items: center; justify-content: center; t
 :lang(zh) .page .ablock h2 { letter-spacing: 0.08em; }
 .page .ablock .tl { margin-top: -20px; }
 .page .abody .smap { margin-left: 0; }
+/* a paper's BibTeX, folded under its entry */
+.cite { margin-top: 12px; }
+.cite summary { display: inline-block; cursor: pointer; list-style: none; font-family: var(--font-mono), monospace; font-size: var(--fs-cap); letter-spacing: var(--track-meta); text-transform: uppercase; color: var(--mute); border-bottom: 1px solid var(--ulink); padding-bottom: 4px; transition: color var(--dur-fast) var(--ease); }
+.cite summary::-webkit-details-marker { display: none; }
+.cite[open] summary, .cite summary:focus-visible { color: var(--ink); }
+.cite pre { margin-top: 12px; padding: 16px; border-radius: var(--r); background: var(--field-bg); font-family: var(--font-mono), monospace; font-size: var(--fs-cap); line-height: 1.7; color: var(--text); white-space: pre-wrap; overflow-wrap: anywhere; }
+.cite button { margin-top: 8px; padding: 0; background: none; border: 0; cursor: pointer; font-family: var(--font-mono), monospace; font-size: var(--fs-cap); letter-spacing: var(--track-meta); text-transform: uppercase; color: var(--ink); }
+@media (hover: hover) { .cite summary:hover { color: var(--ink); } }
 .page-links { display: flex; flex-wrap: wrap; gap: 0 32px; margin-top: 24px; }
 .page-foot { display: flex; flex-wrap: wrap; align-items: baseline; gap: 16px 32px; margin: 0 var(--gutter); padding: 24px 0 48px; border-top: 1px solid var(--line); }
 .page-foot .more { margin-top: 0; }

@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import SubPage from "./SubPage";
 import SybilMap from "./SybilMap";
+import Cite from "./Cite";
 
 type Lang = "en" | "zh";
 
@@ -12,6 +13,22 @@ const ext = (href: string, text: ReactNode) => (
   </a>
 );
 
+// citations as the conferences list them
+const BIB = {
+  nbc: `@INPROCEEDINGS{AdelineWLQLC2026,
+AUTHOR={Adeline Wen and Chunyang Li and Shutong Qu and Leon Leng and Wei Cai},
+TITLE={HasciDB: A Database for Identifying Crypto Sybil Airdrop Hunters},
+BOOKTITLE={Nanyang Blockchain Conference 2026, Singapore, Aug 21-22},
+YEAR={2026},
+}`,
+  smc: `@INPROCEEDINGS{LindsayZAIWBC2026,
+AUTHOR={Lindsay Zastrow and Cheri Allen and Leah Ingold and Adeline Wen and Yan Bai and Wei Cai},
+TITLE={Human-Centered Decision Support for Crypto Airdrop Governance: Interpretable Behavioral Modeling of Strategic Hunters},
+BOOKTITLE={2026 IEEE International Conference on Systems, Man, and Cybernetics (SMC'26), Bellevue, WA, USA, October 4-7},
+YEAR={2026},
+}`,
+};
+
 const COPY: Record<
   Lang,
   {
@@ -21,7 +38,7 @@ const COPY: Record<
     stats: { n: string; d: string }[];
     ind: { h: string; intro: string; rows: { name: string; rule: string; what: string }[] };
     cross: { h: string; p: string };
-    papers: { h: string; items: { y: string; h: string; d?: string; pdf?: string }[] };
+    papers: { h: string; items: { y: string; h: string; d?: string; pdf?: string; bib?: string }[] };
     links: { href: string; text: string }[];
     next: { href: string; text: string };
     other: string;
@@ -63,8 +80,8 @@ const COPY: Record<
     papers: {
       h: "Papers",
       items: [
-        { y: "Presented · Nanyang Blockchain Conference 2026", h: "HasciDB: A Database for Identifying Crypto Sybil Airdrop Hunters", d: "First author, with Wei Cai et al. Data and code are open source, and anyone can query the database free at hascidb.org.", pdf: "/papers/Wen2026-HasciDB-NBC.pdf" },
-        { y: "Presented · IEEE SMC 2026 · IEEE Xplore", h: "Human-Centered Decision Support for Crypto Airdrop Governance: Interpretable Behavioral Modeling of Strategic Hunters", d: "Co-author. An extension of HasciDB toward interpretable, human-centered airdrop governance.", pdf: "/papers/Zastrow2026-Airdrop-Governance-SMC.pdf" },
+        { y: "Presented · Nanyang Blockchain Conference 2026", h: "HasciDB: A Database for Identifying Crypto Sybil Airdrop Hunters", d: "First author, with Wei Cai et al. Data and code are open source, and anyone can query the database free at hascidb.org.", pdf: "/papers/Wen2026-HasciDB-NBC.pdf", bib: BIB.nbc },
+        { y: "Presented · IEEE SMC 2026 · IEEE Xplore", h: "Human-Centered Decision Support for Crypto Airdrop Governance: Interpretable Behavioral Modeling of Strategic Hunters", d: "Co-author. An extension of HasciDB toward interpretable, human-centered airdrop governance.", pdf: "/papers/Zastrow2026-Airdrop-Governance-SMC.pdf", bib: BIB.smc },
         { y: "Poster · INFORMS Annual Meeting 2026", h: "When AI Learns to Hide: Upper and Lower Bounds on Behavioral Identification of Automated Accounts" },
       ],
     },
@@ -110,8 +127,8 @@ const COPY: Record<
     papers: {
       h: "论文",
       items: [
-        { y: "已报告 · 南洋区块链大会 2026", h: "HasciDB：识别加密 Sybil 空投猎人的数据库", d: "第一作者，与 Wei Cai 教授等合作。数据和代码全部开源，任何人都可以在 hascidb.org 免费查询。", pdf: "/papers/Wen2026-HasciDB-NBC.pdf" },
-        { y: "已报告 · IEEE SMC 2026 · IEEE Xplore", h: "面向加密空投治理的​以人为本决策支持：​策略型猎手的​可解释行为建模", d: "合作者。HasciDB 的延伸工作，面向可解释、以人为本的空投治理。", pdf: "/papers/Zastrow2026-Airdrop-Governance-SMC.pdf" },
+        { y: "已报告 · 南洋区块链大会 2026", h: "HasciDB：识别加密 Sybil 空投猎人的数据库", d: "第一作者，与 Wei Cai 教授等合作。数据和代码全部开源，任何人都可以在 hascidb.org 免费查询。", pdf: "/papers/Wen2026-HasciDB-NBC.pdf", bib: BIB.nbc },
+        { y: "已报告 · IEEE SMC 2026 · IEEE Xplore", h: "面向加密空投治理的​以人为本决策支持：​策略型猎手的​可解释行为建模", d: "合作者。HasciDB 的延伸工作，面向可解释、以人为本的空投治理。", pdf: "/papers/Zastrow2026-Airdrop-Governance-SMC.pdf", bib: BIB.smc },
         { y: "海报 · INFORMS 年会 2026", h: "When AI Learns to Hide: Upper and Lower Bounds on Behavioral Identification of Automated Accounts" },
       ],
     },
@@ -204,6 +221,7 @@ export default function ResearchPage({ lang }: { lang: Lang }) {
                     )}
                   </div>
                   {p.d && <div className="dsc">{p.d}</div>}
+                  {p.bib && <Cite bib={p.bib} lang={lang} />}
                 </li>
               ))}
             </ul>
