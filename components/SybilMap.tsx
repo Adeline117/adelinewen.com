@@ -12,12 +12,12 @@ import { NODES, LINKS } from "./sybil";
 // Save-Data: a still map, nothing runs.
 const L = {
   en: {
-    cap: "Sybil wallets shared across 15 Ethereum airdrops, from HasciDB. Circle area: Sybils caught in that airdrop; line weight: wallets caught in both (pairs sharing 2,000+). Drag a circle to pull the network.",
+    cap: "Sybil wallets shared across 15 Ethereum airdrops, from HasciDB. Circle area: Sybils caught in that airdrop; line weight: wallets caught in both (pairs sharing 2,000+, and each airdrop’s largest). Drag a circle to pull the network.",
     read: (n: string, s: string) => `${n} · ${s} Sybils`,
     aria: "Network of 15 airdrops; the heaviest overlap is X2Y2 and LooksRare, with 75,343 shared Sybil wallets.",
   },
   zh: {
-    cap: "15 个以太坊空投之间共享的 Sybil 钱包，数据来自 HasciDB。圆的面积是该空投检出的 Sybil 数，线的粗细是两边都被标记的钱包数（只画共享 2,000 个以上的组合）。拖动圆可以牵动整张网络。",
+    cap: "15 个以太坊空投之间共享的 Sybil 钱包，数据来自 HasciDB。圆的面积是该空投检出的 Sybil 数，线的粗细是两边都被标记的钱包数（画出共享 2,000 个以上的组合，以及每个空投最大的一条）。拖动圆可以牵动整张网络。",
     read: (n: string, s: string) => `${n} · ${s} 个 Sybil`,
     aria: "15 个空投的关系网络；重叠最多的是 X2Y2 与 LooksRare，共有 75,343 个 Sybil 钱包。",
   },

@@ -1,5 +1,6 @@
 // Sybil wallets shared between airdrops: HasciDB's project-overlap data
-// (hascidb.org, 15 Ethereum L1 airdrops; pairs sharing 2,000+ flagged wallets).
+// (hascidb.org, 15 Ethereum L1 airdrops; pairs sharing 2,000+ flagged wallets, plus
+// each airdrop's largest pair so none floats alone: ParaSwap–dYdX, 805).
 // Positions are a fixed force layout, so server and client draw the same map.
 export const NODES: { name: string; sybils: number; x: number; y: number }[] = [
   { name: "X2Y2", sybils: 296604, x: 234.8, y: 230.8 },
@@ -16,7 +17,7 @@ export const NODES: { name: string; sybils: number; x: number; y: number }[] = [
   { name: "Gitcoin", sybils: 9991, x: 521.2, y: 255.1 },
   { name: "ApeCoin", sybils: 9068, x: 404.6, y: 344.0 },
   { name: "Badger", sybils: 8422, x: 56.0, y: 175.3 },
-  { name: "ParaSwap", sybils: 2596, x: 96.2, y: 70.5 },
+  { name: "ParaSwap", sybils: 2596, x: 540.0, y: 62.0 },
 ];
 // [node a, node b, wallets flagged in both]
 export const LINKS: [number, number, number][] = [
@@ -61,4 +62,5 @@ export const LINKS: [number, number, number][] = [
   [9, 5, 2136],
   [2, 11, 2126],
   [5, 11, 2086],
+  [14, 9, 805],
 ];
