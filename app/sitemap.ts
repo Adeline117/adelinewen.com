@@ -26,5 +26,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
         { url: pair.zh, lastModified, changeFrequency: "monthly" as const, priority: 0.7, alternates: { languages: pair } },
       ];
     }),
+    // the papers themselves, so Google Scholar and search can index the PDFs directly
+    ...["Wen2026-HasciDB-NBC.pdf", "Zastrow2026-Airdrop-Governance-SMC.pdf"].map((f) => ({
+      url: `${SITE}/papers/${f}`,
+      lastModified,
+      changeFrequency: "yearly" as const,
+      priority: 0.6,
+    })),
   ];
 }
