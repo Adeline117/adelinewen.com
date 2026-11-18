@@ -89,6 +89,7 @@ const personLd = {
   jobTitle: "Researcher & Builder",
   description:
     "Economics undergraduate at the University of Washington, research assistant at the UW CAIS Lab working on airdrop Sybil detection (HasciDB), and solo founder of Arena (arenafi.org).",
+  image: "https://adelinewen.com/photos/nbc/05.jpg",
   affiliation: { "@type": "CollegeOrUniversity", name: "University of Washington", url: "https://www.washington.edu/" },
   memberOf: { "@type": "ResearchOrganization", name: "UW CAIS Lab (Collective, AI, and Interactive Systems)", url: "https://sites.uw.edu/weicaics/" },
   homeLocation: { "@type": "Place", name: "Seattle, WA" },
