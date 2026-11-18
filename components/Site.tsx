@@ -4,6 +4,8 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import PhotoStrip from "./PhotoStrip";
 import PhotoWall from "./PhotoWall";
 import SybilMap from "./SybilMap";
+import Cite from "./Cite";
+import { BIB } from "./papers";
 import OffClock from "./OffClock";
 import Leaderboard from "./Leaderboard";
 import type { Board } from "@/lib/arena";
@@ -15,7 +17,7 @@ type Lang = "en" | "zh";
 type Section = { label: string; title: ReactNode; lead: ReactNode; more: { text: string; href: string }; page?: { text: string; href: string } };
 type Row = { n: string; d: string; m: string };
 type Road = { phase: string; when: string; what: string };
-type TL = { y: string; h: string; d: string; href?: string };
+type TL = { y: string; h: string; d: string; href?: string; bib?: string };
 // gallery: the event's photographs, shown as a scrolling reel under the row.
 type Honor = { t: string; d: string; m: string; href?: string; gallery?: Shot[] };
 
@@ -116,8 +118,8 @@ const COPY: Record<
       more: { text: "Explore HasciDB ↗", href: "https://hascidb.org" },
       page: { text: "The research in full →", href: "/research" },
       tl: [
-        { y: "Presented · Nanyang Blockchain Conference 2026", h: "HasciDB: A Database for Identifying Crypto Sybil Airdrop Hunters", d: "First author. The largest open-source cross-project airdrop Sybil-detection database (hascidb.org, 2.5M+ wallets). With Wei Cai et al.", href: "/papers/Wen2026-HasciDB-NBC.pdf" },
-        { y: "Presented · IEEE SMC 2026 · IEEE Xplore", h: "Human-Centered Decision Support for Crypto Airdrop Governance: Interpretable Behavioral Modeling of Strategic Hunters", d: "Co-author. An extension of HasciDB toward interpretable, human-centered airdrop governance. With Wei Cai et al.", href: "/papers/Zastrow2026-Airdrop-Governance-SMC.pdf" },
+        { y: "Presented · Nanyang Blockchain Conference 2026", h: "HasciDB: A Database for Identifying Crypto Sybil Airdrop Hunters", d: "First author. The largest open-source cross-project airdrop Sybil-detection database (hascidb.org, 2.5M+ wallets). With Wei Cai et al.", href: "/papers/Wen2026-HasciDB-NBC.pdf", bib: BIB.nbc },
+        { y: "Presented · IEEE SMC 2026 · IEEE Xplore", h: "Human-Centered Decision Support for Crypto Airdrop Governance: Interpretable Behavioral Modeling of Strategic Hunters", d: "Co-author. An extension of HasciDB toward interpretable, human-centered airdrop governance. With Wei Cai et al.", href: "/papers/Zastrow2026-Airdrop-Governance-SMC.pdf", bib: BIB.smc },
       ],
     },
     arena: {
@@ -259,8 +261,8 @@ const COPY: Record<
       more: { text: "查看 HasciDB ↗", href: "https://hascidb.org" },
       page: { text: "研究详情 →", href: "/zh/research" },
       tl: [
-        { y: "已报告 · 南洋区块链大会 2026", h: "HasciDB：识别加密 Sybil 空投猎人的数据库", d: "第一作者。最大的开源跨项目空投 Sybil 检测数据库（hascidb.org，250 万+ 钱包）。与 Wei Cai 教授等合作。", href: "/papers/Wen2026-HasciDB-NBC.pdf" },
-        { y: "已报告 · IEEE SMC 2026 · IEEE Xplore", h: "面向加密空投治理的\u200b以人为本决策支持：\u200b策略型猎手的\u200b可解释行为建模", d: "合作者。HasciDB 的延伸工作，面向可解释、以人为本的空投治理。与 Wei Cai 教授等合作。", href: "/papers/Zastrow2026-Airdrop-Governance-SMC.pdf" },
+        { y: "已报告 · 南洋区块链大会 2026", h: "HasciDB：识别加密 Sybil 空投猎人的数据库", d: "第一作者。最大的开源跨项目空投 Sybil 检测数据库（hascidb.org，250 万+ 钱包）。与 Wei Cai 教授等合作。", href: "/papers/Wen2026-HasciDB-NBC.pdf", bib: BIB.nbc },
+        { y: "已报告 · IEEE SMC 2026 · IEEE Xplore", h: "面向加密空投治理的\u200b以人为本决策支持：\u200b策略型猎手的\u200b可解释行为建模", d: "合作者。HasciDB 的延伸工作，面向可解释、以人为本的空投治理。与 Wei Cai 教授等合作。", href: "/papers/Zastrow2026-Airdrop-Governance-SMC.pdf", bib: BIB.smc },
       ],
     },
     arena: {
@@ -666,6 +668,7 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
                 <div className="y">{item.y}</div>
                 <div className="h">{linked(item.h, item.href)}</div>
                 <div className="dsc">{item.d}</div>
+                {item.bib && <Cite bib={item.bib} lang={lang} />}
               </li>
             ))}
           </ul>
