@@ -22,13 +22,18 @@ type Honor = { t: string; d: string; m: string; href?: string; gallery?: Shot[] 
 type CLink = { label: string; val: string; href: string; download?: boolean };
 
 // wrap text in an inline link (external) when an href is present, else plain text
+// a title that links out (↗), or to a paper PDF on this site, which downloads (↓)
 const linked = (text: string, href?: string): ReactNode =>
-  href ? (
-    <a className="ilink" href={href} target="_blank" rel="noopener noreferrer">
+  !href ? (
+    text
+  ) : href.endsWith(".pdf") ? (
+    <a className="ilink pdf" href={href} download>
       {text}
     </a>
   ) : (
-    text
+    <a className="ilink" href={href} target="_blank" rel="noopener noreferrer">
+      {text}
+    </a>
   );
 type Form = { name: string; email: string; message: string; send: string; sending: string; sent: string; mailed: string; err: string };
 

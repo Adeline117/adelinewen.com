@@ -213,7 +213,7 @@ export default function ResearchPage({ lang }: { lang: Lang }) {
                   <div className="y">{p.y}</div>
                   <div className="h">
                     {p.pdf ? (
-                      <a className="ilink" href={p.pdf} target="_blank" rel="noopener noreferrer">
+                      <a className="ilink pdf" href={p.pdf} download>
                         {p.h}
                       </a>
                     ) : (
