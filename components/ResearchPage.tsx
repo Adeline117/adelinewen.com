@@ -64,7 +64,7 @@ const COPY: Record<
       h: "Papers",
       items: [
         { y: "Presented · Nanyang Blockchain Conference 2026", h: "HasciDB: A Database for Identifying Crypto Sybil Airdrop Hunters", d: "First author, with Wei Cai et al. Data and code are open source, and anyone can query the database free at hascidb.org.", pdf: "/papers/Wen2026-HasciDB-NBC.pdf" },
-        { y: "Presented · IEEE SMC 2026 · IEEE Xplore", h: "Human-Centered Decision Support for Crypto Airdrop Governance: Interpretable Behavioral Modeling of Strategic Hunters", d: "Co-author. An extension of HasciDB toward interpretable, human-centered airdrop governance." },
+        { y: "Presented · IEEE SMC 2026 · IEEE Xplore", h: "Human-Centered Decision Support for Crypto Airdrop Governance: Interpretable Behavioral Modeling of Strategic Hunters", d: "Co-author. An extension of HasciDB toward interpretable, human-centered airdrop governance.", pdf: "/papers/Zastrow2026-Airdrop-Governance-SMC.pdf" },
         { y: "Poster · INFORMS Annual Meeting 2026", h: "When AI Learns to Hide: Upper and Lower Bounds on Behavioral Identification of Automated Accounts" },
       ],
     },
@@ -111,7 +111,7 @@ const COPY: Record<
       h: "论文",
       items: [
         { y: "已报告 · 南洋区块链大会 2026", h: "HasciDB：识别加密 Sybil 空投猎人的数据库", d: "第一作者，与 Wei Cai 教授等合作。数据和代码全部开源，任何人都可以在 hascidb.org 免费查询。", pdf: "/papers/Wen2026-HasciDB-NBC.pdf" },
-        { y: "已报告 · IEEE SMC 2026 · IEEE Xplore", h: "面向加密空投治理的​以人为本决策支持：​策略型猎手的​可解释行为建模", d: "合作者。HasciDB 的延伸工作，面向可解释、以人为本的空投治理。" },
+        { y: "已报告 · IEEE SMC 2026 · IEEE Xplore", h: "面向加密空投治理的​以人为本决策支持：​策略型猎手的​可解释行为建模", d: "合作者。HasciDB 的延伸工作，面向可解释、以人为本的空投治理。", pdf: "/papers/Zastrow2026-Airdrop-Governance-SMC.pdf" },
         { y: "海报 · INFORMS 年会 2026", h: "When AI Learns to Hide: Upper and Lower Bounds on Behavioral Identification of Automated Accounts" },
       ],
     },
