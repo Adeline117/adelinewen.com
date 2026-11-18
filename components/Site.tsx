@@ -185,7 +185,7 @@ const COPY: Record<
       ),
       lead: "Based in Seattle. I’m open to research positions and to building products with others.",
       links: [
-        { label: "Email", val: "adelinewen1107@outlook.com ↗", href: "mailto:adelinewen1107@outlook.com" },
+        { label: "Email", val: "ywen8@uw.edu ↗", href: "mailto:ywen8@uw.edu" },
         { label: "GitHub", val: "@Adeline117 ↗", href: "https://github.com/Adeline117" },
         { label: "LinkedIn", val: "/in/adeline1107 ↗", href: "https://www.linkedin.com/in/adeline1107" },
         { label: "X", val: "@adewen7 ↗", href: "https://x.com/adewen7" },
@@ -198,8 +198,8 @@ const COPY: Record<
         send: "Send message",
         sending: "Sending…",
         sent: "Thanks, I’ll be in touch soon.",
-        mailed: "Opening your email app. If nothing happens, write to adelinewen1107@outlook.com.",
-        err: "Couldn’t send. Please email adelinewen1107@outlook.com directly.",
+        mailed: "Opening your email app. If nothing happens, write to ywen8@uw.edu.",
+        err: "Couldn’t send. Please email ywen8@uw.edu directly.",
       },
     },
   },
@@ -328,7 +328,7 @@ const COPY: Record<
       ),
       lead: "人在西雅图，欢迎研究职位和一起做产品的机会。",
       links: [
-        { label: "邮箱", val: "adelinewen1107@outlook.com ↗", href: "mailto:adelinewen1107@outlook.com" },
+        { label: "邮箱", val: "ywen8@uw.edu ↗", href: "mailto:ywen8@uw.edu" },
         { label: "GitHub", val: "@Adeline117 ↗", href: "https://github.com/Adeline117" },
         { label: "LinkedIn", val: "/in/adeline1107 ↗", href: "https://www.linkedin.com/in/adeline1107" },
         { label: "X", val: "@adewen7 ↗", href: "https://x.com/adewen7" },
@@ -341,8 +341,8 @@ const COPY: Record<
         send: "发送",
         sending: "发送中…",
         sent: "谢谢，我会尽快回复你。",
-        mailed: "正在打开你的邮件应用。如果没有反应，请直接写信到 adelinewen1107@outlook.com。",
-        err: "发送失败，请直接邮件 adelinewen1107@outlook.com。",
+        mailed: "正在打开你的邮件应用。如果没有反应，请直接写信到 ywen8@uw.edu。",
+        err: "发送失败，请直接邮件 ywen8@uw.edu。",
       },
     },
   },
@@ -489,7 +489,7 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
         // backend not configured yet → fall back to the visitor's mail client
         const body = encodeURIComponent(`From: ${form.name} <${form.email}>\n\n${form.message}`);
         const subject = encodeURIComponent(`Portfolio contact, ${form.name}`);
-        window.location.href = `mailto:adelinewen1107@outlook.com?subject=${subject}&body=${body}`;
+        window.location.href = `mailto:ywen8@uw.edu?subject=${subject}&body=${body}`;
         setStatus("mailed");
         return;
       }
