@@ -704,7 +704,8 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
 .arena-sign { display: flex; align-items: center; gap: 14px; margin-top: 48px; flex-wrap: wrap; }
 .arena-sign .inf-mark { width: 40px; height: 21px; color: var(--ink); flex: none; filter: url(#ink); }
 .arena-sign .wm { font-family: -apple-system, "Segoe UI", system-ui, sans-serif; font-size: 22px; font-weight: 500; letter-spacing: -0.015em; color: var(--ink); line-height: 1; }
-.arena-sign .more { margin-top: 0; margin-left: 8px; }
+.arena-sign .sign-links { display: flex; flex-wrap: wrap; gap: 16px 24px; margin-left: 8px; }
+.arena-sign .more { margin: 0; }
 
 /* pages of their own (/research, /arena): the same chapter, told at length. The h1
    wears the chapter heading's dress; block headings are the mono kicker of .ablock */

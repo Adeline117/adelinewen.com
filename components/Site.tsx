@@ -718,14 +718,16 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
               <path className="inf-glint" d="M42 22 C 35 12 28 8 22 8 A 14 14 0 1 0 22 36 C 28 36 35 32 42 22 C 49 12 56 8 62 8 A 14 14 0 1 1 62 36 C 56 36 49 32 42 22 Z" pathLength={1} />
             </svg>
             <span className="wm">arena</span>
-            <a className="more" href={t.arena.more.href} target="_blank" rel="noopener noreferrer">
-              {t.arena.more.text}
-            </a>
-            {t.arena.page && (
-              <a className="more" href={t.arena.page.href}>
-                {t.arena.page.text}
+            <span className="sign-links">
+              <a className="more" href={t.arena.more.href} target="_blank" rel="noopener noreferrer">
+                {t.arena.more.text}
               </a>
-            )}
+              {t.arena.page && (
+                <a className="more" href={t.arena.page.href}>
+                  {t.arena.page.text}
+                </a>
+              )}
+            </span>
           </div>
         </div>
       </section>

@@ -202,11 +202,13 @@ export default function ArenaPage({ lang, board }: { lang: Lang; board: Board })
               <path className="inf-glint" d={INF} pathLength={1} />
             </svg>
             <span className="wm">arena</span>
-            {t.links.map((l) => (
-              <a key={l.href} className="more" href={l.href} target="_blank" rel="noopener noreferrer">
-                {l.text}
-              </a>
-            ))}
+            <span className="sign-links">
+              {t.links.map((l) => (
+                <a key={l.href} className="more" href={l.href} target="_blank" rel="noopener noreferrer">
+                  {l.text}
+                </a>
+              ))}
+            </span>
           </div>
         </div>
       </section>
