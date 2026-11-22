@@ -146,7 +146,12 @@ export default function OffClock({ lang }: { lang: "en" | "zh" }) {
       st.x = Math.max(NUT + 60, Math.min(BRIDGE - 40, x));
       run();
     }
-    if (soundRef.current && audio.current) pluckSound(audio.current, STRINGS[i].f, 0.12 + Math.min(0.12, force * 0.02));
+    const ctx = audio.current;
+    if (soundRef.current && ctx) {
+      // iOS suspends or interrupts the context after a lock or an app switch: wake it on the next pluck
+      if (ctx.state !== "running") void ctx.resume();
+      pluckSound(ctx, STRINGS[i].f, 0.12 + Math.min(0.12, force * 0.02));
+    }
   };
 
   // pointer in viewBox units (the drawing keeps its aspect ratio)
@@ -185,6 +190,10 @@ export default function OffClock({ lang }: { lang: "en" | "zh" }) {
     if (!next) return;
     const AC = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
     if (!AC) return;
+    // iPhones on silent mute web audio but not video; asking for "playback" lets the
+    // strings sound like a video would (Safari 16.4+; elsewhere it's undefined and skipped)
+    const session = (navigator as Navigator & { audioSession?: { type: string } }).audioSession;
+    if (session) session.type = "playback";
     audio.current ??= new AC();
     if (audio.current.state === "suspended") audio.current.resume();
     // a soft strum, low to high, so turning sound on confirms itself
