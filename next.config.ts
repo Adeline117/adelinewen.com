@@ -3,7 +3,11 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   // a paper renamed to the site's one scheme (FirstAuthorYear-Short-Venue.pdf) keeps its old address
   async redirects() {
-    return [{ source: "/papers/hascidb-nbc26.pdf", destination: "/papers/Wen2026-HasciDB-NBC.pdf", permanent: true }];
+    return [
+      { source: "/papers/hascidb-nbc26.pdf", destination: "/papers/Wen2026-HasciDB-NBC.pdf", permanent: true },
+      // one address for the whole site: www.adelinewen.com serves nothing of its own
+      { source: "/:path*", has: [{ type: "host", value: "www.adelinewen.com" }], destination: "https://adelinewen.com/:path*", permanent: true },
+    ];
   },
   // Image search: every adult photo (conferences and events) can be found; of the childhood
   // photos (/photos/stage/, the wall included) only the landscape stage shots in red (03),
