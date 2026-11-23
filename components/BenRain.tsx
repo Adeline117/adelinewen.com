@@ -1,15 +1,17 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { COLS, ROWS, RGB } from "@/app/ben/grid";
+import { COLS, ROWS, INK } from "@/app/ben/grid";
 
-// The photo, drawn in 0s and 1s. Every column of digits scrolls down at its own pace while
-// the colours stay put, so the picture holds still and the binary flows through it; a
-// brighter head runs down some columns, and hearts rise from between Ben and the puppy.
-// A tap or click sends up a handful more. Only the colour grid ships, never the photo.
+// The photo drawn by 0s and 1s alone: on the site's paper, each digit carries as much ink
+// as that spot of the photo is dark (or sits on an edge), and outside Ben and the puppy
+// there are no digits at all. Every column scrolls down at its own pace while the ink
+// stays put, so the figure holds still and the binary flows through it; now and then a
+// darker wave runs down a column. Pink hearts, the only colour, rise from between Ben and
+// the puppy; a tap or click sends up more. Only the ink grid ships, never the photo.
 const CELL = 0.62; // digit width / height, as in scripts/ben-grid.py
 const HEART_FROM = { x0: 0.46, x1: 0.62, y0: 0.5, y1: 0.62 }; // between Ben’s face and the puppy
-const PINK = ["#ff5c8a", "#ff7aa2", "#ff3b6b", "#ffb3c7"];
+const PINK = ["#f0527f", "#f77199", "#e83a68", "#f9a3bd"];
 
 type Heart = { x: number; y: number; vx: number; vy: number; s: number; life: number; age: number; c: string; ph: number };
 
@@ -22,14 +24,9 @@ export default function BenRain() {
     const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     // the colour map as shipped (COLS x ROWS), one pixel per cell
-    const src = Uint8Array.from(atob(RGB), (ch) => ch.charCodeAt(0));
+    const src = Uint8Array.from(atob(INK), (ch) => ch.charCodeAt(0));
     const full = new ImageData(COLS, ROWS);
-    for (let i = 0; i < COLS * ROWS; i++) {
-      full.data[i * 4] = src[i * 3];
-      full.data[i * 4 + 1] = src[i * 3 + 1];
-      full.data[i * 4 + 2] = src[i * 3 + 2];
-      full.data[i * 4 + 3] = 255;
-    }
+    for (let i = 0; i < COLS * ROWS; i++) full.data[i * 4 + 3] = src[i];
     const fullMap = document.createElement("canvas");
     fullMap.width = COLS;
     fullMap.height = ROWS;
@@ -40,7 +37,7 @@ export default function BenRain() {
     let nc = COLS, nr = ROWS, px = new Uint8ClampedArray(0);
     const lum = (c: number, r: number) => {
       const k = (Math.min(nr - 1, Math.max(0, r)) * nc + c) * 4;
-      return (0.3 * px[k] + 0.59 * px[k + 1] + 0.11 * px[k + 2]) / 255;
+      return px[k + 3] / 255;
     };
 
     // each column: a looping strip of digits, its scroll offset and speed, and a bright head
@@ -49,22 +46,20 @@ export default function BenRain() {
     let cols: Col[] = [];
 
     const mono = getComputedStyle(document.body).getPropertyValue("--font-mono").trim() || "monospace";
-    const layer = document.createElement("canvas"); // white digits, then tinted by the map
-    const lctx = layer.getContext("2d")!;
     let W = 0, H = 0, cw = 0, ch = 0, ox = 0, oy = 0, dpr = 1;
     const glyph: HTMLCanvasElement[] = [];
-    const MIN_DIGIT = 5.5; // css px a digit needs to read as a 0 or a 1
+    const MIN_DIGIT = 5.5; // css px a digit needs to read as a 0 or a 1 (4.8 on big screens, where detail counts more)
 
     const size = () => {
       dpr = Math.min(2, window.devicePixelRatio || 1);
       W = window.innerWidth;
       H = window.innerHeight;
-      cv.width = layer.width = Math.round(W * dpr);
-      cv.height = layer.height = Math.round(H * dpr);
+      cv.width = Math.round(W * dpr);
+      cv.height = Math.round(H * dpr);
       // fit the whole picture, centred, with digits no smaller than MIN_DIGIT
       const rowsPerCol = ROWS / COLS;
-      const fitW = Math.min(W, (H * CELL) / rowsPerCol);
-      const n = Math.max(48, Math.min(COLS, Math.floor(fitW / MIN_DIGIT)));
+      const fitW = Math.min(W * 0.92, (H * 0.86 * CELL) / rowsPerCol);
+      const n = Math.max(48, Math.min(COLS, Math.floor(fitW / (W > 900 ? 4.8 : MIN_DIGIT))));
       if (n !== nc || !px.length) {
         nc = n;
         nr = Math.round(n * rowsPerCol);
@@ -83,18 +78,18 @@ export default function BenRain() {
           hv: (9 + Math.random() * 14) * (nr / 81),
         }));
       }
-      ch = Math.min(H / nr, W / (nc * CELL));
+      ch = Math.min((H * 0.86) / nr, (W * 0.92) / (nc * CELL));
       cw = ch * CELL;
       ox = (W - cw * nc) / 2;
       oy = (H - ch * nr) / 2;
-      // pre-drawn "0" and "1", so each frame is only image copies
+      // "0" and "1" pre-drawn in the page's ink (light on the dark sheet), so a frame is only copies
       ["0", "1"].forEach((t, i) => {
         const g = (glyph[i] ??= document.createElement("canvas"));
         g.width = Math.ceil(cw * dpr);
         g.height = Math.ceil(ch * dpr);
         const gc = g.getContext("2d")!;
         gc.clearRect(0, 0, g.width, g.height);
-        gc.fillStyle = "#fff";
+        gc.fillStyle = getComputedStyle(document.body).getPropertyValue("--ink").trim() || "#15130f";
         gc.font = `${ch * 0.92 * dpr}px ${mono}`;
         gc.textAlign = "center";
         gc.textBaseline = "middle";
@@ -128,62 +123,30 @@ export default function BenRain() {
       t += dt;
       const intro = Math.min(1, t / 1.8); // the picture resolves out of noise
 
-      // 1. the digits, in white, each column at its own scroll offset
-      lctx.setTransform(1, 0, 0, 1, 0, 0);
-      lctx.clearRect(0, 0, layer.width, layer.height);
-      lctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.clearRect(0, 0, cv.width, cv.height);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       for (let c = 0; c < nc; c++) {
         const col = cols[c];
         if (!still) {
           col.off = (col.off + col.v * dt) % N;
-          if (Math.random() < dt * 3) col.bits[Math.floor(Math.random() * N)] ^= 1; // a digit flips now and then
+          if (Math.random() < dt * 3) col.bits[Math.floor(Math.random() * N)] ^= 1;
+          col.head += col.hv * dt;
+          if (col.head > nr + 12) {
+            col.head = -Math.random() * nr * 2.5;
+            col.hv = (8 + Math.random() * 12) * (nr / 80);
+          }
         }
         const whole = Math.floor(col.off);
         const frac = col.off - whole;
-        const x = ox + c * cw;
-        for (let r = -1; r < nr; r++) {
-          const b = col.bits[(((r - whole) % N) + N) % N];
-          const fade = intro < 1 ? Math.max(0, Math.min(1, intro * 2.2 - ((c * 7 + r * 13) % 17) / 17)) : 1;
-          if (fade <= 0) continue;
-          lctx.globalAlpha = fade;
-          lctx.drawImage(glyph[b], x, oy + (r + frac) * ch, cw, ch);
+        for (let r = 0; r < nr; r++) {
+          const k = lum(c, r);
+          if (k < 0.04) continue; // blank paper outside the figure
+          const behind = col.head - r; // a darker wave running down the column
+          const wave = behind >= 0 && behind < 10 ? (1 - behind / 10) * 0.6 : 0;
+          ctx.globalAlpha = Math.min(1, (0.12 + 0.88 * k) * (1 + wave)) * intro; // a floor so light skin still reads
+          ctx.drawImage(glyph[col.bits[(((r - whole) % N) + N) % N]], ox + c * cw, oy + (r + frac) * ch, cw, ch);
         }
-      }
-      // 2. tinted by the photo: each digit takes the colour of the cell it is passing through
-      lctx.globalAlpha = 1;
-      lctx.globalCompositeOperation = "source-in";
-      lctx.imageSmoothingEnabled = false;
-      lctx.drawImage(map, ox, oy, cw * nc, ch * nr);
-      lctx.globalCompositeOperation = "source-over";
-
-      ctx.setTransform(1, 0, 0, 1, 0, 0);
-      ctx.fillStyle = "#0d0c0a";
-      ctx.fillRect(0, 0, cv.width, cv.height);
-      ctx.drawImage(layer, 0, 0);
-
-      // 3. bright heads running down some columns, only as bright as the picture beneath
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      if (!still) {
-        ctx.globalCompositeOperation = "lighter";
-        for (let c = 0; c < nc; c++) {
-          const col = cols[c];
-          col.head += col.hv * dt;
-          if (col.head > nr + 12) {
-            col.head = -Math.random() * nr * 1.5;
-            col.hv = (9 + Math.random() * 14) * (nr / 81);
-          }
-          const h = Math.floor(col.head);
-          for (let k = 0; k < 8; k++) {
-            const r = h - k;
-            if (r < 0 || r >= nr) continue;
-            const a = (1 - k / 8) * 0.55 * lum(c, r) * intro;
-            if (a < 0.02) continue;
-            ctx.globalAlpha = a;
-            const whole = Math.floor(col.off);
-            ctx.drawImage(glyph[col.bits[(((r - whole) % N) + N) % N]], ox + c * cw, oy + r * ch, cw, ch);
-          }
-        }
-        ctx.globalCompositeOperation = "source-over";
       }
 
       // 4. hearts, rising from between Ben and the puppy
