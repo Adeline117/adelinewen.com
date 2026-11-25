@@ -74,7 +74,7 @@ const COPY: Record<
       { href: "https://hascidb.org", text: "Look up an address ↗" },
       { href: "https://hascidb.org/methodology", text: "How HasciDB scores ↗" },
     ],
-    next: { href: "/arena", text: "Arena →" },
+    next: { href: "/#arena", text: "Arena →" },
     other: "/zh/research",
   },
   zh: {
@@ -121,7 +121,7 @@ const COPY: Record<
       { href: "https://hascidb.org", text: "查询一个地址 ↗" },
       { href: "https://hascidb.org/methodology", text: "HasciDB 的评分方法 ↗" },
     ],
-    next: { href: "/zh/arena", text: "Arena →" },
+    next: { href: "/zh#arena", text: "Arena →" },
     other: "/research",
   },
 };

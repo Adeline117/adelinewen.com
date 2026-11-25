@@ -135,7 +135,6 @@ const COPY: Record<
         </>
       ),
       more: { text: "Visit arenafi.org ↗", href: "https://arenafi.org" },
-      page: { text: "How the score works →", href: "/arena" },
       stats: [
         { n: "68,000+", d: "traders ranked", m: "" },
         { n: "44+", d: "exchanges · CEX + DEX", m: "" },
@@ -278,7 +277,6 @@ const COPY: Record<
         </>
       ),
       more: { text: "访问 arenafi.org ↗", href: "https://arenafi.org" },
-      page: { text: "评分怎么算 →", href: "/zh/arena" },
       stats: [
         { n: "68,000+", d: "交易者排名", m: "" },
         { n: "44+", d: "交易所 · CEX + DEX", m: "" },

@@ -5,6 +5,9 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       { source: "/papers/hascidb-nbc26.pdf", destination: "/papers/Wen2026-HasciDB-NBC.pdf", permanent: true },
+      // Arena's method lives on arenafi.org; the page that retold it here is gone
+      { source: "/arena", destination: "https://arenafi.org/methodology", permanent: true },
+      { source: "/zh/arena", destination: "https://arenafi.org/methodology", permanent: true },
       // one address for the whole site: www.adelinewen.com serves nothing of its own
       { source: "/:path*", has: [{ type: "host", value: "www.adelinewen.com" }], destination: "https://adelinewen.com/:path*", permanent: true },
     ];

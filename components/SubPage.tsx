@@ -5,7 +5,7 @@ import { useTheme } from "./useTheme";
 
 type Lang = "en" | "zh";
 
-// The frame for a page of its own (/research, /arena and their /zh twins): the same nav
+// The frame for a page of its own (/research and /zh/research): the same nav
 // bar, theme and reveals as the home page, the paper tone of its chapter, and a foot that
 // leads back home and on to the other page.
 export default function SubPage({
@@ -16,9 +16,9 @@ export default function SubPage({
   children,
 }: {
   lang: Lang;
-  paper: "research" | "arena";
+  paper: "research";
   other: string; // the same page in the other language
-  next: { href: string; text: string }; // the sibling page
+  next: { href: string; text: string }; // where to go on from here
   children: ReactNode;
 }) {
   const { dark, flipTheme } = useTheme();

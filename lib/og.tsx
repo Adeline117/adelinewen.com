@@ -3,12 +3,11 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import type { ReactNode } from "react";
 import { LINKS, NODES } from "@/components/sybil";
-import { getBoard } from "@/lib/arena";
 
-// Share cards for the research and Arena pages, in the home card's dress (Fraunces on
-// paper, ink, the site's address bottom right) with each page's own evidence on the right.
-// Latin type only: the card font has no hanzi (and its plus sign renders badly here), so the /zh pages share
-// the same cards.
+// Share card for the research page, in the home card's dress (Fraunces on
+// paper, ink, the site's address bottom right) with the page's own evidence on the right.
+// Latin type only: the card font has no hanzi (and its plus sign renders badly here), so /zh/research shares
+// the same card.
 export const OG_SIZE = { width: 1200, height: 630 };
 const INK = "#15130f";
 const MUTE = "#6b675f";
@@ -55,30 +54,5 @@ export function researchCard() {
     "Catching Sybils.",
     "HasciDB: 2.54M Ethereum addresses across 16 airdrops, the largest open airdrop Sybil database.",
     map,
-  );
-}
-
-// the top of the live board: rank, where the trader trades, score and 90-day return.
-// Trader names are left off (many are in scripts the card font can't set).
-export async function arenaCard() {
-  const { rows } = await getBoard();
-  const list = (
-    <div style={{ display: "flex", flexDirection: "column", width: 500 }}>
-      {rows.slice(0, 5).map((row, i) => (
-        <div key={i} style={{ display: "flex", alignItems: "baseline", padding: "16px 0", borderTop: i ? `1px solid #d8d0bf` : "none" }}>
-          <span style={{ width: 52, fontSize: 20, color: MUTE }}>{String(i + 1).padStart(2, "0")}</span>
-          <span style={{ flex: 1, fontSize: 22, letterSpacing: 3, color: MUTE }}>{row.exchange.toUpperCase()}</span>
-          <span style={{ width: 96, fontSize: 48, textAlign: "right" }}>{Math.round(row.score)}</span>
-          <span style={{ width: 130, fontSize: 24, textAlign: "right", color: MUTE }}>{`${row.roi < 0 ? "−" : ""}${Math.abs(row.roi).toFixed(1)}%`}</span>
-        </div>
-      ))}
-    </div>
-  );
-  return card(
-    "#f4ecdc",
-    "ARENA · ARENAFI.ORG",
-    "Crypto’s world ranking.",
-    "Over 68,000 traders from more than 44 exchanges, ranked by one public 0–100 score.",
-    list,
   );
 }

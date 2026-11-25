@@ -20,8 +20,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     { url: SITE, lastModified, changeFrequency: "weekly", priority: 1, alternates: { languages }, images },
     { url: `${SITE}/zh`, lastModified, changeFrequency: "weekly", priority: 0.8, alternates: { languages }, images },
-    // a page of its own for each of the two projects, so a search for either lands on it
-    ...(["research", "arena"] as const).flatMap((p) => {
+    // the research in full, a page of its own so a search for it lands there
+    ...(["research"] as const).flatMap((p) => {
       const pair = { en: `${SITE}/${p}`, zh: `${SITE}/zh/${p}` };
       return [
         { url: pair.en, lastModified, changeFrequency: "monthly" as const, priority: 0.9, alternates: { languages: pair } },
