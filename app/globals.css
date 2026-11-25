@@ -902,6 +902,3 @@ main:focus { outline: none; } /* skip-link target — focused programmatically, 
   nav .links { display: none; }
   nav .logo, .toggle { white-space: nowrap; }
 }
-
-/* /ben: the photo in 0s and 1s fills the window */
-.ben { position: fixed; inset: 0; width: 100%; height: 100%; display: block; touch-action: manipulation; cursor: pointer; }
