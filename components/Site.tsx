@@ -56,7 +56,7 @@ const COPY: Record<
       roadmap: { h: string; steps: Road[] };
       vision: { d: ReactNode };
     };
-    stage: { label: string; title: ReactNode; lead: string; stats: { n: string; d: string }[]; credits: { role: string; work: ReactNode }[] };
+    stage: { label: string; title: ReactNode; lead: string; credits: { role: string; work: ReactNode }[] };
     contact: { label: string; title: ReactNode; lead: string; links: CLink[]; form: Form };
   }
 > = {
@@ -163,16 +163,13 @@ const COPY: Record<
           Earlier, on <em>stage</em>.
         </>
       ),
-      lead: "I grew up holding a microphone, hosting, reciting, acting and playing the pipa: CCTV-14, four consecutive years hosting the Hubei Children's Spring Festival Gala, and on the big screen, in cinemas across China.",
-      stats: [
-        { n: "60+", d: "awards in recitation, speech and hosting" },
-        { n: "30+", d: "at national or international level" },
-      ],
+      lead: "Before research, I grew up holding a microphone.",
       credits: [
         { role: "Feature film", work: <><a className="tlink" href="https://baike.baidu.com/item/%E6%AC%A7%E7%88%B8%E7%9A%84%E6%83%85%E4%BA%BA/20287640" target="_blank" rel="noopener noreferrer"><i>Superposition of Love</i></a> (2017), released in cinemas across China</> },
         { role: "Performer", work: "CCTV-14" },
         { role: "Host", work: "Hubei Children's Spring Festival Gala, four years running" },
         { role: "Recitation", work: "Hubei TV, Voice of Kids" },
+        { role: "Awards", work: "60+ in recitation, speech and hosting, 30+ of them national or international" },
       ],
     },
     contact: {
@@ -305,16 +302,13 @@ const COPY: Record<
           更早以前，在<em>舞台</em>上
         </>
       ),
-      lead: "做研究之前，我是拿着话筒长大的。主持、朗诵、表演、弹琵琶：央视 CCTV-14，连续四年主持湖北少儿春晚，还有全国院线上映的电影。",
-      stats: [
-        { n: "60+", d: "朗诵、演讲与主持奖项" },
-        { n: "30+", d: "国家级与国际级" },
-      ],
+      lead: "做研究之前，我是拿着话筒长大的。",
       credits: [
         { role: "电影", work: <><a className="tlink" href="https://baike.baidu.com/item/%E6%AC%A7%E7%88%B8%E7%9A%84%E6%83%85%E4%BA%BA/20287640" target="_blank" rel="noopener noreferrer">《欧爸的情人》</a>（2017），全国院线上映</> },
         { role: "演出", work: "CCTV-14 少儿频道" },
         { role: "主持", work: "湖北少儿春晚，连续四年" },
         { role: "朗诵", work: "湖北卫视《童声朗朗》" },
+        { role: "奖项", work: "朗诵、演讲与主持奖项 60+，其中国家级与国际级 30+" },
       ],
     },
     contact: {
@@ -748,16 +742,6 @@ export default function Site({ routeLang, board }: { routeLang?: Lang; board: Bo
             <div className="label">{t.stage.label}</div>
             <h2>{t.stage.title}</h2>
             <p className="lead">{t.stage.lead}</p>
-            <ul className="rows arena-stats stage-stats">
-              {t.stage.stats.map((r) => (
-                <li key={r.d}>
-                  <div className="rinfo">
-                    <span className="n">{r.n}</span>
-                    <span className="rd">{r.d}</span>
-                  </div>
-                </li>
-              ))}
-            </ul>
           </div>
           <div className="right">
             <ul className="credits">

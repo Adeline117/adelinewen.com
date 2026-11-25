@@ -22,7 +22,7 @@ const srcSet = (s: Shot, ext: "avif" | "webp") =>
 // are 70% of that (globals.css .strip ul / li)
 // rendered plate height: phone / wide (every plate in a reel shares one height)
 const reelSizes = (s: Shot, even: boolean) => {
-  const [phone, wide] = even ? [154, 238] : [220, 280];
+  const [phone, wide] = even ? [112, 168] : [220, 280];
   return `(max-width: 480px) ${Math.round((s.w * phone) / s.h)}px, ${Math.round((s.w * wide) / s.h)}px`;
 };
 

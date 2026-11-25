@@ -423,7 +423,7 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
 .strip ul { display: flex; align-items: flex-end; gap: 8px; list-style: none; height: clamp(172px, 20cqi, 236px); }
 .strip li { flex: none; height: 100%; scroll-snap-align: start; }
 /* even reels: no enlarged lead — every photo at the reel's standard (70%) height */
-.even .strip ul { height: clamp(154px, 42cqi, 238px); }
+.even .strip ul { height: clamp(112px, 28cqi, 168px); } /* the childhood highlights, kept low */
 .even .strip li, .even .strip li:first-child { height: 100%; }
 .strip .plate { display: block; height: 100%; padding: 0; cursor: zoom-in; transition: border-color var(--dur-fast) var(--ease); }
 .strip .plate:hover { border-color: var(--ink); }
@@ -465,25 +465,24 @@ body.dark .plate img, body.dark .plate video { filter: brightness(0.85) saturate
    counts beneath the lead, and the photo reel running the full measure below */
 .stage-sec { flex-direction: column; }
 .stage-sec > .inner, .stage-reel { width: 100%; }
-.stage-stats { grid-template-columns: repeat(2, 1fr); margin-top: 40px; }
 .credits { list-style: none; border-top: 1px solid var(--line); }
 .credits li { display: grid; grid-template-columns: 8.5rem 1fr; gap: 0 20px; align-items: baseline; padding: 16px 0; border-bottom: 1px solid var(--line); }
 .cr-role { font-family: var(--font-mono), monospace; font-size: var(--fs-cap); letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--mute); }
 .cr-work { font-size: var(--fs-md); line-height: 1.4; color: var(--ink); }
-.stage-reel { max-width: var(--measure); margin: clamp(48px, 7vh, 80px) auto 0; }
+.stage-reel { max-width: var(--measure); margin: clamp(32px, 4.5vh, 48px) auto 0; }
 /* the wall: four full-bleed rows drifting at different speeds, neighbours in
    opposite directions, edges dissolving into the paper. Every photo is a plate
    like the rest of the site (hairline, radius, grain, true colour); the rows rise
    in with the section's reveal, one stagger step apart; the row under the
    pointer stops, and the plate under it takes the ink border every control on
    the site takes on hover. */
-.wall { align-self: stretch; margin: clamp(48px, 7vh, 80px) calc(-1 * clamp(24px, 5vw, 72px)) 0; display: grid; gap: 10px; overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
+.wall { align-self: stretch; margin: 12px calc(-1 * clamp(24px, 5vw, 72px)) 0; display: grid; gap: 10px; overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
 .wall-track { display: flex; gap: 10px; width: max-content; list-style: none; animation: wallDrift var(--wall-t, 150s) linear infinite; }
 /* one row now, as long as each of the old three: the same slow drift */
 .wall-row { --wall-t: 225s; }
 .wall-row.rev .wall-track { animation-direction: reverse; }
 .wall-row:hover .wall-track { animation-play-state: paused; }
-.wall .plate { display: block; height: clamp(84px, 9.5vw, 176px); transition: border-color var(--dur-fast) var(--ease); }
+.wall .plate { display: block; height: clamp(64px, 6.5vw, 120px); transition: border-color var(--dur-fast) var(--ease); }
 .wall .plate img { width: auto; }
 .wall li:hover .plate { border-color: var(--ink); }
 .sec .wall-row { opacity: 0; transform: translateY(26px); transition: opacity var(--dur) var(--ease) calc(var(--i) * var(--stagger)), transform var(--dur) var(--ease) calc(var(--i) * var(--stagger)); }
