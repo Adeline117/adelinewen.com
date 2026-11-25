@@ -65,7 +65,7 @@ const COPY: Record<
     colophon: "© 2026 Adeline Wen",
     heroSub: (
       <>
-        Research assistant at the University of Washington <a className="tlink" href="https://sites.uw.edu/weicaics/" target="_blank" rel="noopener noreferrer"><b>CAIS Lab</b></a>, and independent developer of <a className="tlink" href="https://arenafi.org" target="_blank" rel="noopener noreferrer"><b>arenafi.org</b></a>.
+        Economics at the University of Washington. I catch airdrop Sybils at the <a className="tlink" href="https://sites.uw.edu/weicaics/" target="_blank" rel="noopener noreferrer"><b>CAIS Lab</b></a> and built <a className="tlink" href="https://arenafi.org" target="_blank" rel="noopener noreferrer"><b>Arena</b></a>, a world ranking for crypto traders.
       </>
     ),
     heroHint: "Scroll ↓",
@@ -207,7 +207,7 @@ const COPY: Record<
     colophon: "© 2026 Adeline Wen",
     heroSub: (
       <>
-        华盛顿大学 <a className="tlink" href="https://sites.uw.edu/weicaics/" target="_blank" rel="noopener noreferrer"><b>CAIS 实验室</b></a>研究助理，<a className="tlink" href="https://arenafi.org" target="_blank" rel="noopener noreferrer"><b>arenafi.org</b></a> 独立开发者。
+        华盛顿大学经济学本科。在 <a className="tlink" href="https://sites.uw.edu/weicaics/" target="_blank" rel="noopener noreferrer"><b>CAIS 实验室</b></a>研究空投 Sybil 检测，一个人做了加密交易者的世界排名 <a className="tlink" href="https://arenafi.org" target="_blank" rel="noopener noreferrer"><b>Arena</b></a>。
       </>
     ),
     heroHint: "滚动 ↓",
