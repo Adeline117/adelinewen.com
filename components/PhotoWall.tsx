@@ -1,10 +1,10 @@
 import { WALL } from "./wall";
 
-// Rows of small photos drifting, neighbours in opposite directions: the sheer amount of
-// it, not any one picture. Pure CSS (each row is the list twice, translated by
+// A row of small photos drifting past under the highlights: the range of stages, not any
+// one picture. Pure CSS (each row is the list twice, translated by
 // half its width); each photo is a .plate like every other photo on the site.
 // A row stops under the pointer; reduced motion gets plain scrollable rows.
-// The first copy of each row carries a description, so the photos can be found in image
+// The first copy of the row carries a description, so the photos can be found in image
 // search; the duplicate copy (there only to make the loop seamless) stays silent.
 export default function PhotoWall({ label, alt }: { label: string; alt: string }) {
   return (
