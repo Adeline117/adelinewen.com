@@ -371,6 +371,16 @@ nav .links button.active::after { transform: scaleX(1); }
 .honors .hn { margin: 0; font-family: var(--font-fraunces), var(--font-cjk), serif; font-size: var(--fs-lg); font-weight: 330; line-height: 1.15; color: var(--ink); }
 .honors .hd { font-size: var(--fs-body); line-height: 1.5; color: var(--text); }
 .honors .hm { font-family: var(--font-mono), monospace; font-size: var(--fs-cap); letter-spacing: var(--track-meta); text-transform: uppercase; color: var(--mute); white-space: nowrap; text-align: right; }
+/* on a wide screen the honours sit two to a row, so the section is half as tall: each
+   reads place and date, then title and line, its reel along the bottom so neighbours align */
+@media (min-width: 1024px) {
+  .honors { display: grid; grid-template-columns: 1fr 1fr; column-gap: 48px; }
+  .honors > li { display: flex; flex-direction: column; }
+  .honors > li:nth-last-child(2):nth-child(odd) { border-bottom: 1px solid var(--line); }
+  .honors > li .strip-wrap { margin-top: auto; padding-top: 16px; }
+  .honors .hrow { grid-template-columns: 1fr; row-gap: 6px; }
+  .honors .hm { grid-row: 1; text-align: left; }
+}
 @media (max-width: 480px) {
   .honors .hrow { grid-template-columns: 1fr; row-gap: 4px; }
   .honors .hn { font-size: var(--fs-md); }
